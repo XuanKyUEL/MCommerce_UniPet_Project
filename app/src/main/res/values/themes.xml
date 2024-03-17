@@ -3,6 +3,7 @@
     <style name="Base.Theme.UniPet" parent="Theme.Material3.DayNight.NoActionBar">
         <!-- Customize your light theme here. -->
         <!-- <item name="colorPrimary">@color/my_light_primary</item> -->
+        <item name="fontFamily">@font/unipet_fonts</item>
     </style>
 
     <style name="Theme.UniPet" parent="Base.Theme.UniPet" />
