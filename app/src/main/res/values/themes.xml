@@ -6,6 +6,13 @@
         <item name="fontFamily">@font/unipet_fonts</item>
     </style>
 
+<!--    Special theme for the splash screen-->
+    <style name="Theme.UniPet.SplashScreen" parent="Theme.AppCompat.NoActionBar">
+        <item name="windowSplashScreenBackground">@color/transparent</item>
+        <item name="windowSplashScreenAnimatedIcon">@drawable/transparent_icon</item>
+        <item name="postSplashScreenTheme">@style/Theme.UniPet</item>
+    </style>
+
     <!--    font Style introscreen-->
     <style name="IntroTextMainStyle">
         <item name="android:fontFamily">@font/aptos_semibold</item>

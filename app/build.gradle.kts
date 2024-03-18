@@ -36,6 +36,11 @@ android {
 
 dependencies {
 
+    // splash screen library
+    implementation(libs.core.splashscreen)
+    // lottie animation library
+    implementation(libs.lottie)
+
     implementation(libs.appcompat)
     implementation(libs.material)
     implementation(libs.activity)
