@@ -3,7 +3,28 @@
     <style name="Base.Theme.UniPet" parent="Theme.Material3.DayNight.NoActionBar">
         <!-- Customize your light theme here. -->
         <!-- <item name="colorPrimary">@color/my_light_primary</item> -->
+        <item name="fontFamily">@font/unipet_fonts</item>
     </style>
+
+<!--    Special theme for the splash screen-->
+    <style name="Theme.UniPet.SplashScreen" parent="Theme.AppCompat.NoActionBar">
+        <item name="windowSplashScreenBackground">@color/transparent</item>
+        <item name="windowSplashScreenAnimatedIcon">@drawable/transparent_icon</item>
+        <item name="postSplashScreenTheme">@style/Theme.UniPet</item>
+    </style>
+
+    <!--    font Style introscreen-->
+    <style name="IntroTextMainStyle">
+        <item name="android:fontFamily">@font/aptos_semibold</item>
+        <item name="android:textSize">32sp</item>
+        <item name="android:textColor">@color/introTitleText</item>
+    </style>
+    <style name="introContentStyle">
+        <item name="android:fontFamily">@font/aptos_semibold</item>
+        <item name="android:textSize">16sp</item>
+        <item name="android:textColor">@color/introContentText</item>
+    </style>
+
 
     <style name="Theme.UniPet" parent="Base.Theme.UniPet" />
 </resources>

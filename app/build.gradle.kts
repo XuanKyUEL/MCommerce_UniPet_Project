@@ -29,9 +29,17 @@ android {
         sourceCompatibility = JavaVersion.VERSION_1_8
         targetCompatibility = JavaVersion.VERSION_1_8
     }
+    buildFeatures {
+        viewBinding = true
+    }
 }
 
 dependencies {
+
+    // splash screen library
+    implementation(libs.core.splashscreen)
+    // lottie animation library
+    implementation(libs.lottie)
 
     implementation(libs.appcompat)
     implementation(libs.material)
