@@ -31,6 +31,6 @@
         app:layout_constraintVertical_bias="1.0"
         app:lottie_autoPlay="true"
         app:lottie_loop="true"
-        app:lottie_rawRes="@raw/unipet_cat_anim" />
+        app:lottie_rawRes="@raw/cat_animation" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
