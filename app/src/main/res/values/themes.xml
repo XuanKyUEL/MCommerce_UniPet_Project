@@ -5,25 +5,34 @@
         <!-- <item name="colorPrimary">@color/my_light_primary</item> -->
         <item name="fontFamily">@font/unipet_fonts</item>
         <item name="colorPrimary">@color/primaryColor</item>
+        <item name="android:buttonTint">@color/secondaryColor</item>
     </style>
 
 <!--    Special theme for the splash screen-->
-    <style name="Theme.UniPet.SplashScreen" parent="Base.Theme.UniPet">
-        <item name="windowSplashScreenBackground">@android:color/transparent</item>
-        <item name="windowSplashScreenAnimatedIcon">@android:color/transparent</item>
-        <item name="postSplashScreenTheme">@style/Theme.UniPet</item>
+    <style name="Theme.UniPet.SplashScreen" parent="Theme.AppCompat.NoActionBar">
+        <item name="android:windowIsTranslucent">true</item>
     </style>
 
     <!--    font Style introscreen-->
     <style name="IntroTextMainStyle">
         <item name="android:fontFamily">@font/aptos_semibold</item>
+        <item name="android:textFontWeight">800</item>
         <item name="android:textSize">32sp</item>
+        <item name="android:gravity">center</item>
         <item name="android:textColor">@color/introTitleText</item>
     </style>
-    <style name="introContentStyle">
+    <style name="IntroContentStyle">
         <item name="android:fontFamily">@font/aptos_semibold</item>
-        <item name="android:textSize">16sp</item>
+        <item name="android:textFontWeight">400</item>
+        <item name="android:gravity">center</item>
+        <item name="android:textSize">19sp</item>
         <item name="android:textColor">@color/introContentText</item>
+    </style>
+    <style name="IntroButtonStyle">
+        <item name="android:fontFamily">@font/aptos_display</item>
+        <item name="android:textFontWeight">800</item>
+        <item name="android:textSize">20sp</item>
+        <item name="android:alpha">1</item>
     </style>
 
 

@@ -5,5 +5,6 @@
     <color name="introTitleText">#141415</color>
     <color name="introContentText">#A1A1A1</color>
     <color name="primaryColor">#FFAB94</color>
+    <color name="secondaryColor">#FF6C44</color>
     <color name="transparent">#00000000</color>
 </resources>

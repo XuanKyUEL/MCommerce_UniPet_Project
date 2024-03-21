@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".fragments.onboarding.OnBoardThirdScreen">
+
+    <!-- TODO: Update blank fragment layout -->
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:scaleType="centerCrop"
+        android:src="@drawable/dog_2"
+        android:contentDescription="@string/contentdescription"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom"
+        android:padding="16dp"
+        android:background="@drawable/bg_intro_content_layer"
+        android:gravity="center_horizontal"
+        android:orientation="vertical">
+
+        <ImageView
+            android:layout_width="97dp"
+            android:layout_height="89dp"
+            android:layout_marginTop="82dp"
+            android:layout_marginBottom="9dp"
+            android:contentDescription="@string/content_intro_01"
+            android:src="@drawable/intro_logo" />
+
+        <TextView
+            style="@style/IntroTextMainStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginBottom="9dp"
+            android:text="@string/intro_title_1"
+            android:textSize="30sp" />
+
+        <TextView
+            style="@style/IntroContentStyle"
+            android:layout_width="250dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginBottom="26dp"
+            android:lineHeight="28.5dp"
+            android:text="@string/content_intro_01" />
+
+        <Button
+            android:id="@+id/btn_intro_third_screen"
+            style="@style/IntroButtonStyle"
+            android:layout_width="367dp"
+            android:layout_height="65dp"
+            android:backgroundTint="@color/secondaryColor"
+            android:drawableEnd="@drawable/next_btn_intro_white"
+            android:gravity="center"
+            android:paddingStart="16dp"
+            android:paddingEnd="16dp"
+            android:text="@string/tiep_tuc" />
+    </LinearLayout>
+
+</FrameLayout>
