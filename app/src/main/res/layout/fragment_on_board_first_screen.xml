@@ -54,7 +54,7 @@
             android:id="@+id/btn_intro_first_screen"
             android:layout_width="367dp"
             android:layout_height="65dp"
-            android:backgroundTint="@color/secondaryColor"
+            android:backgroundTint="@color/primaryColor"
             android:text="@string/tiep_tuc"
             android:gravity="center"
             android:drawableEnd="@drawable/next_btn_intro_white"
