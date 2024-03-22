@@ -53,7 +53,7 @@
             style="@style/IntroButtonStyle"
             android:layout_width="367dp"
             android:layout_height="65dp"
-            android:backgroundTint="@color/secondaryColor"
+            android:backgroundTint="@color/primaryColor"
             android:drawableEnd="@drawable/next_btn_intro_white"
             android:gravity="center"
             android:paddingStart="16dp"
