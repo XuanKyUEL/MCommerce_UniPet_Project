@@ -20,6 +20,18 @@
         android:contentDescription="@string/contentdescription"
         android:visibility="gone"/>
 
+    <TextView
+        android:id="@+id/tv_skip_intro_screen1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/bo_qua"
+        android:layout_gravity="end"
+        android:padding="25dp"
+        android:layout_marginEnd="10dp"
+        style="@style/HEAD4_BOLD_20"
+        android:textColor="@color/white"
+        android:visibility="gone"/>
+
 
 
     <LinearLayout
@@ -30,18 +42,20 @@
         android:padding="16dp"
         android:gravity="center_horizontal">
 
+
+
         <!-- TODO: Add dash indicator here -->
 
         <com.tbuonomo.viewpagerdotsindicator.DotsIndicator
             android:id="@+id/dots_indicator"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            app:dotsColor="@color/secondaryColor"
-            app:dotsCornerRadius="10dp"
+            app:dotsColor="@color/brandLighter"
+            app:dotsCornerRadius="30dp"
             app:dotsSize="12dp"
             app:dotsSpacing="4dp"
-            app:dotsWidthFactor="2.2"
-            app:selectedDotColor="@color/primaryColor"
+            app:dotsWidthFactor="1"
+            app:selectedDotColor="@color/brandDarker"
             app:progressMode="false"
             app:dotsElevation="3dp"
             android:layout_gravity="center"
@@ -60,7 +74,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/intro_title_1"
-            style="@style/IntroTextMainStyle"
+            style="@style/HEAD1_BOLD_32"
             android:lineHeight="48dp"
             android:layout_gravity="center"
             android:layout_marginBottom="9dp"
@@ -71,22 +85,21 @@
             android:visibility="gone"
             android:layout_height="wrap_content"
             android:text="@string/content_intro_01"
-            style="@style/IntroContentStyle"
+            style="@style/HEAD4_BOLD_20"
             android:layout_gravity="center"
-            android:lineHeight="28.5dp"
             android:layout_marginBottom="26dp"/>
 
         <Button
             android:id="@+id/btn_intro_first_screen"
             android:layout_width="367dp"
             android:layout_height="65dp"
-            android:backgroundTint="@color/secondaryColor"
+            android:backgroundTint="@color/brandPrimary"
             android:text="@string/tiep_tuc"
             android:gravity="center"
             android:drawableEnd="@drawable/next_btn_intro_white"
             android:paddingStart="16dp"
             android:paddingEnd="16dp"
-            style="@style/IntroButtonStyle"
+            style="@style/HEAD4_BOLD_20"
             android:visibility="gone"
             />
     </LinearLayout>
