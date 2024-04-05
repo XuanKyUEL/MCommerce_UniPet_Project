@@ -43,7 +43,6 @@
         android:gravity="center_horizontal">
 
 
-
         <!-- TODO: Add dash indicator here -->
 
         <com.tbuonomo.viewpagerdotsindicator.DotsIndicator
