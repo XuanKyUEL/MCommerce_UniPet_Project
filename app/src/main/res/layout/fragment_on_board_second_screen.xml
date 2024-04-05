@@ -14,37 +14,42 @@
         android:src="@drawable/dog_1"
         android:contentDescription="@string/contentdescription"/>
 
+    <TextView
+        android:id="@+id/tv_skip_intro_screen2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/bo_qua"
+        android:layout_gravity="end"
+        android:padding="25dp"
+        android:layout_marginEnd="10dp"
+        style="@style/HEAD4_BOLD_20"
+        android:textColor="@color/white"/>
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
         android:padding="16dp"
         android:background="@drawable/bg_intro_content_layer"
-        android:gravity="center_horizontal"
+        android:gravity="center_horizontal|bottom"
         android:layout_gravity="bottom">
-
-        <ImageView
-            android:layout_width="97dp"
-            android:layout_height="89dp"
-            android:src="@drawable/intro_logo"
-            android:layout_marginBottom="9dp"
-            android:layout_marginTop="82dp"
-            android:contentDescription="@string/content_intro_01" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/intro_title_1"
-            style="@style/IntroTextMainStyle"
+            android:text="@string/intro_title_2"
+            style="@style/HEAD1_BOLD_32"
             android:layout_gravity="center"
             android:layout_marginBottom="9dp"/>
 
         <TextView
-            android:layout_width="250dp"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/content_intro_01"
-            style="@style/IntroContentStyle"
+            android:text="@string/content_intro_02"
+            style="@style/HEAD4_BOLD_20"
+            android:textColor="@color/darkTertiary"
             android:layout_gravity="center"
+            android:gravity="center"
             android:lineHeight="28.5dp"
             android:layout_marginBottom="26dp"/>
 
@@ -52,14 +57,16 @@
             android:id="@+id/btn_intro_sc_screen"
             android:layout_width="367dp"
             android:layout_height="65dp"
-            android:backgroundTint="@color/primaryColor"
+            android:backgroundTint="@color/brandPrimary"
             android:text="@string/tiep_tuc"
             android:gravity="center"
             android:drawableEnd="@drawable/next_btn_intro_white"
             android:paddingStart="16dp"
             android:paddingEnd="16dp"
-            style="@style/IntroButtonStyle"
+            android:layout_marginBottom="38dp"
+            style="@style/HEAD4_BOLD_20"
             />
+
     </LinearLayout>
 
 </FrameLayout>
