@@ -19,46 +19,64 @@
         android:layout_gravity="bottom"
         android:padding="16dp"
         android:background="@drawable/bg_intro_content_layer"
-        android:gravity="center_horizontal"
+        android:gravity="center_horizontal|bottom"
         android:orientation="vertical">
 
-        <ImageView
-            android:layout_width="97dp"
-            android:layout_height="89dp"
-            android:layout_marginTop="82dp"
-            android:layout_marginBottom="9dp"
-            android:contentDescription="@string/content_intro_01"
-            android:src="@drawable/intro_logo" />
-
         <TextView
-            style="@style/IntroTextMainStyle"
+            style="@style/HEAD1_BOLD_32"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_marginBottom="9dp"
-            android:text="@string/intro_title_1"
+            android:text="@string/intro_title_3"
             android:textSize="30sp" />
 
         <TextView
-            style="@style/IntroContentStyle"
-            android:layout_width="250dp"
+            style="@style/HEAD4_BOLD_20"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
+            android:gravity="center"
+            android:textColor="@color/darkTertiary"
             android:layout_marginBottom="26dp"
             android:lineHeight="28.5dp"
-            android:text="@string/content_intro_01" />
+            android:text="@string/content_intro_03" />
 
         <Button
             android:id="@+id/btn_intro_third_screen"
-            style="@style/IntroButtonStyle"
+            style="@style/HEAD4_BOLD_20"
             android:layout_width="367dp"
             android:layout_height="65dp"
-            android:backgroundTint="@color/primaryColor"
+            android:backgroundTint="@color/brandPrimary"
             android:drawableEnd="@drawable/next_btn_intro_white"
             android:gravity="center"
             android:paddingStart="16dp"
             android:paddingEnd="16dp"
-            android:text="@string/tiep_tuc" />
+            android:text="@string/bat_dau_thoi" />
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginTop="20dp"
+            android:layout_marginBottom="28dp"
+            android:gravity="center">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/da_co_tai_khoan"
+                android:textColor="@color/darkPrimary"
+                android:layout_marginEnd="15dp"
+                style="@style/BODY_LARGE_REGULAR_16" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/dang_nhap"
+                android:textColor="@color/brandPrimary"
+                style="@style/BODY_LARGE_BOLD_16" />
+
+        </LinearLayout>
     </LinearLayout>
 
 </FrameLayout>
