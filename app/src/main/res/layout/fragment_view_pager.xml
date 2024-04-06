@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".fragments.onboarding.ViewPagerFragment">
+
+    <!-- TODO: Update blank fragment layout -->
+    <androidx.viewpager2.widget.ViewPager2
+        android:id="@+id/view_pager_intro"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:src="@drawable/cat_1"
+        android:scaleType="centerCrop"
+        android:contentDescription="@string/contentdescription"
+        android:visibility="gone"/>
+
+    <TextView
+        android:id="@+id/tv_skip_intro_screen1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/bo_qua"
+        android:layout_gravity="end"
+        android:padding="25dp"
+        android:layout_marginEnd="10dp"
+        style="@style/HEAD4_BOLD_20"
+        android:textColor="@color/white"
+        android:visibility="gone"/>
+
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="432dp"
+        android:layout_gravity="bottom"
+        android:orientation="vertical"
+        android:padding="16dp"
+        android:gravity="center_horizontal">
+
+
+        <!-- TODO: Add dash indicator here -->
+
+        <com.tbuonomo.viewpagerdotsindicator.DotsIndicator
+            android:id="@+id/dots_indicator"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:dotsColor="@color/brandLighter"
+            app:dotsCornerRadius="30dp"
+            app:dotsSize="12dp"
+            app:dotsSpacing="4dp"
+            app:dotsWidthFactor="1"
+            app:selectedDotColor="@color/brandDarker"
+            app:progressMode="false"
+            app:dotsElevation="3dp"
+            android:layout_gravity="center"
+            android:layout_marginBottom="26dp"
+            android:layout_marginTop="16dp"
+            />
+
+        <ImageView
+            android:layout_width="97dp"
+            android:layout_height="89dp"
+            android:src="@drawable/intro_logo"
+            android:layout_marginBottom="9dp"
+            android:contentDescription="@string/content_intro_01"
+            android:visibility="gone"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/intro_title_1"
+            style="@style/HEAD1_BOLD_32"
+            android:lineHeight="48dp"
+            android:layout_gravity="center"
+            android:layout_marginBottom="9dp"
+            android:visibility="gone"/>
+
+        <TextView
+            android:layout_width="250dp"
+            android:visibility="gone"
+            android:layout_height="wrap_content"
+            android:text="@string/content_intro_01"
+            style="@style/HEAD4_BOLD_20"
+            android:layout_gravity="center"
+            android:layout_marginBottom="26dp"/>
+
+        <Button
+            android:id="@+id/btn_intro_first_screen"
+            android:layout_width="367dp"
+            android:layout_height="65dp"
+            android:backgroundTint="@color/brandPrimary"
+            android:text="@string/tiep_tuc"
+            android:gravity="center"
+            android:drawableEnd="@drawable/next_btn_intro_white"
+            android:paddingStart="16dp"
+            android:paddingEnd="16dp"
+            style="@style/HEAD4_BOLD_20"
+            android:visibility="gone"
+            />
+    </LinearLayout>
+</FrameLayout>
