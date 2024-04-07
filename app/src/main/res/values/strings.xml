@@ -1,3 +1,17 @@
 <resources>
     <string name="app_name">UniPet</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="contentdescription">contentDescription</string>
+    <string name="content_intro_01">UniPet - Mua sắm thú vị, đọc blog hữu ích! 🐾</string>
+    <string name="content_intro_02">Tại UniPet, bạn sẽ được khám phá một thế giới đa dạng của các sản phẩm từ thực phẩm cho đến đồ chơi dành cho thú cưng. Hãy trải nghiệm mua sắm thuận tiện và đầy đủ tại cửa hàng của chúng tôi! 🐾</string>
+    <string name="content_intro_03">Tại đây, bạn sẽ tìm thấy những bài viết hữu ích về chăm sóc và nuôi dưỡng thú cưng. Hãy tham khảo và chia sẻ kiến thức cùng cộng đồng yêu thú cưng của UniPet nhé!</string>
+    <string name="bo_qua">BỎ QUA</string>
+    <string name="tiep_tuc">TIẾP TỤC</string>
+    <string name="bat_dau_thoi">BẮT ĐẦU THÔI</string>
+    <string name="intro_title_1">Hé lô! UniPet đây!</string>
+    <string name="intro_title_2">Khám Phá Cửa Hàng!</string>
+    <string name="intro_title_3">Đọc Blog Hữu Ích!</string>
+    <string name="da_co_tai_khoan">Sen đã đăng ký ?</string>
+    <string name="dang_nhap">Đăng nhập</string>
 </resources>
