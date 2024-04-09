@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -7,20 +8,22 @@
 
     <!-- TODO: Update blank fragment layout -->
     <ImageView
+        android:id="@+id/imageView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:contentDescription="@string/contentdescription"
         android:scaleType="centerCrop"
-        android:src="@drawable/dog_2"
-        android:contentDescription="@string/contentdescription"/>
+        android:src="@drawable/dog_2" />
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom"
-        android:padding="16dp"
         android:background="@drawable/bg_intro_content_layer"
         android:gravity="center_horizontal|bottom"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:padding="16dp"
+        app:layout_constraintBottom_toBottomOf="@+id/imageView">
 
         <TextView
             style="@style/HEAD1_BOLD_32"
@@ -36,11 +39,11 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:gravity="center"
-            android:textColor="@color/darkTertiary"
             android:layout_marginBottom="26dp"
+            android:gravity="center"
             android:lineHeight="28.5dp"
-            android:text="@string/content_intro_03" />
+            android:text="@string/content_intro_03"
+            android:textColor="@color/darkTertiary" />
 
         <Button
             android:id="@+id/btn_intro_third_screen"
@@ -57,26 +60,27 @@
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
             android:layout_marginTop="20dp"
             android:layout_marginBottom="28dp"
-            android:gravity="center">
+            android:gravity="center"
+            android:orientation="horizontal">
 
             <TextView
+                style="@style/BODY_LARGE_REGULAR_16"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/da_co_tai_khoan"
-                android:textColor="@color/darkPrimary"
                 android:layout_marginEnd="15dp"
-                style="@style/BODY_LARGE_REGULAR_16" />
+                android:text="@string/da_co_tai_khoan"
+                android:textColor="@color/darkPrimary" />
+
             <TextView
+                style="@style/BODY_LARGE_BOLD_16"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/dang_nhap"
-                android:textColor="@color/brandPrimary"
-                style="@style/BODY_LARGE_BOLD_16" />
+                android:textColor="@color/brandPrimary" />
 
         </LinearLayout>
     </LinearLayout>
 
-</FrameLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

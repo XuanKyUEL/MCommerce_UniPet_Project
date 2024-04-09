@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -8,75 +8,77 @@
 
     <!-- TODO: Update blank fragment layout -->
     <ImageView
+        android:id="@+id/imageView3"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:src="@drawable/cat_1"
+        android:contentDescription="@string/contentdescription"
         android:scaleType="centerCrop"
-        android:contentDescription="@string/contentdescription"/>
+        android:src="@drawable/cat_1" />
+
 
     <TextView
         android:id="@+id/tv_skip_intro_screen1"
+        style="@style/HEAD4_BOLD_20"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/bo_qua"
         android:layout_gravity="end"
         android:padding="25dp"
-        android:layout_marginEnd="10dp"
-        style="@style/HEAD4_BOLD_20"
-        android:textColor="@color/white"/>
-
-
+        android:text="@string/bo_qua"
+        android:textColor="@color/white"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom"
+        android:background="@drawable/bg_intro_content_layer"
+        android:gravity="center_horizontal|bottom"
         android:orientation="vertical"
         android:padding="16dp"
-        android:gravity="center_horizontal|bottom"
-        android:background="@drawable/bg_intro_content_layer">
+        app:layout_constraintBottom_toBottomOf="parent">
 
         <ImageView
             android:layout_width="97dp"
             android:layout_height="89dp"
-            android:src="@drawable/intro_logo"
-            android:layout_marginBottom="9dp"
             android:layout_marginTop="82dp"
-            android:contentDescription="@string/content_intro_01" />
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/intro_title_1"
-            style="@style/HEAD1_BOLD_32"
-            android:lineHeight="48dp"
-            android:layout_gravity="center"
-            android:layout_marginBottom="9dp"/>
+            android:layout_marginBottom="9dp"
+            android:contentDescription="@string/content_intro_01"
+            android:src="@drawable/intro_logo" />
 
         <TextView
+            style="@style/HEAD1_BOLD_32"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginBottom="9dp"
+            android:lineHeight="48dp"
+            android:text="@string/intro_title_1" />
+
+        <TextView
+            style="@style/HEAD4_BOLD_20"
             android:layout_width="250dp"
             android:layout_height="wrap_content"
-            android:text="@string/content_intro_01"
-            style="@style/HEAD4_BOLD_20"
-            android:textColor="@color/darkTertiary"
             android:layout_gravity="center"
+            android:layout_marginBottom="26dp"
             android:gravity="center"
-            android:layout_marginBottom="26dp"/>
+            android:text="@string/content_intro_01"
+            android:textColor="@color/darkTertiary" />
 
         <Button
             android:id="@+id/btn_intro_first_screen"
+            style="@style/HEAD4_BOLD_20"
             android:layout_width="367dp"
             android:layout_height="65dp"
+            android:layout_marginBottom="38dp"
             android:backgroundTint="@color/brandPrimary"
-            android:text="@string/tiep_tuc"
-            android:gravity="center"
             android:drawableEnd="@drawable/next_btn_intro_white"
+            android:gravity="center"
             android:paddingStart="16dp"
             android:paddingEnd="16dp"
-            android:layout_marginBottom="38dp"
-            style="@style/HEAD4_BOLD_20"
-            />
+            android:text="@string/tiep_tuc" />
     </LinearLayout>
 
 
 
-</FrameLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>
