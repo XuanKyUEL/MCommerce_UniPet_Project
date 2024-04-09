@@ -20,5 +20,7 @@
         android:id="@+id/viewPagerFragment"
         android:name="com.unipet7.mcommerce.fragments.onboarding.ViewPagerFragment"
         android:label="fragment_view_pager"
-        tools:layout="@layout/fragment_view_pager" />
+        tools:layout="@layout/fragment_view_pager" >
+    </fragment>
+
 </navigation>
