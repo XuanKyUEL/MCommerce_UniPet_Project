@@ -8,7 +8,7 @@
         <item name="android:buttonTint">@color/brandLighter</item>
     </style>
 
-<!--    Special theme for the splash screen-->
+    <!--    Special theme for the splash screen-->
     <style name="Theme.UniPet.SplashScreen" parent="Theme.AppCompat.NoActionBar">
         <item name="android:windowIsTranslucent">true</item>
     </style>
@@ -69,5 +69,35 @@
     </style>
 
 
+    <style name="BODY_XL_MED_18">
+        <item name="android:fontFamily">@font/svn_gilroy_medium</item>
+        <item name="android:textFontWeight">500</item>
+        <item name="android:textSize">18sp</item>
+    </style>
+
+
+
+    <style name="BODY_MED_REGULAR_14">
+        <item name="android:fontFamily">@font/svn_gilroy_regular</item>
+        <item name="android:textFontWeight">300</item>
+        <item name="android:textSize">14sp</item>
+    </style>
+    <style name="BODY_MED_MED_14">
+        <item name="android:fontFamily">@font/svn_gilroy_medium</item>
+        <item name="android:textFontWeight">500</item>
+        <item name="android:textSize">14sp</item>
+    </style>
+    <style name="BODY_MED_SEM_14">
+        <item name="android:fontFamily">@font/svn_gilroy_semibold</item>
+        <item name="android:textFontWeight">600</item>
+        <item name="android:textSize">14sp</item>
+    </style>
+
+<!--    BODY_XS-->
+    <style name="BODY_XS_REGULAR_10">
+        <item name="android:fontFamily">@font/svn_gilroy_regular</item>
+        <item name="android:textFontWeight">300</item>
+        <item name="android:textSize">10sp</item>
+    </style>
     <style name="Theme.UniPet" parent="Base.Theme.UniPet" />
 </resources>
