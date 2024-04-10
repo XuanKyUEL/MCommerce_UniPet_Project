@@ -10,9 +10,9 @@ import com.unipet7.mcommerce.R;
 
 public class MessageDialog {
 
-    public boolean cancelable;
-    public boolean hasPositiveBtn;
-    public boolean hasNegativeBtn;
+    public boolean cancelable = true;
+    public boolean hasPositiveBtn = true;
+    public boolean hasNegativeBtn = true;
 
     String title, message, positiveButtonText, negativeButtonText;
 
@@ -77,5 +77,24 @@ public class MessageDialog {
 
     public void setNegativeButtonText(String negativeButtonText) {
         this.negativeButtonText = negativeButtonText;
+    }
+
+    private View.OnClickListener negativeClickListener;
+    private View.OnClickListener positiveClickListener;
+
+    public void setNegativeClickListener(View.OnClickListener listener) {
+        this.negativeClickListener = listener;
+    }
+
+    public void setPositiveClickListener(View.OnClickListener listener) {
+        this.positiveClickListener = listener;
+    }
+
+    public View.OnClickListener getNegativeClickListener() {
+        return negativeClickListener;
+    }
+
+    public View.OnClickListener getPositiveClickListener() {
+        return positiveClickListener;
     }
 }

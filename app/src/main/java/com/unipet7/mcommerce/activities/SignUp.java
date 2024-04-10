@@ -1,38 +1,68 @@
 package com.unipet7.mcommerce.activities;
 
+import static com.unipet7.mcommerce.activities.SignIn.EMAIL_KEY;
+import static com.unipet7.mcommerce.activities.SignIn.PASSWORD_KEY;
+
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.text.SpannableString;
 import android.text.Spanned;
 import android.text.style.ForegroundColorSpan;
 import android.text.style.UnderlineSpan;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import androidx.appcompat.widget.AppCompatEditText;
 import androidx.core.content.ContextCompat;
 
+import com.google.android.material.textfield.TextInputLayout;
 import com.unipet7.mcommerce.R;
 import com.unipet7.mcommerce.adapters.MessageDialogAdapter;
 import com.unipet7.mcommerce.databinding.ActivitySignUpBinding;
+import com.unipet7.mcommerce.models.MessageDialog;
 
 public class SignUp extends BaseActivity {
 
     ActivitySignUpBinding binding;
     MessageDialogAdapter messageDialogAdapter;
 
+    MessageDialog messageDialog;
+
+    AppCompatEditText edtEmail, edtPassword, edtConfirmPassword;
+
+    TextInputLayout tilEmail, tilPassword, tilConfirmPassword;
+
+    boolean isTermsAndConditionsChecked = false;
+
+
+
+    public static final String SHARED_PREFS = "signUpInfo";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         binding = ActivitySignUpBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
+
         configTermsAndConditions();
+        createDialog();
         addEvents();
+        mapping();
+    }
 
+    private void mapping() {
+        edtEmail = binding.edtEmailSignUp;
+        edtPassword = binding.edtPasswordSignUp;
+        edtConfirmPassword = binding.rePwdEdtSignup;
 
-        messageDialogAdapter = new MessageDialogAdapter(this,"Đăng ký thành công", "Chúc mừng bạn đã đăng ký tài khoản thành công!", "Đăng nhập ngay", "Đóng");
-        messageDialogAdapter.setCancelable(true);
-        messageDialogAdapter.setHasPositiveBtn(true);
-        messageDialogAdapter.setHasNegativeBtn(true);
+        tilEmail = binding.tilEmailSignUp;
+        tilPassword = binding.tilPasswordSignUp;
+        tilConfirmPassword = binding.tilRePwdSignup;
+    }
+
+    private void createDialog() {
     }
 
     private void addEvents() {
@@ -41,14 +71,46 @@ public class SignUp extends BaseActivity {
         });
 
         binding.btnSignUp.setOnClickListener(v -> {
-            messageDialogAdapter.startDialog();
-            messageDialogAdapter.messageDialogNegativeBtnListener();
-            messageDialogAdapter.messageDialogPositiveBtnListener(dialog -> {
-                Intent intent = new Intent(this, SignIn.class);
-                startActivity(intent);
-                finish();
-            });
+            if(edtEmail.getText().toString().isEmpty()) {
+                tilEmail.setError("Email không được để trống");
+            } else if (edtPassword.getText().toString().isEmpty()) {
+                tilPassword.setError("Mật khẩu không được để trống");
+            } else if (edtConfirmPassword.getText().toString().isEmpty()) {
+                tilConfirmPassword.setError("Mật khẩu xác nhận không được để trống");
+            } else if (edtEmail.getText().toString().isEmpty() && edtPassword.getText().toString().isEmpty() && edtConfirmPassword.getText().toString().isEmpty()) {
+                Toast.makeText(this, "Vui lòng điền đầy đủ thông tin đăng ký", Toast.LENGTH_SHORT).show();
+            }else {
+                messageDialogAdapter = new MessageDialogAdapter(this);
+                messageDialog = new MessageDialog("Đăng Ký Thành Công", "Chúc mừng bạn đã đăng ký tài khoản thành công", "Đăng Nhập", "Đóng");
+                messageDialog.setCancelable(true);
+                messageDialog.setNegativeClickListener(v1 -> {
+                    messageDialogAdapter.dismissDialog();
+                });
+                messageDialog.setNegativeClickListener(v1 -> {
+                    messageDialogAdapter.dismissDialog();
+                });
+                messageDialog.setPositiveClickListener(v1 -> {
+                    navigateToSignIn();
+                });
+                messageDialogAdapter.showDialog(messageDialog);
+            }
         });
+    }
+
+    private void navigateToSignIn() {
+        // Lưu dữ liệu vào SharedPreferences
+        SharedPreferences sharedPreferences = getSharedPreferences(SHARED_PREFS, MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putString(EMAIL_KEY, edtEmail.getText().toString());
+        editor.putString(PASSWORD_KEY, edtPassword.getText().toString());
+        editor.apply();
+
+        // Chuyển người dùng sang hoạt động SignIn và truyền dữ liệu qua Intent
+        Intent intent = new Intent(this, SignIn.class);
+        intent.putExtra(EMAIL_KEY, edtEmail.getText().toString());
+        intent.putExtra(PASSWORD_KEY, edtPassword.getText().toString());
+        startActivity(intent);
+        finish();
     }
 
     private void configTermsAndConditions() {

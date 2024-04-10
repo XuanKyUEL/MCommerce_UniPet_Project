@@ -9,7 +9,8 @@
     </style>
 
     <!--    Special theme for the splash screen-->
-    <style name="Theme.UniPet.SplashScreen" parent="Theme.AppCompat.NoActionBar">
+    <style name="Theme.UniPet.SplashScreen" parent="Theme.Material3.DayNight.NoActionBar">
+        <item name="colorPrimary">@color/brandPrimary</item>
         <item name="android:windowIsTranslucent">true</item>
     </style>
 
