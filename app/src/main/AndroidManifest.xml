@@ -28,6 +28,26 @@
             </intent-filter>
         </activity>
         <activity
+            android:name=".activities.IntroActivity"
+            android:exported="false" />
+        <activity
+            android:name=".activities.BaseActivity"
+            android:exported="false" />
+        <activity
+            android:name=".activities.ForgetPassword"
+            android:exported="false" />
+        <activity
+            android:name=".activities.SignUp"
+            android:exported="false" />
+        <activity
+            android:name=".activities.SignIn"
+            android:exported="false" />
+        <activity
+            android:name=".activities.SplashScreen"
+            android:exported="false"
+            android:theme="@style/Theme.UniPet.SplashScreen">
+        </activity>
+        <activity
             android:name=".activities.RateOrder"
             android:exported="false" />
         <activity

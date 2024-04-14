@@ -14,4 +14,20 @@
     <string name="intro_title_3">Đọc Blog Hữu Ích!</string>
     <string name="da_co_tai_khoan">Sen đã đăng ký ?</string>
     <string name="dang_nhap">Đăng nhập</string>
+    <string name="signIn_CTA">Hãy nhập thông tin đăng nhập của bạn để khám phá thế giới UniPet!</string>
+    <string name="email">Email\n</string>
+    <string name="password">Mật khẩu</string>
+    <string name="forgot_password">Quên mật khẩu ?</string>
+    <string name="sign_in">Đăng Nhập</string>
+    <string name="sen_moi_den">Sen mới đến ?</string>
+    <string name="signUp_CTA">Nhập thông tin để tham gia vào UniPet ngay hôm nay để nhận được nhiều ưu đãi!</string>
+    <string name="re_password">Nhập lại mật khẩu</string>
+    <string name="terms_and_conditions">Bằng cách nhấn nút Đăng Ký, bạn đã đồng ý với các Điều Khoản và Dịch Vụ của UniPet</string>
+    <string name="sign_up">Đăng Ký</string>
+    <string name="sen_da_dang_ky">Sen đã đăng ký ?</string>
+    <string name="message_sample"># Message</string>
+    <string name="message_details">Chi tiết nội dung thành công</string>
+    <string name="ok">Ok</string>
+    <string name="Cancel">Cancel</string>
+    <string name="title_sample"># Title Dialog</string>
 </resources>
