@@ -4,7 +4,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".fragments.onboarding.HistoryOrder_Confirm"
-    android:id="@+id/fragmentConfirm">
+    android:id="@+id/fragmentConfirm"
+    android:background="@color/white">
 
     <!-- TODO: Update blank fragment layout -->
     <ListView

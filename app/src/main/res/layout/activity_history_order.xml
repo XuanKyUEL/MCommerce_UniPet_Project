@@ -6,7 +6,8 @@
     android:layout_height="match_parent"
     tools:context=".activities.HistoryOrder"
     android:orientation="vertical"
-    android:id="@+id/HistoryPurchase">
+    android:id="@+id/HistoryPurchase"
+    android:background="@color/white">
     <com.google.android.material.appbar.AppBarLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -17,7 +18,7 @@
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
             style="@style/HEAD5_BOLD_18"
-            android:background="#FDF6FE"
+            android:background="@color/white"
             app:popupTheme="@style/Widget.Material3.PopupMenu.Overflow"
             android:layout_gravity="center">
         </androidx.appcompat.widget.Toolbar>

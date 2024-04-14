@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    tools:context=".activities.ProfileAddress"
+    android:background="@color/white"
+    android:orientation="vertical"
+    android:id="@+id/AddressLayout">
+    <com.google.android.material.appbar.AppBarLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:theme="@style/ThemeOverlay.AppCompat.DayNight.ActionBar"
+        android:gravity="center">
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/toolbaraddress"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            style="@style/HEAD5_BOLD_18"
+            android:background="@color/white"
+            app:popupTheme="@style/Widget.Material3.PopupMenu.Overflow"
+            android:layout_gravity="center">
+        </androidx.appcompat.widget.Toolbar>
+    </com.google.android.material.appbar.AppBarLayout>
+    <ListView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/lvlAddress"
+        android:layout_weight="1"
+
+        android:padding="10dp"/>
+    <Button
+        android:id="@+id/btn_addaddress"
+        android:layout_width="250dp"
+        android:layout_height="40dp"
+        style="@style/BODY_MED_BOLD_14"
+        android:text="Thêm địa chỉ"
+        android:layout_marginBottom="100dp"
+        android:layout_gravity="bottom|center_horizontal"
+        android:background="@drawable/button_custom"/>
+
+</LinearLayout>

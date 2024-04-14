@@ -72,6 +72,11 @@
         <item name="android:textFontWeight">800</item>
         <item name="android:textSize">14sp</item>
     </style>
+    <style name="BODY_MED_REG_14">
+        <item name="android:fontFamily">@font/svn_gilroy_medium</item>
+        <item name="android:textFontWeight">500</item>
+        <item name="android:textSize">14sp</item>
+    </style>
     <style name="BODY_XS_BOLD_12">
         <item name="android:fontFamily">@font/svn_gilroy_medium</item>
         <item name="android:textFontWeight">800</item>

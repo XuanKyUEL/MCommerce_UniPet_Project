@@ -151,8 +151,8 @@
             android:layout_weight="1"
             android:text="Mua lại"
             style="@style/BODY_MED_BOLD_14"
-            android:backgroundTint="@color/brandPrimary"
-            android:layout_marginRight="20dp"/>
+            android:background="@drawable/button_custom"
+        android:layout_marginRight="20dp"/>
         <!--chỉnh bo góc lấy file xml custom-->
         <Button
             android:id="@+id/btn_rate"
@@ -161,6 +161,6 @@
             android:layout_weight="1"
             style="@style/BODY_MED_BOLD_14"
             android:text="Đánh giá"
-            android:backgroundTint="@color/brandPrimary"/>
+            android:background="@drawable/button_custom"/>
     </LinearLayout>
 </LinearLayout>

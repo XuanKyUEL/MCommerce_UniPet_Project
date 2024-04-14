@@ -150,6 +150,6 @@
             android:layout_height="40dp"
             style="@style/BODY_MED_BOLD_14"
             android:text="Hủy đơn hàng"
-            android:backgroundTint="@color/brandPrimary"/>
+            android:background="@drawable/button_custom"/>
     </LinearLayout>
 </LinearLayout>
