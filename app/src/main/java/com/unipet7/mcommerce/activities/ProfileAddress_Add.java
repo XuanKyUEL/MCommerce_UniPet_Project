@@ -4,6 +4,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.AppCompatEditText;
 import androidx.appcompat.widget.Toolbar;
 
 import android.graphics.Color;
@@ -14,13 +15,20 @@ import android.text.style.TextAppearanceSpan;
 import android.view.Gravity;
 import android.view.MenuItem;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.google.android.material.textfield.TextInputLayout;
 import com.unipet7.mcommerce.R;
+import com.unipet7.mcommerce.adapters.MessageDialogAdapter;
 import com.unipet7.mcommerce.databinding.ActivityProfileAddressAddBinding;
 import com.unipet7.mcommerce.databinding.ActivityProfileAddressBinding;
+import com.unipet7.mcommerce.models.MessageDialog;
 
 public class ProfileAddress_Add extends AppCompatActivity {
     ActivityProfileAddressAddBinding binding;
+    MessageDialogAdapter messageDialogAdapter;
+
+    MessageDialog messageDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,7 +37,49 @@ public class ProfileAddress_Add extends AppCompatActivity {
         binding = ActivityProfileAddressAddBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
         setActionBar(binding.toolbaradd);
+        addEvents();
     }
+
+    private void addEvents() {
+        binding.btnDone.setOnClickListener(v -> {
+            boolean hasError = false;
+
+            if (binding.edtuser.getText().toString().isEmpty()) {
+                binding.edtuser.setError("Tên không được để trống");
+                hasError = true;
+            }
+
+            if (binding.edtphone.getText().toString().isEmpty()) {
+                binding.edtphone.setError("Số điện thoại không được để trống");
+                hasError = true;
+            }
+
+            if (binding.edtprovince.getText().toString().isEmpty()) {
+                binding.edtprovince.setError("Huyện và Tỉnh không được để trống");
+                hasError = true;
+            }
+
+            if (binding.edtstress.getText().toString().isEmpty()) {
+                binding.edtstress.setError("Số nhà không được để trống");
+                hasError = true;
+            }
+            if (hasError) {
+                // Có lỗi, không thực hiện các thành phần khác
+            } else {
+                MessageDialogAdapter messageDialogAdapter = new MessageDialogAdapter(this);
+                messageDialog = new MessageDialog("Cập nhật thành công", "Bạn đã thêm địa chỉ mới thành công", "Quay lại", "Đóng");
+                messageDialog.setCancelable(true);
+                messageDialog.setNegativeClickListener(v1 -> {
+                    messageDialogAdapter.dismissDialog();
+                });
+                messageDialog.setPositiveClickListener(v1 -> {
+                    finish();
+                });
+                messageDialogAdapter.showDialog(messageDialog);
+            }
+        });
+    }
+
     public void setActionBar(@Nullable Toolbar toolbar) {
         setSupportActionBar(toolbar);
         ActionBar actionBar = getSupportActionBar();
@@ -38,23 +88,6 @@ public class ProfileAddress_Add extends AppCompatActivity {
         // Set icon arrow
         actionBar.setHomeAsUpIndicator(R.drawable.ic_back);
         actionBar.setDisplayShowTitleEnabled(false);
-        actionBar.setDisplayShowTitleEnabled(false);
-        // Create a TextView programmatically.
-        TextView textView = new TextView(this);
-        textView.setText("Thêm địa chỉ");
-        textView.setTextColor(Color.BLACK);
-        // Set text style using TextAppearanceSpan.
-        SpannableString spannableString = new SpannableString(textView.getText());
-        spannableString.setSpan(new TextAppearanceSpan(this, R.style.HEAD5_BOLD_18), 0, spannableString.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
-        textView.setText(spannableString);
-
-        // Set layout parameters for TextView.
-        Toolbar.LayoutParams layoutParams = new Toolbar.LayoutParams(Toolbar.LayoutParams.WRAP_CONTENT, Toolbar.LayoutParams.WRAP_CONTENT);
-        layoutParams.gravity = Gravity.CENTER;
-        textView.setLayoutParams(layoutParams);
-
-        actionBar.setCustomView(textView);
-        actionBar.setDisplayShowCustomEnabled(true);
     }
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {

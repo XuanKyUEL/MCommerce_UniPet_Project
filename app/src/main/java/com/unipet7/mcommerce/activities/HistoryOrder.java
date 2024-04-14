@@ -44,25 +44,7 @@ public class HistoryOrder extends AppCompatActivity {
         // Set icon arrow
         actionBar.setHomeAsUpIndicator(R.drawable.ic_back);
         actionBar.setDisplayShowTitleEnabled(false);
-        actionBar.setDisplayShowTitleEnabled(false);
-        // Create a TextView programmatically.
-        TextView textView = new TextView(this);
-        textView.setText("Lịch sử mua hàng");
-        textView.setTextColor(Color.BLACK);
-        // Set text style using TextAppearanceSpan.
-        SpannableString spannableString = new SpannableString(textView.getText());
-        spannableString.setSpan(new TextAppearanceSpan(this, R.style.HEAD5_BOLD_18), 0, spannableString.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
-        textView.setText(spannableString);
-
-        // Set layout parameters for TextView.
-        Toolbar.LayoutParams layoutParams = new Toolbar.LayoutParams(Toolbar.LayoutParams.WRAP_CONTENT, Toolbar.LayoutParams.WRAP_CONTENT);
-        layoutParams.gravity = Gravity.CENTER;
-        textView.setLayoutParams(layoutParams);
-
-        actionBar.setCustomView(textView);
         actionBar.setDisplayShowCustomEnabled(true);
-        actionBar.setTitle("Lịch sử mua hàng");
-
     }
     View.OnClickListener onClickListener = new View.OnClickListener() {
         @Override
