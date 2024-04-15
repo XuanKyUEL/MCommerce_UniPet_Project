@@ -23,17 +23,15 @@
             android:exported="false" />
         <activity
             android:name=".activities.SupportContact"
-            android:exported="true">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
+            android:exported="false">
         </activity>
         <activity
             android:name=".activities.IntroActivity"
             android:exported="false" />
         <activity
+            android:name=".activities.Home"
+            android:exported="false" />
+         <activity
             android:name=".activities.BaseActivity"
             android:exported="false" />
         <activity
@@ -48,7 +46,13 @@
         <activity
             android:name=".activities.SplashScreen"
             android:exported="false"
-            android:theme="@style/Theme.UniPet.SplashScreen"></activity>
+            android:theme="@style/Theme.UniPet.SplashScreen">
+          <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+           </activity>
         <activity
             android:name=".activities.RateOrder"
             android:exported="false" />
