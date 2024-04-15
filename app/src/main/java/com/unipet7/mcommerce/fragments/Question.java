@@ -10,7 +10,6 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.unipet7.mcommerce.adapters.QuestionAdapter;
-import com.unipet7.mcommerce.databinding.FragmentDeliveryOrderBinding;
 import com.unipet7.mcommerce.databinding.FragmentQuestionBinding;
 import com.unipet7.mcommerce.models.Questions;
 

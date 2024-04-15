@@ -40,6 +40,9 @@ public class SignIn extends BaseActivity {
 //            Intent intent = new Intent(this, Home.class);
 //            startActivity(intent);
 //            finish();
+            Intent intent = new Intent(this, MainActivity.class);
+            startActivity(intent);
+            finish();
         });
     }
 }

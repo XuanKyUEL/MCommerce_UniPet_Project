@@ -12,7 +12,6 @@ import android.os.Bundle;
 import com.google.android.material.tabs.TabLayout;
 import com.unipet7.mcommerce.R;
 import com.unipet7.mcommerce.adapters.SupportViewPageAdapter;
-import com.unipet7.mcommerce.databinding.ActivityRateOrderBinding;
 import com.unipet7.mcommerce.databinding.ActivitySupportContactBinding;
 
 public class SupportContact extends AppCompatActivity {

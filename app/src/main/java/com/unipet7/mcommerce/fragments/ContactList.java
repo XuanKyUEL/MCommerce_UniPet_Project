@@ -11,7 +11,6 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.unipet7.mcommerce.databinding.FragmentContactListBinding;
-import com.unipet7.mcommerce.databinding.FragmentQuestionBinding;
 
 /**
  * A simple {@link Fragment} subclass.
