@@ -1,4 +1,4 @@
-package com.unipet7.mcommerce.fragments.onboarding;
+package com.unipet7.mcommerce.fragments;
 
 import android.os.Bundle;
 
@@ -10,7 +10,7 @@ import android.view.ViewGroup;
 
 import com.unipet7.mcommerce.R;
 import com.unipet7.mcommerce.adapters.HistoryOrderAdapter;
-import com.unipet7.mcommerce.databinding.FragmentReceivedOrderBinding;
+import com.unipet7.mcommerce.databinding.FragmentConfirmationOrderBinding;
 import com.unipet7.mcommerce.models.HistoryOrders;
 
 import java.util.ArrayList;
@@ -18,10 +18,10 @@ import java.util.List;
 
 /**
  * A simple {@link Fragment} subclass.
- * Use the {@link HistoryOrder_Received#newInstance} factory method to
+ * Use the {@link HistoryOrder_Confirm#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class HistoryOrder_Received extends Fragment {
+public class HistoryOrder_Confirm extends Fragment {
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -31,10 +31,10 @@ public class HistoryOrder_Received extends Fragment {
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
-    FragmentReceivedOrderBinding binding;
+    FragmentConfirmationOrderBinding binding;
     HistoryOrderAdapter HistoryAdapter;
     ArrayList<HistoryOrders> Historyorders;
-    public HistoryOrder_Received() {
+    public HistoryOrder_Confirm() {
         // Required empty public constructor
     }
 
@@ -44,11 +44,11 @@ public class HistoryOrder_Received extends Fragment {
      *
      * @param param1 Parameter 1.
      * @param param2 Parameter 2.
-     * @return A new instance of fragment ReceivedOrder.
+     * @return A new instance of fragment ConfirmationOrder.
      */
     // TODO: Rename and change types and number of parameters
-    public static HistoryOrder_Received newInstance(String param1, String param2) {
-        HistoryOrder_Received fragment = new HistoryOrder_Received();
+    public static HistoryOrder_Confirm newInstance(String param1, String param2) {
+        HistoryOrder_Confirm fragment = new HistoryOrder_Confirm();
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
         args.putString(ARG_PARAM2, param2);
@@ -68,7 +68,8 @@ public class HistoryOrder_Received extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        binding = FragmentReceivedOrderBinding.inflate(inflater,container,false);
+        // Inflate the layout for this fragment
+        binding = FragmentConfirmationOrderBinding.inflate(inflater,container,false);
         loadData();
         addEvents();
 
@@ -78,13 +79,13 @@ public class HistoryOrder_Received extends Fragment {
     }
 
     private void loadData() {
-        HistoryAdapter = new HistoryOrderAdapter(getActivity(),R.layout.layout_history_order, initData());
-        binding.lvlReceivedOrder.setAdapter(HistoryAdapter);
+        HistoryAdapter = new HistoryOrderAdapter(getActivity(),R.layout.layout_confirmorder, initData());
+        binding.lvlConfOrder.setAdapter(HistoryAdapter);
     }
 
     private List<HistoryOrders> initData() {
         Historyorders = new ArrayList<>();
-        Historyorders.add(new HistoryOrders("11/12/2024","1111", "Đã nhận", R.drawable.unipet_app_icon,"Royal Canin Rottweiler Puppy con mèo con đi hia long nhong",
+        Historyorders.add(new HistoryOrders("11/12/2024","1111", "Chờ xác nhận", R.drawable.unipet_app_icon,"Royal Canin Rottweiler Puppy con mèo con đi hia long nhong",
                 "Túi", 1.0,24000.0, 24000.0));
 
         return Historyorders;

@@ -32,7 +32,7 @@
             android:name=".activities.IntroActivity"
             android:exported="false" />
         <activity
-            android:name=".activities.Home"
+            android:name=".fragments.Home"
             android:exported="false" />
          <activity
             android:name=".activities.BaseActivity"

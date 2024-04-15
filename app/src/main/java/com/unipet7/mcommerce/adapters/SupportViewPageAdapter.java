@@ -1,16 +1,13 @@
 package com.unipet7.mcommerce.adapters;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.lifecycle.Lifecycle;
 import androidx.viewpager2.adapter.FragmentStateAdapter;
 
-import com.unipet7.mcommerce.fragments.onboarding.ContactList;
-import com.unipet7.mcommerce.fragments.onboarding.Question;
-
-import java.util.ArrayList;
+import com.unipet7.mcommerce.fragments.ContactList;
+import com.unipet7.mcommerce.fragments.Question;
 
 public class SupportViewPageAdapter extends FragmentStateAdapter {
 
