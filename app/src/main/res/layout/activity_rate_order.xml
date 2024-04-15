@@ -1,0 +1,178 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".activities.RateOrder"
+    android:orientation="vertical"
+    android:id="@+id/RateOrder"
+    android:background="@color/white">
+    <com.google.android.material.appbar.AppBarLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:theme="@style/ThemeOverlay.AppCompat.DayNight.ActionBar"
+        android:gravity="center">
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/toolbar1"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            style="@style/HEAD5_BOLD_18"
+            android:background="@color/white"
+            app:popupTheme="@style/Widget.Material3.PopupMenu.Overflow"
+            android:layout_gravity="center">
+            <TextView
+                android:layout_width="300dp"
+                android:layout_height="wrap_content"
+                android:textColor="@color/darkPrimary"
+                style="@style/HEAD5_BOLD_18"
+                android:gravity="center"
+                android:text="Đánh giá sản phẩm"/>
+        </androidx.appcompat.widget.Toolbar>
+    </com.google.android.material.appbar.AppBarLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginTop="20dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp">
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+            <TextView
+                android:id="@+id/order_date"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1 "
+                android:text="02/02/2024"
+                android:layout_marginRight="10dp"
+                style="@style/BODY_XS_LAG_10"
+                android:textColor="@color/darkSecondary"/>
+            <TextView
+                android:id="@+id/order_code"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="#11123"
+                style="@style/BODY_XS_LAG_10"
+                android:layout_marginRight="10dp"
+                android:textColor="@color/darkSecondary"/>
+        </LinearLayout>
+        <TextView
+            android:id="@+id/order_status"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Chờ xác nhận"
+            style="@style/BODY_XS_BOLD_10"
+            android:layout_marginRight="5dp"
+            android:textColor="@color/brandPrimary"
+            android:gravity="end"/>
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="10dp"
+        android:orientation="vertical">
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Bạn có hài lòng với các sản phẩm của đơn hàng này?"
+            style="@style/BODY_MED_BOLD_14"
+            android:gravity="center"
+            android:layout_marginTop="15dp"/>
+        <RatingBar
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/ratingbar1"
+            android:layout_gravity="center"
+            android:progressTint="@color/brandPrimary"
+            android:layout_marginTop="5dp"/>
+        <TextView
+            android:id="@+id/txtFB1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Chưa đánh giá"
+            android:textColor="@color/brandPrimary"
+            style="@style/BODY_XS_MED_12"
+            android:gravity="center" />
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="10dp"
+        android:orientation="vertical">
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Bạn có hài lòng với nhân viên giao hàng của UniPet?"
+            style="@style/BODY_MED_BOLD_14"
+            android:gravity="center"
+            android:layout_marginTop="15dp"/>
+        <RatingBar
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/ratingbar2"
+            android:layout_gravity="center"
+            android:progressTint="@color/brandPrimary"
+            android:layout_marginTop="5dp"/>
+        <TextView
+            android:id="@+id/txtFB2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Chưa đánh giá"
+            android:textColor="@color/brandPrimary"
+            style="@style/BODY_XS_MED_12"
+            android:gravity="center" />
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="10dp"
+        android:orientation="vertical">
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Bạn có hài lòng với ứng dụng mua sắm UniPet?"
+            style="@style/BODY_MED_BOLD_14"
+            android:gravity="center"
+            android:layout_marginTop="15dp"/>
+        <RatingBar
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/ratingbar3"
+            android:layout_gravity="center"
+            android:progressTint="@color/brandPrimary"
+            android:layout_marginTop="5dp"/>
+        <TextView
+            android:id="@+id/txtFB3"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Chưa đánh giá"
+            android:textColor="@color/brandPrimary"
+            style="@style/BODY_XS_MED_12"
+            android:gravity="center" />
+    </LinearLayout>
+    <EditText
+        android:layout_marginTop="20dp"
+        android:layout_width="340dp"
+        android:layout_height="100dp"
+        android:padding="5dp"
+        android:hint="Hãy để lại nhận xét của bạn!"
+        style="@style/BODY_MED_BOLD_14"
+        android:textColor="@color/darkPrimary"
+        android:gravity="center"
+        android:layout_gravity="center"
+        android:background="@drawable/rectangle_outline"/>
+<!--chỉnh bo góc lấy file xml custom-->
+    <Button
+        android:layout_marginTop="50dp"
+        android:id="@+id/btn_Done"
+        android:layout_width="250dp"
+        android:layout_height="40dp"
+        style="@style/BODY_MED_BOLD_14"
+        android:layout_gravity="center"
+        android:text="Hoàn tất"
+        android:background="@drawable/button_custom"/>
+</LinearLayout>
