@@ -27,7 +27,7 @@ public class ContactList extends Fragment {
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
-    FragmentContactListBinding binding;
+    com.unipet7.mcommerce.databinding.FragmentContactListBinding binding;
     public ContactList() {
         // Required empty public constructor
     }

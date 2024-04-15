@@ -10,7 +10,7 @@
         android:icon="@drawable/product_icon_bottom_nav"
         android:title="@string/product_nav"/>
     <item
-        android:id="@id/fab"
+        android:id="@+id/fab_nav_shop"
         android:title=""
         android:enabled="false"/>
     <item

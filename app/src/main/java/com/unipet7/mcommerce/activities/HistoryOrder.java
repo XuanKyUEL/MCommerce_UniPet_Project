@@ -12,6 +12,7 @@ import android.os.Bundle;
 import android.view.View;
 
 import com.unipet7.mcommerce.R;
+import com.unipet7.mcommerce.databinding.ActivityHistoryOrderBinding;
 import com.unipet7.mcommerce.fragments.HistoryOrder_All;
 import com.unipet7.mcommerce.fragments.HistoryOrder_Cancel;
 import com.unipet7.mcommerce.fragments.HistoryOrder_Confirm;

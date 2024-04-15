@@ -1,4 +1,4 @@
-package com.unipet7.mcommerce;
+package com.unipet7.mcommerce.fragments;
 
 import android.graphics.Color;
 import android.os.Bundle;
@@ -18,6 +18,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.unipet7.mcommerce.R;
 import com.unipet7.mcommerce.databinding.FragmentCartBinding;
 
 /**

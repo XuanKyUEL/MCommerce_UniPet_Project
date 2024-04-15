@@ -1,4 +1,4 @@
-package com.unipet7.mcommerce;
+package com.unipet7.mcommerce.fragments;
 
 import android.os.Bundle;
 
@@ -7,6 +7,8 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+
+import com.unipet7.mcommerce.R;
 
 /**
  * A simple {@link Fragment} subclass.
