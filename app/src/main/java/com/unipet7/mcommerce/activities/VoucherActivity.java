@@ -1,8 +1,10 @@
-package com.unipet7.mcommerce;
+package com.unipet7.mcommerce.activities;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
+
+import com.unipet7.mcommerce.R;
 
 public class VoucherActivity extends AppCompatActivity {
 

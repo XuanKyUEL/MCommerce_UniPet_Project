@@ -8,22 +8,16 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
-import android.graphics.Color;
 import android.os.Bundle;
-import android.text.Spannable;
-import android.text.SpannableString;
-import android.text.style.TextAppearanceSpan;
-import android.view.Gravity;
 import android.view.View;
-import android.widget.TextView;
 
 import com.unipet7.mcommerce.R;
 import com.unipet7.mcommerce.databinding.ActivityHistoryOrderBinding;
-import com.unipet7.mcommerce.fragments.onboarding.HistoryOrder_All;
-import com.unipet7.mcommerce.fragments.onboarding.HistoryOrder_Cancel;
-import com.unipet7.mcommerce.fragments.onboarding.HistoryOrder_Confirm;
-import com.unipet7.mcommerce.fragments.onboarding.HistoryOrder_Delivery;
-import com.unipet7.mcommerce.fragments.onboarding.HistoryOrder_Received;
+import com.unipet7.mcommerce.fragments.HistoryOrder_All;
+import com.unipet7.mcommerce.fragments.HistoryOrder_Cancel;
+import com.unipet7.mcommerce.fragments.HistoryOrder_Confirm;
+import com.unipet7.mcommerce.fragments.HistoryOrder_Delivery;
+import com.unipet7.mcommerce.fragments.HistoryOrder_Received;
 
 public class HistoryOrder extends AppCompatActivity {
     ActivityHistoryOrderBinding binding;

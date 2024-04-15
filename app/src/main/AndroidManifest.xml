@@ -13,7 +13,7 @@
         android:theme="@style/Theme.UniPet"
         tools:targetApi="31">
         <activity
-            android:name=".VoucherActivity"
+            android:name=".activities.VoucherActivity"
             android:exported="false" />
         <activity
             android:name=".activities.ProfileAddress"
