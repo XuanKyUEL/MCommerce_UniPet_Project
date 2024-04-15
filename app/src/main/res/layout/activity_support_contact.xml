@@ -56,13 +56,13 @@
 <!--        android:id="@+id/frag1"-->
 <!--        android:layout_width="match_parent"-->
 <!--        android:layout_height="wrap_content"-->
-<!--        android:name="com.unipet7.mcommerce.fragments.onboarding.Question"-->
+<!--        android:name="com.unipet7.mcommerce.fragments.Question"-->
 <!--        tools:layout="@layout/fragment_question"/>-->
 <!--    <androidx.fragment.app.FragmentContainerView-->
 <!--        android:layout_gravity="center"-->
 <!--        android:id="@+id/frag2"-->
 <!--        android:layout_width="match_parent"-->
 <!--        android:layout_height="wrap_content"-->
-<!--        android:name="com.unipet7.mcommerce.fragments.onboarding.ContactList"-->
+<!--        android:name="com.unipet7.mcommerce.fragments.ContactList"-->
 <!--        tools:layout="@layout/fragment_contact_list"/>-->
 </LinearLayout>

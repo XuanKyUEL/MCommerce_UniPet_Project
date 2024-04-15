@@ -1,4 +1,4 @@
-package com.unipet7.mcommerce.fragments.onboarding;
+package com.unipet7.mcommerce.fragments;
 
 import android.os.Bundle;
 

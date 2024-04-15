@@ -1,4 +1,4 @@
-package com.unipet7.mcommerce.fragments.onboarding;
+package com.unipet7.mcommerce.fragments;
 
 import android.content.Intent;
 import android.net.Uri;
@@ -10,7 +10,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.unipet7.mcommerce.R;
 import com.unipet7.mcommerce.databinding.FragmentContactListBinding;
 import com.unipet7.mcommerce.databinding.FragmentQuestionBinding;
 
@@ -29,7 +28,7 @@ public class ContactList extends Fragment {
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
-    FragmentContactListBinding binding;
+    com.unipet7.mcommerce.databinding.FragmentContactListBinding binding;
     public ContactList() {
         // Required empty public constructor
     }

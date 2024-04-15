@@ -48,7 +48,7 @@
                 android:layout_weight="1 "
                 android:text="02/02/2024"
                 android:layout_marginRight="10dp"
-                style="@style/BODY_XS_LAG_10"
+                style="@style/BODY_SMALL_REGULAR_12"
                 android:textColor="@color/darkSecondary"/>
             <TextView
                 android:id="@+id/order_code"
@@ -56,7 +56,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:text="#11123"
-                style="@style/BODY_XS_LAG_10"
+                style="@style/BODY_SMALL_REGULAR_12"
                 android:layout_marginRight="10dp"
                 android:textColor="@color/darkSecondary"/>
         </LinearLayout>
@@ -95,7 +95,7 @@
             android:layout_height="wrap_content"
             android:text="Chưa đánh giá"
             android:textColor="@color/brandPrimary"
-            style="@style/BODY_XS_MED_12"
+            style="@style/BODY_SMALL_REGULAR_12"
             android:gravity="center" />
     </LinearLayout>
     <LinearLayout
@@ -123,7 +123,7 @@
             android:layout_height="wrap_content"
             android:text="Chưa đánh giá"
             android:textColor="@color/brandPrimary"
-            style="@style/BODY_XS_MED_12"
+            style="@style/BODY_SMALL_REGULAR_12"
             android:gravity="center" />
     </LinearLayout>
     <LinearLayout
@@ -151,7 +151,7 @@
             android:layout_height="wrap_content"
             android:text="Chưa đánh giá"
             android:textColor="@color/brandPrimary"
-            style="@style/BODY_XS_MED_12"
+            style="@style/BODY_SMALL_REGULAR_12"
             android:gravity="center" />
     </LinearLayout>
     <EditText
