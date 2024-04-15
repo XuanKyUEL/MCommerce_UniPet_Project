@@ -1,0 +1,214 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".fragment_cart">
+    <!-- TODO: Update blank fragment layout -->
+    <com.google.android.material.appbar.AppBarLayout
+        android:id="@+id/aplBar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:theme="@style/ThemeOverlay.AppCompat.DayNight.ActionBar"
+        android:gravity="center"
+        tools:ignore="MissingConstraints">
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/toolbar"
+            style="@style/HEAD5_BOLD_18"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:background="#FDF6FE"
+            android:gravity="center"
+            app:popupTheme="@style/Widget.Material3.PopupMenu.Overflow">
+        </androidx.appcompat.widget.Toolbar>
+    </com.google.android.material.appbar.AppBarLayout>
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rcCart"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginStart="15dp"
+        android:layout_marginEnd="15dp"
+        app:layout_constraintBottom_toTopOf="@+id/lnCart"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/aplBar" />
+    <LinearLayout
+        android:id="@+id/lnCart"
+        android:layout_width="match_parent"
+        android:layout_height="250dp"
+        android:background="@drawable/bg_cart"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        android:orientation="vertical">
+        <TextView
+            android:id="@+id/txtCartInfor"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Thông Tin Đơn Hàng"
+            android:textStyle="bold"
+            android:fontFamily="@font/svn_gilroy_bold"
+            android:textSize="15dp"
+            android:layout_marginStart="15dp"
+            android:layout_marginEnd="15dp"
+            android:layout_marginTop="10dp"
+            android:textColor="@color/darkPrimary"/>
+        <View
+            android:id="@+id/vLine"
+            android:layout_width="match_parent"
+            android:layout_height="2dp"
+            android:background="@color/brandLighter"
+            android:layout_marginStart="15dp"
+            android:layout_marginEnd="15dp"
+            android:layout_marginTop="5dp"/>
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="15dp"
+            android:layout_marginEnd="15dp"
+            android:layout_marginTop="5dp">
+
+            <EditText
+                android:id="@+id/edtVoucher"
+                android:layout_width="0dp"
+                android:layout_height="40dp"
+                android:background="@drawable/edit_text_border"
+                android:fontFamily="@font/svn_gilroy_medium"
+                android:hint="Nhập mã giảm giá"
+                android:textColor="@color/darkSecondary"
+                android:textSize="12dp"
+                android:gravity="center"
+                android:layout_marginEnd="15dp"
+                app:layout_constraintEnd_toStartOf="@+id/btnVoucher"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <Button
+                android:id="@+id/btnCircleVoucher"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:background="@drawable/btn_bg_circular"
+                app:layout_constraintEnd_toEndOf="@+id/edtVoucher"
+                app:layout_constraintTop_toTopOf="@id/edtVoucher"/>
+
+            <ImageView
+                android:id="@+id/imvEnterCart"
+                android:layout_width="25dp"
+                android:layout_height="25dp"
+                android:src="@drawable/ic_cart_enter"
+                app:layout_constraintStart_toStartOf="@id/btnCircleVoucher"
+                app:layout_constraintEnd_toEndOf="@id/btnCircleVoucher"
+                app:layout_constraintTop_toTopOf="@id/btnCircleVoucher"
+                app:layout_constraintBottom_toBottomOf="@id/btnCircleVoucher"/>
+
+            <Button
+                android:id="@+id/btnVoucher"
+                android:layout_width="120dp"
+                android:layout_height="40dp"
+                android:background="@drawable/btn_bg_voucher"
+                android:fontFamily="@font/svn_gilroy_medium"
+                android:textColor="@color/white"
+                android:text="Áp dụng"
+                android:textSize="12dp"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/txtValidVoucher"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/svn_gilroy_medium"
+                android:text="*Mã giảm giá không hợp lệ"
+                android:textColor="@color/brandDarker"
+                android:textSize="10dp"
+                android:textStyle="italic"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/edtVoucher" />
+            <TextView
+                android:id="@+id/txtPrePrice"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Tạm tính"
+                android:fontFamily="@font/svn_gilroy_bold"
+                android:textSize="15dp"
+                android:layout_marginTop="5dp"
+                app:layout_constraintTop_toBottomOf="@id/txtValidVoucher"
+                app:layout_constraintStart_toStartOf="parent"/>
+            <TextView
+                android:id="@+id/txtDiscoutPrice"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Giá giảm"
+                android:fontFamily="@font/svn_gilroy_bold"
+                android:textSize="15dp"
+                android:layout_marginTop="5dp"
+                app:layout_constraintTop_toBottomOf="@id/txtPrePrice"
+                app:layout_constraintStart_toStartOf="parent"/>
+            <TextView
+                android:id="@+id/txtTotalPrice"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Tổng thanh toán"
+                android:textStyle="bold"
+                android:fontFamily="@font/svn_gilroy_bold"
+                android:textSize="15dp"
+                android:layout_marginTop="5dp"
+                app:layout_constraintTop_toBottomOf="@id/txtDiscoutPrice"
+                app:layout_constraintStart_toStartOf="parent"/>
+            <TextView
+                android:id="@+id/txtVAT"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/svn_gilroy_medium"
+                android:text="*Giá đã bao gồm VAT"
+                android:textSize="10dp"
+                android:textStyle="italic"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/txtTotalPrice" />
+            <TextView
+                android:id="@+id/txtPreNumb"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="0"
+                android:fontFamily="@font/svn_gilroy_bold"
+                android:textSize="15dp"
+                android:layout_marginTop="5dp"
+                app:layout_constraintTop_toBottomOf="@id/txtValidVoucher"
+                app:layout_constraintEnd_toEndOf="parent"/>
+            <TextView
+                android:id="@+id/txtDiscoutNumb"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="0"
+                android:fontFamily="@font/svn_gilroy_bold"
+                android:textSize="15dp"
+                android:layout_marginTop="5dp"
+                app:layout_constraintTop_toBottomOf="@id/txtPreNumb"
+                app:layout_constraintEnd_toEndOf="parent"/>
+            <TextView
+                android:id="@+id/txtTotalNumb"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="0"
+                android:textColor="@color/brandPrimary"
+                android:textStyle="bold"
+                android:fontFamily="@font/svn_gilroy_bold"
+                android:textSize="15dp"
+                android:layout_marginTop="5dp"
+                app:layout_constraintTop_toBottomOf="@id/txtDiscoutNumb"
+                app:layout_constraintEnd_toEndOf="parent"/>
+        </androidx.constraintlayout.widget.ConstraintLayout>
+        <Button
+            android:id="@+id/btnPaymentNow"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Thanh toán ngay"
+            style="@style/HEAD5_BOLD_18"
+            android:background="@drawable/bg_btn_cartpayment"
+            android:layout_gravity="center"
+            android:layout_marginTop="10dp"/>
+    </LinearLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,0 +1,16 @@
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+    <!-- Trạng thái khi đã được chọn -->
+    <item android:state_checked="true" android:state_enabled="true">
+        <shape android:shape="rectangle">
+            <solid android:color="@color/brandPrimary" /> <!-- Màu nền khi đã chọn -->
+            <stroke android:width="2dp" android:color="@color/white" /> <!-- Màu viền khi đã chọn -->
+        </shape>
+    </item>
+    <!-- Trạng thái khi chưa được chọn -->
+    <item android:state_enabled="true">
+        <shape android:shape="rectangle">
+            <solid android:color="@color/white" /> <!-- Màu nền khi chưa được chọn -->
+            <stroke android:width="2dp" android:color="@color/brandPrimary" /> <!-- Màu viền khi chưa được chọn -->
+        </shape>
+    </item>
+</selector>

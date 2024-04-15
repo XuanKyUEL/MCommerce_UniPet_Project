@@ -30,4 +30,7 @@
     <string name="ok">Ok</string>
     <string name="Cancel">Cancel</string>
     <string name="title_sample"># Title Dialog</string>
+    <string name="DiscountVoucher">Voucher Giảm giá</string>
+    <string name="ShippingVoucher">Voucher Vận chuyển</string>
+    <string name="ButtonApply">XÁC NHẬN</string>
 </resources>
