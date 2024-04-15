@@ -37,6 +37,7 @@
             android:layout_gravity="center"
             android:orientation="vertical">
             <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/til_email_sign_up"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="20dp"
@@ -54,6 +55,7 @@
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/til_password_sign_up"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="24dp"
@@ -75,9 +77,9 @@
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/til_re_pwd_signup"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                 app:boxStrokeColor="@color/colorstates"
                 app:boxStrokeWidth="1dp"
