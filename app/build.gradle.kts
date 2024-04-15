@@ -86,6 +86,16 @@ fun getSha1(
 }
 
 dependencies {
+    //CircleImageView
+    implementation ("de.hdodenhof:circleimageview:3.1.0")
+    //Import CardView
+    implementation ("androidx.cardview:cardview:1.0.0")
+    //Glide
+    implementation ("com.github.bumptech.glide:glide:4.12.0")
+    annotationProcessor ("com.github.bumptech.glide:compiler:4.12.0")
+    implementation ("jp.wasabeef:glide-transformations:4.3.0")
+    //Round imageview
+    implementation ("com.makeramen:roundedimageview:2.3.0")
 
     // splash screen library
     implementation(libs.core.splashscreen)
