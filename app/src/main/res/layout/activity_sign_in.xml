@@ -53,6 +53,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:drawableStart="@drawable/mail_hint_edtext"
+                    android:inputType="textEmailAddress"
                     android:drawablePadding="10dp"
                     android:hint="@string/email" />
             </com.google.android.material.textfield.TextInputLayout>
