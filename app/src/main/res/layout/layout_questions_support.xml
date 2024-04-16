@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="390dp"
+    android:layout_height="wrap_content"
+    app:cardCornerRadius="5dp"
+    android:layout_gravity="center_horizontal"
+    app:cardElevation="3dp"
+    android:background="@drawable/button_custom"
+    app:cardUseCompatPadding="true">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:background="@drawable/rectangle_outline"
+        android:id="@+id/layout_question">
+        <TextView
+            android:layout_width="370dp"
+            android:layout_height="wrap_content"
+            android:id="@+id/question"
+            android:text="Chính sách"
+            android:textColor="@color/black"
+            style="@style/BODY_LARGE_BOLD_16"
+            android:padding="10dp"/>
+        <RelativeLayout
+            android:id="@+id/rlt_title"
+            android:background="@color/brandPrimary"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+        </RelativeLayout>
+        <TextView
+            android:layout_width="372dp"
+            android:layout_height="wrap_content"
+            android:text="Answer"
+            android:padding="10dp"
+            android:textStyle="italic"
+            android:textColor="@color/darkPrimary"
+            style="@style/BODY_MED_REG_14"
+            android:id="@+id/answer"/>
+        <RelativeLayout
+            android:id="@+id/rlt_descript"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+        </RelativeLayout>
+    </LinearLayout>
+
+</androidx.cardview.widget.CardView>

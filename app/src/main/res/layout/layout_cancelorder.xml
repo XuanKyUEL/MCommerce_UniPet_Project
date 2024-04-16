@@ -1,0 +1,155 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:layout_gravity="center_horizontal"
+    android:background="@drawable/rectangle_outline">
+
+    <!-- Header with date, order number, and status -->
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:padding="8dp">
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+            <TextView
+                android:id="@+id/order_date"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1 "
+                android:text="02/02/2024"
+                android:layout_marginRight="10dp"
+                style="@style/BODY_SMALL_REGULAR_12"
+                android:textColor="@color/darkSecondary"/>
+            <TextView
+                android:id="@+id/order_code"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="#11123"
+                style="@style/BODY_SMALL_REGULAR_12"
+                android:layout_marginRight="10dp"
+                android:textColor="@color/darkSecondary"/>
+        </LinearLayout>
+        <TextView
+            android:id="@+id/order_status"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Chờ xác nhận"
+            style="@style/BODY_XS_BOLD_10"
+            android:layout_marginRight="5dp"
+            android:textColor="@color/brandPrimary"
+            android:gravity="end"/>
+    </LinearLayout>
+
+    <!-- Product details -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:padding="8dp">
+
+        <ImageView
+            android:id="@+id/order_imv"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:src="@drawable/unipet_app_icon"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:orientation="vertical"
+            android:paddingStart="8dp">
+
+            <TextView
+                android:id="@+id/order_productname"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Pate chó IRIS chăm sóc răng m..."
+                style="@style/BODY_MED_BOLD_14"
+                android:textColor="@color/brandPrimary"/>
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/product_info"
+                    style="@style/BODY_SMALL_REGULAR_12"
+                    android:layout_width="217dp"
+                    android:layout_height="wrap_content"
+                    android:paddingRight="15dp"
+                    android:text="Lon"
+                    android:textColor="@color/darkSecondary"
+                    android:textStyle="italic" />
+
+                <TextView
+                    android:id="@+id/product_count"
+                    style="@style/BODY_SMALL_REGULAR_12"
+                    android:layout_width="25dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="5dp"
+                    android:gravity="end"
+                    android:text="x1 "
+                    android:textColor="@color/darkSecondary"
+                    android:textStyle="italic" />
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/product_price"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="68.000đ"
+                style="@style/BODY_SMALL_REGULAR_12"
+                android:textStyle="italic"
+
+                android:layout_marginRight="5dp"
+                android:textColor="@color/darkSecondary"/>
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginRight="15dp"
+        android:gravity="end">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:text="Thành tiền: "
+            android:textColor="@color/black"
+            style="@style/BODY_XS_BOLD_12" />
+        <TextView
+            android:id="@+id/order_totalprice"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:text="340.000"
+            android:textColor="@color/brandPrimary"
+            style="@style/BODY_XS_BOLD_12"/>
+    </LinearLayout>
+    <!-- Action buttons -->
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_gravity="center_horizontal"
+        android:padding="8dp">
+        <!--chỉnh bo góc lấy file xml custom-->
+        <Button
+            android:id="@+id/btn_buyagain"
+            android:layout_width="250dp"
+            android:layout_height="40dp"
+            style="@style/BODY_MED_BOLD_14"
+            android:text="Mua lại"
+            android:background="@drawable/button_custom"/>
+    </LinearLayout>
+</LinearLayout>

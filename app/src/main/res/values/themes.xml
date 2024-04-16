@@ -9,7 +9,8 @@
     </style>
 
     <!--    Special theme for the splash screen-->
-    <style name="Theme.UniPet.SplashScreen" parent="Theme.AppCompat.NoActionBar">
+    <style name="Theme.UniPet.SplashScreen" parent="Theme.Material3.DayNight.NoActionBar">
+        <item name="colorPrimary">@color/brandPrimary</item>
         <item name="android:windowIsTranslucent">true</item>
     </style>
 
@@ -46,6 +47,11 @@
     </style>
 
     <!--    font Style BODY-->
+    <style name="BODY_SEMI_18">
+        <item name="android:fontFamily">@font/svn_gilroy_semibold</item>
+        <item name="android:textFontWeight">600</item>
+        <item name="android:textSize">18sp</item>
+    </style>
 
     <style name="BODY_LARGE_REGULAR_16">
         <item name="android:fontFamily">@font/svn_gilroy_regular</item>
@@ -57,6 +63,16 @@
         <item name="android:textFontWeight">500</item>
         <item name="android:textSize">16sp</item>
     </style>
+    <style name="BODY_LARGE_MED_14">
+        <item name="android:fontFamily">@font/svn_gilroy_medium</item>
+        <item name="android:textFontWeight">500</item>
+        <item name="android:textSize">14sp</item>
+    </style>
+    <style name="BODY_LARGE_BOLD_14">
+        <item name="android:fontFamily">@font/svn_gilroy_bold</item>
+        <item name="android:textFontWeight">800</item>
+        <item name="android:textSize">14sp</item>
+    </style>
     <style name="BODY_LARGE_SEMI_BOLD_16">
         <item name="android:fontFamily">@font/svn_gilroy_semibold</item>
         <item name="android:textFontWeight">600</item>
@@ -67,7 +83,62 @@
         <item name="android:textFontWeight">800</item>
         <item name="android:textSize">16sp</item>
     </style>
+    <style name="BODY_MED_BOLD_14">
+        <item name="android:fontFamily">@font/svn_gilroy_medium</item>
+        <item name="android:textFontWeight">800</item>
+        <item name="android:textSize">14sp</item>
+    </style>
+    <style name="BODY_MED_REG_14">
+        <item name="android:fontFamily">@font/svn_gilroy_medium</item>
+        <item name="android:textFontWeight">500</item>
+        <item name="android:textSize">14sp</item>
+    </style>
+    <style name="BODY_XS_BOLD_12">
+        <item name="android:fontFamily">@font/svn_gilroy_medium</item>
+        <item name="android:textFontWeight">800</item>
+        <item name="android:textSize">12sp</item>
+    </style>
+    <style name="BODY_SMALL_BOLD_12">
+        <item name="android:fontFamily">@font/svn_gilroy_bold</item>
+        <item name="android:textFontWeight">800</item>
+        <item name="android:textSize">12sp</item>
+    </style>
 
+    <style name="BODY_SMALL_REGULAR_12">
+        <item name="android:fontFamily">@font/svn_gilroy_regular</item>
+        <item name="android:textFontWeight">300</item>
+        <item name="android:textSize">12sp</item>
+    </style>
+    <style name="BODY_SMALL_MED_12">
+        <item name="android:fontFamily">@font/svn_gilroy_medium</item>
+        <item name="android:textFontWeight">500</item>
+        <item name="android:textSize">12sp</item>
+    </style>
+    <style name="BODY_XS_BOLD_10">
+        <item name="android:fontFamily">@font/svn_gilroy_medium</item>
+        <item name="android:textFontWeight">800</item>
+        <item name="android:textSize">10sp</item>
+    </style>
+    <style name="BODY_XSMALL_SEMI_10">
+        <item name="android:fontFamily">@font/svn_gilroy_semibold</item>
+        <item name="android:textFontWeight">600</item>
+        <item name="android:textSize">10sp</item>
+    </style>
+    <style name="BODY_XSMALL_MED_10">
+        <item name="android:fontFamily">@font/svn_gilroy_medium</item>
+        <item name="android:textFontWeight">500</item>
+        <item name="android:textSize">10sp</item>
+    </style>
+    <style name="BODY_XSMALL_BOLD_10">
+        <item name="android:fontFamily">@font/svn_gilroy_bold</item>
+        <item name="android:textFontWeight">800</item>
+        <item name="android:textSize">10sp</item>
+    </style>
+    <style name="BODY_XSMALL_REGULAR_10">
+        <item name="android:fontFamily">@font/svn_gilroy_regular</item>
+        <item name="android:textFontWeight">300</item>
+        <item name="android:textSize">10sp</item>
+    </style>
 
     <style name="BODY_XL_MED_18">
         <item name="android:fontFamily">@font/svn_gilroy_medium</item>
@@ -101,4 +172,5 @@
     </style>
 
     <style name="Theme.UniPet" parent="Base.Theme.UniPet" />
+
 </resources>

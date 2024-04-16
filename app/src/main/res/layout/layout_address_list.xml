@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:background="@drawable/rectangle_outline">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+        <ImageView
+            android:paddingLeft="5dp"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:src="@drawable/ic_address_map"/>
+
+        <LinearLayout
+            android:layout_width="320dp"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="5dp">
+            <TextView
+                android:id="@+id/txttitleadress"
+                style="@style/BODY_MED_BOLD_14"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="left"
+                android:paddingLeft="10dp"
+                android:text="Office"
+                android:textColor="@color/black" />
+            <TextView
+                android:id="@+id/txtdetailadress"
+                style="@style/BODY_MED_REG_14"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="left"
+                android:paddingLeft="10dp"
+                android:text="2972 Westheimer Rd. Santa Ana "
+                android:textColor="@color/darkPrimary" />
+        </LinearLayout>
+        <ImageView
+            android:id="@+id/editlayout"
+            android:layout_width="match_parent"
+            android:layout_height="20dp"
+            android:src="@drawable/ic_address_edit"
+            android:layout_gravity="end|center_horizontal"/>
+
+    </LinearLayout>
+
+</LinearLayout>
