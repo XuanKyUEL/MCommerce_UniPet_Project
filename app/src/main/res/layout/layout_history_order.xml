@@ -25,7 +25,7 @@
                 android:layout_weight="1 "
                 android:text="02/02/2024"
                 android:layout_marginRight="10dp"
-                style="@style/BODY_XS_LAG_10"
+                style="@style/BODY_SMALL_REGULAR_12"
                 android:textColor="@color/darkSecondary"/>
             <TextView
                 android:id="@+id/order_code"
@@ -33,7 +33,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:text="#11123"
-                style="@style/BODY_XS_LAG_10"
+                style="@style/BODY_SMALL_REGULAR_12"
                 android:layout_marginRight="10dp"
                 android:textColor="@color/darkSecondary"/>
         </LinearLayout>
@@ -82,7 +82,7 @@
 
                 <TextView
                     android:id="@+id/product_info"
-                    style="@style/BODY_XS_MED_12"
+                    style="@style/BODY_SMALL_REGULAR_12"
                     android:layout_width="217dp"
                     android:layout_height="wrap_content"
                     android:paddingRight="15dp"
@@ -92,7 +92,7 @@
 
                 <TextView
                     android:id="@+id/product_count"
-                    style="@style/BODY_XS_MED_12"
+                    style="@style/BODY_SMALL_REGULAR_12"
                     android:layout_width="25dp"
                     android:layout_height="wrap_content"
                     android:layout_marginRight="5dp"
@@ -107,9 +107,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="68.000đ"
-                style="@style/BODY_XS_MED_12"
+                style="@style/BODY_SMALL_REGULAR_12"
                 android:textStyle="italic"
-
                 android:layout_marginRight="5dp"
                 android:textColor="@color/darkSecondary"/>
         </LinearLayout>

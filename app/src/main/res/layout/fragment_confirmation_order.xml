@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".fragments.onboarding.HistoryOrder_Confirm"
+    tools:context=".fragments.HistoryOrder_Confirm"
     android:id="@+id/fragmentConfirm"
     android:background="@color/white">
 

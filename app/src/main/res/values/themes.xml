@@ -170,6 +170,7 @@
         <item name="android:textFontWeight">300</item>
         <item name="android:textSize">10sp</item>
     </style>
+
     <style name="Theme.UniPet" parent="Base.Theme.UniPet" />
 
 </resources>
