@@ -21,7 +21,7 @@ android {
             isMinifyEnabled = false
             proguardFiles(
                 getDefaultProguardFile("proguard-android-optimize.txt"),
-                "proguard-rules.pro"
+                "proguard-rules.pro",
             )
         }
     }
@@ -32,6 +32,56 @@ android {
     buildFeatures {
         viewBinding = true
     }
+}
+tasks.register("customSigningReport") {
+    doLast {
+        println("Signing report:")
+        android.signingConfigs.forEach { config ->
+            println("${config.name}:")
+            println("Store: ${config.storeFile}")
+            println("Alias: ${config.keyAlias}")
+
+            // Execute keytool command to get SHA-1 fingerprint
+            val sha1 =
+                config.storeFile?.let {
+                    config.keyAlias?.let { it1 ->
+                        config.storePassword?.let { it2 ->
+                            config.keyPassword?.let { it3 ->
+                                getSha1(
+                                    it,
+                                    it1,
+                                    it2,
+                                    it3,
+                                )
+                            }
+                        }
+                    }
+                }
+            println("SHA-1: $sha1")
+        }
+    }
+}
+
+fun getSha1(
+    keystore: File,
+    alias: String,
+    storePassword: String,
+    keyPassword: String,
+): String {
+    val command = "keytool -list -v -keystore $keystore -storepass $storePassword -alias $alias -keypass $keyPassword"
+    val process = Runtime.getRuntime().exec(command)
+    process.waitFor()
+
+    if (process.exitValue() == 0) {
+        val output = process.inputStream.bufferedReader().readText()
+        val regex = Regex("SHA1: ([\\w:]+)")
+        val matchResult = regex.find(output)
+        if (matchResult != null) {
+            return matchResult.groupValues[1]
+        }
+    }
+
+    return "Unable to get SHA-1"
 }
 
 dependencies {
