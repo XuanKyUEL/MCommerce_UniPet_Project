@@ -3,11 +3,11 @@
 
     <item
         android:id="@+id/home_icon_bottom"
-        android:icon="@drawable/home_ic_bottom_nav"
+        android:icon="@drawable/icon_bottom_navigation_selector_home"
         android:title="@string/home"/>
     <item
         android:id="@+id/product_icon_bottom"
-        android:icon="@drawable/product_icon_bottom_nav"
+        android:icon="@drawable/icon_bottom_navigation_selector_product"
         android:title="@string/product_nav"/>
     <item
         android:id="@+id/fab_nav_shop"
@@ -15,11 +15,11 @@
         android:enabled="false"/>
     <item
         android:id="@+id/fav_icon_bottom"
-        android:icon="@drawable/love_ic_bottom_nav"
+        android:icon="@drawable/icon_bottom_navigation_selector_fav"
         android:title="@string/love"/>
     <item
         android:id="@+id/account_icon_bottom"
-        android:icon="@drawable/account_ic_bottom_nav"
+        android:icon="@drawable/icon_bottom_navigation_selector_account"
         android:title="@string/profile_nav"/>
 
 </menu>
