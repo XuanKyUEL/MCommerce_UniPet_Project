@@ -1,7 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <selector xmlns:android="http://schemas.android.com/apk/res/android">
-    <item android:color="@color/brandPrimary" android:state_focused="true" />
-    <item android:color="@color/brandPrimary" android:state_hovered="true" />
-    <item android:color="@color/brandPrimary" android:state_enabled="true" />
-    <item android:color="@color/brandPrimary"/> <!-- default state -->
+    <item android:color="@color/brandPrimary" android:state_checked="true"/> <!-- checked state -->
+    <item android:color="@color/darkSecondary"/> <!-- default state -->
 </selector>

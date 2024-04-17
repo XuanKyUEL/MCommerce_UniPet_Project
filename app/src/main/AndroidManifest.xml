@@ -53,7 +53,7 @@
             android:name=".activities.BlogDetails"
             android:exported="false" />
         <activity
-            android:name=".activities.Profile"
+            android:name=".fragments.Profile"
             android:exported="false" />
         <activity
             android:name=".activities.Account"
