@@ -16,12 +16,15 @@ import android.text.style.ForegroundColorSpan;
 import android.text.style.ImageSpan;
 import android.text.style.UnderlineSpan;
 import android.util.Patterns;
+import android.view.View;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.widget.AppCompatEditText;
 import androidx.core.content.ContextCompat;
 
+import com.airbnb.lottie.LottieAnimationView;
 import com.google.android.material.internal.TextWatcherAdapter;
 import com.google.android.material.textfield.TextInputLayout;
 import com.google.firebase.auth.FirebaseAuth;
@@ -41,6 +44,10 @@ public class SignUp extends BaseActivity {
     AppCompatEditText edtEmail, edtPassword, edtConfirmPassword;
 
     TextInputLayout tilEmail, tilPassword, tilConfirmPassword;
+
+    RelativeLayout rlSignUp;
+    TextView tvSignUnCta;
+    LottieAnimationView lottieAnimationView;
 
     boolean isTermsAndConditionsChecked = false;
 
@@ -127,6 +134,10 @@ public class SignUp extends BaseActivity {
         tilEmail = binding.tilEmailSignUp;
         tilPassword = binding.tilPasswordSignUp;
         tilConfirmPassword = binding.tilRePwdSignup;
+
+        rlSignUp = binding.rlSignUpCta;
+        tvSignUnCta = binding.tvSignUpCta;
+        lottieAnimationView = binding.lottieLoadingSignUp;
     }
 
 
@@ -135,7 +146,7 @@ public class SignUp extends BaseActivity {
             finish();
         });
 
-        binding.btnSignUp.setOnClickListener(v -> {
+        rlSignUp.setOnClickListener(v -> {
             if (isSignUpValid()) {
                 String email = edtEmail.getText().toString().trim();
                 String password = edtPassword.getText().toString().trim();
@@ -216,6 +227,7 @@ public class SignUp extends BaseActivity {
 
 
     private void signUpUser(String email, String password) {
+        loadingAnimation();
         FirebaseAuth.getInstance().createUserWithEmailAndPassword(email, password)
                 .addOnCompleteListener(task -> {
                     if (task.isSuccessful()) {
@@ -224,17 +236,35 @@ public class SignUp extends BaseActivity {
                     } else {
                         signUpDialog("Đăng ký thất bại", "Đăng ký tài khoản không thành công", "", "Đóng");
                     }
+                    resetAnimation();
                 });
+    }
+
+    private void resetAnimation() {
+        rlSignUp.setClickable(true);
+        tvSignUnCta.setVisibility(View.VISIBLE);
+        lottieAnimationView.setVisibility(View.GONE);
+        lottieAnimationView.cancelAnimation();
+    }
+
+    private void loadingAnimation() {
+        rlSignUp.setClickable(false);
+        tvSignUnCta.setVisibility(View.GONE);
+        lottieAnimationView.setVisibility(View.VISIBLE);
+        lottieAnimationView.playAnimation();
     }
 
     private void signUpDialog(String title, String message, String positiveText, String negativeText) {
         messageDialogAdapter = new MessageDialogAdapter(this);
         messageDialog = new MessageDialog(title, message, positiveText, negativeText);
         messageDialog.setCancelable(true);
-        messageDialog.setNegativeClickListener(v1 -> {
-            messageDialogAdapter.dismissDialog();
-        });
-        messageDialog.hasNegativeBtn = !positiveText.isEmpty();
+        if (negativeText.isEmpty()) {
+            messageDialog.hasNegativeBtn = false;
+        } else {
+            messageDialog.setNegativeClickListener(v1 -> {
+                messageDialogAdapter.dismissDialog();
+            });
+        }
         if (positiveText.isEmpty()) {
             messageDialog.hasPositiveBtn = false;
         } else {

@@ -3,13 +3,20 @@ package com.unipet7.mcommerce.activities;
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.os.Handler;
+import android.text.Editable;
 import android.text.SpannableString;
 import android.text.Spanned;
+import android.text.TextWatcher;
 import android.text.style.ImageSpan;
 import android.util.Patterns;
+import android.view.View;
+import android.widget.RelativeLayout;
+import android.widget.TextView;
 
 import androidx.appcompat.widget.AppCompatEditText;
 
+import com.airbnb.lottie.LottieAnimationView;
 import com.google.android.material.textfield.TextInputLayout;
 import com.google.firebase.auth.FirebaseAuth;
 import com.unipet7.mcommerce.R;
@@ -19,8 +26,15 @@ public class SignIn extends BaseActivity {
 
     ActivitySignInBinding binding;
 
+    public static final int TIMER = 2000;
+
     AppCompatEditText edtEmail, edtPassword;
     TextInputLayout tilEmail, tilPassword;
+
+    RelativeLayout rlSignInCta;
+    TextView tvSignUpCta, tvSignInCta;
+
+    LottieAnimationView lottieLoadingSignIn;
 
     public static final String SHARED_PREFS = "signUpInfo";
     public static final String EMAIL_KEY = "email";
@@ -31,8 +45,6 @@ public class SignIn extends BaseActivity {
         super.onCreate(savedInstanceState);
         binding = ActivitySignInBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
-        addEvents();
-
         // Lấy dữ liệu từ Intent khi hoạt động bắt đầu
         mapping();
         resetErrorUI();
@@ -46,6 +58,45 @@ public class SignIn extends BaseActivity {
     }
 
     private void resetErrorUI() {
+        edtEmail.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                if (s.length() > 0) {
+                    tilEmail.setEndIconMode(TextInputLayout.END_ICON_CLEAR_TEXT);
+                    tilEmail.setEndIconOnClickListener(v -> edtEmail.setText(""));
+                } else {
+                    tilEmail.setEndIconMode(TextInputLayout.END_ICON_NONE);
+                }
+                tilEmail.setError(null);
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+            }
+        });
+
+        edtPassword.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                tilPassword.setError(null);
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+            }
+        });
     }
 
     private void mapping() {
@@ -53,14 +104,19 @@ public class SignIn extends BaseActivity {
         edtPassword = binding.edtPasswordSignIn;
         tilEmail = binding.tilEmailSignIn;
         tilPassword = binding.tilPasswordSignIn;
+
+        rlSignInCta = binding.rlSignInCta;
+        tvSignUpCta = binding.tvSignUpCta;
+        tvSignInCta = binding.tvSignInCta;
+        lottieLoadingSignIn = binding.lottieLoadingSignIn;
     }
 
     private void addEvents() {
-        binding.tvSignUpCta.setOnClickListener(v -> {
+        tvSignUpCta.setOnClickListener(v -> {
             Intent intent = new Intent(this, SignUp.class);
             startActivity(intent);
         });
-        binding.btnSignIn.setOnClickListener(v -> {
+        rlSignInCta.setOnClickListener(v -> {
             if (isSignInValid()) {
                 String email = edtEmail.getText().toString().trim();
                 String password = edtPassword.getText().toString().trim();
@@ -113,6 +169,7 @@ public class SignIn extends BaseActivity {
     }
 
     private void signInUser(String email, String password) {
+        loadSignInAnimation();
         FirebaseAuth.getInstance().signInWithEmailAndPassword(email, password)
                 .addOnCompleteListener(task -> {
                     if (task.isSuccessful()) {
@@ -123,7 +180,20 @@ public class SignIn extends BaseActivity {
                         tilEmail.setErrorIconDrawable(null);
                         setErrorWithIcon(tilEmail, "Email hoặc mật khẩu không đúng", R.drawable.error_input_icon);
                         edtEmail.requestFocus();
+                        resetButtonUI();
                     }
                 });
+    }
+
+    private void loadSignInAnimation() {
+        lottieLoadingSignIn.setVisibility(View.VISIBLE);
+        lottieLoadingSignIn.playAnimation();
+        tvSignInCta.setVisibility(View.GONE);
+    }
+
+    private void resetButtonUI() {
+        binding.lottieLoadingSignIn.cancelAnimation();
+        binding.lottieLoadingSignIn.setVisibility(View.GONE);
+        binding.tvSignInCta.setVisibility(View.VISIBLE);
     }
 }
