@@ -25,9 +25,6 @@
             android:name=".activities.BlogDetails"
             android:exported="false" />
         <activity
-            android:name=".activities.Profile"
-            android:exported="false" />
-        <activity
             android:name=".activities.Account"
             android:exported="false" />
         <activity
@@ -51,6 +48,21 @@
         <activity
             android:name=".fragments.Home"
             android:exported="false" />
+         <activity
+            android:name=".activities.Blog"
+            android:exported="false" />
+        <activity
+            android:name=".activities.BlogDetails"
+            android:exported="false" />
+        <activity
+            android:name=".fragments.Profile"
+            android:exported="false" />
+        <activity
+            android:name=".activities.Account"
+            android:exported="false" />
+        <activity
+            android:name=".activities.MainActivity"
+            android:exported="false" />
         <activity
             android:name=".activities.BaseActivity"
             android:exported="false" />
@@ -64,7 +76,10 @@
             android:name=".activities.SignIn"
             android:exported="false" />
         <activity
-            android:name=".activities.SearchProductList"
+            android:name=".activities.PaymentMethod"
+            android:exported="false" />
+        <activity
+            android:name=".activities.SplashScreen"
             android:exported="true"
             android:theme="@style/Theme.UniPet.SplashScreen">
             <intent-filter>
@@ -74,7 +89,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".activities.SplashScreen"
+            android:name=".activities.SearchProductList"
             android:exported="false" />
         <activity
             android:name=".activities.HistoryOrder"
@@ -87,9 +102,6 @@
             <!-- <category android:name="android.intent.category.LAUNCHER" /> -->
             <!-- </intent-filter> -->
         </activity>
-        <activity
-            android:name=".activities.MainActivity"
-            android:exported="false" />
     </application>
 
 </manifest>

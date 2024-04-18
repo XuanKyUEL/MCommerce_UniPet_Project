@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "777978951811",
+    "project_id": "unipet-e9ecd",
+    "storage_bucket": "unipet-e9ecd.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:777978951811:android:70ec53e758617f5c6043b6",
+        "android_client_info": {
+          "package_name": "com.unipet7.mcommerce"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAT0TiWQLso1mqGMV-jE8-MWXwxU7Ivjzo"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

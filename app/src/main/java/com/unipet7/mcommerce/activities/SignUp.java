@@ -7,17 +7,23 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.text.Editable;
 import android.text.SpannableString;
 import android.text.Spanned;
+import android.text.TextWatcher;
 import android.text.style.ForegroundColorSpan;
 import android.text.style.UnderlineSpan;
+import android.util.Patterns;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.widget.AppCompatEditText;
 import androidx.core.content.ContextCompat;
 
+import com.google.android.material.internal.TextWatcherAdapter;
 import com.google.android.material.textfield.TextInputLayout;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.unipet7.mcommerce.R;
 import com.unipet7.mcommerce.adapters.MessageDialogAdapter;
 import com.unipet7.mcommerce.databinding.ActivitySignUpBinding;
@@ -47,9 +53,60 @@ public class SignUp extends BaseActivity {
         setContentView(binding.getRoot());
 
         configTermsAndConditions();
-        createDialog();
-        addEvents();
         mapping();
+        resetErrorUI();
+        addEvents();
+    }
+
+    private void resetErrorUI() {
+        edtEmail.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+                // do nothing
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                tilEmail.setError(null);
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                // do nothing
+            }
+        });
+        edtPassword.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                tilPassword.setError(null);
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+            }
+        });
+        edtConfirmPassword.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                tilConfirmPassword.setError(null);
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+            }
+        });
     }
 
     private void mapping() {
@@ -62,8 +119,6 @@ public class SignUp extends BaseActivity {
         tilConfirmPassword = binding.tilRePwdSignup;
     }
 
-    private void createDialog() {
-    }
 
     private void addEvents() {
         binding.tvSignInCta.setOnClickListener(v -> {
@@ -71,30 +126,90 @@ public class SignUp extends BaseActivity {
         });
 
         binding.btnSignUp.setOnClickListener(v -> {
-            if(edtEmail.getText().toString().isEmpty()) {
-                tilEmail.setError("Email không được để trống");
-            } else if (edtPassword.getText().toString().isEmpty()) {
-                tilPassword.setError("Mật khẩu không được để trống");
-            } else if (edtConfirmPassword.getText().toString().isEmpty()) {
-                tilConfirmPassword.setError("Mật khẩu xác nhận không được để trống");
-            } else if (edtEmail.getText().toString().isEmpty() && edtPassword.getText().toString().isEmpty() && edtConfirmPassword.getText().toString().isEmpty()) {
-                Toast.makeText(this, "Vui lòng điền đầy đủ thông tin đăng ký", Toast.LENGTH_SHORT).show();
-            }else {
-                messageDialogAdapter = new MessageDialogAdapter(this);
-                messageDialog = new MessageDialog("Đăng Ký Thành Công", "Chúc mừng bạn đã đăng ký tài khoản thành công", "Đăng Nhập", "Đóng");
-                messageDialog.setCancelable(true);
-                messageDialog.setNegativeClickListener(v1 -> {
-                    messageDialogAdapter.dismissDialog();
-                });
-                messageDialog.setNegativeClickListener(v1 -> {
-                    messageDialogAdapter.dismissDialog();
-                });
-                messageDialog.setPositiveClickListener(v1 -> {
-                    navigateToSignIn();
-                });
-                messageDialogAdapter.showDialog(messageDialog);
+            if (isSignUpValid()) {
+                String email = edtEmail.getText().toString().trim();
+                String password = edtPassword.getText().toString().trim();
+                signUpUser(email, password);
             }
         });
+    }
+
+    private boolean isSignUpValid() {
+        if (edtEmail.getText().toString().isEmpty()) {
+            tilEmail.setError("Email không được để trống");
+            edtEmail.requestFocus();
+            return false;
+        } else if (!Patterns.EMAIL_ADDRESS.matcher(edtEmail.getText().toString()).matches()) {
+            tilEmail.setError("Email không hợp lệ");
+            edtEmail.requestFocus();
+            return false;
+        } else {
+            tilEmail.setError(null);
+        }
+
+        if (edtPassword.getText().toString().isEmpty()) {
+            tilPassword.setError("Mật khẩu không được để trống");
+            edtPassword.requestFocus();
+            return false;
+        } else if (edtPassword.getText().toString().length() < 8) {
+            tilPassword.setError("Mật khẩu phải có ít nhất 8 ký tự");
+            edtPassword.requestFocus();
+            return false;
+        } else {
+            tilPassword.setError(null);
+        }
+
+        if (edtConfirmPassword.getText().toString().isEmpty()) {
+            tilConfirmPassword.setError("Vui lòng xác nhận mật khẩu");
+            edtConfirmPassword.requestFocus();
+            return false;
+        } else if (!edtPassword.getText().toString().equals(edtConfirmPassword.getText().toString())) {
+            tilConfirmPassword.setError("Mật khẩu không khớp");
+            edtConfirmPassword.requestFocus();
+            return false;
+        } else {
+            tilConfirmPassword.setError(null);
+        }
+
+        if (binding.rbTerms.isChecked()) {
+            isTermsAndConditionsChecked = true;
+        } else {
+            Toast.makeText(this, "Vui lòng đồng ý với Điều Khoản và Dịch Vụ", Toast.LENGTH_SHORT).show();
+            return false;
+        }
+
+        return true;
+    }
+
+
+    private void signUpUser(String email, String password) {
+        FirebaseAuth.getInstance().createUserWithEmailAndPassword(email, password)
+                .addOnCompleteListener(task -> {
+                    if (task.isSuccessful()) {
+                        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+                        signUpDialog("Đăng ký thành công", "Chúc mừng bạn đã đăng ký tài khoản thành công", "Đăng nhập ngay", "Đóng");
+                    } else {
+                        signUpDialog("Đăng ký thất bại", "Đăng ký tài khoản không thành công", "", "Đóng");
+                    }
+                });
+    }
+
+    private void signUpDialog(String title, String message, String positiveText, String negativeText) {
+        messageDialogAdapter = new MessageDialogAdapter(this);
+        messageDialog = new MessageDialog(title, message, positiveText, negativeText);
+        messageDialog.setCancelable(true);
+        messageDialog.setNegativeClickListener(v1 -> {
+            messageDialogAdapter.dismissDialog();
+        });
+        messageDialog.hasNegativeBtn = !positiveText.isEmpty();
+        if (positiveText.isEmpty()) {
+            messageDialog.hasPositiveBtn = false;
+        } else {
+            messageDialog.setPositiveClickListener(v1 -> {
+                navigateToSignIn();
+            });
+        }
+        messageDialogAdapter.showDialog(messageDialog);
     }
 
     private void navigateToSignIn() {
