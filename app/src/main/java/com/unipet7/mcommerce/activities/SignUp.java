@@ -152,16 +152,8 @@ public class SignUp extends BaseActivity {
             finish();
         });
 
-        binding.tvTerms.setOnClickListener(v -> {
-            RadioButton radioButton = (RadioButton) v;
-
-            if (radioButton.isChecked()) {
-                radioButton.setChecked(false);
-                isTermsAndConditionsChecked = false;
-            } else {
-                radioButton.setChecked(true);
-                isTermsAndConditionsChecked = true;
-            }
+        binding.rbTerms.setOnClickListener(v -> {
+            isTermsAndConditionsChecked = ((RadioButton) v).isChecked();
         });
 
         binding.ibBackSignup.setOnClickListener(v -> {
@@ -182,23 +174,6 @@ public class SignUp extends BaseActivity {
         });
     }
 
-    private void setErrorWithIcon(TextInputLayout textInputLayout, String errorMessage, int errorIconResId) {
-        // Tạo một SpannableString với một ký tự đặc biệt ở đầu
-        SpannableString spannableString = new SpannableString("  " + errorMessage);
-
-        // Tạo một Drawable từ icon lỗi
-        Drawable errorIcon = getResources().getDrawable(errorIconResId);
-        errorIcon.setBounds(0, 0, errorIcon.getIntrinsicWidth(), errorIcon.getIntrinsicHeight());
-
-        // Tạo một ImageSpan từ Drawable
-        ImageSpan imageSpan = new ImageSpan(errorIcon, ImageSpan.ALIGN_BOTTOM);
-
-        // Thêm ImageSpan vào đầu SpannableString
-        spannableString.setSpan(imageSpan, 0, 1, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
-
-        // Đặt SpannableString làm thông báo lỗi cho TextInputLayout
-        textInputLayout.setError(spannableString);
-    }
     private boolean isSignUpValid() {
         if (edtEmail.getText().toString().isEmpty()) {
             tilEmail.setErrorIconDrawable(null);
@@ -305,13 +280,11 @@ public class SignUp extends BaseActivity {
         SharedPreferences sharedPreferences = getSharedPreferences(SHARED_PREFS, MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPreferences.edit();
         editor.putString(EMAIL_KEY, edtEmail.getText().toString());
-        editor.putString(PASSWORD_KEY, edtPassword.getText().toString());
         editor.apply();
 
         // Chuyển người dùng sang hoạt động SignIn và truyền dữ liệu qua Intent
         Intent intent = new Intent(this, SignIn.class);
         intent.putExtra(EMAIL_KEY, edtEmail.getText().toString());
-        intent.putExtra(PASSWORD_KEY, edtPassword.getText().toString());
         startActivity(intent);
         finish();
     }
