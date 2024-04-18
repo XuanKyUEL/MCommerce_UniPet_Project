@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
 
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.text.Spannable;
@@ -17,8 +18,12 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.google.firebase.auth.FirebaseAuth;
 import com.unipet7.mcommerce.R;
+import com.unipet7.mcommerce.activities.SignIn;
 import com.unipet7.mcommerce.databinding.FragmentProfileBinding;
+
+import java.util.Objects;
 
 public class Profile extends Fragment {
     FragmentProfileBinding binding;
@@ -33,11 +38,11 @@ public class Profile extends Fragment {
     }
 
     private void addEvents() {
-        binding.lnSignout.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                // TODO:Signout user
-            }
+        binding.lnSignout.setOnClickListener(v -> {
+            FirebaseAuth.getInstance().signOut();
+            Intent intent = new Intent(getActivity(), SignIn.class);
+            startActivity(intent);
+            requireActivity().finish();
         });
     }
 
