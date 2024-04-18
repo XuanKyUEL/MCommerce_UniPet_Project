@@ -44,16 +44,9 @@ public class SearchProductList extends AppCompatActivity {
     }
     private void initData() {
         products = new ArrayList<>();
-        products.add(new Product(R.drawable.pate1, "Thức ăn mèo gâu gâu", 20000,3,3));
-        products.add(new Product(R.drawable.pate1, "Thức ăn mèo gâu gâu", 20000,3,3));
-        products.add(new Product(R.drawable.pate1, "Thức ăn mèo gâu gâu", 20000,3,3));
-        products.add(new Product(R.drawable.pate1, "Thức ăn mèo gâu gâu", 20000,3,3));
-        products.add(new Product(R.drawable.pate1, "Thức ăn mèo gâu gâu", 20000,3,3));
-        products.add(new Product(R.drawable.pate1, "Thức ăn mèo gâu gâu", 20000,3,3));
-        products.add(new Product(R.drawable.pate1, "Thức ăn mèo gâu gâu", 20000,3,3));
-
-
-
+        products.add(new Product(R.drawable.pate1, "Thức ăn mèo gâu gâu", 20000,3,3,32,20000));
+        products.add(new Product(R.drawable.pate1, "Thức ăn mèo gâu gâu", 20000,3,3, 32, 20000));
+        products.add(new Product(R.drawable.pate1, "Thức ăn mèo gâu gâu", 20000,3,3,20,30000));
 
         adapter = new ProductAdapter(products);
     }

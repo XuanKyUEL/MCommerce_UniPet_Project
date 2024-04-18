@@ -311,6 +311,7 @@
 
 
             <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/lvlHomeSale"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent" />
 
@@ -347,6 +348,7 @@
             </androidx.constraintlayout.widget.ConstraintLayout>
 
             <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/lvlHomeProduct1"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:paddingBottom="12dp" />
@@ -438,6 +440,7 @@
             </androidx.constraintlayout.widget.ConstraintLayout>
 
             <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/lvlHomeProduct2"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent" />
 
@@ -467,6 +470,7 @@
             </androidx.constraintlayout.widget.ConstraintLayout>
 
             <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/homeblog"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent" />
         </LinearLayout>

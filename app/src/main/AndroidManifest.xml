@@ -48,17 +48,9 @@
         <activity
             android:name=".fragments.Home"
             android:exported="false" />
-         <activity
-            android:name=".activities.Blog"
-            android:exported="false" />
-        <activity
-            android:name=".activities.BlogDetails"
-            android:exported="false" />
+
         <activity
             android:name=".fragments.Profile"
-            android:exported="false" />
-        <activity
-            android:name=".activities.Account"
             android:exported="false" />
         <activity
             android:name=".activities.MainActivity"
@@ -90,17 +82,11 @@
         </activity>
         <activity
             android:name=".activities.SearchProductList"
-            android:exported="false" />
+            android:exported="false">
+        </activity>
         <activity
             android:name=".activities.HistoryOrder"
             android:exported="false">
-
-            <!-- <intent-filter> -->
-            <!-- <action android:name="android.intent.action.MAIN" /> -->
-
-
-            <!-- <category android:name="android.intent.category.LAUNCHER" /> -->
-            <!-- </intent-filter> -->
         </activity>
     </application>
 

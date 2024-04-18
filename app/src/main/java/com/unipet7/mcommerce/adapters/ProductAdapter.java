@@ -16,6 +16,7 @@ import com.unipet7.mcommerce.models.Product;
 import java.util.List;
 
 public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ViewHolder> {
+
     List<Product> productList;
 
     public ProductAdapter(List<Product> productList) {
@@ -38,6 +39,8 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ViewHold
         holder.productprice.setText(String.valueOf(product.getProductprice()));
         holder.productratenum.setText(String.valueOf(product.getProductratenum()));
         holder.producttotalnum.setText(String.valueOf(product.getProducttotalnum()));
+        holder.presaleprice.setText(String.valueOf(product.getPresaleprice()));
+        holder.salepercent.setText(String.valueOf(product.getSalepercent()));
         holder.imvThumb.setImageResource(product.getImvThumb());
 
     }
@@ -49,7 +52,7 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ViewHold
 
     static class ViewHolder extends RecyclerView.ViewHolder {
 
-        TextView productname ,productprice, productratenum, producttotalnum;;
+        TextView productname ,productprice, productratenum, producttotalnum, presaleprice, salepercent;
         ImageView imvThumb;
 
         public ViewHolder(@NonNull View itemView) {
@@ -58,7 +61,10 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ViewHold
             productprice = itemView.findViewById(R.id.textView2);
             producttotalnum = itemView.findViewById(R.id.txtNumberOfRating);
             productratenum = itemView.findViewById(R.id.txtRating);
-            imvThumb = itemView.findViewById(R.id.imageView3);
+            imvThumb = itemView.findViewById(R.id.imageproduct);
+            salepercent = itemView.findViewById(R.id.textsalepercent);
+            presaleprice = itemView.findViewById(R.id.textsale);
+
         }
     }
 }
