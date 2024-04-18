@@ -4,7 +4,6 @@ import android.content.Intent;
 import android.content.res.ColorStateList;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
-import android.os.Handler;
 import android.text.Editable;
 import android.text.SpannableString;
 import android.text.Spanned;
@@ -52,6 +51,13 @@ public class SignIn extends BaseActivity {
         mapping();
         resetErrorUI();
         addEvents();
+
+    }
+
+
+    @Override
+    protected void onResume() {
+        super.onResume();
         Intent intent = getIntent();
         if (intent != null) {
             String email = intent.getStringExtra(EMAIL_KEY);
@@ -134,24 +140,12 @@ public class SignIn extends BaseActivity {
                 }
             }
         });
+        binding.tvForgotPassword.setOnClickListener(v -> {
+            Intent intent = new Intent(this, ForgetPassword.class);
+            startActivity(intent);
+        });
     }
 
-    private void setErrorWithIcon(TextInputLayout textInputLayout, String error, int errorIconResId) {
-        SpannableString spannableString = new SpannableString("  " + error);
-
-        // Tạo một Drawable từ icon lỗi
-        Drawable errorIcon = getResources().getDrawable(errorIconResId);
-        errorIcon.setBounds(0, 0, errorIcon.getIntrinsicWidth(), errorIcon.getIntrinsicHeight());
-
-        // Tạo một ImageSpan từ Drawable
-        ImageSpan imageSpan = new ImageSpan(errorIcon, ImageSpan.ALIGN_BOTTOM);
-
-        // Thêm ImageSpan vào đầu SpannableString
-        spannableString.setSpan(imageSpan, 0, 1, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
-
-        // Đặt SpannableString làm thông báo lỗi cho TextInputLayout
-        textInputLayout.setError(spannableString);
-    }
 
     private boolean isSignInValid() {
         if (edtEmail.getText().toString().trim().isEmpty()) {
