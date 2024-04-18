@@ -52,7 +52,8 @@
                     android:layout_gravity="center"
                     app:cardCornerRadius="8dp"
                     app:cardElevation="8dp"
-                    android:layout_marginTop="10dp">
+                    android:layout_marginTop="10dp"
+                    android:background="@color/white">
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -87,15 +88,17 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:text="36 Nguyễn Tri Phương"
-                            style="@style/BODY_LARGE_REGULAR_16"
+                            android:textSize="14dp"
+                            android:fontFamily="@font/svn_gilroy_regular"
                             android:textColor="@color/black"
                             android:layout_marginBottom="5dp"/>
                         <TextView
                             android:id="@+id/txtOtherAddressInfo"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            style="@style/BODY_LARGE_REGULAR_16"
                             android:text="Đông Hòa, Dĩ An, Bình Dương"
+                            android:textSize="14dp"
+                            android:fontFamily="@font/svn_gilroy_regular"
                             android:textColor="@color/black" />
                     </LinearLayout>
 
@@ -123,18 +126,212 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal"
-                    android:layout_marginTop="10dp">
-                    <EditText
-                        android:layout_width="320dp"
-                        android:layout_height="39dp"
-                        android:fontFamily="@font/svn_gilroy_regular"
+                    android:layout_marginTop="10dp"
+                    android:padding="10dp">
+                    <FrameLayout
+                        android:layout_width="222dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="7">
+                        <EditText
+                            android:id="@+id/edtDiscountCode"
+                            android:layout_width="222dp"
+                            android:layout_height="35dp"
+                            android:fontFamily="@font/svn_gilroy_regular"
+                            android:textSize="12dp"
+                            android:text="Nhập mã khuyến mãi"
+                            android:textColor="#A2A2A2"
+                            android:background="@drawable/search_background"
+                            android:padding="10dp" />
+                        <ImageView
+                            android:id="@+id/btnShowDiscountCode"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:src="@drawable/ic_showdiscount_paymentmethoddetails"
+                            android:layout_gravity="end|center" />
+                    </FrameLayout>
+                    <Button
+                        android:layout_width="wrap_content"
+                        android:layout_height="35dp"
+                        android:layout_gravity="center_vertical"
+                        android:text="Áp dụng"
+                        android:textStyle="bold"
                         android:textSize="12dp"
-
-
-                        android:text="Nhập mã khuyến mãi"/>
-
-
+                        android:layout_marginStart="30dp"
+                        android:layout_weight="3"
+                        android:textColor="@color/white"
+                        android:background="@drawable/custom_button_paymenmethoddetails"/>
                 </LinearLayout>
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Phương thức thanh toán"
+                    android:textColor="@color/brandPrimary"
+                    style="@style/HEAD6_BOLD_16"
+                    android:layout_marginTop="10dp"/>
+                <androidx.cardview.widget.CardView
+                    android:layout_width="320dp"
+                    android:layout_height="108dp"
+                    android:layout_gravity="center"
+                    app:cardCornerRadius="8dp"
+                    app:cardElevation="8dp"
+                    android:layout_marginTop="10dp"
+                    android:background="@color/white">
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:padding="10dp"
+                        android:layout_gravity="center_vertical">
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal"
+                            android:layout_marginBottom="10dp">
+                            <TextView
+                                android:id="@+id/txtPaymentMethodName"
+                                style="@style/HEAD6_BOLD_16"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="8"
+                                android:text="Thanh toán khi nhận hàng"
+                                android:textColor="@color/black"/>
+
+                            <TextView
+                                android:id="@+id/txtChangePaymentMethod"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Thay đổi"
+                                style="@style/HEAD6_BOLD_16"
+                                android:textColor="@color/brandPrimary"/>
+
+                        </LinearLayout>
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="Thời gian nhận hàng dự kiến"
+                            android:textSize="14dp"
+                            android:fontFamily="@font/svn_gilroy_regular"
+                            android:textColor="@color/black"
+                            android:layout_marginBottom="5dp"/>
+                        <TextView
+                            android:id="@+id/txtEstimatedDeliveryDate"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:textSize="14dp"
+                            android:fontFamily="@font/svn_gilroy_regular"
+                            android:text="19/4-20/4"
+                            android:textColor="@color/black" />
+                    </LinearLayout>
+
+                </androidx.cardview.widget.CardView>
+                <androidx.cardview.widget.CardView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    app:cardCornerRadius="8dp">
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:layout_margin="10dp">
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Thông tin đơn hàng"
+                            android:textColor="@color/brandPrimary"
+                            style="@style/HEAD6_BOLD_16"/>
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="0.5dp"
+                            android:background="@color/brandPrimary"
+                            android:layout_marginTop="10dp"/>
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal"
+                            android:layout_marginTop="10dp">
+                            <TextView
+                                style="@style/HEAD6_BOLD_16"
+                                android:layout_width="20dp"
+                                android:layout_height="wrap_content"
+                                android:text="Tạm tính"
+                                android:textColor="@color/black"
+                                android:layout_weight="5"/>
+
+                            <TextView
+                                android:id="@+id/txtCost"
+                                style="@style/HEAD6_BOLD_16"
+                                android:layout_width="20dp"
+                                android:layout_height="wrap_content"
+                                android:text="300.000đ"
+                                android:textColor="@color/black"
+                                android:layout_weight="5"/>
+
+                        </LinearLayout>
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal"
+                            android:layout_marginTop="10dp">
+                            <TextView
+                                style="@style/HEAD6_BOLD_16"
+                                android:layout_width="20dp"
+                                android:layout_height="wrap_content"
+                                android:text="Phí vận chuyển"
+                                android:textColor="@color/black"
+                                android:layout_weight="5"/>
+
+                            <TextView
+                                android:id="@+id/txtDeliveryCost"
+                                style="@style/HEAD6_BOLD_16"
+                                android:layout_width="20dp"
+                                android:layout_height="wrap_content"
+                                android:text="25.000đ"
+                                android:textColor="@color/black"
+                                android:layout_weight="5"/>
+
+                        </LinearLayout>
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal"
+                            android:layout_marginTop="10dp">
+                            <TextView
+                                style="@style/HEAD6_BOLD_16"
+                                android:layout_width="20dp"
+                                android:layout_height="wrap_content"
+                                android:text="Tổng cộng"
+                                android:textColor="@color/black"
+                                android:layout_weight="5"/>
+
+                            <TextView
+                                android:id="@+id/txtTotalPayment"
+                                style="@style/HEAD6_BOLD_16"
+                                android:layout_width="20dp"
+                                android:layout_height="wrap_content"
+                                android:text="325.000đ"
+                                android:textColor="@color/brandPrimary"
+                                android:layout_weight="5"/>
+
+                        </LinearLayout>
+                        <Button
+                            android:id="@+id/btnPay"
+                            android:layout_width="300dp"
+                            android:layout_height="40dp"
+                            android:layout_gravity="center"
+                            android:text="Thanh toán"
+                            style="@style/HEAD6_BOLD_16"
+                            android:layout_marginTop="10dp"
+                            android:background="@drawable/button_custom"/>
+
+                    </LinearLayout>
+
+
+                </androidx.cardview.widget.CardView>
+
+
+
+
 
 
             </LinearLayout>
@@ -142,10 +339,6 @@
         </ScrollView>
 
     </com.google.android.material.appbar.AppBarLayout>
-
-
-
-
 
 
 
