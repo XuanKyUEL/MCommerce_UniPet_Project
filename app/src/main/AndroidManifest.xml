@@ -80,18 +80,12 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".activities.RateOrder"
-            android:exported="false" />
+            android:name=".activities.SearchProductList"
+            android:exported="false">
+        </activity>
         <activity
             android:name=".activities.HistoryOrder"
             android:exported="false">
-
-            <!-- <intent-filter> -->
-            <!-- <action android:name="android.intent.action.MAIN" /> -->
-
-
-            <!-- <category android:name="android.intent.category.LAUNCHER" /> -->
-            <!-- </intent-filter> -->
         </activity>
     </application>
 

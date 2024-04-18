@@ -3,6 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/white"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".fragments.fragment_cart">
     <!-- TODO: Update blank fragment layout -->
@@ -18,7 +19,7 @@
             style="@style/HEAD5_BOLD_18"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
-            android:background="#FDF6FE"
+            android:background="@color/white"
             android:gravity="center"
             app:popupTheme="@style/Widget.Material3.PopupMenu.Overflow">
         </androidx.appcompat.widget.Toolbar>

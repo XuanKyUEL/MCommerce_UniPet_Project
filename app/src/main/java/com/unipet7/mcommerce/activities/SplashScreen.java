@@ -32,13 +32,11 @@ public class SplashScreen extends AppCompatActivity {
             // user is signed in
             Intent intent = new Intent(this, MainActivity.class);
             startActivity(intent);
-            finish();
         } else {
             // user is not signed in
             Intent intent = new Intent(this, IntroActivity.class);
             startActivity(intent);
-            finish();
         }
-
+        finish();
     }
 }

@@ -12,13 +12,20 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.google.firebase.auth.FirebaseAuth;
 import com.unipet7.mcommerce.R;
 import com.unipet7.mcommerce.activities.MainActivity;
 import com.unipet7.mcommerce.activities.ProfileFunction;
 import com.unipet7.mcommerce.databinding.FragmentProfileBinding;
+import com.unipet7.mcommerce.models.MessageDialog;
+
+import java.util.Objects;
 
 public class Profile extends Fragment {
     FragmentProfileBinding binding;
+
+    MessageDialogAdapter messageDialogAdapter;
+    MessageDialog messageDialog;
 
     @Nullable
     @Override
@@ -100,12 +107,22 @@ public class Profile extends Fragment {
     }
 
     private void addEvents() {
-        binding.lnSignout.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                // TODO:Signout user
-            }
+        binding.lnSignout.setOnClickListener(v -> {
+            showConfirmSignOutDialog();
         });
+    }
+
+    private void showConfirmSignOutDialog() {
+        String title = getString(R.string.sign_out_dialog_title);
+        messageDialogAdapter = new MessageDialogAdapter(getActivity());
+        messageDialog = new MessageDialog(title, null, "Đăng Xuất", "Hủy");
+        messageDialog.setPositiveClickListener(v -> {
+            FirebaseAuth.getInstance().signOut();
+            Intent intent = new Intent(getActivity(), SignIn.class);
+            startActivity(intent);
+            requireActivity().finish();
+        });
+        messageDialogAdapter.showDialog(messageDialog);
     }
 
     @Override
