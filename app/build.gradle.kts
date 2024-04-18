@@ -1,5 +1,6 @@
 plugins {
     alias(libs.plugins.androidApplication)
+    id("com.google.gms.google-services")
 }
 
 android {
@@ -21,7 +22,7 @@ android {
             isMinifyEnabled = false
             proguardFiles(
                 getDefaultProguardFile("proguard-android-optimize.txt"),
-                "proguard-rules.pro"
+                "proguard-rules.pro",
             )
         }
     }
@@ -33,18 +34,68 @@ android {
         viewBinding = true
     }
 }
+tasks.register("customSigningReport") {
+    doLast {
+        println("Signing report:")
+        android.signingConfigs.forEach { config ->
+            println("${config.name}:")
+            println("Store: ${config.storeFile}")
+            println("Alias: ${config.keyAlias}")
+
+            // Execute keytool command to get SHA-1 fingerprint
+            val sha1 =
+                config.storeFile?.let {
+                    config.keyAlias?.let { it1 ->
+                        config.storePassword?.let { it2 ->
+                            config.keyPassword?.let { it3 ->
+                                getSha1(
+                                    it,
+                                    it1,
+                                    it2,
+                                    it3,
+                                )
+                            }
+                        }
+                    }
+                }
+            println("SHA-1: $sha1")
+        }
+    }
+}
+
+fun getSha1(
+    keystore: File,
+    alias: String,
+    storePassword: String,
+    keyPassword: String,
+): String {
+    val command = "keytool -list -v -keystore $keystore -storepass $storePassword -alias $alias -keypass $keyPassword"
+    val process = Runtime.getRuntime().exec(command)
+    process.waitFor()
+
+    if (process.exitValue() == 0) {
+        val output = process.inputStream.bufferedReader().readText()
+        val regex = Regex("SHA1: ([\\w:]+)")
+        val matchResult = regex.find(output)
+        if (matchResult != null) {
+            return matchResult.groupValues[1]
+        }
+    }
+
+    return "Unable to get SHA-1"
+}
 
 dependencies {
-    //CircleImageView
-    implementation ("de.hdodenhof:circleimageview:3.1.0")
-    //Import CardView
-    implementation ("androidx.cardview:cardview:1.0.0")
-    //Glide
-    implementation ("com.github.bumptech.glide:glide:4.12.0")
-    annotationProcessor ("com.github.bumptech.glide:compiler:4.12.0")
-    implementation ("jp.wasabeef:glide-transformations:4.3.0")
-    //Round imageview
-    implementation ("com.makeramen:roundedimageview:2.3.0")
+    // CircleImageView
+    implementation(libs.circleimageview)
+    // Import CardView
+    implementation(libs.cardview)
+    // Glide
+    implementation(libs.glide)
+    annotationProcessor(libs.compiler)
+    implementation(libs.glide.transformations)
+    // Round imageview
+    implementation(libs.roundedimageview)
 
     // splash screen library
     implementation(libs.core.splashscreen)
@@ -62,4 +113,7 @@ dependencies {
     testImplementation(libs.junit)
     androidTestImplementation(libs.ext.junit)
     androidTestImplementation(libs.espresso.core)
+    implementation(platform(libs.firebase.bom))
+    implementation(libs.firebase.analytics)
+    implementation(libs.firebase.auth)
 }
