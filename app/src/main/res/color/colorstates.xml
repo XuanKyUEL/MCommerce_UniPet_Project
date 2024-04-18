@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <selector xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:color="@color/brandPrimary" android:state_focused="true"/> <!-- focus state -->
     <item android:color="@color/brandPrimary" android:state_checked="true"/> <!-- checked state -->
     <item android:color="@color/darkSecondary"/> <!-- default state -->
 </selector>

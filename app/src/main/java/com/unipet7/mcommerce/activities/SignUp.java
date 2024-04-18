@@ -6,20 +6,28 @@ import static com.unipet7.mcommerce.activities.SignIn.PASSWORD_KEY;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.res.ColorStateList;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.SpannableString;
 import android.text.Spanned;
 import android.text.TextWatcher;
 import android.text.style.ForegroundColorSpan;
+import android.text.style.ImageSpan;
 import android.text.style.UnderlineSpan;
 import android.util.Patterns;
+import android.view.View;
+import android.view.inputmethod.InputMethodManager;
+import android.widget.RadioButton;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.widget.AppCompatEditText;
 import androidx.core.content.ContextCompat;
 
+import com.airbnb.lottie.LottieAnimationView;
 import com.google.android.material.internal.TextWatcherAdapter;
 import com.google.android.material.textfield.TextInputLayout;
 import com.google.firebase.auth.FirebaseAuth;
@@ -39,6 +47,10 @@ public class SignUp extends BaseActivity {
     AppCompatEditText edtEmail, edtPassword, edtConfirmPassword;
 
     TextInputLayout tilEmail, tilPassword, tilConfirmPassword;
+
+    RelativeLayout rlSignUp;
+    TextView tvSignUnCta;
+    LottieAnimationView lottieAnimationView;
 
     boolean isTermsAndConditionsChecked = false;
 
@@ -67,6 +79,17 @@ public class SignUp extends BaseActivity {
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
+                if(s.length() > 0) {
+                    tilEmail.setEndIconMode(TextInputLayout.END_ICON_CUSTOM);
+                    ColorStateList colorStateList = ColorStateList.valueOf(ContextCompat.getColor(SignUp.this, R.color.brandPrimary));
+                    tilEmail.setEndIconTintList(colorStateList);
+                    tilEmail.setEndIconDrawable(R.drawable.clear_input);
+                    tilEmail.setEndIconOnClickListener(v -> {
+                        edtEmail.setText("");
+                    });
+                } else {
+                    tilEmail.setEndIconMode(TextInputLayout.END_ICON_NONE);
+                }
                 tilEmail.setError(null);
             }
 
@@ -117,6 +140,10 @@ public class SignUp extends BaseActivity {
         tilEmail = binding.tilEmailSignUp;
         tilPassword = binding.tilPasswordSignUp;
         tilConfirmPassword = binding.tilRePwdSignup;
+
+        rlSignUp = binding.rlSignUpCta;
+        tvSignUnCta = binding.tvSignUpCta;
+        lottieAnimationView = binding.lottieLoadingSignUp;
     }
 
 
@@ -125,22 +152,62 @@ public class SignUp extends BaseActivity {
             finish();
         });
 
-        binding.btnSignUp.setOnClickListener(v -> {
+        binding.tvTerms.setOnClickListener(v -> {
+            RadioButton radioButton = (RadioButton) v;
+
+            if (radioButton.isChecked()) {
+                radioButton.setChecked(false);
+                isTermsAndConditionsChecked = false;
+            } else {
+                radioButton.setChecked(true);
+                isTermsAndConditionsChecked = true;
+            }
+        });
+
+        binding.ibBackSignup.setOnClickListener(v -> {
+            finish();
+        });
+
+        rlSignUp.setOnClickListener(v -> {
             if (isSignUpValid()) {
                 String email = edtEmail.getText().toString().trim();
                 String password = edtPassword.getText().toString().trim();
                 signUpUser(email, password);
+                // hide keyboard
+                InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+                if (imm != null && getCurrentFocus() != null) {
+                    imm.hideSoftInputFromWindow(v.getWindowToken(), 0);
+                }
             }
         });
     }
 
+    private void setErrorWithIcon(TextInputLayout textInputLayout, String errorMessage, int errorIconResId) {
+        // Tạo một SpannableString với một ký tự đặc biệt ở đầu
+        SpannableString spannableString = new SpannableString("  " + errorMessage);
+
+        // Tạo một Drawable từ icon lỗi
+        Drawable errorIcon = getResources().getDrawable(errorIconResId);
+        errorIcon.setBounds(0, 0, errorIcon.getIntrinsicWidth(), errorIcon.getIntrinsicHeight());
+
+        // Tạo một ImageSpan từ Drawable
+        ImageSpan imageSpan = new ImageSpan(errorIcon, ImageSpan.ALIGN_BOTTOM);
+
+        // Thêm ImageSpan vào đầu SpannableString
+        spannableString.setSpan(imageSpan, 0, 1, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+
+        // Đặt SpannableString làm thông báo lỗi cho TextInputLayout
+        textInputLayout.setError(spannableString);
+    }
     private boolean isSignUpValid() {
         if (edtEmail.getText().toString().isEmpty()) {
-            tilEmail.setError("Email không được để trống");
+            tilEmail.setErrorIconDrawable(null);
+            setErrorWithIcon(tilEmail, "Email không được để trống", R.drawable.error_input_icon);
             edtEmail.requestFocus();
             return false;
         } else if (!Patterns.EMAIL_ADDRESS.matcher(edtEmail.getText().toString()).matches()) {
-            tilEmail.setError("Email không hợp lệ");
+            tilEmail.setErrorIconDrawable(null);
+            setErrorWithIcon(tilEmail, "Email không hợp lệ", R.drawable.error_input_icon);
             edtEmail.requestFocus();
             return false;
         } else {
@@ -148,11 +215,13 @@ public class SignUp extends BaseActivity {
         }
 
         if (edtPassword.getText().toString().isEmpty()) {
-            tilPassword.setError("Mật khẩu không được để trống");
+            tilPassword.setErrorIconDrawable(null);
+            setErrorWithIcon(tilPassword, "Mật khẩu không được để trống", R.drawable.error_input_icon);
             edtPassword.requestFocus();
             return false;
         } else if (edtPassword.getText().toString().length() < 8) {
-            tilPassword.setError("Mật khẩu phải có ít nhất 8 ký tự");
+            tilPassword.setErrorIconDrawable(null);
+            setErrorWithIcon(tilPassword, "Mật khẩu phải có ít nhất 8 ký tự", R.drawable.error_input_icon);
             edtPassword.requestFocus();
             return false;
         } else {
@@ -160,20 +229,20 @@ public class SignUp extends BaseActivity {
         }
 
         if (edtConfirmPassword.getText().toString().isEmpty()) {
-            tilConfirmPassword.setError("Vui lòng xác nhận mật khẩu");
+            tilConfirmPassword.setErrorIconDrawable(null);
+            setErrorWithIcon(tilConfirmPassword, "Nhập lại mật khẩu không được để trống", R.drawable.error_input_icon);
             edtConfirmPassword.requestFocus();
             return false;
         } else if (!edtPassword.getText().toString().equals(edtConfirmPassword.getText().toString())) {
-            tilConfirmPassword.setError("Mật khẩu không khớp");
+            tilConfirmPassword.setErrorIconDrawable(null);
+            setErrorWithIcon(tilConfirmPassword, "Mật khẩu không khớp", R.drawable.error_input_icon);
             edtConfirmPassword.requestFocus();
             return false;
         } else {
             tilConfirmPassword.setError(null);
         }
 
-        if (binding.rbTerms.isChecked()) {
-            isTermsAndConditionsChecked = true;
-        } else {
+        if (!isTermsAndConditionsChecked) {
             Toast.makeText(this, "Vui lòng đồng ý với Điều Khoản và Dịch Vụ", Toast.LENGTH_SHORT).show();
             return false;
         }
@@ -183,6 +252,7 @@ public class SignUp extends BaseActivity {
 
 
     private void signUpUser(String email, String password) {
+        loadingAnimation();
         FirebaseAuth.getInstance().createUserWithEmailAndPassword(email, password)
                 .addOnCompleteListener(task -> {
                     if (task.isSuccessful()) {
@@ -191,17 +261,35 @@ public class SignUp extends BaseActivity {
                     } else {
                         signUpDialog("Đăng ký thất bại", "Đăng ký tài khoản không thành công", "", "Đóng");
                     }
+                    resetAnimation();
                 });
+    }
+
+    private void resetAnimation() {
+        rlSignUp.setClickable(true);
+        tvSignUnCta.setVisibility(View.VISIBLE);
+        lottieAnimationView.setVisibility(View.GONE);
+        lottieAnimationView.cancelAnimation();
+    }
+
+    private void loadingAnimation() {
+        rlSignUp.setClickable(false);
+        tvSignUnCta.setVisibility(View.GONE);
+        lottieAnimationView.setVisibility(View.VISIBLE);
+        lottieAnimationView.playAnimation();
     }
 
     private void signUpDialog(String title, String message, String positiveText, String negativeText) {
         messageDialogAdapter = new MessageDialogAdapter(this);
         messageDialog = new MessageDialog(title, message, positiveText, negativeText);
         messageDialog.setCancelable(true);
-        messageDialog.setNegativeClickListener(v1 -> {
-            messageDialogAdapter.dismissDialog();
-        });
-        messageDialog.hasNegativeBtn = !positiveText.isEmpty();
+        if (negativeText.isEmpty()) {
+            messageDialog.hasNegativeBtn = false;
+        } else {
+            messageDialog.setNegativeClickListener(v1 -> {
+                messageDialogAdapter.dismissDialog();
+            });
+        }
         if (positiveText.isEmpty()) {
             messageDialog.hasPositiveBtn = false;
         } else {
