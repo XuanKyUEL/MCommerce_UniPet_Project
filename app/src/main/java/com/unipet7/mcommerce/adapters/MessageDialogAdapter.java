@@ -37,7 +37,11 @@ public class MessageDialogAdapter extends MessageDialog {
         Button btnOk = dialog.findViewById(R.id.btn_ok_dialog);
 
         tvTitle.setText(messageDialog.getTitle());
-        tvMessage.setText(messageDialog.getMessage());
+        if (messageDialog.getMessage() != null) {
+            tvMessage.setText(messageDialog.getMessage());
+        } else {
+            tvMessage.setVisibility(View.GONE);
+        }
 
         if (!messageDialog.isHasNegativeBtn()) {
             btnCancel.setVisibility(View.GONE);
