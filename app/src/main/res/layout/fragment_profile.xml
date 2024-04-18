@@ -85,21 +85,28 @@
                     android:layout_weight="8"
                     android:text="Nhân Đinh"
                     android:textColor="@color/black"/>
-
-                <ImageView
+                <LinearLayout
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_vertical"
-                    android:src="@drawable/ic_signout_profile" />
+                    android:layout_height="match_parent"
+                    android:orientation="horizontal"
+                    android:id="@+id/lnSignout">
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:src="@drawable/ic_signout_profile" />
 
-                <TextView
-                    style="@style/HEAD6_BOLD_16"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="10dp"
-                    android:layout_weight="2"
-                    android:text="Đăng xuất"
-                    android:textColor="@color/black"/>
+                    <TextView
+                        style="@style/HEAD6_BOLD_16"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="10dp"
+                        android:text="Đăng xuất"
+                        android:textColor="@color/black"/>
+
+                </LinearLayout>
+
+
             </LinearLayout>
 
             <LinearLayout

@@ -27,7 +27,18 @@ public class Profile extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         binding = FragmentProfileBinding.inflate(inflater, container, false);
+        addEvents();
         return binding.getRoot();
+
+    }
+
+    private void addEvents() {
+        binding.lnSignout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // TODO:Signout user
+            }
+        });
     }
 
     @Override
