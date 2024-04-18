@@ -5,14 +5,15 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".fragments.Home"
+    android:background="@color/white"
     android:paddingTop="20dp">
 
     <ScrollView
         android:id="@+id/scrollView3"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:layout_editor_absoluteX="20dp"
-        tools:layout_editor_absoluteY="20dp">
+        tools:layout_editor_absoluteX="0dp"
+        tools:layout_editor_absoluteY="63dp">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -317,8 +318,8 @@
                 android:id="@+id/imageView6"
                 android:layout_width="wrap_content"
                 android:layout_height="56dp"
-                android:src="@drawable/sieusale"
-                android:scaleType="centerCrop" />
+                android:scaleType="centerCrop"
+                android:src="@drawable/sieusale" />
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
@@ -348,7 +349,7 @@
             <androidx.recyclerview.widget.RecyclerView
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:paddingBottom="12dp"/>
+                android:paddingBottom="12dp" />
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -359,13 +360,13 @@
                 <androidx.cardview.widget.CardView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:outlineSpotShadowColor="@color/brandPrimary"
-                    app:cardCornerRadius="16dp"
-                    app:cardElevation="24dp"
-                    android:transformPivotY="6dp"
-                    android:transformPivotX="4dp"
+                    android:layout_marginEnd="10dp"
                     android:layout_marginBottom="20dp"
-                    android:layout_marginEnd="10dp">
+                    android:outlineSpotShadowColor="@color/brandPrimary"
+                    android:transformPivotX="4dp"
+                    android:transformPivotY="6dp"
+                    app:cardCornerRadius="16dp"
+                    app:cardElevation="24dp">
 
                     <ImageView
                         android:id="@+id/imgGroupBanner1"
@@ -373,16 +374,17 @@
                         android:layout_height="147.16dp"
                         android:src="@drawable/group_banner_1" />
                 </androidx.cardview.widget.CardView>
+
                 <androidx.cardview.widget.CardView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:outlineSpotShadowColor="@color/brandPrimary"
-                    app:cardCornerRadius="16dp"
-                    app:cardElevation="24dp"
-                    android:transformPivotY="6dp"
-                    android:transformPivotX="4dp"
+                    android:layout_marginEnd="10dp"
                     android:layout_marginBottom="20dp"
-                    android:layout_marginEnd="10dp">
+                    android:outlineSpotShadowColor="@color/brandPrimary"
+                    android:transformPivotX="4dp"
+                    android:transformPivotY="6dp"
+                    app:cardCornerRadius="16dp"
+                    app:cardElevation="24dp">
 
                     <ImageView
                         android:id="@+id/imgGroupBanner2"
@@ -390,16 +392,17 @@
                         android:layout_height="147.16dp"
                         android:src="@drawable/group_banner_2" />
                 </androidx.cardview.widget.CardView>
+
                 <androidx.cardview.widget.CardView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:outlineSpotShadowColor="@color/brandPrimary"
-                    app:cardCornerRadius="16dp"
-                    app:cardElevation="24dp"
-                    android:transformPivotY="6dp"
-                    android:transformPivotX="4dp"
+                    android:layout_marginEnd="10dp"
                     android:layout_marginBottom="20dp"
-                    android:layout_marginEnd="10dp">
+                    android:outlineSpotShadowColor="@color/brandPrimary"
+                    android:transformPivotX="4dp"
+                    android:transformPivotY="6dp"
+                    app:cardCornerRadius="16dp"
+                    app:cardElevation="24dp">
 
                     <ImageView
                         android:id="@+id/imgGroupBanner3"

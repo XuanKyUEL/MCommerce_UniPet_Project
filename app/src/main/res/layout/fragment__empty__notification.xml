@@ -6,6 +6,7 @@
     android:layout_height="match_parent"
     tools:context=".fragments.Fragment_Empty_Notification"
     android:paddingHorizontal="20dp"
+    android:background="@color/white"
     android:paddingVertical="20dp">
 
     <LinearLayout
