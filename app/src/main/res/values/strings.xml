@@ -37,4 +37,5 @@
     <string name="product_nav">Sản Phẩm</string>
     <string name="love">Yêu Thích</string>
     <string name="profile_nav">Tài Khoản</string>
+    <string name="detailorder">Thông tin đơn hàng</string>
 </resources>

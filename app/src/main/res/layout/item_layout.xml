@@ -88,11 +88,11 @@
 
         <Button
             android:id="@+id/btnAddCart"
+            style="@style/BODY_XSMALL_BOLD_10"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Thêm giỏ hàng"
-            style="@style/BODY_XSMALL_BOLD_10"
             android:layout_weight="8"
-            android:textColor="@color/white"/>
+            android:text="Thêm giỏ hàng"
+            android:textColor="@color/white" />
     </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

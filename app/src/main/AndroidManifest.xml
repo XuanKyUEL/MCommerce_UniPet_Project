@@ -13,6 +13,12 @@
         android:theme="@style/Theme.UniPet"
         tools:targetApi="31">
         <activity
+            android:name=".activities.DetailOrder"
+            android:exported="false" />
+        <activity
+            android:name=".activities.RateOrder"
+            android:exported="false" />
+        <activity
             android:name=".activities.Blog"
             android:exported="false" />
         <activity
@@ -38,15 +44,14 @@
             android:exported="false" />
         <activity
             android:name=".activities.SupportContact"
-            android:exported="false">
-        </activity>
+            android:exported="false"></activity>
         <activity
             android:name=".activities.IntroActivity"
             android:exported="false" />
         <activity
             android:name=".fragments.Home"
             android:exported="false" />
-         <activity
+        <activity
             android:name=".activities.BaseActivity"
             android:exported="false" />
         <activity
@@ -59,17 +64,17 @@
             android:name=".activities.SignIn"
             android:exported="false" />
         <activity
-            android:name=".activities.SplashScreen"
+            android:name=".activities.SearchProductList"
             android:exported="true"
             android:theme="@style/Theme.UniPet.SplashScreen">
-          <intent-filter>
+            <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-           </activity>
+        </activity>
         <activity
-            android:name=".activities.RateOrder"
+            android:name=".activities.SplashScreen"
             android:exported="false" />
         <activity
             android:name=".activities.HistoryOrder"

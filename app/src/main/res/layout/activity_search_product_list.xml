@@ -27,7 +27,6 @@
                 android:layout_height="40dp"
                 android:background="@drawable/search_background"
                 android:drawableStart="@drawable/search"
-                android:drawableEnd="@drawable/filter_search"
                 android:drawablePadding="8dp"
                 android:ems="10"
                 android:hint="Tìm kiếm"
@@ -138,7 +137,9 @@
             android:text="Kết quả tìm kiếm"/>
     </LinearLayout>
     <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/lvlProductList"
         android:padding="10dp"
+        android:layout_marginLeft="20dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"/>
 </LinearLayout>
