@@ -6,6 +6,7 @@ import static com.unipet7.mcommerce.activities.SignIn.PASSWORD_KEY;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.res.ColorStateList;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.text.Editable;
@@ -17,6 +18,8 @@ import android.text.style.ImageSpan;
 import android.text.style.UnderlineSpan;
 import android.util.Patterns;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
+import android.widget.RadioButton;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -77,7 +80,10 @@ public class SignUp extends BaseActivity {
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
                 if(s.length() > 0) {
-                    tilEmail.setEndIconMode(TextInputLayout.END_ICON_CLEAR_TEXT);
+                    tilEmail.setEndIconMode(TextInputLayout.END_ICON_CUSTOM);
+                    ColorStateList colorStateList = ColorStateList.valueOf(ContextCompat.getColor(SignUp.this, R.color.brandPrimary));
+                    tilEmail.setEndIconTintList(colorStateList);
+                    tilEmail.setEndIconDrawable(R.drawable.clear_input);
                     tilEmail.setEndIconOnClickListener(v -> {
                         edtEmail.setText("");
                     });
@@ -146,11 +152,32 @@ public class SignUp extends BaseActivity {
             finish();
         });
 
+        binding.tvTerms.setOnClickListener(v -> {
+            RadioButton radioButton = (RadioButton) v;
+
+            if (radioButton.isChecked()) {
+                radioButton.setChecked(false);
+                isTermsAndConditionsChecked = false;
+            } else {
+                radioButton.setChecked(true);
+                isTermsAndConditionsChecked = true;
+            }
+        });
+
+        binding.ibBackSignup.setOnClickListener(v -> {
+            finish();
+        });
+
         rlSignUp.setOnClickListener(v -> {
             if (isSignUpValid()) {
                 String email = edtEmail.getText().toString().trim();
                 String password = edtPassword.getText().toString().trim();
                 signUpUser(email, password);
+                // hide keyboard
+                InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+                if (imm != null && getCurrentFocus() != null) {
+                    imm.hideSoftInputFromWindow(v.getWindowToken(), 0);
+                }
             }
         });
     }
@@ -215,9 +242,7 @@ public class SignUp extends BaseActivity {
             tilConfirmPassword.setError(null);
         }
 
-        if (binding.rbTerms.isChecked()) {
-            isTermsAndConditionsChecked = true;
-        } else {
+        if (!isTermsAndConditionsChecked) {
             Toast.makeText(this, "Vui lòng đồng ý với Điều Khoản và Dịch Vụ", Toast.LENGTH_SHORT).show();
             return false;
         }
