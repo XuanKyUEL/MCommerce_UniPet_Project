@@ -1,46 +1,48 @@
-package com.unipet7.mcommerce.activities;
+package com.unipet7.mcommerce.fragments;
 
-import androidx.annotation.NonNull;
+import android.os.Bundle;
+
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.AppCompatEditText;
 import androidx.appcompat.widget.Toolbar;
+import androidx.fragment.app.Fragment;
 
-import android.graphics.Color;
-import android.os.Bundle;
-import android.text.Spannable;
-import android.text.SpannableString;
-import android.text.style.TextAppearanceSpan;
-import android.view.Gravity;
-import android.view.MenuItem;
-import android.widget.TextView;
-import android.widget.Toast;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
 
-import com.google.android.material.textfield.TextInputLayout;
 import com.unipet7.mcommerce.R;
+
 import com.unipet7.mcommerce.adapters.MessageDialogAdapter;
-import com.unipet7.mcommerce.databinding.ActivityProfileAddressAddBinding;
-import com.unipet7.mcommerce.databinding.ActivityProfileAddressBinding;
+import com.unipet7.mcommerce.databinding.FragmentAdressAddBinding;
 import com.unipet7.mcommerce.models.MessageDialog;
 
-public class ProfileAddress_Add extends AppCompatActivity {
-    ActivityProfileAddressAddBinding binding;
-    MessageDialogAdapter messageDialogAdapter;
+public class FragmentAdressAdd extends Fragment {
+    FragmentAdressAddBinding binding;
 
     MessageDialog messageDialog;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_profile_address);
-        binding = ActivityProfileAddressAddBinding.inflate(getLayoutInflater());
-        setContentView(binding.getRoot());
-        setActionBar(binding.toolbaradd);
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
+        // Inflate the layout for this fragment
+        binding= FragmentAdressAddBinding.inflate(inflater, container, false);
+        setActionBar(binding.toolbaraddressadd);
         addEvents();
-    }
+        addEvents1();
+        return binding.getRoot();
 
+    }
     private void addEvents() {
+        binding.toolbaraddressadd.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                requireActivity().getOnBackPressedDispatcher().onBackPressed();
+            }
+        });
+    }
+    private void addEvents1() {
         binding.btnDone.setOnClickListener(v -> {
             boolean hasError = false;
 
@@ -66,34 +68,26 @@ public class ProfileAddress_Add extends AppCompatActivity {
             if (hasError) {
                 // Có lỗi, không thực hiện các thành phần khác
             } else {
-                MessageDialogAdapter messageDialogAdapter = new MessageDialogAdapter(this);
+                MessageDialogAdapter messageDialogAdapter = new MessageDialogAdapter(requireContext());
                 messageDialog = new MessageDialog("Cập nhật thành công", "Bạn đã thêm địa chỉ mới thành công", "Quay lại", "Đóng");
                 messageDialog.setCancelable(true);
                 messageDialog.setNegativeClickListener(v1 -> {
                     messageDialogAdapter.dismissDialog();
                 });
                 messageDialog.setPositiveClickListener(v1 -> {
-                    finish();
+                    getActivity().finish();
                 });
                 messageDialogAdapter.showDialog(messageDialog);
             }
         });
     }
 
-    public void setActionBar(@Nullable Toolbar toolbar) {
-        setSupportActionBar(toolbar);
-        ActionBar actionBar = getSupportActionBar();
+        public void setActionBar(@Nullable Toolbar toolbar) {
+        ((AppCompatActivity) getActivity()).setSupportActionBar(toolbar);
+        ActionBar actionBar = ((AppCompatActivity) getActivity()).getSupportActionBar();
         assert actionBar != null;
         actionBar.setDisplayHomeAsUpEnabled(true);
-        // Set icon arrow
-        actionBar.setHomeAsUpIndicator(R.drawable.ic_back);
+        actionBar.setHomeAsUpIndicator(R.drawable.ic_back_profile);
         actionBar.setDisplayShowTitleEnabled(false);
-    }
-    @Override
-    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-        if (item.getItemId() == android.R.id.home) {
-            finish(); // Go back to the previous screen
-        }
-        return super.onOptionsItemSelected(item);
     }
 }
