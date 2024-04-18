@@ -5,25 +5,24 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/main"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"    android:background="@android:color/white"
+    android:layout_height="match_parent"
+    android:background="@android:color/white"
     tools:context=".activities.MainActivity">
 
-    <ScrollView
-        android:id="@+id/scrollView2"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        tools:layout_editor_absoluteX="0dp"
-        tools:layout_editor_absoluteY="5dp">
-
-        <androidx.fragment.app.FragmentContainerView
-            android:id="@+id/fragment_container"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
-    </ScrollView>
+    <FrameLayout
+        android:id="@+id/containerLayoutMain"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toTopOf="@+id/coordinatorLayout"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <androidx.coordinatorlayout.widget.CoordinatorLayout
+        android:id="@+id/coordinatorLayout"
         android:layout_width="match_parent"
-        android:layout_height="125dp"
+        android:background="@android:color/transparent"
+        android:layout_height="wrap_content"
         app:layout_constraintBottom_toBottomOf="parent">
         <com.google.android.material.bottomappbar.BottomAppBar
             android:id="@+id/bottomAppBar"
@@ -34,7 +33,7 @@
             app:fabCradleMargin="10dp"
             app:fabAlignmentMode="center"
             app:fabCradleRoundedCornerRadius="100dp"
-            app:fabAnchorMode="cradle"
+            app:fabAnchorMode="embed"
             android:layout_gravity="bottom">
             <com.google.android.material.bottomnavigation.BottomNavigationView
                 android:id="@+id/bottomNavigationView"
@@ -72,7 +71,5 @@
     </androidx.coordinatorlayout.widget.CoordinatorLayout>
     
 
-
-
-
+    
 </androidx.constraintlayout.widget.ConstraintLayout>
