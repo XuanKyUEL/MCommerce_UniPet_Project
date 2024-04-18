@@ -1,6 +1,7 @@
 package com.unipet7.mcommerce.activities;
 
 import android.content.Intent;
+import android.content.res.ColorStateList;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.os.Handler;
@@ -11,10 +12,12 @@ import android.text.TextWatcher;
 import android.text.style.ImageSpan;
 import android.util.Patterns;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import androidx.appcompat.widget.AppCompatEditText;
+import androidx.core.content.ContextCompat;
 
 import com.airbnb.lottie.LottieAnimationView;
 import com.google.android.material.textfield.TextInputLayout;
@@ -67,7 +70,10 @@ public class SignIn extends BaseActivity {
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
                 if (s.length() > 0) {
-                    tilEmail.setEndIconMode(TextInputLayout.END_ICON_CLEAR_TEXT);
+                    tilEmail.setEndIconMode(TextInputLayout.END_ICON_CUSTOM);
+                    ColorStateList colorStateList = ColorStateList.valueOf(ContextCompat.getColor(SignIn.this, R.color.brandPrimary));
+                    tilEmail.setEndIconTintList(colorStateList);
+                    tilEmail.setEndIconDrawable(R.drawable.clear_input);
                     tilEmail.setEndIconOnClickListener(v -> edtEmail.setText(""));
                 } else {
                     tilEmail.setEndIconMode(TextInputLayout.END_ICON_NONE);
@@ -121,6 +127,11 @@ public class SignIn extends BaseActivity {
                 String email = edtEmail.getText().toString().trim();
                 String password = edtPassword.getText().toString().trim();
                 signInUser(email, password);
+                // hide keyboard
+                InputMethodManager imm = (InputMethodManager) getSystemService(INPUT_METHOD_SERVICE);
+                if (imm != null) {
+                    imm.hideSoftInputFromWindow(v.getWindowToken(), 0);
+                }
             }
         });
     }

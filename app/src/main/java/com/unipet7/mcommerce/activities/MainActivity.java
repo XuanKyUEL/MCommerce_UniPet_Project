@@ -14,6 +14,7 @@ import com.unipet7.mcommerce.databinding.ActivityMainBinding;
 import com.unipet7.mcommerce.fragments.Fragment_Empty_Notification;
 import com.unipet7.mcommerce.fragments.Home;
 import com.unipet7.mcommerce.fragments.Profile;
+import com.unipet7.mcommerce.fragments.fragment_blank_cart;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -52,7 +53,10 @@ public class MainActivity extends AppCompatActivity {
             replaceFragment(fragment);
             return true;
         });
-        fabCart.setOnClickListener(v -> Toast.makeText(this, "FAB clicked", Toast.LENGTH_SHORT).show());
+        fabCart.setOnClickListener(v -> {
+            Fragment fragment = new fragment_blank_cart();
+            replaceFragment(fragment);
+        });
     }
 
     private void replaceFragment(Fragment fragment) {

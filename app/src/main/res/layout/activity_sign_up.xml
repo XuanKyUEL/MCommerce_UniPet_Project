@@ -17,13 +17,32 @@
             android:orientation="vertical"
             android:padding="15dp">
 
-            <ImageView
-                android:layout_width="243dp"
-                android:layout_height="243dp"
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
                 android:layout_gravity="center"
-                android:layout_marginBottom="40dp"
-                android:contentDescription="@string/contentdescription"
-                android:src="@drawable/intro_logo" />
+                android:padding="5dp"
+                android:layout_marginBottom="40dp">
+                <ImageButton
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/ic_back_signup"
+                    android:clickable="true"
+                    android:background="@null"
+                    android:padding="10dp"
+                    android:id="@+id/ib_back_signup"/>
+
+                <ImageView
+                    android:layout_width="243dp"
+                    android:layout_height="243dp"
+                    android:layout_centerInParent="true"
+                    android:contentDescription="@string/contentdescription"
+                    android:src="@drawable/intro_logo" />
+
+            </RelativeLayout>
+
+
 
             <TextView
                 style="@style/HEAD6_BOLD_16"
@@ -56,6 +75,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:drawableStart="@drawable/mail_hint_edtext"
+                        android:inputType="textEmailAddress"
                         android:drawablePadding="10dp"
                         android:hint="@string/email" />
                 </com.google.android.material.textfield.TextInputLayout>
