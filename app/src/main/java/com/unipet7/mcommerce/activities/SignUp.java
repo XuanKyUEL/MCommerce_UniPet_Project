@@ -6,12 +6,14 @@ import static com.unipet7.mcommerce.activities.SignIn.PASSWORD_KEY;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.SpannableString;
 import android.text.Spanned;
 import android.text.TextWatcher;
 import android.text.style.ForegroundColorSpan;
+import android.text.style.ImageSpan;
 import android.text.style.UnderlineSpan;
 import android.util.Patterns;
 import android.widget.TextView;
@@ -67,6 +69,14 @@ public class SignUp extends BaseActivity {
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
+                if(s.length() > 0) {
+                    tilEmail.setEndIconMode(TextInputLayout.END_ICON_CLEAR_TEXT);
+                    tilEmail.setEndIconOnClickListener(v -> {
+                        edtEmail.setText("");
+                    });
+                } else {
+                    tilEmail.setEndIconMode(TextInputLayout.END_ICON_NONE);
+                }
                 tilEmail.setError(null);
             }
 
@@ -134,13 +144,32 @@ public class SignUp extends BaseActivity {
         });
     }
 
+    private void setErrorWithIcon(TextInputLayout textInputLayout, String errorMessage, int errorIconResId) {
+        // Tạo một SpannableString với một ký tự đặc biệt ở đầu
+        SpannableString spannableString = new SpannableString("  " + errorMessage);
+
+        // Tạo một Drawable từ icon lỗi
+        Drawable errorIcon = getResources().getDrawable(errorIconResId);
+        errorIcon.setBounds(0, 0, errorIcon.getIntrinsicWidth(), errorIcon.getIntrinsicHeight());
+
+        // Tạo một ImageSpan từ Drawable
+        ImageSpan imageSpan = new ImageSpan(errorIcon, ImageSpan.ALIGN_BOTTOM);
+
+        // Thêm ImageSpan vào đầu SpannableString
+        spannableString.setSpan(imageSpan, 0, 1, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+
+        // Đặt SpannableString làm thông báo lỗi cho TextInputLayout
+        textInputLayout.setError(spannableString);
+    }
     private boolean isSignUpValid() {
         if (edtEmail.getText().toString().isEmpty()) {
-            tilEmail.setError("Email không được để trống");
+            tilEmail.setErrorIconDrawable(null);
+            setErrorWithIcon(tilEmail, "Email không được để trống", R.drawable.error_input_icon);
             edtEmail.requestFocus();
             return false;
         } else if (!Patterns.EMAIL_ADDRESS.matcher(edtEmail.getText().toString()).matches()) {
-            tilEmail.setError("Email không hợp lệ");
+            tilEmail.setErrorIconDrawable(null);
+            setErrorWithIcon(tilEmail, "Email không hợp lệ", R.drawable.error_input_icon);
             edtEmail.requestFocus();
             return false;
         } else {
@@ -148,11 +177,13 @@ public class SignUp extends BaseActivity {
         }
 
         if (edtPassword.getText().toString().isEmpty()) {
-            tilPassword.setError("Mật khẩu không được để trống");
+            tilPassword.setErrorIconDrawable(null);
+            setErrorWithIcon(tilPassword, "Mật khẩu không được để trống", R.drawable.error_input_icon);
             edtPassword.requestFocus();
             return false;
         } else if (edtPassword.getText().toString().length() < 8) {
-            tilPassword.setError("Mật khẩu phải có ít nhất 8 ký tự");
+            tilPassword.setErrorIconDrawable(null);
+            setErrorWithIcon(tilPassword, "Mật khẩu phải có ít nhất 8 ký tự", R.drawable.error_input_icon);
             edtPassword.requestFocus();
             return false;
         } else {
@@ -160,11 +191,13 @@ public class SignUp extends BaseActivity {
         }
 
         if (edtConfirmPassword.getText().toString().isEmpty()) {
-            tilConfirmPassword.setError("Vui lòng xác nhận mật khẩu");
+            tilConfirmPassword.setErrorIconDrawable(null);
+            setErrorWithIcon(tilConfirmPassword, "Nhập lại mật khẩu không được để trống", R.drawable.error_input_icon);
             edtConfirmPassword.requestFocus();
             return false;
         } else if (!edtPassword.getText().toString().equals(edtConfirmPassword.getText().toString())) {
-            tilConfirmPassword.setError("Mật khẩu không khớp");
+            tilConfirmPassword.setErrorIconDrawable(null);
+            setErrorWithIcon(tilConfirmPassword, "Mật khẩu không khớp", R.drawable.error_input_icon);
             edtConfirmPassword.requestFocus();
             return false;
         } else {
