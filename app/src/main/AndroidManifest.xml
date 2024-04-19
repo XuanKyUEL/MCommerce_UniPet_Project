@@ -16,7 +16,10 @@
             android:name=".activities.DetailOrder"
             android:exported="false" />
         <activity
-            android:name=".activities.RateOrder"
+            android:name=".activities.ProfileFunction"
+            android:exported="false" />
+        <activity
+            android:name=".activities.PaymentMethodDetails"
             android:exported="false" />
         <activity
             android:name=".activities.Blog"
@@ -25,23 +28,11 @@
             android:name=".activities.BlogDetails"
             android:exported="false" />
         <activity
-            android:name=".activities.Account"
-            android:exported="false" />
-        <activity
             android:name=".activities.VoucherActivity"
             android:exported="false" />
         <activity
-            android:name=".activities.ProfileAddress"
-            android:exported="false" />
-        <activity
-            android:name=".activities.ProfileAddress_Edit"
-            android:exported="false" />
-        <activity
-            android:name=".activities.ProfileAddress_Add"
-            android:exported="false" />
-        <activity
             android:name=".activities.SupportContact"
-            android:exported="false"/>
+            android:exported="false" />
         <activity
             android:name=".activities.IntroActivity"
             android:exported="false" />
@@ -67,9 +58,6 @@
             android:name=".activities.SignIn"
             android:exported="false" />
         <activity
-            android:name=".activities.PaymentMethod"
-            android:exported="false" />
-        <activity
             android:name=".activities.SplashScreen"
             android:exported="true"
             android:theme="@style/Theme.UniPet.SplashScreen">
@@ -81,10 +69,6 @@
         </activity>
         <activity
             android:name=".activities.SearchProductList"
-            android:exported="false">
-        </activity>
-        <activity
-            android:name=".activities.HistoryOrder"
             android:exported="false">
         </activity>
     </application>

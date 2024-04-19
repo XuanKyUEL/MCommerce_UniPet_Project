@@ -1,19 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    tools:context=".fragments.FragmentAddressEdit"
     android:orientation="vertical"
-    android:background="@color/white"
-    tools:context=".activities.ProfileAddress_Edit">
+    android:padding="10dp">
     <com.google.android.material.appbar.AppBarLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:theme="@style/ThemeOverlay.AppCompat.DayNight.ActionBar"
         android:gravity="center">
         <androidx.appcompat.widget.Toolbar
-            android:id="@+id/toolbaredit"
+            android:id="@+id/toolbaraddessedit"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
             style="@style/HEAD5_BOLD_18"
@@ -47,7 +46,7 @@
         android:textColor="@color/darkPrimary"
         android:paddingLeft="15dp"
         android:layout_gravity="center"
-        android:background="@drawable/rectangle_outline"/>
+        android:background="@drawable/edittext_conner_profile"/>
     <EditText
         android:layout_marginTop="15dp"
         android:id="@+id/edtphone"
@@ -58,7 +57,7 @@
         style="@style/BODY_MED_REG_14"
         android:textColor="@color/darkPrimary"
         android:layout_gravity="center"
-        android:background="@drawable/rectangle_outline"/>
+        android:background="@drawable/edittext_conner_profile"/>
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -77,7 +76,7 @@
         android:textColor="@color/darkPrimary"
         android:paddingLeft="15dp"
         android:layout_gravity="center"
-        android:background="@drawable/rectangle_outline"/>
+        android:background="@drawable/edittext_conner_profile"/>
     <EditText
         android:layout_marginTop="15dp"
         android:id="@+id/edtstress"
@@ -88,7 +87,7 @@
         style="@style/BODY_MED_REG_14"
         android:textColor="@color/darkPrimary"
         android:layout_gravity="center"
-        android:background="@drawable/rectangle_outline"/>
+        android:background="@drawable/edittext_conner_profile"/>
     <!--chỉnh bo góc lấy file xml custom-->
     <Button
         android:layout_marginTop="50dp"
@@ -98,7 +97,7 @@
         style="@style/BODY_MED_BOLD_14"
         android:layout_gravity="center"
         android:text="Xóa địa chỉ"
-        android:background="@drawable/button_custom" />
+        android:background="@drawable/custom_button_account" />
     <Button
         android:layout_marginTop="25dp"
         android:id="@+id/btn_Done"
@@ -107,5 +106,7 @@
         style="@style/BODY_MED_BOLD_14"
         android:layout_gravity="center"
         android:text="Hoàn thành"
-        android:background="@drawable/button_custom" />
+        android:background="@drawable/custom_button_account" />
+
+
 </LinearLayout>
