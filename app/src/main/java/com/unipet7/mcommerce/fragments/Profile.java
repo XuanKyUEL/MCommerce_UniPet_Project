@@ -1,25 +1,25 @@
 package com.unipet7.mcommerce.fragments;
 
-import androidx.annotation.Nullable;
-import androidx.appcompat.app.ActionBar;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
-import androidx.fragment.app.Fragment;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.ActionBar;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
+import androidx.fragment.app.Fragment;
+
 import com.google.firebase.auth.FirebaseAuth;
 import com.unipet7.mcommerce.R;
 import com.unipet7.mcommerce.activities.MainActivity;
 import com.unipet7.mcommerce.activities.ProfileFunction;
+import com.unipet7.mcommerce.activities.SignIn;
+import com.unipet7.mcommerce.adapters.MessageDialogAdapter;
 import com.unipet7.mcommerce.databinding.FragmentProfileBinding;
 import com.unipet7.mcommerce.models.MessageDialog;
-
-import java.util.Objects;
 
 public class Profile extends Fragment {
     FragmentProfileBinding binding;
