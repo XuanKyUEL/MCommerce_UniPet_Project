@@ -41,10 +41,12 @@
         <com.google.android.material.tabs.TabItem
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            style="@style/HEAD6_BOLD_16"
             android:text="           FAQs            "/>
         <com.google.android.material.tabs.TabItem
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            style="@style/HEAD6_BOLD_16"
             android:text="           Hỗ trợ            "/>
     </com.google.android.material.tabs.TabLayout>
     <androidx.viewpager2.widget.ViewPager2

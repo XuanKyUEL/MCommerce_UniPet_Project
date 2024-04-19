@@ -69,8 +69,16 @@ public class FragmentAddressEdit extends Fragment {
         // Inflate the layout for this fragment
         binding= FragmentAddressEditBinding.inflate(inflater, container, false);
         setActionBar(binding.toolbaraddessedit);
+        addEvents();
         return binding.getRoot();
-
+    }
+    private void addEvents() {
+        binding.toolbaraddessedit.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                requireActivity().getOnBackPressedDispatcher().onBackPressed();
+            }
+        });
     }
     public void setActionBar(@Nullable Toolbar toolbar) {
         ((AppCompatActivity) getActivity()).setSupportActionBar(toolbar);
