@@ -2,25 +2,21 @@ package com.unipet7.mcommerce.firebase;
 
 import android.util.Log;
 
-import androidx.annotation.NonNull;
+import androidx.fragment.app.Fragment;
 
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.SetOptions;
-import com.unipet7.mcommerce.R;
-import com.unipet7.mcommerce.activities.MainActivity;
 import com.unipet7.mcommerce.activities.SignUp;
-import com.unipet7.mcommerce.models.Product;
+import com.unipet7.mcommerce.fragments.Home;
+import com.unipet7.mcommerce.fragments.Profile;
 import com.unipet7.mcommerce.models.User;
 import com.unipet7.mcommerce.utils.Constants;
 
-import java.util.List;
-
 public class FireStoreClass {
     private final FirebaseFirestore UniPetdb = FirebaseFirestore.getInstance();
+    private User currentUser = null;
 
     public String getCurrentUID() {
         FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
@@ -47,22 +43,24 @@ public class FireStoreClass {
                 });
     }
 
-    public void checkLoggedUser(UserInformationCallback callback) {
+    public void loadLoggedUserUI(Fragment fragment) {
         UniPetdb.collection(Constants.USERS)
                 .document(getCurrentUID())
                 .get()
                 .addOnSuccessListener(documentSnapshot -> {
-                    User user = documentSnapshot.toObject(User.class);
-                    if (user != null) {
-                        callback.onCallback(user);
+                    if (documentSnapshot.exists()) {
+                        User user = documentSnapshot.toObject(User.class);
+                        if ((fragment instanceof Home)) {
+                            Home home = (Home) fragment;
+                            home.greeting(user);
+                        } else if ((fragment instanceof Profile)) {
+                            Profile profile = (Profile) fragment;
+                            profile.loadUserData(user);
+                        }
                     }
                 })
                 .addOnFailureListener(e -> {
-                    Log.e("FireStoreClass", "checkLoggedUser: ", e);
+                    Log.e("FireStoreClass", "loadUserUI: ", e);
                 });
-    }
-
-    public interface UserInformationCallback {
-        void onCallback(User user);
     }
 }

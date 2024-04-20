@@ -19,7 +19,9 @@ import com.unipet7.mcommerce.activities.ProfileFunction;
 import com.unipet7.mcommerce.activities.SignIn;
 import com.unipet7.mcommerce.adapters.MessageDialogAdapter;
 import com.unipet7.mcommerce.databinding.FragmentProfileBinding;
+import com.unipet7.mcommerce.firebase.FireStoreClass;
 import com.unipet7.mcommerce.models.MessageDialog;
+import com.unipet7.mcommerce.models.User;
 
 public class Profile extends Fragment {
     FragmentProfileBinding binding;
@@ -35,6 +37,8 @@ public class Profile extends Fragment {
         addEvents1();
         addEvents2();
         setActionBar(binding.toolbar);
+        FireStoreClass fireStoreClass = new FireStoreClass();
+        fireStoreClass.loadLoggedUserUI(this);
         return binding.getRoot();
 
     }
@@ -129,5 +133,10 @@ public class Profile extends Fragment {
     public void onDestroyView() {
         super.onDestroyView();
         binding = null;
+    }
+
+    public void loadUserData(User user) {
+        binding.txtUserName.setText(user.getName());
+        binding.txtEmail.setText(user.getEmail());
     }
 }
