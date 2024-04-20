@@ -40,7 +40,7 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ViewHold
         holder.productratenum.setText(String.valueOf(product.getProductratenum()));
         holder.producttotalnum.setText(String.valueOf(product.getProducttotalnum()));
         holder.presaleprice.setText(String.valueOf(product.getPresaleprice()));
-        holder.salepercent.setText(String.valueOf(product.getSalepercent()));
+        holder.salepercent.setText(product.getSalepercent() + " %" );
         holder.imvThumb.setImageResource(product.getImvThumb());
 
     }

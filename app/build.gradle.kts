@@ -92,6 +92,7 @@ dependencies {
     implementation(libs.cardview)
     // Glide
     implementation(libs.glide)
+    implementation(libs.firebase.firestore)
     annotationProcessor(libs.compiler)
     implementation(libs.glide.transformations)
     // Round imageview
@@ -115,4 +116,6 @@ dependencies {
     implementation(platform(libs.firebase.bom))
     implementation(libs.firebase.analytics)
     implementation(libs.firebase.auth)
+    implementation(libs.firebase.realtime.database)
+    implementation(libs.gson)
 }
