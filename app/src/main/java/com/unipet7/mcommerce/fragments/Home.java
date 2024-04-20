@@ -9,6 +9,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import com.unipet7.mcommerce.R;
 import com.unipet7.mcommerce.adapters.BlogAdapter;
@@ -16,6 +17,7 @@ import com.unipet7.mcommerce.adapters.HistoryOrderAdapter;
 import com.unipet7.mcommerce.adapters.ProductAdapter;
 import com.unipet7.mcommerce.databinding.FragmentConfirmationOrderBinding;
 import com.unipet7.mcommerce.databinding.FragmentHomeBinding;
+import com.unipet7.mcommerce.firebase.FireStoreClass;
 import com.unipet7.mcommerce.models.Blogs;
 import com.unipet7.mcommerce.models.HistoryOrders;
 import com.unipet7.mcommerce.models.Product;
@@ -84,8 +86,17 @@ public class Home extends Fragment {
         loadData();
         loadBlog();
         initBlog();
+        gretting();
 
         return binding.getRoot();
+    }
+
+    private void gretting() {
+        TextView v = binding.txtUserName;
+        FireStoreClass fireStoreClass = new FireStoreClass();
+        fireStoreClass.checkLoggedUser(user -> {
+            v.setText("Hi " + user.getName());
+        });
     }
 
     private void initBlog() {

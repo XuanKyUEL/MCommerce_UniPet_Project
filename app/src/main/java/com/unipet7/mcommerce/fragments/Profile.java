@@ -16,6 +16,8 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.unipet7.mcommerce.R;
 import com.unipet7.mcommerce.activities.MainActivity;
 import com.unipet7.mcommerce.activities.ProfileFunction;
+import com.unipet7.mcommerce.activities.SignIn;
+import com.unipet7.mcommerce.adapters.MessageDialogAdapter;
 import com.unipet7.mcommerce.databinding.FragmentProfileBinding;
 import com.unipet7.mcommerce.models.MessageDialog;
 
