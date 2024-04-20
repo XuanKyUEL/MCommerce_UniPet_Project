@@ -3,6 +3,7 @@ package com.unipet7.mcommerce.fragments;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
@@ -44,7 +45,6 @@ public class Home extends Fragment {
     ProductAdapter adapter;
     ArrayList<Product> products;
     BlogAdapter blogAdapter;
-    ArrayList<Blogs> blogs;
 
     public Home() {
         // Required empty public constructor
@@ -85,8 +85,8 @@ public class Home extends Fragment {
         initData();
         loadData();
         loadBlog();
-        initBlog();
         gretting();
+        addEvents();
 
         return binding.getRoot();
     }
@@ -98,20 +98,31 @@ public class Home extends Fragment {
             v.setText("Hi " + user.getName());
         });
     }
+    private void addEvents() {
+        binding.imageView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Fragment notyfragment = new Fragment_Empty_Notification();
+                FragmentManager fragmentManager = requireActivity().getSupportFragmentManager();
 
-    private void initBlog() {
-        blogs = new ArrayList<>();
-        blogs.add(new Blogs("5 tiêu chuẩn thức ăn cho mèo mà một Sen chính hiệu cần biết", "blog_4", "14.02.2024", "1. Giảm lượng tinh bột trong khẩu phần ăn mỗi ngày. Đúng rằng con người không thể sống thiếu ..."));
-        blogs.add(new Blogs("Những lưu ý khi triệt sản chó cái", "blog_5", "17.02.2024", "1. Triệt sản là gì?Triệt sản (hay thiến) đây là một phẫu thuật loại bỏ cơ quan sinh dục của động vật. Việc này nhằm..."));
-        blogs.add(new Blogs("Cách xử lý vết thương khi bị chó cắn", "blog_6", "20.3.2024", "Hiện nay bệnh dại chưa có thuốc điều trị đặc hiệu. Xử lý vết thương khi bị chó cắn đúng cách và được tiêm vắc-xin..."));
-
-        blogAdapter = new BlogAdapter(blogs,2);
+                // Thực hiện giao diện chuyển đổi Fragment
+                fragmentManager.beginTransaction()
+                        .replace(((ViewGroup) requireView().getParent()).getId(), notyfragment)
+                        .addToBackStack(null)
+                        .commit();
+            }
+        });
     }
+
 
     private void loadBlog() {
         binding.homeblog.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false));
-        binding.homeblog.setAdapter(adapter);
-        binding.homeblog.setHasFixedSize(true);
+        ArrayList<Blogs> blogs = new ArrayList<>();
+        blogs.add(new Blogs("5 tiêu chuẩn thức ăn cho mèo mà một Sen chính hiệu cần biết", "blog_4", "14.02.2024", "1. Giảm lượng tinh bột trong khẩu phần ăn mỗi ngày. Đúng rằng con người không thể sống thiếu ..."));
+        blogs.add(new Blogs("Những lưu ý khi triệt sản chó cái", "blog_5", "17.02.2024", "1. Triệt sản là gì?Triệt sản (hay thiến) đây là một phẫu thuật loại bỏ cơ quan sinh dục của động vật. Việc này nhằm..."));
+        blogs.add(new Blogs("Cách xử lý vết thương khi bị chó cắn", "blog_6", "20.3.2024", "Hiện nay bệnh dại chưa có thuốc điều trị đặc hiệu. Xử lý vết thương khi bị chó cắn đúng cách và được tiêm vắc-xin..."));
+        blogAdapter = new BlogAdapter(blogs,2);
+        binding.homeblog.setAdapter(blogAdapter);
     }
 
     private void initData() {

@@ -104,7 +104,6 @@ dependencies {
     implementation(libs.lottie)
     // page indicator
     implementation(libs.dotsindicator)
-
     implementation(libs.appcompat)
     implementation(libs.material)
     implementation(libs.activity)
