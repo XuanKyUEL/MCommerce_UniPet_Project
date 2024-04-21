@@ -98,5 +98,5 @@
         style="@style/BODY_MED_BOLD_14"
         android:layout_gravity="center"
         android:text="Hoàn thành"
-        android:background="@drawable/button_custom"/>
+        android:background="@drawable/custom_button_account"/>
 </LinearLayout>

@@ -11,9 +11,14 @@
     <!--    Special theme for the splash screen-->
     <style name="Theme.UniPet.SplashScreen" parent="Theme.Material3.DayNight.NoActionBar">
         <item name="colorPrimary">@color/brandPrimary</item>
-        <item name="android:windowIsTranslucent">true</item>
     </style>
-
+<!--    fab circle style-->
+    <style name="ShapeAppearanceOverlay.MyApp.FAB" parent="">
+        <item name="android:width">70dp</item>
+        <item name="android:height">70dp</item>
+        <item name="cornerFamily">rounded</item>
+        <item name="cornerSize">50%</item>
+    </style>
     <!--    font Style HEADING-->
     <style name="HEAD1_BOLD_32">
         <item name="android:fontFamily">@font/svn_gilroy_bold</item>
@@ -170,6 +175,10 @@
         <item name="android:textFontWeight">300</item>
         <item name="android:textSize">10sp</item>
     </style>
-    <style name="Theme.UniPet" parent="Base.Theme.UniPet" />
 
+    <style name="Theme.UniPet" parent="Base.Theme.UniPet" />
+    <style name="DialogAnimation">
+        <item name="android:windowEnterAnimation">@anim/slide_in</item>
+        <item name="android:windowExitAnimation">@anim/slide_out</item>
+    </style>
 </resources>

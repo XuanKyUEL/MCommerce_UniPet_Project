@@ -7,6 +7,9 @@ import android.os.Handler;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.google.firebase.Firebase;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.unipet7.mcommerce.databinding.ActivitySplashScreenBinding;
 
 @SuppressLint("CustomSplashScreen")
@@ -19,10 +22,26 @@ public class SplashScreen extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         binding = ActivitySplashScreenBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
-        new Handler().postDelayed((() -> {
-            Intent intent = new Intent(this, IntroActivity.class);
-            startActivity(intent);
-            finish();
-        }), 3000);
+        nextActivity();
+    }
+
+    private void nextActivity() {
+        Handler handler = new Handler();
+        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+        if (user != null) {
+            // user is signed in
+            handler.postDelayed(() -> {
+                Intent intent = new Intent(this, MainActivity.class);
+                startActivity(intent);
+                finish();
+            }, 1500);
+        } else {
+            // user is not signed in
+            handler.postDelayed(() -> {
+                Intent intent = new Intent(this, IntroActivity.class);
+                startActivity(intent);
+                finish();
+            }, 2000);
+        }
     }
 }

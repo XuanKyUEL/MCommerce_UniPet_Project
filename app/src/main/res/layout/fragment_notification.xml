@@ -4,7 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".fragment_notification"
+    android:background="@color/white"
+    tools:context=".fragments.fragment_notification"
     android:paddingHorizontal="20dp"
     android:paddingVertical="20dp">
 

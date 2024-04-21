@@ -41,10 +41,12 @@
         <com.google.android.material.tabs.TabItem
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            style="@style/HEAD6_BOLD_16"
             android:text="           FAQs            "/>
         <com.google.android.material.tabs.TabItem
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            style="@style/HEAD6_BOLD_16"
             android:text="           Hỗ trợ            "/>
     </com.google.android.material.tabs.TabLayout>
     <androidx.viewpager2.widget.ViewPager2
@@ -56,13 +58,13 @@
 <!--        android:id="@+id/frag1"-->
 <!--        android:layout_width="match_parent"-->
 <!--        android:layout_height="wrap_content"-->
-<!--        android:name="com.unipet7.mcommerce.fragments.onboarding.Question"-->
+<!--        android:name="com.unipet7.mcommerce.fragments.Question"-->
 <!--        tools:layout="@layout/fragment_question"/>-->
 <!--    <androidx.fragment.app.FragmentContainerView-->
 <!--        android:layout_gravity="center"-->
 <!--        android:id="@+id/frag2"-->
 <!--        android:layout_width="match_parent"-->
 <!--        android:layout_height="wrap_content"-->
-<!--        android:name="com.unipet7.mcommerce.fragments.onboarding.ContactList"-->
+<!--        android:name="com.unipet7.mcommerce.fragments.ContactList"-->
 <!--        tools:layout="@layout/fragment_contact_list"/>-->
 </LinearLayout>

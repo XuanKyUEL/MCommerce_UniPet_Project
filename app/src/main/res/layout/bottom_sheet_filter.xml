@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    app:behavior_hideable="true"
+    app:behavior_peekHeight="0dp"
+    android:background="@color/white"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="10dp">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="30dp"
+            style="@style/BODY_MED_SEM_14"
+            android:textColor="@color/black"
+            android:text="Sắp xếp theo"/>
+        <ImageView
+            android:id="@+id/ic_close"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="30dp"
+            android:src="@drawable/ic_filter_close"/>
+    </RelativeLayout>
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/brandPrimary"/>
+    <RadioGroup
+        android:id="@+id/radioGroup"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_marginLeft="20dp">
+
+        <RadioButton
+            android:id="@+id/rdioNameProductA"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:text="Tên sản phẩm (A-Z)"
+            style="@style/BODY_SMALL_REGULAR_12"
+            />
+
+        <RadioButton
+            android:id="@+id/rdioNameProductZ"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:text="Tên sản phẩm (Z-A)"
+            style="@style/BODY_SMALL_REGULAR_12" />
+
+        <RadioButton
+            android:id="@+id/rdioNamePriceInc"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            style="@style/BODY_SMALL_REGULAR_12"
+            android:text="Giá tăng dần"/>
+
+        <RadioButton
+            android:id="@+id/rdioPriceDes"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            style="@style/BODY_SMALL_REGULAR_12"
+            android:text="Giá giảm dần"/>
+    </RadioGroup>
+
+</LinearLayout>

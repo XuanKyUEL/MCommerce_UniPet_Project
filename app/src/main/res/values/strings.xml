@@ -33,4 +33,11 @@
     <string name="DiscountVoucher">Voucher Giảm giá</string>
     <string name="ShippingVoucher">Voucher Vận chuyển</string>
     <string name="ButtonApply">XÁC NHẬN</string>
+    <string name="home">Trang Chủ</string>
+    <string name="product_nav">Sản Phẩm</string>
+    <string name="love">Yêu Thích</string>
+    <string name="profile_nav">Tài Khoản</string>
+    <string name="detailorder">Thông tin đơn hàng</string>
+    <string name="sign_out_dialog_title">Đăng Xuất Tài Khoản ?</string>
+    <string name="insert_email_fgpw_cta">Vui lòng nhập Email đăng ký của bạn để thay đổi mật khẩu.</string>
 </resources>

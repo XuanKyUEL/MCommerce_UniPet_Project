@@ -1,0 +1,14 @@
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:state_pressed="true">
+        <shape>
+            <solid android:color="#3A231D" />
+            <corners android:radius="5dp" /> <!-- Độ cong của góc nút -->
+        </shape>
+    </item>
+    <item>
+        <shape>
+            <solid android:color="@color/brandPrimary" /> <!-- Màu nền mặc định của nút -->
+            <corners android:radius="5dp" /> <!-- Độ cong của góc nút -->
+        </shape>
+    </item>
+</selector>

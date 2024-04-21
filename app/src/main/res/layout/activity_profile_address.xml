@@ -45,6 +45,6 @@
         android:text="Thêm địa chỉ"
         android:layout_marginBottom="100dp"
         android:layout_gravity="bottom|center_horizontal"
-        android:background="@drawable/button_custom"/>
+        android:background="@drawable/custom_button_account"/>
 
 </LinearLayout>
