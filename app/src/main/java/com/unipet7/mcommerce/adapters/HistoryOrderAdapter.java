@@ -12,6 +12,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.unipet7.mcommerce.R;
+import com.unipet7.mcommerce.activities.FragmentRateOrder;
 import com.unipet7.mcommerce.models.HistoryOrders;
 
 import java.text.NumberFormat;
@@ -89,8 +90,8 @@ public class HistoryOrderAdapter extends BaseAdapter {
         holder.rate_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-//                Intent intent = new Intent(context, RateOrder.class); // Sử dụng context của Adapter
-//                context.startActivity(intent);
+                Intent intent = new Intent(context, FragmentRateOrder.class); // Sử dụng context của Adapter
+                context.startActivity(intent);
             }
         });
 

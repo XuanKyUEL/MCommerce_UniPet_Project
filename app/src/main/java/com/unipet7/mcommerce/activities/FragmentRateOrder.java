@@ -1,32 +1,30 @@
-package com.unipet7.mcommerce.fragments;
+package com.unipet7.mcommerce.activities;
 
 import android.os.Bundle;
-
-import androidx.annotation.Nullable;
-import androidx.appcompat.app.ActionBar;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
-import androidx.fragment.app.Fragment;
-
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.RatingBar;
 
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.ActionBar;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
+
 import com.unipet7.mcommerce.R;
-import com.unipet7.mcommerce.databinding.FragmentBlogBinding;
 import com.unipet7.mcommerce.databinding.FragmentRateOrderBinding;
 
-public class FragmentRateOrder extends Fragment {
+public class FragmentRateOrder extends AppCompatActivity {
     FragmentRateOrderBinding binding;
+
+
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        binding = FragmentRateOrderBinding.inflate(inflater, container, false);
-        setActionBar(binding.toolbar1);
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        binding = FragmentRateOrderBinding.inflate(getLayoutInflater());
+        setContentView(binding.getRoot());
         addEvents();
-        return binding.getRoot();     }
+    }
 
     private void addEvents() {
         binding.ratingbar1.setOnRatingBarChangeListener(new RatingBar.OnRatingBarChangeListener() {
@@ -92,8 +90,8 @@ public class FragmentRateOrder extends Fragment {
     }
 
     public void setActionBar(@Nullable Toolbar toolbar) {
-        ((AppCompatActivity) getActivity()).setSupportActionBar(toolbar);
-        ActionBar actionBar = ((AppCompatActivity) getActivity()).getSupportActionBar();
+        this.setSupportActionBar(toolbar);
+        ActionBar actionBar = this.getSupportActionBar();
         assert actionBar != null;
         actionBar.setDisplayHomeAsUpEnabled(true);
         actionBar.setHomeAsUpIndicator(R.drawable.ic_back_profile);
