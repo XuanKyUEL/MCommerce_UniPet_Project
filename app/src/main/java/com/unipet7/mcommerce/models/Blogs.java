@@ -2,16 +2,17 @@ package com.unipet7.mcommerce.models;
 
 public class Blogs {
     String title;
-    String pic;
+    int pic;
     String pubDate;
     String description;
+    private int viewType;
 
-    public Blogs(String title, String pic, String pubDate, String description) {
+    public Blogs(String title, int pic, String pubDate, String description, int viewType) {
         this.title = title;
         this.pic = pic;
         this.pubDate = pubDate;
         this.description = description;
-
+        this.viewType = viewType;
     }
 
     public String getTitle() {
@@ -22,11 +23,11 @@ public class Blogs {
         this.title = title;
     }
 
-    public String getPic() {
+    public int getPic() {
         return pic;
     }
 
-    public void setPic(String pic) {
+    public void setPic(int pic) {
         this.pic = pic;
     }
 
@@ -44,4 +45,14 @@ public class Blogs {
 
     public void setDescription(String description) {
         this.description = description;
-    }}
+    }
+
+    public int getViewType() {
+        return viewType;
+    }
+
+    public void setViewType(int viewType) {
+        this.viewType = viewType;
+    }
+}
+

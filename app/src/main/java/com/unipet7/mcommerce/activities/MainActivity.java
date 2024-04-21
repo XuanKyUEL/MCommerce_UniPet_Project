@@ -11,6 +11,7 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.unipet7.mcommerce.R;
 import com.unipet7.mcommerce.databinding.ActivityMainBinding;
+import com.unipet7.mcommerce.fragments.FragmentAllProduct;
 import com.unipet7.mcommerce.fragments.Fragment_Empty_Notification;
 import com.unipet7.mcommerce.fragments.Home;
 import com.unipet7.mcommerce.fragments.Profile;
@@ -49,7 +50,7 @@ public class MainActivity extends AppCompatActivity {
             else if (item.getItemId() == R.id.fav_icon_bottom)
                 fragment = new Fragment_Empty_Notification();
             else if (item.getItemId() == R.id.product_icon_bottom)
-                fragment = new Fragment_Empty_Notification();
+                fragment = new FragmentAllProduct();
             replaceFragment(fragment);
             return true;
         });
