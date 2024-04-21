@@ -13,40 +13,49 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.unipet7.mcommerce.R;
 import com.unipet7.mcommerce.adapters.BlogAdapter;
+import com.unipet7.mcommerce.adapters.ProductAdapter;
 import com.unipet7.mcommerce.databinding.FragmentBlogBinding;
-import com.unipet7.mcommerce.databinding.FragmentContactListBinding;
+import com.unipet7.mcommerce.databinding.FragmentBlogDetailsBinding;
 import com.unipet7.mcommerce.models.Blogs;
+import com.unipet7.mcommerce.models.Product;
 
 import java.util.ArrayList;
 
+public class FragmentBlogDetails extends Fragment {
+    FragmentBlogDetailsBinding binding;
+    BlogAdapter blogAdapter;
+    ProductAdapter adapter;
+    ArrayList<Product> products;
+    public FragmentBlogDetails() {
+        // Required empty public constructor
+    }
 
-public class FragmentBlog extends Fragment {
-    FragmentBlogBinding binding;
-    private RecyclerView.Adapter adapter, adapter2;
-    private RecyclerView recyclerViewBlog, recyclerViewBlog2;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        binding = FragmentBlogBinding.inflate(inflater, container, false);
-        setActionBar(binding.toolbar);
+        binding = FragmentBlogDetailsBinding.inflate(inflater, container, false);
         addEvents();
-        recyclerViewBlog();
-        recyclerViewBlog2();
-        return binding.getRoot();    }
+        setActionBar(binding.toolbardetail);
+        initBlog();
+        initProduct();
+        return binding.getRoot();     }
+
+
 
     private void addEvents() {
-        binding.toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+        binding.toolbardetail.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 requireActivity().getOnBackPressedDispatcher().onBackPressed();
             }
         });
     }
-
     public void setActionBar(@Nullable Toolbar toolbar) {
         ((AppCompatActivity) getActivity()).setSupportActionBar(toolbar);
         ActionBar actionBar = ((AppCompatActivity) getActivity()).getSupportActionBar();
@@ -55,29 +64,23 @@ public class FragmentBlog extends Fragment {
         actionBar.setHomeAsUpIndicator(R.drawable.ic_back_profile);
         actionBar.setDisplayShowTitleEnabled(false);
     }
-
-    private void recyclerViewBlog2() {
-        binding.rclBlogs2.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false));
+    private void initProduct() {
+        binding.rclBlogDetails1.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
+        products = new ArrayList<>();
+        products.add(new Product(R.drawable.pate1, "Thức ăn mèo gâu gâu", 20000,3,3,32,20000));
+        products.add(new Product(R.drawable.pate1, "Thức ăn mèo gâu gâu", 20000,3,3, 32, 20000));
+        products.add(new Product(R.drawable.pate1, "Thức ăn mèo gâu gâu", 20000,3,3,20,30000));
+        adapter = new ProductAdapter(products);
+        binding.rclBlogDetails1.setAdapter(adapter);
+    }
+    private void initBlog() {
+        binding.rclBlogDetails2.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false));
         ArrayList<Blogs> blogs = new ArrayList<>();
         blogs.add(new Blogs("5 tiêu chuẩn thức ăn cho mèo mà một Sen chính hiệu cần biết", R.drawable.blog2_image_4, "14.02.2024", "1. Giảm lượng tinh bột trong khẩu phần ăn mỗi ngày. Đúng rằng con người không thể sống thiếu ...",2));
         blogs.add(new Blogs("Những lưu ý khi triệt sản chó cái", R.drawable.blog2_image_5, "17.02.2024", "1. Triệt sản là gì?Triệt sản (hay thiến) đây là một phẫu thuật loại bỏ cơ quan sinh dục của động vật. Việc này nhằm...",2));
         blogs.add(new Blogs("Cách xử lý vết thương khi bị chó cắn", R.drawable.blog2_image_6, "20.3.2024", "Hiện nay bệnh dại chưa có thuốc điều trị đặc hiệu. Xử lý vết thương khi bị chó cắn đúng cách và được tiêm vắc-xin...",2));
         blogs.add(new Blogs("Top 7 giống chó dễ nuôi nhất", R.drawable.blog_image, "20.3.2024", "1. Chó ChihuahuaChihuahua là giống chó đang được nuôi khá nhiều tại Việt Nam. Lý do dòng chó này được yêu chuộng một cách rộng...",2));
-        adapter2 = new BlogAdapter(blogs);
-        binding.rclBlogs2.setAdapter(adapter2);
+        blogAdapter = new BlogAdapter(blogs);
+        binding.rclBlogDetails2.setAdapter(blogAdapter);
     }
-
-
-    private void recyclerViewBlog() {
-        binding.rclBlogs.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, false));
-        ArrayList<Blogs> blogs = new ArrayList<>();
-        blogs.add(new Blogs("Top 7 giống chó dễ nuôi nhất", R.drawable.blog_image, "a", "a",1));
-        blogs.add(new Blogs("Mách bạn 8 lý do khiến mèo bỏ ăn", R.drawable.blog_image_1, "a", "a",1));
-        blogs.add(new Blogs("Những bài học cuộc sống mà thú cưng dạy cho bạn", R.drawable.blog_image_2, "a", "a",1));
-        blogs.add(new Blogs("Cách xử lý vết thương khi bị chó cắn", R.drawable.blog2_image_6, "20.3.2024", "Hiện nay bệnh dại chưa có thuốc điều trị đặc hiệu. Xử lý vết thương khi bị chó cắn đúng cách và được tiêm vắc-xin...",1));
-        adapter = new BlogAdapter(blogs);
-        binding.rclBlogs.setAdapter(adapter);
-
-    }
-
 }
