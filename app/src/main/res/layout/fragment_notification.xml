@@ -24,7 +24,7 @@
             android:layout_width="24dp"
             android:layout_height="24dp"
             android:backgroundTint="@color/white"
-            android:src="@drawable/backicon" />
+            android:src="@drawable/ic_back" />
 
         <TextView
             android:id="@+id/txtThong_bao"
@@ -56,6 +56,7 @@
             android:textColor="@color/black" />
 
         <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rvNewNoti"
             android:layout_width="match_parent"
             android:layout_height="match_parent" />
     </LinearLayout>
@@ -77,6 +78,7 @@
             android:textColor="@color/black" />
 
         <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rvOldNoti"
             android:layout_width="match_parent"
             android:layout_height="match_parent" />
     </LinearLayout>

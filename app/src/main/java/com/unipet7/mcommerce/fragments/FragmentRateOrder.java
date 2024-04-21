@@ -1,43 +1,33 @@
-package com.unipet7.mcommerce.activities;
+package com.unipet7.mcommerce.fragments;
+
+import android.os.Bundle;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.fragment.app.Fragment;
 
-import android.graphics.Color;
-import android.os.Bundle;
-import android.text.Spannable;
-import android.text.SpannableString;
-import android.text.style.TextAppearanceSpan;
-import android.view.Gravity;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
 import android.widget.RatingBar;
-import android.widget.TextView;
 
 import com.unipet7.mcommerce.R;
-import com.unipet7.mcommerce.databinding.ActivityHistoryOrderBinding;
-import com.unipet7.mcommerce.databinding.ActivityRateOrderBinding;
+import com.unipet7.mcommerce.databinding.FragmentBlogBinding;
+import com.unipet7.mcommerce.databinding.FragmentRateOrderBinding;
 
-public class RateOrder extends AppCompatActivity {
-    ActivityRateOrderBinding binding;
-
+public class FragmentRateOrder extends Fragment {
+    FragmentRateOrderBinding binding;
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        binding = ActivityRateOrderBinding.inflate(getLayoutInflater());
-        setContentView(binding.getRoot());
-        addEvents();
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
+        // Inflate the layout for this fragment
+        binding = FragmentRateOrderBinding.inflate(inflater, container, false);
         setActionBar(binding.toolbar1);
-    }
-    public void setActionBar(@Nullable Toolbar toolbar) {
-        setSupportActionBar(toolbar);
-        ActionBar actionBar = getSupportActionBar();
-        assert actionBar != null;
-        actionBar.setDisplayHomeAsUpEnabled(true);
-        // Set icon arrow
-        actionBar.setHomeAsUpIndicator(R.drawable.ic_back);
-        actionBar.setDisplayShowTitleEnabled(false);
-    }
+        addEvents();
+        return binding.getRoot();     }
+
     private void addEvents() {
         binding.ratingbar1.setOnRatingBarChangeListener(new RatingBar.OnRatingBarChangeListener() {
             @Override
@@ -99,6 +89,14 @@ public class RateOrder extends AppCompatActivity {
                 }
             }
         });
+    }
 
+    public void setActionBar(@Nullable Toolbar toolbar) {
+        ((AppCompatActivity) getActivity()).setSupportActionBar(toolbar);
+        ActionBar actionBar = ((AppCompatActivity) getActivity()).getSupportActionBar();
+        assert actionBar != null;
+        actionBar.setDisplayHomeAsUpEnabled(true);
+        actionBar.setHomeAsUpIndicator(R.drawable.ic_back_profile);
+        actionBar.setDisplayShowTitleEnabled(false);
     }
 }

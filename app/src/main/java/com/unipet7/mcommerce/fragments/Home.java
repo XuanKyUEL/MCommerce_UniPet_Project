@@ -148,6 +148,58 @@ public class Home extends Fragment {
     }
 
     private void addEvents() {
+        binding.txtXemThem1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Fragment allproduct = new FragmentAllProduct();
+                FragmentManager fragmentManager = requireActivity().getSupportFragmentManager();
+
+                // Thực hiện giao diện chuyển đổi Fragment
+                fragmentManager.beginTransaction()
+                        .replace(((ViewGroup) requireView().getParent()).getId(), allproduct)
+                        .addToBackStack(null)
+                        .commit();
+            }
+        });
+        binding.txtXemThem2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Fragment allproduct = new FragmentAllProduct();
+                FragmentManager fragmentManager = requireActivity().getSupportFragmentManager();
+
+                // Thực hiện giao diện chuyển đổi Fragment
+                fragmentManager.beginTransaction()
+                        .replace(((ViewGroup) requireView().getParent()).getId(), allproduct)
+                        .addToBackStack(null)
+                        .commit();
+            }
+        });
+        binding.txtXemthem3.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Fragment allproduct = new FragmentAllProduct();
+                FragmentManager fragmentManager = requireActivity().getSupportFragmentManager();
+
+                // Thực hiện giao diện chuyển đổi Fragment
+                fragmentManager.beginTransaction()
+                        .replace(((ViewGroup) requireView().getParent()).getId(), allproduct)
+                        .addToBackStack(null)
+                        .commit();
+            }
+        });
+        binding.Xemthem4.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Fragment blogfrag = new FragmentBlog();
+                FragmentManager fragmentManager = requireActivity().getSupportFragmentManager();
+
+                // Thực hiện giao diện chuyển đổi Fragment
+                fragmentManager.beginTransaction()
+                        .replace(((ViewGroup) requireView().getParent()).getId(), blogfrag)
+                        .addToBackStack(null)
+                        .commit();
+            }
+        });
         binding.imgCate6.setOnClickListener(v -> {
             Fragment fragmentBlog = new FragmentBlog();
             FragmentManager fragmentManager = requireActivity().getSupportFragmentManager();
@@ -159,7 +211,7 @@ public class Home extends Fragment {
                     .commit();
         });
         binding.imageView.setOnClickListener(v -> {
-            Fragment notyfragment = new Fragment_Empty_Notification();
+            Fragment notyfragment = new fragment_notification();
             FragmentManager fragmentManager = requireActivity().getSupportFragmentManager();
 
             // Thực hiện giao diện chuyển đổi Fragment
