@@ -40,7 +40,7 @@
         android:layout_marginTop="8dp"
         android:background="@drawable/search_background"
         android:drawableStart="@drawable/search"
-        android:drawableEnd="@drawable/filter_search"
+        android:drawableEnd="@drawable/search_filter"
         android:drawablePadding="8dp"
         android:ems="10"
         android:hint="Tìm kiếm"
