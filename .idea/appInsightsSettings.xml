@@ -8,10 +8,10 @@
             <InsightsFilterSettings>
               <option name="connection">
                 <ConnectionSetting>
-                  <option name="appId" value="PLACEHOLDER" />
-                  <option name="mobileSdkAppId" value="" />
-                  <option name="projectId" value="" />
-                  <option name="projectNumber" value="" />
+                  <option name="appId" value="com.unipet7.mcommerce" />
+                  <option name="mobileSdkAppId" value="1:777978951811:android:70ec53e758617f5c6043b6" />
+                  <option name="projectId" value="unipet-e9ecd" />
+                  <option name="projectNumber" value="777978951811" />
                 </ConnectionSetting>
               </option>
               <option name="signal" value="SIGNAL_UNSPECIFIED" />

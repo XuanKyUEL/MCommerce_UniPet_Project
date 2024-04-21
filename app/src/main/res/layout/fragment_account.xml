@@ -1,0 +1,174 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".fragments.FragmentAccount"
+    android:padding="10dp"
+    android:background="@color/white">
+
+    <com.google.android.material.appbar.AppBarLayout
+        android:id="@+id/appBarLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:theme="@style/ThemeOverlay.AppCompat.DayNight.ActionBar"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/toolbar"
+            style="@style/HEAD5_BOLD_18"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:background="@color/white"
+            android:gravity="center"
+            app:popupTheme="@style/Widget.Material3.PopupMenu.Overflow">
+            <TextView
+                android:layout_width="200dp"
+                android:layout_height="wrap_content"
+                android:textColor="@color/darkPrimary"
+                style="@style/HEAD5_BOLD_18"
+                android:gravity="center"
+                android:text="Tôi"/>
+        </androidx.appcompat.widget.Toolbar>
+
+    </com.google.android.material.appbar.AppBarLayout>
+
+    <FrameLayout
+        android:layout_marginTop="15dp"
+        android:id="@+id/frameLayout"
+        android:layout_width="150dp"
+        android:layout_height="150dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/appBarLayout">
+
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/imvUserImageAccount"
+            android:layout_width="150dp"
+            android:layout_height="150dp"
+            android:src="@drawable/profile_image" />
+
+        <ImageButton
+            android:id="@+id/editButton"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_gravity="bottom|end"
+            android:background="@android:color/transparent"
+            android:contentDescription="Edit button"
+            android:src="@drawable/ic_edit_account" />
+    </FrameLayout>
+
+    <LinearLayout
+        android:id="@+id/lninfoAccount"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="35dp"
+        android:orientation="vertical"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/frameLayout">
+
+        <TextView
+            style="@style/HEAD6_BOLD_16"
+            android:layout_width="320dp"
+            android:layout_height="27dp"
+            android:layout_gravity="center"
+            android:text="Tên người dùng"
+            android:textColor="@color/black"/>
+
+        <EditText
+            android:id="@+id/edtUserNameAccount"
+            style="@style/BODY_LARGE_MED_16"
+            android:layout_width="320dp"
+            android:layout_height="48dp"
+            android:layout_marginTop="10dp"
+            android:background="@drawable/edittext_conner_profile"
+            android:hint="Nhân Đinh"
+            android:padding="10dp"
+            android:layout_gravity="center"
+            android:textColor="@color/black"
+            android:textColorHint="@color/black"/>
+        <TextView
+            android:layout_width="320dp"
+            android:layout_height="wrap_content"
+            android:text="Email"
+            android:layout_gravity="center"
+            android:layout_marginTop="10dp"
+            style="@style/HEAD6_BOLD_16"
+            android:textColor="@color/black"/>
+
+        <EditText
+            android:id="@+id/edtEmailAccount"
+            style="@style/BODY_LARGE_MED_16"
+            android:layout_width="320dp"
+            android:layout_height="48dp"
+            android:layout_marginTop="10dp"
+            android:background="@drawable/edittext_conner_profile"
+            android:hint="nhandinh@gmail.com"
+            android:enabled="false"
+            android:padding="10dp"
+            android:layout_gravity="center"
+            android:textColor="@color/black"
+            android:textColorHint="@color/black"/>
+        <TextView
+            android:layout_width="320dp"
+            android:layout_height="wrap_content"
+            android:text="Số điện thoại"
+            android:layout_gravity="center"
+            android:layout_marginTop="10dp"
+            style="@style/HEAD6_BOLD_16"
+            android:textColor="@color/black" />
+
+        <EditText
+            android:id="@+id/edtPhoneAccount"
+            style="@style/BODY_LARGE_MED_16"
+            android:layout_width="320dp"
+            android:layout_height="48dp"
+            android:layout_marginTop="10dp"
+            android:background="@drawable/edittext_conner_profile"
+            android:hint="076895670"
+            android:padding="10dp"
+            android:layout_gravity="center"
+            android:textColor="@color/black"
+            android:textColorHint="@color/black"/>
+        <TextView
+            android:layout_width="320dp"
+            android:layout_height="wrap_content"
+            android:text="Password"
+            android:layout_gravity="center"
+            android:layout_marginTop="10dp"
+            style="@style/HEAD6_BOLD_16"
+            android:textColor="@color/black"/>
+
+        <EditText
+            android:id="@+id/edtPaswordAccount"
+            style="@style/BODY_LARGE_MED_16"
+            android:layout_width="320dp"
+            android:layout_height="48dp"
+            android:layout_marginTop="10dp"
+            android:background="@drawable/edittext_conner_profile"
+            android:hint="nhan12132003"
+            android:padding="10dp"
+            android:layout_gravity="center"
+            android:textColor="@color/black"
+            android:textColorHint="@color/black"/>
+        <Button
+            android:id="@+id/btnUpdateAccount"
+            android:layout_width="300dp"
+            android:layout_height="48dp"
+            android:background="@drawable/custom_button_account"
+            android:layout_marginTop="30dp"
+            android:layout_gravity="center"
+            android:text="Cập nhật"
+            style="@style/HEAD6_BOLD_16"
+            android:textAllCaps="false"/>
+
+
+    </LinearLayout>
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>
