@@ -173,7 +173,7 @@ public class Home extends Fragment {
                     .commit();
         });
         binding.imageView.setOnClickListener(v -> {
-            Fragment notyfragment = new Fragment_Empty_Notification();
+            Fragment notyfragment = new fragment_notification();
             FragmentManager fragmentManager = requireActivity().getSupportFragmentManager();
 
             // Thực hiện giao diện chuyển đổi Fragment
