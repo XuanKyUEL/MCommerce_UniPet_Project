@@ -152,12 +152,12 @@ public class Home extends Fragment {
         binding.Xemthem4.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Fragment allproduct = new FragmentAllProduct();
+                Fragment blogfrag = new FragmentBlog();
                 FragmentManager fragmentManager = requireActivity().getSupportFragmentManager();
 
                 // Thực hiện giao diện chuyển đổi Fragment
                 fragmentManager.beginTransaction()
-                        .replace(((ViewGroup) requireView().getParent()).getId(), allproduct)
+                        .replace(((ViewGroup) requireView().getParent()).getId(), blogfrag)
                         .addToBackStack(null)
                         .commit();
             }
