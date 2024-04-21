@@ -78,7 +78,7 @@ public class HistoryOrder_All extends Fragment {
         // Inflate the layout for this fragment
         binding = FragmentAllHistoryOrderBinding.inflate(inflater,container,false);
         loadData();
-        addEvents();
+        //addEvents();
 
         return binding.getRoot();
     }
@@ -89,26 +89,26 @@ public class HistoryOrder_All extends Fragment {
         HistoryAdapter = new HistoryOrderAdapter(getActivity(),R.layout.layout_history_order, initData());
         binding.lvlOrder.setAdapter(HistoryAdapter);
     }
-    private void addEvents() {
-        binding.lvlOrder.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Button buttonbuyagian = view.findViewById(R.id.btn_buyagain);
-                buttonbuyagian.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                    }
-                });
-                Button buttonrate = view.findViewById(R.id.btn_rate);
-                buttonrate.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-
-                    }
-                });
-            }
-        });
-    }
+//    private void addEvents() {
+//        binding.lvlOrder.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+//            @Override
+//            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+//                Button buttonbuyagian = view.findViewById(R.id.btn_buyagain);
+//                buttonbuyagian.setOnClickListener(new View.OnClickListener() {
+//                    @Override
+//                    public void onClick(View v) {
+//                    }
+//                });
+//                Button buttonrate = view.findViewById(R.id.btn_rate);
+//                buttonrate.setOnClickListener(new View.OnClickListener() {
+//                    @Override
+//                    public void onClick(View v) {
+//
+//                    }
+//                });
+//            }
+//        });
+//    }
     private List<HistoryOrders> initData() {
         Historyorders = new ArrayList<>();
         Historyorders.add(new HistoryOrders("11/12/2024","1111", "Đã hủy", R.drawable.unipet_app_icon,"Royal Canin Rottweiler Puppy con mèo con đi hia long nhong",

@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".fragments.FragmentAllProduct"
+    android:orientation="vertical"
+    android:padding="10dp"
+    android:background="@color/white"
+    android:id="@+id/HistoryPurchase">
+
+    <com.google.android.material.appbar.AppBarLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:theme="@style/ThemeOverlay.AppCompat.DayNight.ActionBar"
+        android:gravity="center">
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/toolbarall"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            style="@style/HEAD5_BOLD_18"
+            android:background="@color/white"
+            app:popupTheme="@style/Widget.Material3.PopupMenu.Overflow"
+            android:layout_gravity="center">
+            <TextView
+                android:layout_width="300dp"
+                android:layout_height="wrap_content"
+                android:textColor="@color/darkPrimary"
+                style="@style/HEAD5_BOLD_18"
+                android:gravity="center"
+                android:text="Tất cả sản phẩm"/>
+        </androidx.appcompat.widget.Toolbar>
+    </com.google.android.material.appbar.AppBarLayout>
+    <EditText
+        android:id="@+id/editTextText"
+        style="@style/BODY_SMALL_REGULAR_12"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:layout_marginTop="8dp"
+        android:background="@drawable/search_background"
+        android:drawableStart="@drawable/search"
+        android:drawableEnd="@drawable/search_filter"
+        android:drawablePadding="8dp"
+        android:ems="10"
+        android:hint="Tìm kiếm"
+        android:inputType="text"
+        android:padding="12dp"
+        android:textColorHint="@color/darkTertiary"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout2" />
+
+    <HorizontalScrollView
+        android:id="@+id/horizontalScrollViewProduct"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:scrollbars="none"
+        android:layout_marginTop="15dp"
+        android:paddingLeft="10dp">
+        <LinearLayout
+            android:id="@+id/buttonContainer"
+            android:layout_width="wrap_content"
+            android:layout_height="40dp"
+            android:orientation="horizontal">
+            <Button
+                android:id="@+id/btn_all"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Tất cả"
+                style="@style/BODY_XS_BOLD_12"
+                android:layout_marginRight="10dp"/>
+            <Button
+                android:id="@+id/btn_food"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Thức ăn"
+                style="@style/BODY_XS_BOLD_12"
+                android:layout_marginRight="10dp"/>
+            <Button
+                android:id="@+id/btn_toy"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Đồ chơi"
+                style="@style/BODY_XS_BOLD_12"
+                android:layout_marginRight="10dp"/>
+
+            <Button
+                android:id="@+id/btn_item"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Vật dụng"
+                style="@style/BODY_XS_BOLD_12"
+                android:layout_marginRight="10dp"/>
+
+            <Button
+                android:id="@+id/btn_care"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Chăm sóc"
+                style="@style/BODY_XS_BOLD_12"
+                android:layout_marginRight="5dp"/>
+            <Button
+                android:id="@+id/btn_card"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="UniCard"
+                style="@style/BODY_XS_BOLD_12"
+                android:layout_marginRight="5dp"/>
+        </LinearLayout>
+    </HorizontalScrollView>
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/lvlAllProduct"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="10dp"/>
+
+</LinearLayout>
