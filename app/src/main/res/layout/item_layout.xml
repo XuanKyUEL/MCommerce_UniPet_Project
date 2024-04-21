@@ -56,15 +56,15 @@
         tools:layout_editor_absoluteY="117dp" />
 
 
-
     <TextView
         android:id="@+id/textView"
+        style="@style/BODY_XSMALL_BOLD_10"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
         android:text="Thức ăn mèo gâu gâu"
         android:textColor="@color/black"
-        style="@style/BODY_XSMALL_BOLD_10"
-        app:layout_constraintStart_toStartOf="@+id/imagebannersale"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/imagebannersale" />
 
     <TextView
@@ -113,6 +113,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
+            android:paddingStart="5dp"
             android:text="4.8"
             android:textColor="@color/darkTertiary" />
 
@@ -122,7 +123,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text=" (199))"
+            android:paddingStart="5dp"
+            android:text=" (199+)"
             android:textColor="@color/darkTertiary" />
     </LinearLayout>
 
@@ -149,6 +151,6 @@
             android:layout_width="30dp"
             android:layout_height="30dp"
             android:layout_gravity="center_vertical"
-            android:src="@drawable/fav_ic_bottom_nav"/>
+            android:src="@drawable/heart"/>
     </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>
