@@ -11,9 +11,12 @@ import com.google.firebase.firestore.SetOptions;
 import com.unipet7.mcommerce.activities.SignUp;
 import com.unipet7.mcommerce.fragments.Home;
 import com.unipet7.mcommerce.fragments.Profile;
+import com.unipet7.mcommerce.models.Product;
 import com.unipet7.mcommerce.models.User;
 import com.unipet7.mcommerce.utils.Constants;
 import com.unipet7.mcommerce.utils.LoadingDialog;
+
+import java.util.ArrayList;
 
 public class FireStoreClass {
     private final FirebaseFirestore UniPetdb = FirebaseFirestore.getInstance();
@@ -63,5 +66,32 @@ public class FireStoreClass {
                 .addOnFailureListener(e -> {
                     Log.e("FireStoreClass", "loadUserUI: ", e);
                 });
+    }
+
+    public void getProductList(Home home, ArrayList<Product> productsSale, ArrayList<Product> productsDog, ArrayList<Product> productsCat) {
+
+        UniPetdb.collection(Constants.PRODUCTS)
+                .get()
+                .addOnSuccessListener(queryDocumentSnapshots -> {
+                    if (!queryDocumentSnapshots.isEmpty()) {
+                        for (int i = 0; i < queryDocumentSnapshots.size(); i++) {
+                            Product product = queryDocumentSnapshots.getDocuments().get(i).toObject(Product.class);
+                            if (product.getSalepercent() > 0) {
+                                productsSale.add(product);
+                            }
+                            if (product.getCategoryId() == 1) {
+                                productsDog.add(product);
+                            }
+                            if (product.getCategoryId() == 2) {
+                                productsCat.add(product);
+                            }
+                        }
+                        home.configAdapters();
+                    }
+                })
+                .addOnFailureListener(e -> {
+                    Log.e("FireStoreClass", "getProductList: ", e);
+                })
+        ;
     }
 }
