@@ -1,5 +1,6 @@
 package com.unipet7.mcommerce.fragments;
 
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 
@@ -8,6 +9,8 @@ import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.LinearLayoutManager;
 
 import android.text.SpannableString;
 import android.text.Spanned;
@@ -19,7 +22,14 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.unipet7.mcommerce.R;
+import com.unipet7.mcommerce.activities.VoucherActivity;
+import com.unipet7.mcommerce.adapters.CartAdapter;
+import com.unipet7.mcommerce.adapters.NotiAdapter;
 import com.unipet7.mcommerce.databinding.FragmentCartBinding;
+import com.unipet7.mcommerce.models.Notice;
+import com.unipet7.mcommerce.models.ProductCart;
+
+import java.util.ArrayList;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -28,6 +38,8 @@ import com.unipet7.mcommerce.databinding.FragmentCartBinding;
  */
 public class fragment_cart extends Fragment {
     FragmentCartBinding binding;
+    ArrayList<ProductCart> productCarts;
+    CartAdapter adapter;
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -75,23 +87,35 @@ public class fragment_cart extends Fragment {
         // Inflate the layout for this fragment
         binding = FragmentCartBinding.inflate(inflater, container, false);
         setActionBar(binding.toolbar);
-
-        binding.btnVoucher.setOnClickListener(new View.OnClickListener() {
+        binding.btnCircleVoucher.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String voucherCode = binding.edtVoucher.getText().toString();
-
-                boolean CheckValid = CheckValidVoucher(voucherCode);
-
-                if(CheckValid) {
-                    binding.txtValidVoucher.setVisibility(View.GONE);
-                } else {
-                    binding.txtValidVoucher.setVisibility(View.VISIBLE);
-                }
+                Intent intent = new Intent(getContext(), VoucherActivity.class);
+                startActivity(intent);
             }
         });
 
+
+
+        loadData();
+
         return binding.getRoot();
+    }
+
+    private void loadData() {
+        GridLayoutManager gridLayoutManager = new GridLayoutManager(getContext(), 1, LinearLayoutManager.VERTICAL, false);
+        binding.rcCart.setLayoutManager(gridLayoutManager);
+        binding.rcCart.getRecycledViewPool();
+        binding.rcCart.setHasFixedSize(true);
+
+        productCarts = new ArrayList<>();
+        productCarts.add(new ProductCart(R.drawable.intro_logo, "Con mèo con là con con mèo mướp", 1000.0, 1000.0, 1.0));
+        productCarts.add(new ProductCart(R.drawable.intro_logo, "Con mèo con là con con mèo mướp", 1000.0, 1000.0, 1.0));
+        productCarts.add(new ProductCart(R.drawable.intro_logo, "Con mèo con là con con mèo mướp", 1000.0, 1000.0, 1.0));
+        productCarts.add(new ProductCart(R.drawable.intro_logo, "Con mèo con là con con mèo mướp", 1000.0, 1000.0, 1.0));
+        adapter = new CartAdapter(requireActivity().getApplicationContext(), productCarts);
+        binding.rcCart.setAdapter(adapter);
+
     }
 
     private boolean CheckValidVoucher(String voucherCode) {

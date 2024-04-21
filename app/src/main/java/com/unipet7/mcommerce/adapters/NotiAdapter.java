@@ -5,7 +5,10 @@ import android.media.RouteListingPreference;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -38,8 +41,6 @@ public class NotiAdapter extends RecyclerView.Adapter<NotiAdapter.ViewHolder> {
         holder.txtTitle.setText(notice.get(position).getNotiTtle());
         holder.txtDescript.setText(notice.get(position).getNotiDescription());
         holder.txtTime.setText(notice.get(position).getNotiTime());
-
-
     }
 
     @Override
@@ -49,6 +50,7 @@ public class NotiAdapter extends RecyclerView.Adapter<NotiAdapter.ViewHolder> {
 
     public class ViewHolder extends RecyclerView.ViewHolder {
         TextView txtTitle, txtDescript, txtTime;
+        ImageView imvNotice;
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             txtDescript = itemView.findViewById(R.id.txtNotiDescription);
