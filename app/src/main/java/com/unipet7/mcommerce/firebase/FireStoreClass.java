@@ -13,6 +13,7 @@ import com.unipet7.mcommerce.fragments.Home;
 import com.unipet7.mcommerce.fragments.Profile;
 import com.unipet7.mcommerce.models.User;
 import com.unipet7.mcommerce.utils.Constants;
+import com.unipet7.mcommerce.utils.LoadingDialog;
 
 public class FireStoreClass {
     private final FirebaseFirestore UniPetdb = FirebaseFirestore.getInstance();

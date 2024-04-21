@@ -21,6 +21,7 @@ import com.unipet7.mcommerce.firebase.FireStoreClass;
 import com.unipet7.mcommerce.models.Blogs;
 import com.unipet7.mcommerce.models.Product;
 import com.unipet7.mcommerce.models.User;
+import com.unipet7.mcommerce.utils.LoadingDialog;
 
 import java.util.ArrayList;
 
@@ -39,10 +40,12 @@ public class Home extends Fragment {
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
-    FragmentHomeBinding binding;
+    FragmentHomeBinding binding = null;
     ProductAdapter adapter;
     ArrayList<Product> products;
     BlogAdapter blogAdapter;
+
+    LoadingDialog loadingDialog;
 
     private static final String KEY_FLAG = "isLoadUser";
     boolean isLoadUser = false;
@@ -92,17 +95,17 @@ public class Home extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        binding = FragmentHomeBinding.inflate(inflater,container,false);
-
+        if (binding == null) {
+            binding = FragmentHomeBinding.inflate(inflater, container, false);
+        }
         initData();
         loadData();
         loadBlog();
         addEvents();
-        if (savedInstanceState == null && !isLoadUser) {
-            FireStoreClass fireStoreClass = new FireStoreClass();
-            fireStoreClass.loadLoggedUserUI(this);
-            isLoadUser = true;
-        }
+        loadingDialog = new LoadingDialog();
+        loadingDialog.showLoadingDialog(getContext());
+        FireStoreClass fireStoreClass = new FireStoreClass();
+        fireStoreClass.loadLoggedUserUI(this);
         return binding.getRoot();
     }
 
@@ -163,6 +166,7 @@ public class Home extends Fragment {
 
     public void greeting(User user) {
         binding.txtUserName.setText("Xin chào " + user.getName());
+        loadingDialog.dissmis();
     }
 
 }

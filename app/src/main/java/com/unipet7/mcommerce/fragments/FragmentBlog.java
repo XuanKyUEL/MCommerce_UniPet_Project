@@ -16,7 +16,6 @@ import android.view.ViewGroup;
 
 import com.unipet7.mcommerce.R;
 import com.unipet7.mcommerce.adapters.BlogAdapter;
-import com.unipet7.mcommerce.databinding.ActivityBlogBinding;
 import com.unipet7.mcommerce.databinding.FragmentBlogBinding;
 import com.unipet7.mcommerce.databinding.FragmentContactListBinding;
 import com.unipet7.mcommerce.models.Blogs;

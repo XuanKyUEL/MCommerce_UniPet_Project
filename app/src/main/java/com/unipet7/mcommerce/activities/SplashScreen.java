@@ -22,21 +22,26 @@ public class SplashScreen extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         binding = ActivitySplashScreenBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
-        Handler handler = new Handler();
-        handler.postDelayed((this::nextActivity), 3000);
+        nextActivity();
     }
 
     private void nextActivity() {
+        Handler handler = new Handler();
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
         if (user != null) {
             // user is signed in
-            Intent intent = new Intent(this, MainActivity.class);
-            startActivity(intent);
+            handler.postDelayed(() -> {
+                Intent intent = new Intent(this, MainActivity.class);
+                startActivity(intent);
+                finish();
+            }, 1500);
         } else {
             // user is not signed in
-            Intent intent = new Intent(this, IntroActivity.class);
-            startActivity(intent);
+            handler.postDelayed(() -> {
+                Intent intent = new Intent(this, IntroActivity.class);
+                startActivity(intent);
+                finish();
+            }, 2000);
         }
-        finish();
     }
 }
