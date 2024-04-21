@@ -2,13 +2,9 @@ package com.unipet7.mcommerce.activities;
 
 import android.content.Intent;
 import android.content.res.ColorStateList;
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.text.Editable;
-import android.text.SpannableString;
-import android.text.Spanned;
 import android.text.TextWatcher;
-import android.text.style.ImageSpan;
 import android.util.Patterns;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
@@ -37,8 +33,6 @@ public class SignIn extends BaseActivity {
     TextView tvSignUpCta, tvSignInCta;
 
     LottieAnimationView lottieLoadingSignIn;
-
-    public static final String SHARED_PREFS = "signUpInfo";
     public static final String EMAIL_KEY = "email";
     public static final String PASSWORD_KEY = "password";
 
