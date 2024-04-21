@@ -38,7 +38,7 @@
                         style="@style/HEAD5_BOLD_18"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Hi Thanh Hang"
+                        android:text=""
                         android:textColor="@color/black"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
@@ -66,10 +66,11 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginEnd="4dp"
-                        android:src="@drawable/redcircle"
+                        android:src="@drawable/home_redcircle"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
                 </androidx.constraintlayout.widget.ConstraintLayout>
+
 
                 <EditText
                     android:id="@+id/editTextText"
@@ -78,14 +79,13 @@
                     android:layout_height="40dp"
                     android:background="@drawable/search_background"
                     android:drawableStart="@drawable/search"
-                    android:drawableEnd="@drawable/filter_search"
+                    android:drawableEnd="@drawable/search_filter"
                     android:drawablePadding="8dp"
                     android:ems="10"
                     android:hint="Tìm kiếm"
                     android:inputType="text"
                     android:padding="12dp"
                     android:textColorHint="@color/darkTertiary" />
-
 
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="match_parent"
@@ -154,14 +154,14 @@
                         android:id="@+id/imgCate1"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:src="@drawable/cat1" />
+                        android:src="@drawable/cate1" />
 
                     <TextView
                         android:id="@+id/txtCate1"
                         style="@style/BODY_XSMALL_SEMI_10"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="8dp"
+
                         android:text="Thức ăn"
                         android:textAlignment="center"
                         android:textColor="@color/black" />
@@ -177,14 +177,13 @@
                         android:id="@+id/imgCate2"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:src="@drawable/cat2" />
+                        android:src="@drawable/cate2" />
 
                     <TextView
                         android:id="@+id/txtCate2"
                         style="@style/BODY_XSMALL_SEMI_10"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="8dp"
                         android:text="Đồ chơi"
                         android:textAlignment="center"
                         android:textColor="@color/black" />
@@ -200,14 +199,13 @@
                         android:id="@+id/imgCate3"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:src="@drawable/cat3" />
+                        android:src="@drawable/cate3" />
 
                     <TextView
                         android:id="@+id/txtCate3"
                         style="@style/BODY_XSMALL_SEMI_10"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="8dp"
                         android:text="Vật dụng"
                         android:textAlignment="center"
                         android:textColor="@color/black" />
@@ -223,14 +221,13 @@
                         android:id="@+id/imgCate4"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:src="@drawable/cat4" />
+                        android:src="@drawable/cate4" />
 
                     <TextView
                         android:id="@+id/txtCate4"
                         style="@style/BODY_XSMALL_SEMI_10"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="8dp"
                         android:text="Chăm sóc"
                         android:textAlignment="center"
                         android:textColor="@color/black" />
@@ -246,14 +243,13 @@
                         android:id="@+id/imgCate5"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:src="@drawable/cat5" />
+                        android:src="@drawable/cate5" />
 
                     <TextView
                         android:id="@+id/txtCate5"
                         style="@style/BODY_XSMALL_SEMI_10"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="8dp"
                         android:text="UnitCard"
                         android:textAlignment="center"
                         android:textColor="@color/black" />
@@ -269,14 +265,13 @@
                         android:id="@+id/imgCate6"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:src="@drawable/cat6" />
+                        android:src="@drawable/cate6" />
 
                     <TextView
                         android:id="@+id/txtCateThucAn"
                         style="@style/BODY_XSMALL_SEMI_10"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="8dp"
                         android:text="Cẩm nang"
                         android:textAlignment="center"
                         android:textColor="@color/black" />
@@ -353,67 +348,72 @@
                 android:layout_height="match_parent"
                 android:paddingBottom="12dp" />
 
-            <LinearLayout
+            <HorizontalScrollView
+                android:id="@+id/horizontalscrollView"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:orientation="horizontal">
-
-
-                <androidx.cardview.widget.CardView
+                android:layout_height="wrap_content"
+                android:scrollbars="none"
+                android:background="@color/white"
+                android:layout_marginTop="15dp"
+                android:paddingLeft="10dp">
+                <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginEnd="10dp"
-                    android:layout_marginBottom="20dp"
-                    android:outlineSpotShadowColor="@color/brandPrimary"
-                    android:transformPivotX="4dp"
-                    android:transformPivotY="6dp"
-                    app:cardCornerRadius="16dp"
-                    app:cardElevation="24dp">
+                    android:orientation="horizontal">
+                    <androidx.cardview.widget.CardView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="10dp"
+                        android:layout_marginBottom="20dp"
+                        android:outlineSpotShadowColor="@color/brandPrimary"
+                        android:transformPivotX="4dp"
+                        android:transformPivotY="6dp"
+                        app:cardCornerRadius="16dp"
+                        app:cardElevation="24dp">
 
-                    <ImageView
-                        android:id="@+id/imgGroupBanner1"
-                        android:layout_width="260dp"
-                        android:layout_height="147.16dp"
-                        android:src="@drawable/group_banner_1" />
-                </androidx.cardview.widget.CardView>
+                        <ImageView
+                            android:id="@+id/imgGroupBanner1"
+                            android:layout_width="260dp"
+                            android:layout_height="147.16dp"
+                            android:src="@drawable/group_banner_1" />
+                    </androidx.cardview.widget.CardView>
 
-                <androidx.cardview.widget.CardView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginEnd="10dp"
-                    android:layout_marginBottom="20dp"
-                    android:outlineSpotShadowColor="@color/brandPrimary"
-                    android:transformPivotX="4dp"
-                    android:transformPivotY="6dp"
-                    app:cardCornerRadius="16dp"
-                    app:cardElevation="24dp">
+                    <androidx.cardview.widget.CardView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="10dp"
+                        android:layout_marginBottom="20dp"
+                        android:outlineSpotShadowColor="@color/brandPrimary"
+                        android:transformPivotX="4dp"
+                        android:transformPivotY="6dp"
+                        app:cardCornerRadius="16dp"
+                        app:cardElevation="24dp">
+                        <ImageView
+                            android:id="@+id/imgGroupBanner2"
+                            android:layout_width="260dp"
+                            android:layout_height="147.16dp"
+                            android:src="@drawable/group_banner_2" />
+                    </androidx.cardview.widget.CardView>
 
-                    <ImageView
-                        android:id="@+id/imgGroupBanner2"
-                        android:layout_width="260dp"
-                        android:layout_height="147.16dp"
-                        android:src="@drawable/group_banner_2" />
-                </androidx.cardview.widget.CardView>
+                    <androidx.cardview.widget.CardView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="10dp"
+                        android:layout_marginBottom="20dp"
+                        android:outlineSpotShadowColor="@color/brandPrimary"
+                        android:transformPivotX="4dp"
+                        android:transformPivotY="6dp"
+                        app:cardCornerRadius="16dp"
+                        app:cardElevation="24dp">
 
-                <androidx.cardview.widget.CardView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginEnd="10dp"
-                    android:layout_marginBottom="20dp"
-                    android:outlineSpotShadowColor="@color/brandPrimary"
-                    android:transformPivotX="4dp"
-                    android:transformPivotY="6dp"
-                    app:cardCornerRadius="16dp"
-                    app:cardElevation="24dp">
-
-                    <ImageView
-                        android:id="@+id/imgGroupBanner3"
-                        android:layout_width="260dp"
-                        android:layout_height="147.16dp"
-                        android:src="@drawable/group_banner_3" />
-                </androidx.cardview.widget.CardView>
-            </LinearLayout>
-
+                        <ImageView
+                            android:id="@+id/imgGroupBanner3"
+                            android:layout_width="260dp"
+                            android:layout_height="147.16dp"
+                            android:src="@drawable/group_banner_3" />
+                    </androidx.cardview.widget.CardView>
+                </LinearLayout>
+            </HorizontalScrollView>
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
@@ -455,6 +455,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Cẩm nang cho các Sen"
+                    android:layout_marginBottom="10dp"
                     android:textColor="@color/black"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
@@ -470,6 +471,7 @@
             </androidx.constraintlayout.widget.ConstraintLayout>
 
             <androidx.recyclerview.widget.RecyclerView
+                android:padding="10dp"
                 android:id="@+id/homeblog"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent" />

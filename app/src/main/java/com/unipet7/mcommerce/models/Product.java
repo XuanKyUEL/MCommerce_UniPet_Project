@@ -1,13 +1,58 @@
 package com.unipet7.mcommerce.models;
 
 public class Product {
+
+    private int ProductId;
+
+    private int CategoryId;
+
+    public int getProductId() {
+        return ProductId;
+    }
+
+    public void setProductId(int productId) {
+        ProductId = productId;
+    }
+
+    public int getCategoryId() {
+        return CategoryId;
+    }
+
+    public void setCategoryId(int categoryId) {
+        CategoryId = categoryId;
+    }
+
+    public String getProductDescription() {
+        return ProductDescription;
+    }
+
+    public void setProductDescription(String productDescription) {
+        ProductDescription = productDescription;
+    }
+
+    public String getProductImageUrl() {
+        return ProductImageUrl;
+    }
+
+    public void setProductImageUrl(String productImageUrl) {
+        ProductImageUrl = productImageUrl;
+    }
+
+    private String ProductDescription, ProductImageUrl;
+
+
+
     int imvThumb;
     String productname;
+
     double productprice;
     double productratenum;
     double producttotalnum;
     double salepercent;
     double presaleprice;
+
+    public Product() {
+    }
 
     public Product(int imvThumb, String productname, double productprice, double productratenum, double producttotalnum, double salepercent, double presaleprice) {
         this.imvThumb = imvThumb;

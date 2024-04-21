@@ -1,40 +1,51 @@
 package com.unipet7.mcommerce.fragments;
 
-import androidx.annotation.Nullable;
-import androidx.appcompat.app.ActionBar;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
-import androidx.fragment.app.Fragment;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.ActionBar;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
+import androidx.fragment.app.Fragment;
+
 import com.google.firebase.auth.FirebaseAuth;
 import com.unipet7.mcommerce.R;
 import com.unipet7.mcommerce.activities.MainActivity;
 import com.unipet7.mcommerce.activities.ProfileFunction;
+import com.unipet7.mcommerce.activities.SignIn;
+import com.unipet7.mcommerce.adapters.MessageDialogAdapter;
 import com.unipet7.mcommerce.databinding.FragmentProfileBinding;
+import com.unipet7.mcommerce.firebase.FireStoreClass;
 import com.unipet7.mcommerce.models.MessageDialog;
-
-import java.util.Objects;
+import com.unipet7.mcommerce.models.User;
+import com.unipet7.mcommerce.utils.LoadingDialog;
 
 public class Profile extends Fragment {
-    FragmentProfileBinding binding;
+    FragmentProfileBinding binding = null;
 
     MessageDialogAdapter messageDialogAdapter;
     MessageDialog messageDialog;
 
+    LoadingDialog ldDialog;
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        binding = FragmentProfileBinding.inflate(inflater, container, false);
+        ldDialog = new LoadingDialog();
+        ldDialog.showLoadingDialog(getActivity());
+        if (binding == null) {
+            binding = FragmentProfileBinding.inflate(inflater, container, false);
+        }
         addEvents();
         addEvents1();
         addEvents2();
         setActionBar(binding.toolbar);
+        FireStoreClass fireStoreClass = new FireStoreClass();
+        fireStoreClass.loadLoggedUserUI(this);
         return binding.getRoot();
 
     }
@@ -129,5 +140,11 @@ public class Profile extends Fragment {
     public void onDestroyView() {
         super.onDestroyView();
         binding = null;
+    }
+
+    public void loadUserData(User user) {
+        binding.txtUserName.setText(user.getName());
+        binding.txtEmail.setText(user.getEmail());
+        ldDialog.dissmis();
     }
 }
