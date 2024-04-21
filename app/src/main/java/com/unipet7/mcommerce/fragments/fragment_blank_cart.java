@@ -3,12 +3,15 @@ package com.unipet7.mcommerce.fragments;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.unipet7.mcommerce.R;
+import com.unipet7.mcommerce.databinding.FragmentBlankCartBinding;
+import com.unipet7.mcommerce.databinding.FragmentEmptyNotificationBinding;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -25,6 +28,7 @@ public class fragment_blank_cart extends Fragment {
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
+    FragmentBlankCartBinding binding;
 
     public fragment_blank_cart() {
         // Required empty public constructor
@@ -61,6 +65,25 @@ public class fragment_blank_cart extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_blank_cart, container, false);
+        binding= FragmentBlankCartBinding.inflate(inflater, container, false);
+        addEvents();
+        return binding.getRoot();    }
+
+    private void addEvents() {
+        binding.btnBackHome.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Fragment homeFragment = new Home();
+
+                // Lấy FragmentManager
+                FragmentManager fragmentManager = requireActivity().getSupportFragmentManager();
+
+                // Thực hiện giao diện chuyển đổi Fragment
+                fragmentManager.beginTransaction()
+                        .replace(((ViewGroup) requireView().getParent()).getId(), homeFragment)
+                        .addToBackStack(null)
+                        .commit();
+            }
+        });
     }
 }

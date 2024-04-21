@@ -1,7 +1,7 @@
 <selector xmlns:android="http://schemas.android.com/apk/res/android">
     <item android:state_pressed="true">
         <shape>
-            <solid android:color="@color/brandLighter" />
+            <solid android:color="#3A231D" />
             <corners android:radius="5dp" /> <!-- Độ cong của góc nút -->
         </shape>
     </item>

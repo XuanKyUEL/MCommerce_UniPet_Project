@@ -5,14 +5,15 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".fragments.Home"
+    android:background="@color/white"
     android:paddingTop="20dp">
 
     <ScrollView
         android:id="@+id/scrollView3"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:layout_editor_absoluteX="20dp"
-        tools:layout_editor_absoluteY="20dp">
+        tools:layout_editor_absoluteX="0dp"
+        tools:layout_editor_absoluteY="63dp">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -37,7 +38,7 @@
                         style="@style/HEAD5_BOLD_18"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Hi Thanh Hang"
+                        android:text=""
                         android:textColor="@color/black"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
@@ -310,6 +311,7 @@
 
 
             <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/lvlHomeSale"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent" />
 
@@ -317,8 +319,8 @@
                 android:id="@+id/imageView6"
                 android:layout_width="wrap_content"
                 android:layout_height="56dp"
-                android:src="@drawable/sieusale"
-                android:scaleType="centerCrop" />
+                android:scaleType="centerCrop"
+                android:src="@drawable/sieusale" />
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
@@ -346,69 +348,78 @@
             </androidx.constraintlayout.widget.ConstraintLayout>
 
             <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/lvlHomeProduct1"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:paddingBottom="12dp"/>
+                android:paddingBottom="12dp" />
 
-            <LinearLayout
+            <HorizontalScrollView
+                android:id="@+id/horizontalscrollView"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:orientation="horizontal">
-
-
-                <androidx.cardview.widget.CardView
+                android:layout_height="wrap_content"
+                android:scrollbars="none"
+                android:background="@color/white"
+                android:layout_marginTop="15dp"
+                android:paddingLeft="10dp">
+                <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:outlineSpotShadowColor="@color/brandPrimary"
-                    app:cardCornerRadius="16dp"
-                    app:cardElevation="24dp"
-                    android:transformPivotY="6dp"
-                    android:transformPivotX="4dp"
-                    android:layout_marginBottom="20dp"
-                    android:layout_marginEnd="10dp">
+                    android:orientation="horizontal">
+                    <androidx.cardview.widget.CardView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="10dp"
+                        android:layout_marginBottom="20dp"
+                        android:outlineSpotShadowColor="@color/brandPrimary"
+                        android:transformPivotX="4dp"
+                        android:transformPivotY="6dp"
+                        app:cardCornerRadius="16dp"
+                        app:cardElevation="24dp">
 
-                    <ImageView
-                        android:id="@+id/imgGroupBanner1"
-                        android:layout_width="260dp"
-                        android:layout_height="147.16dp"
-                        android:src="@drawable/group_banner_1" />
-                </androidx.cardview.widget.CardView>
-                <androidx.cardview.widget.CardView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:outlineSpotShadowColor="@color/brandPrimary"
-                    app:cardCornerRadius="16dp"
-                    app:cardElevation="24dp"
-                    android:transformPivotY="6dp"
-                    android:transformPivotX="4dp"
-                    android:layout_marginBottom="20dp"
-                    android:layout_marginEnd="10dp">
+                        <ImageView
+                            android:id="@+id/imgGroupBanner1"
+                            android:layout_width="260dp"
+                            android:layout_height="147.16dp"
+                            android:src="@drawable/group_banner_1" />
+                    </androidx.cardview.widget.CardView>
 
-                    <ImageView
-                        android:id="@+id/imgGroupBanner2"
-                        android:layout_width="260dp"
-                        android:layout_height="147.16dp"
-                        android:src="@drawable/group_banner_2" />
-                </androidx.cardview.widget.CardView>
-                <androidx.cardview.widget.CardView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:outlineSpotShadowColor="@color/brandPrimary"
-                    app:cardCornerRadius="16dp"
-                    app:cardElevation="24dp"
-                    android:transformPivotY="6dp"
-                    android:transformPivotX="4dp"
-                    android:layout_marginBottom="20dp"
-                    android:layout_marginEnd="10dp">
+                    <androidx.cardview.widget.CardView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="10dp"
+                        android:layout_marginBottom="20dp"
+                        android:outlineSpotShadowColor="@color/brandPrimary"
+                        android:transformPivotX="4dp"
+                        android:transformPivotY="6dp"
+                        app:cardCornerRadius="16dp"
+                        app:cardElevation="24dp">
 
-                    <ImageView
-                        android:id="@+id/imgGroupBanner3"
-                        android:layout_width="260dp"
-                        android:layout_height="147.16dp"
-                        android:src="@drawable/group_banner_3" />
-                </androidx.cardview.widget.CardView>
-            </LinearLayout>
+                        <ImageView
+                            android:id="@+id/imgGroupBanner2"
+                            android:layout_width="260dp"
+                            android:layout_height="147.16dp"
+                            android:src="@drawable/group_banner_2" />
+                    </androidx.cardview.widget.CardView>
 
+                    <androidx.cardview.widget.CardView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="10dp"
+                        android:layout_marginBottom="20dp"
+                        android:outlineSpotShadowColor="@color/brandPrimary"
+                        android:transformPivotX="4dp"
+                        android:transformPivotY="6dp"
+                        app:cardCornerRadius="16dp"
+                        app:cardElevation="24dp">
+
+                        <ImageView
+                            android:id="@+id/imgGroupBanner3"
+                            android:layout_width="260dp"
+                            android:layout_height="147.16dp"
+                            android:src="@drawable/group_banner_3" />
+                    </androidx.cardview.widget.CardView>
+                </LinearLayout>
+            </HorizontalScrollView>
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
@@ -435,6 +446,7 @@
             </androidx.constraintlayout.widget.ConstraintLayout>
 
             <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/lvlHomeProduct2"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent" />
 
@@ -464,6 +476,7 @@
             </androidx.constraintlayout.widget.ConstraintLayout>
 
             <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/homeblog"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent" />
         </LinearLayout>

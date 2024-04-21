@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".fragments.FragmentAdressAdd"
+    android:orientation="vertical"
+    android:background="@color/white"
+    android:padding="10dp">
+
+    <com.google.android.material.appbar.AppBarLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:theme="@style/ThemeOverlay.AppCompat.DayNight.ActionBar"
+        android:gravity="center">
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/toolbaraddressadd"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            style="@style/HEAD5_BOLD_18"
+            android:background="@color/white"
+            tools:popupTheme="@style/Widget.Material3.PopupMenu.Overflow"
+            android:layout_gravity="center">
+            <TextView
+                android:layout_width="300dp"
+                android:layout_height="wrap_content"
+                android:textColor="@color/darkPrimary"
+                style="@style/HEAD5_BOLD_18"
+                android:gravity="center"
+                android:text="Thêm địa chỉ"/>
+        </androidx.appcompat.widget.Toolbar>
+    </com.google.android.material.appbar.AppBarLayout>
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Liên hệ"
+        style="@style/BODY_MED_BOLD_14"
+        android:gravity="left"
+        android:paddingLeft="35dp"
+        android:layout_marginTop="15dp"/>
+    <EditText
+        android:layout_marginTop="8dp"
+        android:id="@+id/edtuser"
+        android:layout_width="340dp"
+        android:layout_height="40dp"
+        android:hint="Họ và tên"
+        style="@style/BODY_MED_REG_14"
+        android:textColor="@color/darkPrimary"
+        android:paddingLeft="15dp"
+        android:layout_gravity="center"
+        android:background="@drawable/rectangle_outline"/>
+    <EditText
+        android:layout_marginTop="15dp"
+        android:id="@+id/edtphone"
+        android:layout_width="340dp"
+        android:layout_height="40dp"
+        android:hint="Số điện thoại"
+        android:paddingLeft="15dp"
+        style="@style/BODY_MED_REG_14"
+        android:textColor="@color/darkPrimary"
+        android:layout_gravity="center"
+        android:background="@drawable/rectangle_outline"/>
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Địa chỉ"
+        style="@style/BODY_MED_BOLD_14"
+        android:gravity="left"
+        android:paddingLeft="35dp"
+        android:layout_marginTop="15dp"/>
+    <EditText
+        android:layout_marginTop="8dp"
+        android:id="@+id/edtprovince"
+        android:layout_width="340dp"
+        android:layout_height="40dp"
+        android:hint="Tỉnh/Thành phố, Quận/Huyện, Phường/Xã"
+        style="@style/BODY_MED_REG_14"
+        android:textColor="@color/darkPrimary"
+        android:paddingLeft="15dp"
+        android:layout_gravity="center"
+        android:background="@drawable/rectangle_outline"/>
+    <EditText
+        android:layout_marginTop="15dp"
+        android:id="@+id/edtstress"
+        android:layout_width="340dp"
+        android:layout_height="40dp"
+        android:hint="Tên đường, Tòa nhà, Số nhà"
+        android:paddingLeft="15dp"
+        style="@style/BODY_MED_REG_14"
+        android:textColor="@color/darkPrimary"
+        android:layout_gravity="center"
+        android:background="@drawable/rectangle_outline"/>
+    <!--chỉnh bo góc lấy file xml custom-->
+    <Button
+        android:layout_marginTop="25dp"
+        android:id="@+id/btn_Done"
+        android:layout_width="250dp"
+        android:layout_height="40dp"
+        style="@style/BODY_MED_BOLD_14"
+        android:layout_gravity="center"
+        android:text="Hoàn thành"
+        android:background="@drawable/button_custom"/>
+
+</LinearLayout>

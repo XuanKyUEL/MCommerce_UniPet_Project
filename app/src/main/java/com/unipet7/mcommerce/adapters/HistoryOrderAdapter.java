@@ -10,7 +10,6 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.unipet7.mcommerce.R;
-import com.unipet7.mcommerce.activities.HistoryOrder;
 import com.unipet7.mcommerce.models.HistoryOrders;
 
 import java.text.NumberFormat;
