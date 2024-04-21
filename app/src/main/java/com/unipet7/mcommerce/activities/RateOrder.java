@@ -1,33 +1,43 @@
-package com.unipet7.mcommerce.fragments;
-
-import android.os.Bundle;
+package com.unipet7.mcommerce.activities;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
-import androidx.fragment.app.Fragment;
 
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
+import android.graphics.Color;
+import android.os.Bundle;
+import android.text.Spannable;
+import android.text.SpannableString;
+import android.text.style.TextAppearanceSpan;
+import android.view.Gravity;
 import android.widget.RatingBar;
+import android.widget.TextView;
 
 import com.unipet7.mcommerce.R;
-import com.unipet7.mcommerce.databinding.FragmentBlogBinding;
-import com.unipet7.mcommerce.databinding.FragmentRateOrderBinding;
+import com.unipet7.mcommerce.databinding.ActivityHistoryOrderBinding;
+import com.unipet7.mcommerce.databinding.ActivityRateOrderBinding;
 
-public class FragmentRateOrder extends Fragment {
-    FragmentRateOrderBinding binding;
+public class RateOrder extends AppCompatActivity {
+    ActivityRateOrderBinding binding;
+
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        binding = FragmentRateOrderBinding.inflate(inflater, container, false);
-        setActionBar(binding.toolbar1);
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        binding = ActivityRateOrderBinding.inflate(getLayoutInflater());
+        setContentView(binding.getRoot());
         addEvents();
-        return binding.getRoot();     }
-
+        setActionBar(binding.toolbar1);
+    }
+    public void setActionBar(@Nullable Toolbar toolbar) {
+        setSupportActionBar(toolbar);
+        ActionBar actionBar = getSupportActionBar();
+        assert actionBar != null;
+        actionBar.setDisplayHomeAsUpEnabled(true);
+        // Set icon arrow
+        actionBar.setHomeAsUpIndicator(R.drawable.ic_back);
+        actionBar.setDisplayShowTitleEnabled(false);
+    }
     private void addEvents() {
         binding.ratingbar1.setOnRatingBarChangeListener(new RatingBar.OnRatingBarChangeListener() {
             @Override
@@ -89,14 +99,6 @@ public class FragmentRateOrder extends Fragment {
                 }
             }
         });
-    }
 
-    public void setActionBar(@Nullable Toolbar toolbar) {
-        ((AppCompatActivity) getActivity()).setSupportActionBar(toolbar);
-        ActionBar actionBar = ((AppCompatActivity) getActivity()).getSupportActionBar();
-        assert actionBar != null;
-        actionBar.setDisplayHomeAsUpEnabled(true);
-        actionBar.setHomeAsUpIndicator(R.drawable.ic_back_profile);
-        actionBar.setDisplayShowTitleEnabled(false);
     }
 }

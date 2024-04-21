@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".fragments.FragmentRateOrder"
+    tools:context=".activities.RateOrder"
     android:orientation="vertical"
     android:id="@+id/RateOrder"
     android:background="@color/white">
@@ -165,7 +165,7 @@
         android:gravity="center"
         android:layout_gravity="center"
         android:background="@drawable/rectangle_outline"/>
-    <!--chỉnh bo góc lấy file xml custom-->
+<!--chỉnh bo góc lấy file xml custom-->
     <Button
         android:layout_marginTop="50dp"
         android:id="@+id/btn_Done"
