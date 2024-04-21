@@ -15,10 +15,7 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.unipet7.mcommerce.R;
 import com.unipet7.mcommerce.databinding.ActivityMainBinding;
-<<<<<<< HEAD
-=======
 import com.unipet7.mcommerce.fragments.FragmentAllProduct;
->>>>>>> main
 import com.unipet7.mcommerce.firebase.FireStoreClass;
 import com.unipet7.mcommerce.fragments.Fragment_Empty_Notification;
 import com.unipet7.mcommerce.fragments.Home;
