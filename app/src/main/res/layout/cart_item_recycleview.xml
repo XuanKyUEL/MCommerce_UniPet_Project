@@ -3,31 +3,26 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_margin="16dp"
     app:cardCornerRadius="8dp"
-    app:cardElevation="10dp"
+    android:layout_marginTop="5dp"
+    app:cardElevation="5dp"
+    android:layout_marginBottom="10dp"
+    android:layout_marginStart="5dp"
+    android:layout_marginEnd="5dp"
     app:cardPreventCornerOverlap="false">
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
-        <CheckBox
-            android:id="@+id/cbCartItem"
-            android:layout_width="15dp"
-            android:layout_height="15dp"
-            android:layout_marginTop="5dp"
-            android:layout_marginStart="5dp"
-            android:button="@drawable/bg_cart_checkbox"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"/>
+
         <ImageView
             android:id="@+id/imvProductCart"
             android:layout_width="75dp"
             android:layout_height="75dp"
             android:layout_marginStart="10dp"
-            android:layout_marginTop="10dp"
+            android:src="@drawable/ic_launcher_background"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/cbCartItem"
-            android:src="@drawable/ic_launcher_background"/>
+            app:layout_constraintTop_toTopOf="parent" />
         <TextView
             android:id="@+id/txtProductName"
             android:layout_width="0dp"
@@ -103,19 +98,19 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintBottom_toTopOf="@+id/txtSumNumbPrice"/>
         <ImageView
-            android:id="@+id/imvPlus"
-            android:layout_width="15dp"
-            android:layout_height="15dp"
-            android:src="@drawable/ic_cart_plus"
+            android:id="@+id/imvMinus"
+            android:layout_width="18dp"
+            android:layout_height="18dp"
+            android:src="@drawable/ic_cart_minus"
             app:layout_constraintStart_toStartOf="@id/txtNumberOrder"
             app:layout_constraintTop_toTopOf="@id/txtNumberOrder"
             app:layout_constraintBottom_toBottomOf="@id/txtNumberOrder"
             android:layout_marginStart="10dp"/>
         <ImageView
-            android:id="@+id/imvMinus"
-            android:layout_width="15dp"
-            android:layout_height="15dp"
-            android:src="@drawable/ic_cart_minus"
+            android:id="@+id/imvPlus"
+            android:layout_width="18dp"
+            android:layout_height="18dp"
+            android:src="@drawable/ic_cart_plus"
             app:layout_constraintEnd_toEndOf="@id/txtNumberOrder"
             app:layout_constraintTop_toTopOf="@id/txtNumberOrder"
             app:layout_constraintBottom_toBottomOf="@id/txtNumberOrder"

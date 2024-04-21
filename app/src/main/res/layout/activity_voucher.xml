@@ -35,7 +35,8 @@
         app:layout_constraintBottom_toTopOf="@+id/btnAppVoucher"
         app:layout_constraintTop_toBottomOf="@+id/aplBar"
         app:layout_constraintVertical_bias="1.0"
-        tools:layout_editor_absoluteX="13dp" />
+        tools:layout_editor_absoluteX="13dp"
+        android:layout_marginStart="5dp"/>
     <Button
         android:id="@+id/btnAppVoucher"
         android:layout_width="wrap_content"

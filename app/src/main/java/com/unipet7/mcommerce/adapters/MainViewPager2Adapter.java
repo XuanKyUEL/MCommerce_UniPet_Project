@@ -10,6 +10,7 @@ import com.unipet7.mcommerce.fragments.Fragment_Empty_Notification;
 import com.unipet7.mcommerce.fragments.Home;
 import com.unipet7.mcommerce.fragments.Profile;
 import com.unipet7.mcommerce.fragments.fragment_blank_cart;
+import com.unipet7.mcommerce.fragments.fragment_cart;
 import com.unipet7.mcommerce.fragments.fragment_notification;
 
 public class MainViewPager2Adapter extends FragmentStateAdapter {
@@ -26,7 +27,7 @@ public class MainViewPager2Adapter extends FragmentStateAdapter {
             case 1:
                 return new FragmentAllProduct();
             case 2:
-                return new fragment_blank_cart();
+                return new fragment_cart();
             case 3:
                 return new Fragment_Empty_Notification();
             case 4:
