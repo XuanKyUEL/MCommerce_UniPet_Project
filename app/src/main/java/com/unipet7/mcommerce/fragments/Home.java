@@ -106,8 +106,19 @@ public class Home extends Fragment {
         return binding.getRoot();
     }
 
-
     private void addEvents() {
+        binding.imgCate6.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Fragment fragmentBlog = new FragmentBlog();
+                FragmentManager fragmentManager = requireActivity().getSupportFragmentManager();
+
+                // Thực hiện giao diện chuyển đổi Fragment
+                fragmentManager.beginTransaction()
+                        .replace(((ViewGroup) requireView().getParent()).getId(), fragmentBlog)
+                        .addToBackStack(null)
+                        .commit();
+            });
         binding.imageView.setOnClickListener(v -> {
             Fragment notyfragment = new Fragment_Empty_Notification();
             FragmentManager fragmentManager = requireActivity().getSupportFragmentManager();
@@ -124,10 +135,10 @@ public class Home extends Fragment {
     private void loadBlog() {
         binding.homeblog.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false));
         ArrayList<Blogs> blogs = new ArrayList<>();
-        blogs.add(new Blogs("5 tiêu chuẩn thức ăn cho mèo mà một Sen chính hiệu cần biết", "blog_4", "14.02.2024", "1. Giảm lượng tinh bột trong khẩu phần ăn mỗi ngày. Đúng rằng con người không thể sống thiếu ..."));
-        blogs.add(new Blogs("Những lưu ý khi triệt sản chó cái", "blog_5", "17.02.2024", "1. Triệt sản là gì?Triệt sản (hay thiến) đây là một phẫu thuật loại bỏ cơ quan sinh dục của động vật. Việc này nhằm..."));
-        blogs.add(new Blogs("Cách xử lý vết thương khi bị chó cắn", "blog_6", "20.3.2024", "Hiện nay bệnh dại chưa có thuốc điều trị đặc hiệu. Xử lý vết thương khi bị chó cắn đúng cách và được tiêm vắc-xin..."));
-        blogAdapter = new BlogAdapter(blogs,2);
+        blogs.add(new Blogs("5 tiêu chuẩn thức ăn cho mèo mà một Sen chính hiệu cần biết", R.drawable.blog2_image_4, "14.02.2024", "1. Giảm lượng tinh bột trong khẩu phần ăn mỗi ngày. Đúng rằng con người không thể sống thiếu ...",2));
+        blogs.add(new Blogs("Những lưu ý khi triệt sản chó cái", R.drawable.blog2_image_5, "17.02.2024", "1. Triệt sản là gì?Triệt sản (hay thiến) đây là một phẫu thuật loại bỏ cơ quan sinh dục của động vật. Việc này nhằm...",2));
+        blogs.add(new Blogs("Cách xử lý vết thương khi bị chó cắn", R.drawable.blog2_image_6, "20.3.2024", "Hiện nay bệnh dại chưa có thuốc điều trị đặc hiệu. Xử lý vết thương khi bị chó cắn đúng cách và được tiêm vắc-xin...",2));
+        blogAdapter = new BlogAdapter(blogs);
         binding.homeblog.setAdapter(blogAdapter);
     }
 
@@ -141,13 +152,13 @@ public class Home extends Fragment {
     }
 
     private void loadData() {
-        binding.lvlHomeSale.setLayoutManager(new GridLayoutManager(getContext(), 2));
+        binding.lvlHomeSale.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
         binding.lvlHomeSale.setAdapter(adapter);
         binding.lvlHomeSale.setHasFixedSize(true);
-        binding.lvlHomeProduct1.setLayoutManager(new GridLayoutManager(getContext(), 2));
+        binding.lvlHomeProduct1.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
         binding.lvlHomeProduct1.setAdapter(adapter);
         binding.lvlHomeProduct1.setHasFixedSize(true);
-        binding.lvlHomeProduct2.setLayoutManager(new GridLayoutManager(getContext(), 2));
+        binding.lvlHomeProduct2.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
         binding.lvlHomeProduct2.setAdapter(adapter);
         binding.lvlHomeProduct2.setHasFixedSize(true);
     }
