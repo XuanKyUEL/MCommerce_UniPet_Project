@@ -1,6 +1,5 @@
 package com.unipet7.mcommerce;
 
-import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -9,18 +8,12 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.unipet7.mcommerce.activities.Home;
-import com.unipet7.mcommerce.databinding.FragmentBlankCartBinding;
-import com.unipet7.mcommerce.databinding.FragmentCartBinding;
-import com.unipet7.mcommerce.databinding.FragmentHomeBinding;
-
 /**
  * A simple {@link Fragment} subclass.
- * Use the {@link fragment_blank_cart#newInstance} factory method to
+ * Use the {@link fragment_sucess_cart#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class fragment_blank_cart extends Fragment {
-    FragmentBlankCartBinding binding;
+public class fragment_sucess_cart extends Fragment {
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -31,7 +24,7 @@ public class fragment_blank_cart extends Fragment {
     private String mParam1;
     private String mParam2;
 
-    public fragment_blank_cart() {
+    public fragment_sucess_cart() {
         // Required empty public constructor
     }
 
@@ -41,11 +34,11 @@ public class fragment_blank_cart extends Fragment {
      *
      * @param param1 Parameter 1.
      * @param param2 Parameter 2.
-     * @return A new instance of fragment fragment_blank_cart.
+     * @return A new instance of fragment fragment_sucess_cart.
      */
     // TODO: Rename and change types and number of parameters
-    public static fragment_blank_cart newInstance(String param1, String param2) {
-        fragment_blank_cart fragment = new fragment_blank_cart();
+    public static fragment_sucess_cart newInstance(String param1, String param2) {
+        fragment_sucess_cart fragment = new fragment_sucess_cart();
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
         args.putString(ARG_PARAM2, param2);
@@ -66,14 +59,6 @@ public class fragment_blank_cart extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        binding = FragmentBlankCartBinding.inflate(inflater, container, false);
-        binding.btnBackHome.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(getContext(), FragmentHomeBinding.class);
-                startActivity(intent);
-            }
-        });
-        return binding.getRoot();
+        return inflater.inflate(R.layout.fragment_sucess_cart, container, false);
     }
 }
