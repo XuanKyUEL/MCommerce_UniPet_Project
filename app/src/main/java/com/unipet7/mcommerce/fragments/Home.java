@@ -2,10 +2,13 @@ package com.unipet7.mcommerce.fragments;
 
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
+import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,8 +17,10 @@ import com.unipet7.mcommerce.R;
 import com.unipet7.mcommerce.adapters.BlogAdapter;
 import com.unipet7.mcommerce.adapters.ProductAdapter;
 import com.unipet7.mcommerce.databinding.FragmentHomeBinding;
+import com.unipet7.mcommerce.firebase.FireStoreClass;
 import com.unipet7.mcommerce.models.Blogs;
 import com.unipet7.mcommerce.models.Product;
+import com.unipet7.mcommerce.models.User;
 
 import java.util.ArrayList;
 
@@ -38,6 +43,9 @@ public class Home extends Fragment {
     ProductAdapter adapter;
     ArrayList<Product> products;
     BlogAdapter blogAdapter;
+
+    private static final String KEY_FLAG = "isLoadUser";
+    boolean isLoadUser = false;
 
     public Home() {
         // Required empty public constructor
@@ -62,11 +70,21 @@ public class Home extends Fragment {
     }
 
     @Override
+    public void onSaveInstanceState(@NonNull Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putBoolean(KEY_FLAG, isLoadUser);
+    }
+
+    @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
+        }
+        if (savedInstanceState != null) {
+            isLoadUser = savedInstanceState.getBoolean(KEY_FLAG);
+            Log.i("HomeFragment", "onCreate: " + isLoadUser);
         }
     }
 
@@ -75,28 +93,20 @@ public class Home extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         binding = FragmentHomeBinding.inflate(inflater,container,false);
+
         initData();
         loadData();
         loadBlog();
         addEvents();
-
+        if (savedInstanceState == null && !isLoadUser) {
+            FireStoreClass fireStoreClass = new FireStoreClass();
+            fireStoreClass.loadLoggedUserUI(this);
+            isLoadUser = true;
+        }
         return binding.getRoot();
     }
 
     private void addEvents() {
-        binding.imageView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Fragment notyfragment = new Fragment_Empty_Notification();
-                FragmentManager fragmentManager = requireActivity().getSupportFragmentManager();
-
-                // Thực hiện giao diện chuyển đổi Fragment
-                fragmentManager.beginTransaction()
-                        .replace(((ViewGroup) requireView().getParent()).getId(), notyfragment)
-                        .addToBackStack(null)
-                        .commit();
-            }
-        });
         binding.imgCate6.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -108,7 +118,16 @@ public class Home extends Fragment {
                         .replace(((ViewGroup) requireView().getParent()).getId(), fragmentBlog)
                         .addToBackStack(null)
                         .commit();
-            }
+            });
+        binding.imageView.setOnClickListener(v -> {
+            Fragment notyfragment = new Fragment_Empty_Notification();
+            FragmentManager fragmentManager = requireActivity().getSupportFragmentManager();
+
+            // Thực hiện giao diện chuyển đổi Fragment
+            fragmentManager.beginTransaction()
+                    .replace(((ViewGroup) requireView().getParent()).getId(), notyfragment)
+                    .addToBackStack(null)
+                    .commit();
         });
     }
 
@@ -143,4 +162,9 @@ public class Home extends Fragment {
         binding.lvlHomeProduct2.setAdapter(adapter);
         binding.lvlHomeProduct2.setHasFixedSize(true);
     }
+
+    public void greeting(User user) {
+        binding.txtUserName.setText("Xin chào " + user.getName());
+    }
+
 }

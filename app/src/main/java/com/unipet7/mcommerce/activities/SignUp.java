@@ -1,21 +1,19 @@
 package com.unipet7.mcommerce.activities;
 
 import static com.unipet7.mcommerce.activities.SignIn.EMAIL_KEY;
-import static com.unipet7.mcommerce.activities.SignIn.PASSWORD_KEY;
 
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.ColorStateList;
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.SpannableString;
 import android.text.Spanned;
 import android.text.TextWatcher;
 import android.text.style.ForegroundColorSpan;
-import android.text.style.ImageSpan;
 import android.text.style.UnderlineSpan;
+import android.util.Log;
 import android.util.Patterns;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
@@ -28,14 +26,15 @@ import androidx.appcompat.widget.AppCompatEditText;
 import androidx.core.content.ContextCompat;
 
 import com.airbnb.lottie.LottieAnimationView;
-import com.google.android.material.internal.TextWatcherAdapter;
 import com.google.android.material.textfield.TextInputLayout;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.unipet7.mcommerce.R;
 import com.unipet7.mcommerce.adapters.MessageDialogAdapter;
 import com.unipet7.mcommerce.databinding.ActivitySignUpBinding;
+import com.unipet7.mcommerce.firebase.FireStoreClass;
 import com.unipet7.mcommerce.models.MessageDialog;
+import com.unipet7.mcommerce.models.User;
 
 public class SignUp extends BaseActivity {
 
@@ -54,6 +53,9 @@ public class SignUp extends BaseActivity {
 
     boolean isTermsAndConditionsChecked = false;
 
+    FirebaseAuth mAuth;
+    FireStoreClass fireStoreClass;
+
 
 
     public static final String SHARED_PREFS = "signUpInfo";
@@ -63,6 +65,8 @@ public class SignUp extends BaseActivity {
         super.onCreate(savedInstanceState);
         binding = ActivitySignUpBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
+        mAuth = FirebaseAuth.getInstance();
+        fireStoreClass = new FireStoreClass();
 
         configTermsAndConditions();
         mapping();
@@ -70,7 +74,7 @@ public class SignUp extends BaseActivity {
         addEvents();
     }
 
-    private void resetErrorUI() {
+    public void resetErrorUI() {
         edtEmail.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -228,11 +232,15 @@ public class SignUp extends BaseActivity {
 
     private void signUpUser(String email, String password) {
         loadingAnimation();
-        FirebaseAuth.getInstance().createUserWithEmailAndPassword(email, password)
+        mAuth.createUserWithEmailAndPassword(email, password)
                 .addOnCompleteListener(task -> {
                     if (task.isSuccessful()) {
-                        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-                        signUpDialog("Đăng ký thành công", "Chúc mừng bạn đã đăng ký tài khoản thành công", "Đăng nhập ngay", "Đóng");
+                        String initName = email.substring(0, email.indexOf("@"));
+                        FirebaseUser user = mAuth.getCurrentUser();
+                        assert user != null;
+                        User initUserInfo = new User(user.getUid(), email, initName);
+                        Log.i("SignUp", "signUpUser: " + initUserInfo.getId());
+                        fireStoreClass.addUserToFirebaseDB(this, initUserInfo);
                     } else {
                         signUpDialog("Đăng ký thất bại", "Đăng ký tài khoản không thành công", "", "Đóng");
                     }
@@ -240,7 +248,7 @@ public class SignUp extends BaseActivity {
                 });
     }
 
-    private void resetAnimation() {
+    public void resetAnimation() {
         rlSignUp.setClickable(true);
         tvSignUnCta.setVisibility(View.VISIBLE);
         lottieAnimationView.setVisibility(View.GONE);
@@ -254,7 +262,7 @@ public class SignUp extends BaseActivity {
         lottieAnimationView.playAnimation();
     }
 
-    private void signUpDialog(String title, String message, String positiveText, String negativeText) {
+    public void signUpDialog(String title, String message, String positiveText, String negativeText) {
         messageDialogAdapter = new MessageDialogAdapter(this);
         messageDialog = new MessageDialog(title, message, positiveText, negativeText);
         messageDialog.setCancelable(true);
@@ -314,5 +322,12 @@ public class SignUp extends BaseActivity {
 // Đặt SpannableString cho TextView
         TextView termsAndConditions = binding.tvTerms;
         termsAndConditions.setText(spannableString);
+    }
+
+    public void userRegisteredSuccess() {
+        signUpDialog("Đăng ký thành công", "Chúc mừng bạn đã đăng ký tài khoản thành công", "Đăng nhập ngay", "Đóng");
+        resetAnimation();
+        // sign out user
+        mAuth.signOut();
     }
 }
