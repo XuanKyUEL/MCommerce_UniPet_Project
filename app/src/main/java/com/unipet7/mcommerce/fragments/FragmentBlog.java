@@ -16,7 +16,6 @@ import android.view.ViewGroup;
 
 import com.unipet7.mcommerce.R;
 import com.unipet7.mcommerce.adapters.BlogAdapter;
-import com.unipet7.mcommerce.databinding.ActivityBlogBinding;
 import com.unipet7.mcommerce.databinding.FragmentBlogBinding;
 import com.unipet7.mcommerce.databinding.FragmentContactListBinding;
 import com.unipet7.mcommerce.models.Blogs;
@@ -34,9 +33,20 @@ public class FragmentBlog extends Fragment {
         // Inflate the layout for this fragment
         binding = FragmentBlogBinding.inflate(inflater, container, false);
         setActionBar(binding.toolbar);
+        addEvents();
         recyclerViewBlog();
         recyclerViewBlog2();
         return binding.getRoot();    }
+
+    private void addEvents() {
+        binding.toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                requireActivity().getOnBackPressedDispatcher().onBackPressed();
+            }
+        });
+    }
+
     public void setActionBar(@Nullable Toolbar toolbar) {
         ((AppCompatActivity) getActivity()).setSupportActionBar(toolbar);
         ActionBar actionBar = ((AppCompatActivity) getActivity()).getSupportActionBar();
@@ -51,6 +61,7 @@ public class FragmentBlog extends Fragment {
         blogs.add(new Blogs("5 tiêu chuẩn thức ăn cho mèo mà một Sen chính hiệu cần biết", R.drawable.blog2_image_4, "14.02.2024", "1. Giảm lượng tinh bột trong khẩu phần ăn mỗi ngày. Đúng rằng con người không thể sống thiếu ...",2));
         blogs.add(new Blogs("Những lưu ý khi triệt sản chó cái", R.drawable.blog2_image_5, "17.02.2024", "1. Triệt sản là gì?Triệt sản (hay thiến) đây là một phẫu thuật loại bỏ cơ quan sinh dục của động vật. Việc này nhằm...",2));
         blogs.add(new Blogs("Cách xử lý vết thương khi bị chó cắn", R.drawable.blog2_image_6, "20.3.2024", "Hiện nay bệnh dại chưa có thuốc điều trị đặc hiệu. Xử lý vết thương khi bị chó cắn đúng cách và được tiêm vắc-xin...",2));
+        blogs.add(new Blogs("Top 7 giống chó dễ nuôi nhất", R.drawable.blog_image, "20.3.2024", "1. Chó ChihuahuaChihuahua là giống chó đang được nuôi khá nhiều tại Việt Nam. Lý do dòng chó này được yêu chuộng một cách rộng...",2));
         adapter2 = new BlogAdapter(blogs);
         binding.rclBlogs2.setAdapter(adapter2);
     }
@@ -59,9 +70,10 @@ public class FragmentBlog extends Fragment {
     private void recyclerViewBlog() {
         binding.rclBlogs.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, false));
         ArrayList<Blogs> blogs = new ArrayList<>();
-        blogs.add(new Blogs("a", R.drawable.blog_image, "a", "a",1));
-        blogs.add(new Blogs("a", R.drawable.blog_image_1, "a", "a",1));
-        blogs.add(new Blogs("a", R.drawable.blog_image_2, "a", "a",1));
+        blogs.add(new Blogs("Top 7 giống chó dễ nuôi nhất", R.drawable.blog_image, "a", "a",1));
+        blogs.add(new Blogs("Mách bạn 8 lý do khiến mèo bỏ ăn", R.drawable.blog_image_1, "a", "a",1));
+        blogs.add(new Blogs("Những bài học cuộc sống mà thú cưng dạy cho bạn", R.drawable.blog_image_2, "a", "a",1));
+        blogs.add(new Blogs("Cách xử lý vết thương khi bị chó cắn", R.drawable.blog2_image_6, "20.3.2024", "Hiện nay bệnh dại chưa có thuốc điều trị đặc hiệu. Xử lý vết thương khi bị chó cắn đúng cách và được tiêm vắc-xin...",1));
         adapter = new BlogAdapter(blogs);
         binding.rclBlogs.setAdapter(adapter);
 

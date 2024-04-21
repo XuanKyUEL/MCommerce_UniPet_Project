@@ -61,6 +61,7 @@ public class BlogAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
         if (holder instanceof ImageViewHolder) {
             ImageViewHolder imageViewHolder = (ImageViewHolder) holder;
             imageViewHolder.imageView.setImageResource(blogs.getPic());
+            imageViewHolder.textViewName1.setText(blogs.getTitle());
         } else if (holder instanceof ImageWithDescriptionViewHolder) {
             ImageWithDescriptionViewHolder imageWithDescriptionViewHolder = (ImageWithDescriptionViewHolder) holder;
             imageWithDescriptionViewHolder.imageView.setImageResource(blogs.getPic());
@@ -69,65 +70,6 @@ public class BlogAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
             imageWithDescriptionViewHolder.textViewDate.setText(blogs.getPubDate());
         }
     }
-//    @Override
-//    public void onBindViewHolder(@NonNull  BlogAdapter.ViewHolder holder, int position) {
-//            String picList = "";
-//            int drawableResourceId;
-//
-//            if (layoutType == 1) {
-//                // Gán ảnh cho layout loại 1
-//                switch (position) {
-//                    case 0:
-//                        picList = "blog_1";
-//                        holder.mainLayout.setBackground(ContextCompat.getDrawable(holder.itemView.getContext(), R.drawable.blog_image));
-//                        break;
-//                    case 1:
-//                        picList = "blog_2";
-//                        holder.mainLayout.setBackground(ContextCompat.getDrawable(holder.itemView.getContext(), R.drawable.blog_image_1));
-//                        break;
-//                    case 2:
-//                        picList = "blog_3";
-//                        holder.mainLayout.setBackground(ContextCompat.getDrawable(holder.itemView.getContext(), R.drawable.blog_image_2));
-//                        break;
-//                    default:
-//                        break;
-//                }
-//                drawableResourceId = holder.itemView.getContext().getResources().getIdentifier(picList, "drawable", holder.itemView.getContext().getPackageName());
-//                Glide.with(holder.itemView.getContext())
-//                        .load(drawableResourceId)
-//                        .fitCenter()
-//                        .transform(new RoundedCornersTransformation(16 , 0))
-//                        .into(holder.blogPic);
-//            } else {
-//                // Gán ảnh cho layout loại 2
-//                holder.blogTitle.setText(blogsList.get(position).getTitle());
-//                holder.blogPubDate.setText(blogsList.get(position).getPubDate());
-//                holder.blogDesciption.setText(blogsList.get(position).getDescription());
-//
-//                switch (position) {
-//                    case 0:
-//                        picList = "blog_4";
-//                        holder.mainLayout2.setBackground(ContextCompat.getDrawable(holder.itemView.getContext(), R.drawable.blog2_image_4));
-//                        break;
-//                    case 1:
-//                        picList = "blog_5";
-//                        holder.mainLayout2.setBackground(ContextCompat.getDrawable(holder.itemView.getContext(), R.drawable.blog2_image_5));
-//                        break;
-//                    case 2:
-//                        picList = "blog_6";
-//                        holder.mainLayout2.setBackground(ContextCompat.getDrawable(holder.itemView.getContext(), R.drawable.blog2_image_6));
-//                        break;
-//                    default:
-//                        break;
-//                }
-//                drawableResourceId = holder.itemView.getContext().getResources().getIdentifier(picList, "drawable", holder.itemView.getContext().getPackageName());
-//                Glide.with(holder.itemView.getContext())
-//                        .load(drawableResourceId)
-//                        .fitCenter()
-//                        .transform(new RoundedCornersTransformation(16 , 0))
-//                        .into(holder.blogPic2);
-//            }
-//        }
 
     @Override
     public int getItemCount() {
@@ -139,10 +81,11 @@ public class BlogAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     }
     private static class ImageViewHolder extends RecyclerView.ViewHolder {
         ImageView imageView;
-
+        TextView textViewName1;
         ImageViewHolder(View itemView) {
             super(itemView);
             imageView = itemView.findViewById(R.id.imvblogImage);
+            textViewName1 = itemView.findViewById(R.id.txtTitle1);
         }
     }
 

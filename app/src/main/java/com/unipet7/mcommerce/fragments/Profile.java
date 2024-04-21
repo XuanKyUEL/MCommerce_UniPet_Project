@@ -22,17 +22,24 @@ import com.unipet7.mcommerce.databinding.FragmentProfileBinding;
 import com.unipet7.mcommerce.firebase.FireStoreClass;
 import com.unipet7.mcommerce.models.MessageDialog;
 import com.unipet7.mcommerce.models.User;
+import com.unipet7.mcommerce.utils.LoadingDialog;
 
 public class Profile extends Fragment {
-    FragmentProfileBinding binding;
+    FragmentProfileBinding binding = null;
 
     MessageDialogAdapter messageDialogAdapter;
     MessageDialog messageDialog;
 
+    LoadingDialog ldDialog;
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        binding = FragmentProfileBinding.inflate(inflater, container, false);
+        ldDialog = new LoadingDialog();
+        ldDialog.showLoadingDialog(getActivity());
+        if (binding == null) {
+            binding = FragmentProfileBinding.inflate(inflater, container, false);
+        }
         addEvents();
         addEvents1();
         addEvents2();
@@ -138,5 +145,6 @@ public class Profile extends Fragment {
     public void loadUserData(User user) {
         binding.txtUserName.setText(user.getName());
         binding.txtEmail.setText(user.getEmail());
+        ldDialog.dissmis();
     }
 }
