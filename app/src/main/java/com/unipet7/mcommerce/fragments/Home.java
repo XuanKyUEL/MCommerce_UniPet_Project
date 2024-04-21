@@ -107,18 +107,16 @@ public class Home extends Fragment {
     }
 
     private void addEvents() {
-        binding.imgCate6.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Fragment fragmentBlog = new FragmentBlog();
-                FragmentManager fragmentManager = requireActivity().getSupportFragmentManager();
+        binding.imgCate6.setOnClickListener(v -> {
+            Fragment fragmentBlog = new FragmentBlog();
+            FragmentManager fragmentManager = requireActivity().getSupportFragmentManager();
 
-                // Thực hiện giao diện chuyển đổi Fragment
-                fragmentManager.beginTransaction()
-                        .replace(((ViewGroup) requireView().getParent()).getId(), fragmentBlog)
-                        .addToBackStack(null)
-                        .commit();
-            });
+            // Thực hiện giao diện chuyển đổi Fragment
+            fragmentManager.beginTransaction()
+                    .replace(((ViewGroup) requireView().getParent()).getId(), fragmentBlog)
+                    .addToBackStack(null)
+                    .commit();
+        });
         binding.imageView.setOnClickListener(v -> {
             Fragment notyfragment = new Fragment_Empty_Notification();
             FragmentManager fragmentManager = requireActivity().getSupportFragmentManager();
