@@ -4,59 +4,76 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".activities.BlogDetails"
+    tools:context=".fragments.FragmentBlogDetails"
     android:padding="10dp"
     android:background="@color/white">
+
+    <com.google.android.material.appbar.AppBarLayout
+        android:id="@+id/apptoolbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:theme="@style/ThemeOverlay.AppCompat.DayNight.ActionBar"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/toolbardetail"
+            style="@style/HEAD5_BOLD_18"
+            android:layout_width="412dp"
+            android:layout_height="?attr/actionBarSize"
+            android:layout_gravity="center"
+            android:background="@color/white"
+            tools:popupTheme="@style/Widget.Material3.PopupMenu.Overflow"></androidx.appcompat.widget.Toolbar>
+    </com.google.android.material.appbar.AppBarLayout>
 
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="10dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
-
+        app:layout_constraintTop_toBottomOf="@+id/apptoolbar"
+        tools:layout_editor_absoluteX="10dp">
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:padding="10dp"
             android:orientation="vertical">
-
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@drawable/ic_back_profile" />
 
             <com.makeramen.roundedimageview.RoundedImageView
                 android:id="@+id/imvBlogDetailImage"
                 android:layout_width="320dp"
                 android:layout_height="209dp"
+                android:layout_gravity="center"
                 android:src="@drawable/blog_image_3"
-                app:riv_corner_radius="16dp"
-                android:layout_marginTop="10dp"
-                android:layout_gravity="center"/>
-           <TextView
-               android:id="@+id/txtBlogDetailTitle"
-               android:layout_width="match_parent"
-               android:layout_height="wrap_content"
-               android:text="5 tiêu chuẩn thức ăn cho mèo mà một Sen chính hiệu cần biết"
-               style="@style/HEAD4_BOLD_20"
-               android:textColor="@color/brandPrimary"/>
+                app:riv_corner_radius="16dp" />
+
             <TextView
-                android:id="@+id/txtBlogDetailContent"
+                android:id="@+id/txtBlogDetailTitle"
+                style="@style/HEAD4_BOLD_20"
+                android:lineHeight="20dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:text="5 tiêu chuẩn thức ăn cho mèo mà một Sen chính hiệu cần biết"
+                android:textColor="@color/brandPrimary" />
+
+            <TextView
+                android:id="@+id/txtBlogDetailContent"
+                style="@style/BODY_MED_REGULAR_14"
+                android:lineHeight="18dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
                 android:text="1. Giảm lượng tinh bột trong khẩu phần ăn mỗi ngày\n\nĐúng rằng con người không thể sống thiếu tinh bột mỗi ngày, tuy nhiên bạn phải biết không chó là giống động vật ăn thịt chính, nhưng mèo thì là loài ăn thịt hoàn toàn.
 Dẫu có những khác biệt đó, nếu gộp lại bạn chẳng thể bắt chó mèo ăn chay, hoặc cắt giảm toàn bộ lượng đạm và thay thế cho tinh bột được.
 Ngoài ra, việc chó mèo dùng rất nhiều tinh bột cho một bữa ăn sẽ làm chúng gia tăng khả năng béo phì."
-                style="@style/BODY_MED_REGULAR_14"
-                android:textColor="@color/black"
-                android:layout_marginTop="5dp"/>
+                android:textColor="@color/black" />
+
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/rclBlogDetails1"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"/>
+                android:layout_marginTop="10dp" />
+
             <View
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
@@ -64,23 +81,20 @@ Ngoài ra, việc chó mèo dùng rất nhiều tinh bột cho một bữa ăn s
                 android:layout_marginStart="20dp"
                 android:layout_marginTop="15dp"
                 android:layout_marginEnd="20dp"
-                android:background="#E0E0E0"/>
+                android:background="#E0E0E0" />
+
             <TextView
                 style="@style/HEAD6_BOLD_16"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="CÓ THỂ BẠN QUAN TÂM"
-                android:textColor="@color/brandPrimary"/>
+                android:textColor="@color/brandPrimary" />
+
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/rclBlogDetails2"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"/>
-
-
-
+                android:layout_height="wrap_content" />
         </LinearLayout>
-
-
     </ScrollView>
 
 
