@@ -135,33 +135,14 @@
             android:layout_gravity="center"
             android:textColor="@color/black"
             android:textColorHint="@color/black"/>
-        <TextView
-            android:layout_width="320dp"
-            android:layout_height="wrap_content"
-            android:text="Password"
-            android:layout_gravity="center"
-            android:layout_marginTop="10dp"
-            style="@style/HEAD6_BOLD_16"
-            android:textColor="@color/black"/>
 
-        <EditText
-            android:id="@+id/edtPaswordAccount"
-            style="@style/BODY_LARGE_MED_16"
-            android:layout_width="320dp"
-            android:layout_height="48dp"
-            android:layout_marginTop="10dp"
-            android:background="@drawable/edittext_conner_profile"
-            android:hint="nhan12132003"
-            android:padding="10dp"
-            android:layout_gravity="center"
-            android:textColor="@color/black"
-            android:textColorHint="@color/black"/>
+
         <Button
             android:id="@+id/btnUpdateAccount"
             android:layout_width="300dp"
             android:layout_height="48dp"
             android:background="@drawable/custom_button_account"
-            android:layout_marginTop="30dp"
+            android:layout_marginTop="50dp"
             android:layout_gravity="center"
             android:text="Cập nhật"
             style="@style/HEAD6_BOLD_16"
