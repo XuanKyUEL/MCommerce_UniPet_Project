@@ -9,6 +9,7 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,8 +17,10 @@ import android.view.ViewGroup;
 import com.unipet7.mcommerce.R;
 import com.unipet7.mcommerce.adapters.ProductAdapter;
 import com.unipet7.mcommerce.databinding.FragmentAllProductBinding;
-import com.unipet7.mcommerce.databinding.FragmentHistoryOrdersBinding;
+import com.unipet7.mcommerce.firebase.FireStoreClass;
 import com.unipet7.mcommerce.models.Product;
+import com.unipet7.mcommerce.utils.Constants;
+import com.unipet7.mcommerce.utils.LoadingDialog;
 
 import java.util.ArrayList;
 
@@ -33,12 +36,23 @@ public class FragmentAllProduct extends Fragment {
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
 
+    private boolean isAllProductFetched = false;
+    public static final String KEY_FLAG = "isAllProductFetched";
+
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
     FragmentAllProductBinding binding;
-    ProductAdapter adapter;
-    ArrayList<Product> products;
+    public ProductAdapter allPdadapter;
+    public ArrayList<Product> allPdproducts;
+
+    ArrayList<Product> foodProducts = new ArrayList<>();
+
+    ArrayList<Product> toyProducts = new ArrayList<>();
+
+    ArrayList<Product> healthProducts = new ArrayList<>();
+
+    ArrayList<Product> itemProducts = new ArrayList<>();
 
     public FragmentAllProduct() {
         // Required empty public constructor
@@ -69,6 +83,9 @@ public class FragmentAllProduct extends Fragment {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
+        if (savedInstanceState != null) {
+            isAllProductFetched = savedInstanceState.getBoolean(KEY_FLAG);
+        }
     }
 
     @Override
@@ -77,10 +94,96 @@ public class FragmentAllProduct extends Fragment {
         // Inflate the layout for this fragment
         binding = FragmentAllProductBinding.inflate(inflater, container, false);
         setActionBar(binding.toolbarall);
-        initData();
-        loadData();
+        if (!isAllProductFetched) {
+            LoadingDialog ldDialog = new LoadingDialog();
+            ldDialog.showLoadingDialog(getActivity());
+            FireStoreClass fireStoreClass = new FireStoreClass();
+            allPdproducts = new ArrayList<>();
+            fireStoreClass.getAllProducts(this, allPdproducts);
+            ldDialog.dissmis();
+            isAllProductFetched = true;
+        }
+        allPdadapter = new ProductAdapter(allPdproducts);
+        cateClickEvent();
+        Bundle bundle = getArguments();
+        if (bundle != null) {
+            String category = bundle.getString(Constants.CATEGORY);
+            assert category != null;
+            loadProductOnCategory(category);
+        } else {
+            binding.btnAll.performClick();
+        }
+        onSelectCateListener();
         return binding.getRoot();
 
+    }
+
+    private void loadProductOnCategory(String category) {
+        switch (category) {
+            case Constants.FOOD:
+                loadProduct(foodProducts);
+                break;
+            case Constants.ITEM:
+                loadProduct(itemProducts);
+                break;
+            case Constants.HEALTH:
+                loadProduct(healthProducts);
+                break;
+            case Constants.TOY:
+                loadProduct(toyProducts);
+                break;
+            default:
+                loadProduct(allPdproducts);
+        }
+    }
+
+    public void divideProduct() {
+        for (Product product : allPdproducts) {
+            if (product.getCategoryId() == 1 || product.getCategoryId() == 2) {
+                foodProducts.add(product);
+                Log.i("FragmentAllProduct", "divideProduct: " + foodProducts.size());
+            }
+            if (product.getCategoryId() == 3) {
+                itemProducts.add(product);
+            }
+            if (product.getCategoryId() == 4) {
+                healthProducts.add(product);
+            }
+            if (product.getCategoryId() == 5) {
+                toyProducts.add(product);
+            }
+        }
+    }
+
+    private void cateClickEvent() {
+        binding.btnAll.setOnClickListener(v -> {
+            loadProduct(allPdproducts);
+        });
+        binding.btnFood.setOnClickListener(v -> {
+            loadProduct(foodProducts);
+        });
+        binding.btnItem.setOnClickListener(v -> {
+            loadProduct(itemProducts);
+        });
+        binding.btnCare.setOnClickListener(v -> {
+            loadProduct(healthProducts);
+        });
+        binding.btnToy.setOnClickListener(v -> {
+            loadProduct(toyProducts);
+        });
+    }
+
+    private void loadProduct(ArrayList<Product> products) {
+        ProductAdapter adapter = new ProductAdapter(products);
+        binding.lvlAllProduct.setLayoutManager(new GridLayoutManager(getContext(), 2));
+        binding.lvlAllProduct.setAdapter(adapter);
+        binding.lvlAllProduct.setHasFixedSize(true);
+    }
+
+
+    private void onSelectCateListener() {
+        binding.btnFood.setOnClickListener(v -> {
+        });
     }
 
     public void setActionBar(@Nullable Toolbar toolbar) {
@@ -92,18 +195,4 @@ public class FragmentAllProduct extends Fragment {
         actionBar.setDisplayShowTitleEnabled(false);
     }
 
-    private void initData() {
-        products = new ArrayList<>();
-        products.add(new Product(R.drawable.pate1, "Thức ăn mèo gâu gâu", 20000, 3, 3, 32, 20000));
-        products.add(new Product(R.drawable.pate1, "Thức ăn mèo gâu gâu", 20000, 3, 3, 32, 20000));
-        products.add(new Product(R.drawable.pate1, "Thức ăn mèo gâu gâu", 20000, 3, 3, 20, 30000));
-
-        adapter = new ProductAdapter(products);
-    }
-
-    private void loadData() {
-        binding.lvlAllProduct.setLayoutManager(new GridLayoutManager(getContext(), 2));
-        binding.lvlAllProduct.setAdapter(adapter);
-        binding.lvlAllProduct.setHasFixedSize(true);
-    }
 }

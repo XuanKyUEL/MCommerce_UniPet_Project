@@ -63,17 +63,24 @@
             android:layout_width="wrap_content"
             android:layout_height="40dp"
             android:orientation="horizontal">
+
             <Button
                 android:id="@+id/btn_all"
+                style="@style/BODY_XS_BOLD_12"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Tất cả"
-                style="@style/BODY_XS_BOLD_12"
-                android:layout_marginRight="10dp"/>
+                android:background="@drawable/catepd_states"
+                android:textColor="@color/cate_text_colors"
+                android:layout_marginRight="10dp"
+                android:text="Tất cả" />
+
             <Button
                 android:id="@+id/btn_food"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:background="@drawable/catepd_states"
+                android:textColor="@color/cate_text_colors"
+                android:clickable="true"
                 android:text="Thức ăn"
                 style="@style/BODY_XS_BOLD_12"
                 android:layout_marginRight="10dp"/>
@@ -81,6 +88,8 @@
                 android:id="@+id/btn_toy"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:background="@drawable/catepd_states"
+                android:textColor="@color/cate_text_colors"
                 android:text="Đồ chơi"
                 style="@style/BODY_XS_BOLD_12"
                 android:layout_marginRight="10dp"/>
@@ -89,6 +98,8 @@
                 android:id="@+id/btn_item"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:background="@drawable/catepd_states"
+                android:textColor="@color/cate_text_colors"
                 android:text="Vật dụng"
                 style="@style/BODY_XS_BOLD_12"
                 android:layout_marginRight="10dp"/>
@@ -97,6 +108,8 @@
                 android:id="@+id/btn_care"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:background="@drawable/catepd_states"
+                android:textColor="@color/cate_text_colors"
                 android:text="Chăm sóc"
                 style="@style/BODY_XS_BOLD_12"
                 android:layout_marginRight="5dp"/>
@@ -104,6 +117,8 @@
                 android:id="@+id/btn_card"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:background="@drawable/catepd_states"
+                android:textColor="@color/cate_text_colors"
                 android:text="UniCard"
                 style="@style/BODY_XS_BOLD_12"
                 android:layout_marginRight="5dp"/>
