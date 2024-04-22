@@ -165,7 +165,7 @@
         android:gravity="center"
         android:layout_gravity="center"
         android:background="@drawable/rectangle_outline"/>
-<!--chỉnh bo góc lấy file xml custom-->
+    <!--chỉnh bo góc lấy file xml custom-->
     <Button
         android:layout_marginTop="50dp"
         android:id="@+id/btn_Done"

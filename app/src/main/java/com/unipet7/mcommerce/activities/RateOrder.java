@@ -1,43 +1,70 @@
 package com.unipet7.mcommerce.activities;
 
+import android.content.Intent;
+import android.os.Bundle;
+import android.view.View;
+import android.widget.RatingBar;
+
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
-import android.graphics.Color;
-import android.os.Bundle;
-import android.text.Spannable;
-import android.text.SpannableString;
-import android.text.style.TextAppearanceSpan;
-import android.view.Gravity;
-import android.widget.RatingBar;
-import android.widget.TextView;
-
 import com.unipet7.mcommerce.R;
-import com.unipet7.mcommerce.databinding.ActivityHistoryOrderBinding;
+import com.unipet7.mcommerce.adapters.MessageDialogAdapter;
 import com.unipet7.mcommerce.databinding.ActivityRateOrderBinding;
+import com.unipet7.mcommerce.models.MessageDialog;
 
 public class RateOrder extends AppCompatActivity {
     ActivityRateOrderBinding binding;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         binding = ActivityRateOrderBinding.inflate(getLayoutInflater());
-        setContentView(binding.getRoot());
-        addEvents();
         setActionBar(binding.toolbar1);
+        addEvents();
+        addEvents1();
+        addEvents2();
+        setContentView(binding.getRoot());
+
     }
-    public void setActionBar(@Nullable Toolbar toolbar) {
-        setSupportActionBar(toolbar);
-        ActionBar actionBar = getSupportActionBar();
-        assert actionBar != null;
-        actionBar.setDisplayHomeAsUpEnabled(true);
-        // Set icon arrow
-        actionBar.setHomeAsUpIndicator(R.drawable.ic_back);
-        actionBar.setDisplayShowTitleEnabled(false);
+
+    private void addEvents2() {
+            binding.toolbar1.setNavigationOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    finish();
+                }
+            });
+        }
+
+    private void addEvents1() {
+        binding.btnDone.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                MessageDialogAdapter messageDialogAdapter = new MessageDialogAdapter(RateOrder.this);
+                MessageDialog messageDialog = new MessageDialog("Đánh giá thành công", "Bạn đã đánh giá thành công", "Quay lại", "Đóng");
+                messageDialog.setCancelable(true);
+                messageDialog.setNegativeClickListener(v1 -> {
+                    messageDialogAdapter.dismissDialog();
+                    // Quay lại trang Home
+                    Intent intent = new Intent(RateOrder.this, MainActivity.class);
+                    intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
+                    startActivity(intent);
+                });
+                messageDialog.setPositiveClickListener(v1 -> {
+                    messageDialogAdapter.dismissDialog();
+                    // Quay lại Fragment trước đó
+                    finish();
+                });
+                messageDialogAdapter.showDialog(messageDialog);
+            }
+        });
     }
+
+
     private void addEvents() {
         binding.ratingbar1.setOnRatingBarChangeListener(new RatingBar.OnRatingBarChangeListener() {
             @Override
@@ -99,6 +126,16 @@ public class RateOrder extends AppCompatActivity {
                 }
             }
         });
-
     }
+
+    public void setActionBar(@Nullable Toolbar toolbar) {
+        setSupportActionBar(toolbar);
+        ActionBar actionBar = getSupportActionBar();
+        if (actionBar != null) {
+            actionBar.setDisplayHomeAsUpEnabled(true);
+            actionBar.setHomeAsUpIndicator(R.drawable.ic_back_profile);
+            actionBar.setDisplayShowTitleEnabled(false);
+        }
+    }
+
 }
