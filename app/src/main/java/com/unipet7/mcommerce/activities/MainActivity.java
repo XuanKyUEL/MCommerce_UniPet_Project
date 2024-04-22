@@ -2,18 +2,22 @@ package com.unipet7.mcommerce.activities;
 
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
+import androidx.viewpager2.widget.ViewPager2;
 
 import com.airbnb.lottie.L;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.unipet7.mcommerce.R;
+import com.unipet7.mcommerce.adapters.MainViewPager2Adapter;
 import com.unipet7.mcommerce.databinding.ActivityMainBinding;
 import com.unipet7.mcommerce.fragments.FragmentAllProduct;
 import com.unipet7.mcommerce.firebase.FireStoreClass;
@@ -29,6 +33,8 @@ public class MainActivity extends AppCompatActivity {
     private static final String TAG = "MainActivity";
     ActivityMainBinding binding;
 
+    private ViewPager2 mainViewPager2;
+
     LoadingDialog loadingDialog;
     BottomNavigationView bottomNavigationView;
     FloatingActionButton fabCart;
@@ -37,12 +43,6 @@ public class MainActivity extends AppCompatActivity {
 
     Fragment fragment = null;
 
-    boolean isProfileInit = false;
-    boolean isProductInit = false;
-
-    boolean isFavoriteInit = false;
-
-    boolean isCartInit = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,126 +52,65 @@ public class MainActivity extends AppCompatActivity {
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
         mapping();
-        replaceFragment(new Home(), "initHome");
+        MainViewPager2Adapter adapter = new MainViewPager2Adapter(this);
+        mainViewPager2.setAdapter(adapter);
         navigateFragment();
     }
 
     private void mapping() {
         bottomNavigationView = binding.bottomNavigationView;
+        mainViewPager2 = binding.viewPagerMain;
         fabCart = binding.fabCart;
         db = FirebaseFirestore.getInstance();
     }
     
 
     private void navigateFragment() {
+        mainViewPager2.registerOnPageChangeCallback(new ViewPager2.OnPageChangeCallback() {
+            @Override
+            public void onPageSelected(int position) {
+                super.onPageSelected(position);
+                switch (position) {
+                    case 0:
+                        fragment = new Home();
+                        bottomNavigationView.getMenu().getItem(0).setChecked(true);
+                        break;
+                    case 1:
+                        fragment = new FragmentAllProduct();
+                        bottomNavigationView.getMenu().getItem(1).setChecked(true);
+                        break;
+                    case 2:
+                        fragment = new fragment_blank_cart();
+                        bottomNavigationView.getMenu().getItem(2).setChecked(true);
+                        break;
+                    case 3:
+                        fragment = new Fragment_Empty_Notification();
+                        bottomNavigationView.getMenu().getItem(3).setChecked(true);
+                        break;
+                    case 4:
+                        fragment = new Profile();
+                        bottomNavigationView.getMenu().getItem(4).setChecked(true);
+                        break;
+                }
+            }
+        });
         bottomNavigationView.setOnItemSelectedListener(item -> {
-            handleNavigateonItemSelected(item.getItemId());
+            int id = item.getItemId();
+            if (id == R.id.home_icon_bottom) {
+                mainViewPager2.setCurrentItem(0);
+            } else if (id == R.id.product_icon_bottom) {
+                mainViewPager2.setCurrentItem(1);
+            } else if (id == R.id.fab_nav_shop) {
+                mainViewPager2.setCurrentItem(2);
+            } else if (id == R.id.fav_icon_bottom) {
+                mainViewPager2.setCurrentItem(3);
+            } else if (id == R.id.account_icon_bottom) {
+                mainViewPager2.setCurrentItem(4);
+            }
             return true;
         });
         fabCart.setOnClickListener(v -> {
-            Fragment fragment = getSupportFragmentManager().findFragmentByTag("cart");
-            if (fragment == null) {
-                fragment = new fragment_blank_cart();
-                replaceFragment(fragment, "cart");
-            } else {
-                getSupportFragmentManager().popBackStack("cart", 0);
-            }
-            // set all the other items to unchecked
-            bottomNavigationView.getMenu().findItem(R.id.home_icon_bottom).setChecked(false);
-            bottomNavigationView.getMenu().findItem(R.id.account_icon_bottom).setChecked(false);
-            bottomNavigationView.getMenu().findItem(R.id.fav_icon_bottom).setChecked(false);
-            bottomNavigationView.getMenu().findItem(R.id.product_icon_bottom).setChecked(false);
+            mainViewPager2.setCurrentItem(2);
         });
     }
-
-    private void handleNavigateonItemSelected(int itemId) {
-        Fragment fragment;
-        if (itemId == R.id.home_icon_bottom) {
-            fragment = getSupportFragmentManager().findFragmentByTag("initHome");
-            if (fragment == null) {
-                fragment = new Home();
-                replaceFragment(fragment, "initHome");
-            } else {
-                getSupportFragmentManager().popBackStack("initHome", 0);
-            }
-        } else if (itemId == R.id.account_icon_bottom) {
-            fragment = getSupportFragmentManager().findFragmentByTag("profile");
-            if (fragment == null) {
-                fragment = new Profile();
-                replaceFragment(fragment, "profile");
-            } else {
-                getSupportFragmentManager().popBackStack("profile", 0);
-            }
-        } else if (itemId == R.id.fav_icon_bottom) {
-            fragment = getSupportFragmentManager().findFragmentByTag("favorite");
-            if (fragment == null) {
-                fragment = new Fragment_Empty_Notification();
-                replaceFragment(fragment, "favorite");
-            } else {
-                getSupportFragmentManager().popBackStack("favorite", 0);
-            }
-        } else if (itemId == R.id.product_icon_bottom) {
-            fragment = getSupportFragmentManager().findFragmentByTag("product");
-            if (fragment == null) {
-                fragment = new Home();
-                replaceFragment(fragment, "product");
-            } else {
-                getSupportFragmentManager().popBackStack("product", 0);
-            }
-        }
-    }
-
-    private void replaceFragment(Fragment fragment, @Nullable String tag) {
-        loadingDialog = new LoadingDialog();
-        loadingDialog.showLoadingDialog(this);
-        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-        transaction.replace(binding.containerLayoutMain.getId(), fragment);
-        transaction.commitAllowingStateLoss();
-        loadingDialog.dissmis();
-
-
-        // Thêm giao dịch vào back stack (nếu cần)
-        if (tag != null) {
-            transaction.addToBackStack(tag);
-        }
-    }
-//    private void uploadProductdb() {
-//        try {
-//            InputStream is = getAssets().open("product.json");
-//            int size = is.available();
-//            byte[] buffer = new byte[size];
-//            is.read(buffer);
-//            is.close();
-//            String json = new String(buffer, StandardCharsets.UTF_8);
-//            //
-//            JSONObject jsonObject = new JSONObject(json);
-//            JSONArray jsonArray = jsonObject.getJSONArray("Products");
-//            for(int i = 0; i < jsonArray.length(); i++) {
-//                JSONObject pdObject = jsonArray.getJSONObject(i);
-//
-//                int productId = Integer.parseInt(pdObject.getString("ProductId"));
-//                String categoryId = pdObject.getString("CategoryId");
-//                String productDescription = pdObject.getString("ProductDescription");
-//                double productPrice = pdObject.getDouble("ProductPrice");
-//                String productImageUrl = pdObject.getString("ProductImgUrl");
-//                String productName = pdObject.getString("ProductName");
-//
-//                Product product = new Product();
-//                product.setProductId(productId);
-//                product.setCategoryId(Integer.parseInt(categoryId));
-//                product.setProductDescription(productDescription);
-//                product.setProductprice(productPrice);
-//                product.setProductImageUrl(productImageUrl);
-//                product.setProductname(productName);
-//
-//                db.collection(Constants.PRODUCTS)
-//                        .document(String.valueOf(productId))
-//                        .set(product)
-//                        .addOnSuccessListener(aVoid -> Log.i(TAG, "uploadProductData: Thành công"))
-//                        .addOnFailureListener(e -> Log.e(TAG, "uploadProductData: ", e));
-//            }
-//        } catch (IOException | JSONException e) {
-//            Log.e("uploadProductData", "uploadProductData: ", e);
-//        }
-//    }
 }

@@ -2,155 +2,165 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="160dp"
+    android:layout_width="165dp"
     android:layout_height="wrap_content"
     android:layout_margin="8dp"
     android:id="@+id/layoutitem"
     android:background="@drawable/item_background">
 
-    <ImageView
-        android:id="@+id/imageproduct"
-        android:layout_width="120dp"
-        android:layout_height="120dp"
-        android:layout_marginStart="10dp"
-        android:layout_marginTop="10dp"
-        android:layout_marginEnd="10dp"
-        android:src="@drawable/pate1"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.533"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <ImageView
-        android:id="@+id/imagesale"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="28dp"
-        android:src="@drawable/salelayout"
-        app:layout_constraintStart_toStartOf="@id/imagesale"
-        app:layout_constraintTop_toTopOf="@id/layoutitem" />
-
-    <TextView
-        android:id="@+id/textsalepercent"
-        app:layout_constraintTop_toTopOf="@id/imagesale"
-        app:layout_constraintStart_toStartOf="@id/imagesale"
-        app:layout_constraintEnd_toEndOf="@id/imagesale"
-        app:layout_constraintBottom_toBottomOf="@id/imagesale"
-        app:layout_constraintVertical_bias="0.5"
-        app:layout_constraintHorizontal_bias="0.5"
-        style="@style/BODY_XSMALL_BOLD_10"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="-35%"
-        android:textColor="@color/white"
-        tools:layout_editor_absoluteX="12dp"
-        tools:layout_editor_absoluteY="34dp" />
-    <ImageView
-        app:layout_constraintStart_toStartOf="@+id/imageproduct"
-        app:layout_constraintTop_toBottomOf="@+id/imageproduct"
-        android:id="@+id/imagebannersale"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:src="@drawable/bannersale"
-        tools:layout_editor_absoluteX="3dp"
-        tools:layout_editor_absoluteY="117dp" />
-
-
-    <TextView
-        android:id="@+id/textView"
-        style="@style/BODY_XSMALL_BOLD_10"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:text="Thức ăn mèo gâu gâu"
-        android:textColor="@color/black"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imagebannersale" />
-
-    <TextView
-        android:id="@+id/textView2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="5dp"
-        android:text="28.000đ"
-        android:textColor="@color/brandPrimary"
-        style="@style/BODY_LARGE_BOLD_14"
-        app:layout_constraintStart_toStartOf="@+id/textView"
-        app:layout_constraintTop_toBottomOf="@+id/textView" />
-
-    <TextView
-        android:id="@+id/textsale"
-        style="@style/BODY_XSMALL_BOLD_10"
-        android:layout_width="44dp"
-        android:layout_height="15dp"
-        android:layout_marginStart="70dp"
-        android:layout_marginTop="22dp"
-        android:text="35.000đ"
-        android:textColor="@color/darkSecondary"
-        android:textStyle="italic"
-        app:layout_constraintStart_toStartOf="@+id/textView2"
-        app:layout_constraintTop_toBottomOf="@+id/imagebannersale" />
-
-    <LinearLayout
-        android:id="@+id/linearLayout"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="5dp"
-        android:orientation="horizontal"
-        app:layout_constraintStart_toStartOf="@+id/textView2"
-        app:layout_constraintTop_toBottomOf="@+id/textView2">
-
-        <ImageView
-            android:id="@+id/imgStar"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:src="@drawable/star" />
-
-        <TextView
-            android:id="@+id/txtRating"
-            style="@style/BODY_XSMALL_REGULAR_10"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:paddingStart="5dp"
-            android:text="4.8"
-            android:textColor="@color/darkTertiary" />
-
-        <TextView
-            android:id="@+id/txtNumberOfRating"
-            style="@style/BODY_XSMALL_REGULAR_10"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:paddingStart="5dp"
-            android:text=" (199+)"
-            android:textColor="@color/darkTertiary" />
-    </LinearLayout>
-
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="5dp"
-        android:orientation="horizontal"
+        android:layout_height="match_parent"
         android:gravity="center_horizontal"
-        app:layout_constraintStart_toStartOf="@+id/linearLayout"
-        app:layout_constraintTop_toBottomOf="@+id/linearLayout"
-        android:weightSum="10"
-        android:layout_marginStart="3dp">
+        android:orientation="vertical">
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
 
-        <Button
-            android:id="@+id/btnAddCart"
-            style="@style/BODY_XSMALL_BOLD_10"
-            android:layout_width="120dp"
-            android:layout_height="40dp"
-            android:text="Thêm giỏ hàng"
-            android:textColor="@color/white" />
+            <ImageView
+                android:id="@+id/imageproduct"
+                android:layout_width="123dp"
+                android:layout_height="116dp"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginEnd="10dp"
+                android:src="@drawable/pate1"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.533"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <ImageView
+                android:id="@+id/imagesale"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_marginTop="18dp"
+                android:src="@drawable/salelayout"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/textsalepercent"
+                app:layout_constraintTop_toTopOf="@id/imagesale"
+                app:layout_constraintStart_toStartOf="@id/imagesale"
+                app:layout_constraintEnd_toEndOf="@id/imagesale"
+                app:layout_constraintBottom_toBottomOf="@id/imagesale"
+                app:layout_constraintVertical_bias="0.5"
+                app:layout_constraintHorizontal_bias="0.5"
+                style="@style/BODY_XSMALL_BOLD_10"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="-35%"
+                android:textColor="@color/white"
+                tools:layout_editor_absoluteX="12dp"
+                tools:layout_editor_absoluteY="34dp" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+        
         <ImageView
-            android:layout_marginLeft="3dp"
-            android:layout_width="30dp"
-            android:layout_height="30dp"
-            android:layout_gravity="center_vertical"
-            android:src="@drawable/heart"/>
+            app:layout_constraintStart_toStartOf="@+id/imageproduct"
+            app:layout_constraintTop_toBottomOf="@+id/imageproduct"
+            android:id="@+id/imagebannersale"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:src="@drawable/bannersale"
+            tools:layout_editor_absoluteX="3dp"
+            tools:layout_editor_absoluteY="117dp" />
+       
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingStart="8dp"
+            android:paddingEnd="2dp">
+            <TextView
+                android:id="@+id/textView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Thức ăn mèo gâu gâu"
+                android:textColor="@color/black"
+                style="@style/BODY_XSMALL_BOLD_10" />
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="5dp"
+            android:orientation="horizontal">
+            <TextView
+                android:id="@+id/textView2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="28.000đ"
+                android:layout_marginStart="3dp"
+                android:layout_marginEnd="12dp"
+                android:textColor="@color/brandPrimary"
+                style="@style/BODY_LARGE_BOLD_14" />
+
+            <TextView
+                android:id="@+id/textsale"
+                style="@style/BODY_XSMALL_BOLD_10"
+                android:layout_width="44dp"
+                android:layout_height="15dp"
+                android:text="35.000đ"
+                android:textColor="@color/darkSecondary"
+                android:textStyle="italic" />
+
+        </LinearLayout>
+        
+        <LinearLayout
+            android:id="@+id/linearLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:padding="5dp"
+            android:orientation="horizontal">
+            <ImageView
+                android:id="@+id/imgStar"
+                android:layout_marginStart="3dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/star" />
+
+            <TextView
+                android:id="@+id/txtRating"
+                style="@style/BODY_SMALL_MED_12"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="4.8"
+                android:textColor="@color/darkTertiary" />
+
+            <TextView
+                android:id="@+id/txtNumberOfRating"
+                style="@style/BODY_SMALL_MED_12"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text=" (199))"
+                android:textColor="@color/darkTertiary" />
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:orientation="horizontal"
+            android:padding="5dp"
+            android:gravity="center_horizontal">
+
+            <Button
+                android:id="@+id/btnAddCart"
+                style="@style/BODY_XSMALL_BOLD_10"
+                android:layout_width="wrap_content"
+
+                android:layout_height="40dp"
+                android:text="Thêm giỏ hàng"
+                android:textColor="@color/white" />
+            <CheckBox
+                android:layout_marginLeft="3dp"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_marginTop="2dp"
+                android:button="@drawable/selector_favourite_item"
+                android:layout_gravity="center_vertical" />
+        </LinearLayout>
     </LinearLayout>
+
+
+    
 </androidx.constraintlayout.widget.ConstraintLayout>
