@@ -6,7 +6,6 @@
     tools:context=".fragments.FragmentAddressEdit"
     android:orientation="vertical"
     android:background="@color/white"
-
     android:padding="10dp">
     <com.google.android.material.appbar.AppBarLayout
         android:layout_width="match_parent"

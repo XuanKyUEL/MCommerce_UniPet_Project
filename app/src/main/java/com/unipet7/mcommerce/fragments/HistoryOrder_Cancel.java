@@ -70,12 +70,7 @@ public class HistoryOrder_Cancel extends Fragment {
                              Bundle savedInstanceState) {
         binding = FragmentCancelOrderBinding.inflate(inflater,container,false);
         loadData();
-        addEvents();
-
         return binding.getRoot();    }
-
-    private void addEvents() {
-    }
 
     private void loadData() {
         HistoryAdapter = new HistoryOrderAdapter(getActivity(),R.layout.layout_cancelorder, initData());

@@ -1,6 +1,7 @@
 package com.unipet7.mcommerce.models;
 
 public class Blogs {
+    int blogid;
     String title;
     int pic;
     String pubDate;
