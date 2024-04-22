@@ -50,7 +50,7 @@
             android:id="@+id/imvUserImageAccount"
             android:layout_width="150dp"
             android:layout_height="150dp"
-            android:src="@drawable/profile_image" />
+            android:src="@drawable/ic_user_profile_placeholder" />
 
         <ImageButton
             android:id="@+id/editButton"
@@ -107,7 +107,7 @@
             android:layout_width="320dp"
             android:layout_height="48dp"
             android:layout_marginTop="10dp"
-            android:background="@drawable/edittext_conner_profile"
+            android:background="@drawable/edt_not_editatble"
             android:hint="nhandinh@gmail.com"
             android:enabled="false"
             android:padding="10dp"
@@ -128,11 +128,11 @@
             style="@style/BODY_LARGE_MED_16"
             android:layout_width="320dp"
             android:layout_height="48dp"
+            android:layout_gravity="center"
             android:layout_marginTop="10dp"
             android:background="@drawable/edittext_conner_profile"
-            android:hint="076895670"
+            android:hint="@string/update_phone_cta"
             android:padding="10dp"
-            android:layout_gravity="center"
             android:textColor="@color/black"
             android:textColorHint="@color/black"/>
 

@@ -13,6 +13,7 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 
+import com.bumptech.glide.Glide;
 import com.google.firebase.auth.FirebaseAuth;
 import com.unipet7.mcommerce.R;
 import com.unipet7.mcommerce.activities.MainActivity;
@@ -149,6 +150,9 @@ public class Profile extends Fragment {
     public void loadUserData(User user) {
         binding.txtUserName.setText(user.getName());
         binding.txtEmail.setText(user.getEmail());
+        Glide.with(requireContext())
+                .load(user.getImage())
+                .into(binding.profileImage);
         ldDialog.dissmis();
     }
 }

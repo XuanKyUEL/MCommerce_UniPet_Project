@@ -38,15 +38,22 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ViewHold
     public void onBindViewHolder(@NonNull ProductAdapter.ViewHolder holder, int position) {
         Product product = productList.get(position);
         holder.productname.setText(product.getProductname());
-        holder.productratenum.setText("4.7");
-        holder.producttotalnum.setText("100");
+        double roundRating = Math.round(product.getProductratenum() * 10) / 10.0;
+        holder.productratenum.setText("4.5");
+        holder.numOfRating.setText("  (130)");
         if (product.getSalepercent() > 0) {
-            holder.salepercent.setText(product.getSalepercent() + " %");
+            int salepercent = (int) product.getSalepercent();
+            holder.salepercent.setText(salepercent + " %");
             double percent = product.getSalepercent();
             double price = product.getProductprice();
             double saleprice = price - (price * percent / 100);
-            holder.productprice.setText(Math.round(saleprice) + " đ");
+
+            String formattedPrice = String.format("%,.0f đ", price);
+            String formattedSalePrice = String.format("%,.0f đ", saleprice);
+
+            holder.productprice.setText(formattedSalePrice);
             holder.presaleprice.setPaintFlags(holder.presaleprice.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
+            holder.presaleprice.setText(formattedPrice);
         }else {
             holder.salepercent.setVisibility(View.GONE);
             holder.salespercentbg.setVisibility(View.GONE);
@@ -65,21 +72,20 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ViewHold
 
     static class ViewHolder extends RecyclerView.ViewHolder {
 
-        TextView productname ,productprice, productratenum, producttotalnum, presaleprice, salepercent;
+        TextView productname ,productprice, productratenum, presaleprice, salepercent,numOfRating;
         ImageView imvThumb, salespercentbg,salebanner;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             productname = itemView.findViewById(R.id.textView);
             productprice = itemView.findViewById(R.id.textView2);
-            producttotalnum = itemView.findViewById(R.id.txtNumberOfRating);
             productratenum = itemView.findViewById(R.id.txtRating);
             imvThumb = itemView.findViewById(R.id.imageproduct);
             salepercent = itemView.findViewById(R.id.textsalepercent);
             salespercentbg = itemView.findViewById(R.id.imagesale);
             salebanner = itemView.findViewById(R.id.imagebannersale);
             presaleprice = itemView.findViewById(R.id.textsale);
-
+            numOfRating = itemView.findViewById(R.id.txtNumberOfRating);
         }
     }
 }
