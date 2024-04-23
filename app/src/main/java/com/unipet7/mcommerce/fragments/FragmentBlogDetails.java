@@ -7,6 +7,7 @@ import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -21,8 +22,10 @@ import com.unipet7.mcommerce.adapters.BlogAdapter;
 import com.unipet7.mcommerce.adapters.ProductAdapter;
 import com.unipet7.mcommerce.databinding.FragmentBlogBinding;
 import com.unipet7.mcommerce.databinding.FragmentBlogDetailsBinding;
+import com.unipet7.mcommerce.firebase.FireStoreClass;
 import com.unipet7.mcommerce.models.Blogs;
 import com.unipet7.mcommerce.models.Product;
+import com.unipet7.mcommerce.utils.LoadingDialog;
 
 import java.util.ArrayList;
 
@@ -31,6 +34,7 @@ public class FragmentBlogDetails extends Fragment {
     BlogAdapter blogAdapter;
     ProductAdapter adapter;
     ArrayList<Product> products;
+    public ArrayList<Product> allProducts = new ArrayList<>();
     public FragmentBlogDetails() {
         // Required empty public constructor
     }
@@ -40,13 +44,26 @@ public class FragmentBlogDetails extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         binding = FragmentBlogDetailsBinding.inflate(inflater, container, false);
+        loadProduct();
         addEvents();
         setActionBar(binding.toolbardetail);
         initBlog();
-        initProduct();
         return binding.getRoot();     }
 
+    private void loadProduct() {
+        LoadingDialog ldDialog1 = new LoadingDialog();
+        ldDialog1.showLoadingDialog(getActivity());
+        FireStoreClass fireStoreClass = new FireStoreClass();
+        fireStoreClass.getAllProductsBlog(this, allProducts);
+        ldDialog1.dissmis();
+    }
+    public void configAdaptersBlog() {
+            adapter = new ProductAdapter(allProducts);
+            binding.rclBlogDetails1.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
+            binding.rclBlogDetails1.setAdapter(adapter);
+            binding.rclBlogDetails1.setHasFixedSize(true);
 
+    }
 
     private void addEvents() {
         binding.toolbardetail.setNavigationOnClickListener(new View.OnClickListener() {
@@ -64,15 +81,7 @@ public class FragmentBlogDetails extends Fragment {
         actionBar.setHomeAsUpIndicator(R.drawable.ic_back_profile);
         actionBar.setDisplayShowTitleEnabled(false);
     }
-    private void initProduct() {
-        binding.rclBlogDetails1.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
-        products = new ArrayList<>();
-        products.add(new Product(R.drawable.pate1, "Thức ăn mèo gâu gâu", 20000,3,3,32,20000));
-        products.add(new Product(R.drawable.pate1, "Thức ăn mèo gâu gâu", 20000,3,3, 32, 20000));
-        products.add(new Product(R.drawable.pate1, "Thức ăn mèo gâu gâu", 20000,3,3,20,30000));
-        adapter = new ProductAdapter(products);
-        binding.rclBlogDetails1.setAdapter(adapter);
-    }
+
     private void initBlog() {
         binding.rclBlogDetails2.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false));
         ArrayList<Blogs> blogs = new ArrayList<>();

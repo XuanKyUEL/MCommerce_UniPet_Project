@@ -12,6 +12,7 @@ import com.google.firebase.firestore.SetOptions;
 import com.unipet7.mcommerce.activities.SignUp;
 import com.unipet7.mcommerce.fragments.FragmentAccount;
 import com.unipet7.mcommerce.fragments.FragmentAllProduct;
+import com.unipet7.mcommerce.fragments.FragmentBlogDetails;
 import com.unipet7.mcommerce.fragments.Home;
 import com.unipet7.mcommerce.fragments.Profile;
 import com.unipet7.mcommerce.models.Product;
@@ -91,7 +92,23 @@ public class FireStoreClass {
                     Log.e("FireStoreClass", "getAllProducts: ", e);
                 });
     }
-
+    public void getAllProductsBlog(FragmentBlogDetails fragment, ArrayList<Product> allProducts) {
+        UniPetdb.collection(Constants.PRODUCTS)
+                .get()
+                .addOnSuccessListener(queryDocumentSnapshots -> {
+                    if (!queryDocumentSnapshots.isEmpty()) {
+                        for (int i = 0; i < queryDocumentSnapshots.size(); i++) {
+                            Product product = queryDocumentSnapshots.getDocuments().get(i).toObject(Product.class);
+                            allProducts.add(product);
+                            Log.i("FireStoreClass", "getAllProducts: " + product.getProductname());
+                        }
+                        fragment.configAdaptersBlog();
+                    }
+                })
+                .addOnFailureListener(e -> {
+                    Log.e("FireStoreClass", "getAllProducts: ", e);
+                });
+    }
     public void getProductList(Home home, ArrayList<Product> productsSale, ArrayList<Product> productsDog, ArrayList<Product> productsCat) {
 
         UniPetdb.collection(Constants.PRODUCTS)

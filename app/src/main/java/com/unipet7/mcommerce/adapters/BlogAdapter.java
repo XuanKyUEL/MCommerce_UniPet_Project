@@ -115,7 +115,19 @@ public class BlogAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
             textViewName = itemView.findViewById(R.id.txtBlog2Title);
             textViewDescription = itemView.findViewById(R.id.txtBlog2Des);
             textViewDate = itemView.findViewById(R.id.txtBlog2PubDate);
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Fragment details = new FragmentBlogDetails();
+                    FragmentManager fragmentManager = ((FragmentActivity) v.getContext()).getSupportFragmentManager();
 
+                    // Thực hiện giao diện chuyển đổi Fragment
+                    fragmentManager.beginTransaction()
+                            .replace(((ViewGroup) v.getRootView().findViewById(android.R.id.content)).getId(), details)
+                            .addToBackStack(null)
+                            .commit();
+                }
+            });
         }
     }
 }
