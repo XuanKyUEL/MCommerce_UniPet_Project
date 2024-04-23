@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    tools:context=".fragments.Fragment_Wishlist_Product">
+
+    <com.google.android.material.appbar.AppBarLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:theme="@style/ThemeOverlay.AppCompat.DayNight.ActionBar"
+        android:gravity="center">
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/toolbarall"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            style="@style/HEAD5_BOLD_18"
+            android:background="@color/white"
+            app:popupTheme="@style/Widget.Material3.PopupMenu.Overflow"
+            android:layout_gravity="center">
+            <TextView
+                android:layout_width="300dp"
+                android:layout_height="wrap_content"
+                android:textColor="@color/darkPrimary"
+                style="@style/HEAD5_BOLD_18"
+                android:gravity="center"
+                android:text="Sản phẩm yêu thích"/>
+        </androidx.appcompat.widget.Toolbar>
+    </com.google.android.material.appbar.AppBarLayout>
+    <androidx.recyclerview.widget.RecyclerView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="12dp"/>
+
+</LinearLayout>

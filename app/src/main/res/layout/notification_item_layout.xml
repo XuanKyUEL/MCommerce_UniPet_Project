@@ -10,7 +10,7 @@
     <TextView
         android:id="@+id/txtNotiTitle"
         style="@style/BODY_SMALL_BOLD_12"
-        android:layout_width="wrap_content"
+        android:layout_width="380dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:layout_marginTop="16dp"
@@ -21,11 +21,12 @@
 
     <TextView
         android:id="@+id/txtNotiDescription"
-        android:layout_width="wrap_content"
+        android:layout_width="380dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:layout_marginTop="2dp"
-        android:text="Sản phẩm A B C gì đó đang sale, nhấn để mua ngay!"
+        android:layout_marginEnd="16dp"
+        android:text="Sản phẩm A B C gì đó đang sale, nhấn để mua ngay!Sản phẩm A B C gì đó đang sale, nhấn để mua ngay!"
         style="@style/BODY_XSMALL_REGULAR_10"
 
         app:layout_constraintStart_toStartOf="parent"

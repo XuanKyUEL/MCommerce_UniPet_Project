@@ -3,6 +3,10 @@ package com.unipet7.mcommerce.fragments;
 import android.content.Intent;
 import android.os.Bundle;
 
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.ActionBar;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -77,9 +81,27 @@ public class fragment_notification extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         binding= FragmentNotificationBinding.inflate(inflater, container, false);
+        setActionBar(binding.notybar);
+        addEvents();
         loadNewNotice();
         loadOldNotice();
         return binding.getRoot();
+    }
+    public void setActionBar(@Nullable Toolbar toolbar) {
+        ((AppCompatActivity) getActivity()).setSupportActionBar(toolbar);
+        ActionBar actionBar = ((AppCompatActivity) getActivity()).getSupportActionBar();
+        assert actionBar != null;
+        actionBar.setDisplayHomeAsUpEnabled(true);
+        actionBar.setHomeAsUpIndicator(R.drawable.ic_back_profile);
+        actionBar.setDisplayShowTitleEnabled(false);
+    }
+    private void addEvents() {
+        binding.notybar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                requireActivity().getOnBackPressedDispatcher().onBackPressed();
+            }
+        });
     }
 
     private void loadNewNotice() {
@@ -89,7 +111,7 @@ public class fragment_notification extends Fragment {
         binding.rvNewNoti.setHasFixedSize(true);
 
         notices = new ArrayList<>();
-        notices.add(new Notice("KHUYẾN MÃI TƯNG BỪNG !!!", "UniPet ưu đãi khách hàng nhân dịp 30/4-1/5, miễn phí vận chuyển mọi đơn hàng cho quý khách!", "20 phút"));
+        notices.add(new Notice("KHUYẾN MÃI TƯNG BỪNG !!!", "UniPet ưu đãi khách hàng nhân dịp 30/4-1/5, miễn phí vận chuyển!", "20 phút"));
         notices.add(new Notice("Đặt hàng thành công", "Đơn hàng của bạn đã được tạo thành công, thời gian dự kiến giao hàng từ 20-21/04/2024", "43 phút"));
         adapter = new NotiAdapter(requireActivity().getApplicationContext(), notices);
         binding.rvNewNoti.setAdapter(adapter);
@@ -103,7 +125,7 @@ public class fragment_notification extends Fragment {
             binding.rvOldNoti.setHasFixedSize(true);
 
             notices = new ArrayList<>();
-            notices.add(new Notice("KHUYẾN MÃI TƯNG BỪNG !!!", "UniPet ưu đãi khách hàng nhân dịp Giỗ tổ Hùng Vương, miễn phí vận chuyển mọi đơn hàng cho quý khách!", "7 ngày trước"));
+            notices.add(new Notice("KHUYẾN MÃI TƯNG BỪNG !!!", "UniPet ưu đãi khách hàng nhân dịp Giỗ tổ Hùng Vương, voucher ngập tràng!", "7 ngày trước"));
             notices.add(new Notice("Giao hàng thành công", "Đơn hàng đã được giao đến tay bạn thành công.", "8 ngày trước"));
             adapter = new NotiAdapter(requireActivity().getApplicationContext(), notices);
             binding.rvOldNoti.setAdapter(adapter);

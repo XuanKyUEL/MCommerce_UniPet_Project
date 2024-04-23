@@ -18,7 +18,7 @@
             android:layout_height="55dp"
             android:orientation="horizontal"
             android:id="@+id/itemHotline"
-            android:layout_marginTop="20dp"
+            android:layout_marginTop="5dp"
             android:background="@drawable/rectangle_outline">
             <ImageView
                 android:layout_width="25dp"

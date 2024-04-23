@@ -8,35 +8,26 @@
     tools:context=".fragments.Profile"
     android:id="@+id/fragmentProfile">
 
-    <com.google.android.material.appbar.AppBarLayout
+    <LinearLayout
         android:id="@+id/appBarLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center"
         android:theme="@style/ThemeOverlay.AppCompat.DayNight.ActionBar"
+        android:layout_marginTop="20dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
-
-        <androidx.appcompat.widget.Toolbar
-            android:id="@+id/toolbar"
+        <TextView
+            android:layout_gravity="center_horizontal"
+            android:layout_width="250dp"
+            android:layout_height="wrap_content"
+            android:textColor="@color/darkPrimary"
             style="@style/HEAD5_BOLD_18"
-            android:layout_width="match_parent"
-            android:layout_height="?attr/actionBarSize"
-            android:background="@color/white"
             android:gravity="center"
-            app:popupTheme="@style/Widget.Material3.PopupMenu.Overflow">
-            <TextView
-                android:layout_width="250dp"
-                android:layout_height="wrap_content"
-                android:textColor="@color/darkPrimary"
-                style="@style/HEAD5_BOLD_18"
-                android:gravity="center"
-                android:text="Hồ sơ"/>
-        </androidx.appcompat.widget.Toolbar>
+            android:text="Hồ sơ"/>
 
-    </com.google.android.material.appbar.AppBarLayout>
-
+    </LinearLayout>
     <de.hdodenhof.circleimageview.CircleImageView
         android:id="@+id/profileImage"
         android:layout_width="match_parent"
@@ -84,7 +75,7 @@
                     style="@style/HEAD4_BOLD_20"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_weight="8"
+                    android:layout_weight="9"
                     android:text="Nhân Đinh"
                     android:textColor="@color/black"/>
                 <LinearLayout
@@ -123,13 +114,14 @@
                     android:layout_width="20dp"
                     android:layout_height="20dp"
                     android:layout_marginEnd="15dp"
+                    android:layout_weight="1"
                     android:src="@drawable/ic_email_profile" />
 
                 <TextView
                     android:id="@+id/txtEmail"
                     style="@style/HEAD6_BOLD_16"
                     android:layout_width="0dp"
-                    android:layout_weight="1"
+                    android:layout_weight="9"
                     android:layout_height="wrap_content"
                     android:text="nhandinh1213@gmail.com"
                     android:textColor="@color/black"/>
@@ -147,13 +139,15 @@
                     android:layout_width="20dp"
                     android:layout_height="20dp"
                     android:layout_marginEnd="15dp"
+                    android:layout_weight="1"
                     android:src="@drawable/ic_phone_profile" />
 
                 <TextView
                     style="@style/HEAD6_BOLD_16"
-                    android:layout_width="20dp"
                     android:layout_height="wrap_content"
+                    android:layout_width="20dp"
                     android:text="0703682103"
+                    android:layout_weight="9"
                     android:textColor="@color/black"/>
             </LinearLayout>
         </LinearLayout>
