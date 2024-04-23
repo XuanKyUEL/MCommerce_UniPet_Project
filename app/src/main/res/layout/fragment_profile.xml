@@ -28,22 +28,41 @@
             android:text="Hồ sơ"/>
 
     </LinearLayout>
-    <de.hdodenhof.circleimageview.CircleImageView
-        android:id="@+id/profileImage"
+    <RelativeLayout
+        android:id="@+id/profileImageLayout"
         android:layout_width="match_parent"
         android:layout_height="200dp"
-        android:layout_marginStart="30dp"
-        android:layout_marginTop="15dp"
-        android:layout_marginEnd="30dp"
-        android:layout_marginBottom="30dp"
-        android:padding="10dp"
-        android:scaleType="centerCrop"
-        android:src="@drawable/ic_user_profile_placeholder"
+        android:orientation="vertical"
         app:layout_constraintBottom_toTopOf="@+id/cardView"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/appBarLayout" />
+        app:layout_constraintTop_toBottomOf="@+id/appBarLayout"
+        android:layout_marginStart="30dp"
+        android:layout_marginTop="15dp"
+        android:layout_marginEnd="30dp"
+        android:layout_marginBottom="30dp">
+
+        <com.airbnb.lottie.LottieAnimationView
+            android:id="@+id/loadingAvatarProfile"
+            android:layout_width="150dp"
+            android:layout_height="150dp"
+            android:layout_centerInParent="true"
+            app:lottie_rawRes="@raw/loading_signin_up"
+            android:visibility="gone"
+            app:lottie_autoPlay="false"
+            app:lottie_loop="true"/>
+
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/profileImage"
+            android:layout_width="match_parent"
+            android:layout_height="200dp"
+            android:layout_centerInParent="true"
+            android:src="@drawable/ic_user_profile_placeholder"
+            />
+
+    </RelativeLayout>
+
 
     <androidx.cardview.widget.CardView
         android:id="@+id/cardView"
@@ -55,7 +74,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.491"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/profileImage"
+        app:layout_constraintTop_toBottomOf="@+id/profileImageLayout"
         android:layout_marginTop="20dp">
 
         <LinearLayout
@@ -143,6 +162,7 @@
                     android:src="@drawable/ic_phone_profile" />
 
                 <TextView
+                    android:id="@+id/phoneNumberProfile"
                     style="@style/HEAD6_BOLD_16"
                     android:layout_height="wrap_content"
                     android:layout_width="20dp"
