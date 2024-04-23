@@ -1,5 +1,6 @@
 package com.unipet7.mcommerce.fragments;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -20,6 +21,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.unipet7.mcommerce.R;
 import com.unipet7.mcommerce.activities.VoucherActivity;
@@ -40,6 +42,8 @@ public class fragment_cart extends Fragment {
     FragmentCartBinding binding;
     ArrayList<ProductCart> productCarts;
     CartAdapter adapter;
+    private static final int REQUEST_CODE_VOUCHER = 101;
+
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -91,9 +95,24 @@ public class fragment_cart extends Fragment {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(getContext(), VoucherActivity.class);
-                startActivity(intent);
+                startActivityForResult(intent, REQUEST_CODE_VOUCHER);
+            }
+
+        });
+        binding.btnVoucher.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String voucherCode = binding.edtVoucher.getText().toString().trim();
+                if (voucherCode.isEmpty()) {
+                    Intent intent = new Intent(getContext(), VoucherActivity.class);
+                    startActivityForResult(intent, REQUEST_CODE_VOUCHER);
+                } else {
+                    //Thêm logic xử lý
+                    Toast.makeText(getContext(), "Đã nhập voucher code: " + voucherCode, Toast.LENGTH_SHORT).show();
+                }
             }
         });
+
 
 
 
@@ -118,10 +137,7 @@ public class fragment_cart extends Fragment {
 
     }
 
-    private boolean CheckValidVoucher(String voucherCode) {
-        ///Check valid trong  cơ sở dữ liệu
-        return false;
-    }
+
 
     public void setActionBar(@Nullable Toolbar toolbar) {
         AppCompatActivity activity = (AppCompatActivity) getActivity();
@@ -149,5 +165,16 @@ public class fragment_cart extends Fragment {
             }
         }
     }
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == REQUEST_CODE_VOUCHER && resultCode == Activity.RESULT_OK && data != null) {
+            // Lấy dữ liệu voucher code từ Intent
+            String voucherCode = data.getStringExtra("voucher_code");
+            // Hiển thị dữ liệu voucher code vào EditText edtVoucher
+            binding.edtVoucher.setText(voucherCode);
+        }
+    }
+
 
 }

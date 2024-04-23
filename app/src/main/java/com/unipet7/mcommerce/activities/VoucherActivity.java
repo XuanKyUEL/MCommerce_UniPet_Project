@@ -3,7 +3,11 @@ package com.unipet7.mcommerce.activities;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
+import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.Toast;
 
 import com.unipet7.mcommerce.R;
 import com.unipet7.mcommerce.adapters.AdapterVoucher;
@@ -23,6 +27,28 @@ public class VoucherActivity extends AppCompatActivity {
         binding = ActivityVoucherBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
         loadData();
+        addEvents();
+    }
+
+    private void addEvents() {
+        binding.btnAppVoucher.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // Lấy vị trí của voucher được chọn từ Adapter
+                int selectedPosition = adapter.getSelectedPosition();
+                if (selectedPosition != -1) {
+                    // Lấy voucher code tại vị trí được chọn
+                    String voucherCode = vouchers.get(selectedPosition).getTxtVoucherCode();
+                    // Tạo Intent để trả về dữ liệu voucher code
+                    Intent intent = new Intent();
+                    intent.putExtra("voucher_code", voucherCode);
+                    setResult(Activity.RESULT_OK, intent);
+                    finish(); // Đóng VoucherActivity
+                }
+            }
+        });
+
+
     }
 
     private void loadData() {
