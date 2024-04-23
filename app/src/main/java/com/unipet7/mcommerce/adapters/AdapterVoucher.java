@@ -10,62 +10,51 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.RecyclerView;
+
 import com.unipet7.mcommerce.R;
 import com.unipet7.mcommerce.models.Voucher;
 
+import java.util.ArrayList;
 import java.util.List;
 
-public class AdapterVoucher extends BaseAdapter {
+public class AdapterVoucher extends RecyclerView.Adapter<AdapterVoucher.ViewHolder> {
     Context context;
-    List<Voucher> vouchers;
-    int item;
+    ArrayList<Voucher> vouchers;
 
-    public AdapterVoucher(Context context, List<Voucher> vouchers, int item) {
+    public AdapterVoucher(Context context, ArrayList<Voucher> vouchers) {
         this.context = context;
         this.vouchers = vouchers;
-        this.item = item;
-    }
-    public static class ViewHolder {
-        TextView txtVoucherCode, txtVoucherDecription, txtVoucherNumb;
     }
 
+    @NonNull
+    @Override
+    public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        LayoutInflater inflater = LayoutInflater.from(parent.getContext());
+        View view = inflater.inflate(R.layout.voucher_item, parent, false);
+        return new ViewHolder(view);
+    }
 
     @Override
-    public int getCount() {
+    public void onBindViewHolder(@NonNull AdapterVoucher.ViewHolder holder, int position) {
+        holder.txtVoucherNumb.setText(String.valueOf(Math.round(vouchers.get(position).getTxtVoucherNumb())) + " %");
+        holder.txtVoucherCode.setText(vouchers.get(position).getTxtVoucherCode());
+        holder.txtVoucherDecription.setText(vouchers.get(position).getTxtVoucherDecription());
+    }
+
+    @Override
+    public int getItemCount() {
         return vouchers.size();
     }
 
-    @Override
-    public Object getItem(int position) {
-        return vouchers.get(position);
-    }
-
-    @Override
-    public long getItemId(int position) {
-        return 0;
-    }
-
-    @SuppressLint("SetTextI18n")
-    @Override
-    public View getView(int position, View convertView, ViewGroup parent) {
-        ViewHolder holder;
-        if (convertView == null) {
-            holder = new ViewHolder();
-            LayoutInflater inflater = (LayoutInflater) context.getSystemService(Activity.LAYOUT_INFLATER_SERVICE);
-            convertView = inflater.inflate(item, null);
-
-            holder.txtVoucherCode =convertView.findViewById(R.id.txtVoucherCode);
-            holder.txtVoucherDecription =convertView.findViewById(R.id.txtVoucherDecription);
-            holder.txtVoucherNumb = convertView.findViewById(R.id.txtVoucherNumb);
-            convertView.setTag(holder);
+    public class ViewHolder extends RecyclerView.ViewHolder {
+        TextView txtVoucherCode, txtVoucherDecription, txtVoucherNumb;
+        public ViewHolder(@NonNull View itemView) {
+            super(itemView);
+            txtVoucherDecription = itemView.findViewById(R.id.txtVoucherDecription);
+            txtVoucherCode = itemView.findViewById(R.id.txtVoucherCode);
+            txtVoucherNumb = itemView.findViewById(R.id.txtVoucherNumb);
         }
-        else {
-            holder = (ViewHolder) convertView.getTag();
-        }
-        Voucher v = vouchers.get(position);
-        holder.txtVoucherNumb.setText(String.valueOf(Math.round(v.getTxtVoucherNumb())) + "%");
-        holder.txtVoucherCode.setText(v.getTxtVoucherCode());
-        holder.txtVoucherDecription.setText(v.getTxtVoucherDecription());
-        return convertView;
     }
 }

@@ -1,6 +1,7 @@
 package com.unipet7.mcommerce.activities;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
 
 import android.os.Bundle;
 
@@ -25,18 +26,15 @@ public class VoucherActivity extends AppCompatActivity {
     }
 
     private void loadData() {
-        intData();
-        adapter = new AdapterVoucher(this, vouchers, R.layout.voucher_item);
-        binding.lvDiscountVoucher.setAdapter(adapter);
-    }
-
-    private void intData() {
+        LinearLayoutManager layoutManager = new LinearLayoutManager(this,LinearLayoutManager.VERTICAL, false);
+        binding.rvDiscountVoucher.setLayoutManager(layoutManager);
+        binding.rvDiscountVoucher.setHasFixedSize(true);
         vouchers = new ArrayList<>();
         vouchers.add(new Voucher("UNIPETBESTFRIEND30", "Giảm giá 30%, tối đa 300.000 đồng cho hóa đơn từ 100.000 đồng", 30.0));
         vouchers.add(new Voucher("UNIPETBESTFRIEND50", "Giảm giá 50%, tối đa 100.000 đồng cho hóa đơn từ 200.000 đồng", 50.0));
         vouchers.add(new Voucher("UNIPETBESTFRIEND20", "Giảm giá 20%, tối đa 50.000 đồng cho hóa đơn từ 100.000 đồng", 20.0));
-        vouchers.add(new Voucher("UNIPETBESTFRIEND10", "Giảm giá 10%, tối đa 100.000 đồng cho hóa đơn từ 0 đồng", 10.0));
-
-
+        vouchers.add(new Voucher("UNIPETBESTFRIEND10", "Giảm giá 10%, tối đa 10.000 đồng cho hóa đơn từ 0 đồng", 10.0));
+        adapter = new AdapterVoucher(getApplicationContext(),vouchers);
+        binding.rvDiscountVoucher.setAdapter(adapter);
     }
 }
