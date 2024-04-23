@@ -1,5 +1,8 @@
 package com.unipet7.mcommerce.firebase;
 
+import static com.google.common.io.Files.getFileExtension;
+
+import android.net.Uri;
 import android.util.Log;
 
 import androidx.fragment.app.Fragment;
@@ -8,11 +11,10 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.SetOptions;
-<<<<<<< HEAD
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
 import com.unipet7.mcommerce.activities.DetailProduct;
-=======
 import com.unipet7.mcommerce.activities.BlogDetails;
->>>>>>> main
 import com.unipet7.mcommerce.activities.SignUp;
 import com.unipet7.mcommerce.fragments.FragmentAccount;
 import com.unipet7.mcommerce.fragments.FragmentAllProduct;
@@ -23,9 +25,12 @@ import com.unipet7.mcommerce.models.User;
 import com.unipet7.mcommerce.utils.Constants;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 public class FireStoreClass {
     private final FirebaseFirestore UniPetdb = FirebaseFirestore.getInstance();
+
+    private StorageReference sRef = FirebaseStorage.getInstance().getReference();
     private User currentUser = null;
 
     public String getCurrentUID() {
@@ -152,4 +157,36 @@ public class FireStoreClass {
                     Log.e("FireStoreClass", "getProductDetail: ", e);
                 });
     }
+
+    public void updateUser(Fragment fragment, HashMap<String, Object> userHashMap) {
+        UniPetdb.collection(Constants.USERS)
+                .document(getCurrentUID())
+                .update(userHashMap)
+                .addOnSuccessListener(aVoid -> {
+                    Log.i("FireStoreClass", "updateUser: Thành công");
+                    if (fragment instanceof FragmentAccount) {
+                        FragmentAccount fragmentAccount = (FragmentAccount) fragment;
+                        fragmentAccount.updateUserSuccess();
+                    }
+                })
+                .addOnFailureListener(e -> {
+                    Log.e("FireStoreClass", "updateUser: ", e);
+                });
+    }
+
+//    public void uploadImageToStorage(FragmentAccount fragmentAccount, Uri userAvatarUri) {
+//        sRef = FirebaseStorage.getInstance()
+//                .getReference(Constants.USER_AVATAR)
+//                .child(Constants.USER_AVATAR + System.currentTimeMillis() + Uri.parse(userAvatarUri.toString()).getLastPathSegment());
+//        sRef.putFile(userAvatarUri)
+//                .addOnSuccessListener(taskSnapshot -> {
+//                    taskSnapshot.getStorage().getDownloadUrl()
+//                            .addOnSuccessListener(uri -> {
+//                                fragmentAccount.uploadImageSuccess(uri.toString());
+//                            });
+//                })
+//                .addOnFailureListener(e -> {
+//                    Log.e("FireStoreClass", "uploadImageToStorage: ", e);
+//                });
+//    }
 }

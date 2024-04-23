@@ -41,6 +41,8 @@ public class Profile extends Fragment {
         ldDialog.showLoadingDialog(getActivity());
         if (binding == null) {
             binding = FragmentProfileBinding.inflate(inflater, container, false);
+            binding.loadingAvatarProfile.setVisibility(View.VISIBLE);
+            binding.loadingAvatarProfile.playAnimation();
         }
         addEvents();
         addEvents1();
@@ -130,6 +132,14 @@ public class Profile extends Fragment {
         Glide.with(requireContext())
                 .load(user.getImage())
                 .into(binding.profileImage);
+        binding.loadingAvatarProfile.cancelAnimation();
+        binding.loadingAvatarProfile.setVisibility(View.GONE);
+        String mobile = user.getMobile().toString();
+        if (mobile.isEmpty()) {
+            binding.phoneNumberProfile.setText("Chưa cập nhật");
+        } else {
+            binding.phoneNumberProfile.setText(mobile);
+        }
         ldDialog.dissmis();
     }
 }
