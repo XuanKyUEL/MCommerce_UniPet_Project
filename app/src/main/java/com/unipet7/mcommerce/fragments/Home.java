@@ -9,6 +9,9 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+import androidx.viewpager2.widget.CompositePageTransformer;
+import androidx.viewpager2.widget.MarginPageTransformer;
 
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -16,16 +19,23 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.unipet7.mcommerce.R;
 import com.unipet7.mcommerce.activities.Notification;
 import com.unipet7.mcommerce.activities.ProfileFunction;
 import com.unipet7.mcommerce.adapters.BlogAdapter;
 import com.unipet7.mcommerce.adapters.ProductAdapter;
+import com.unipet7.mcommerce.adapters.SliderAdapter;
 import com.unipet7.mcommerce.databinding.FragmentHomeBinding;
 import com.unipet7.mcommerce.firebase.FireStoreClass;
 import com.unipet7.mcommerce.models.Blogs;
 import com.unipet7.mcommerce.models.Product;
+import com.unipet7.mcommerce.models.SliderItems;
 import com.unipet7.mcommerce.models.User;
 import com.unipet7.mcommerce.utils.Constants;
 import com.unipet7.mcommerce.utils.LoadingDialog;
@@ -122,8 +132,45 @@ public class Home extends Fragment {
         loadBlog();
         addEvents();
         loadHomeUserAndProduct();
+        initBanner();
 
         return binding.getRoot();
+    }
+
+    private void initBanner() {
+        DatabaseReference myRef= FirebaseDatabase.getInstance().getReference("Banner");
+        ArrayList<SliderItems> items = new ArrayList<>();
+        myRef.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                if(snapshot.exists()){
+                    for (DataSnapshot issue:snapshot.getChildren()){
+                        items.add(issue.getValue(SliderItems.class));
+                    }
+                    banners(items);
+                }
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+    }
+
+    private void banners(ArrayList<SliderItems> items) {
+
+        binding.viewpageSlider.setAdapter(new SliderAdapter(items, binding.viewpageSlider));
+        binding.viewpageSlider.setClipToPadding(false);
+        binding.viewpageSlider.setClipChildren(false);
+        binding.viewpageSlider.setOffscreenPageLimit(2);
+        binding.viewpageSlider.getChildAt(0).setOverScrollMode(RecyclerView.OVER_SCROLL_NEVER);
+
+        CompositePageTransformer compositePageTransformer= new CompositePageTransformer();
+        compositePageTransformer.addTransformer(new MarginPageTransformer(40));
+
+        binding.viewpageSlider.setPageTransformer(compositePageTransformer);
     }
 
     public void configAdapters() {
