@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".activities.Blogs"
-    android:padding="15dp"
+    android:padding="10dp"
     android:background="@color/white">
     <com.google.android.material.appbar.AppBarLayout
         android:id="@+id/appBarLayout"
@@ -18,15 +18,15 @@
         app:layout_constraintTop_toTopOf="parent">
 
         <androidx.appcompat.widget.Toolbar
-            android:id="@+id/toolbar"
+            android:id="@+id/toolbarblog"
             style="@style/HEAD5_BOLD_18"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
-            android:background="#ffffff"
-            android:gravity="center"
+            android:layout_gravity="center_horizontal"
+            android:background="@color/white"
             app:popupTheme="@style/Widget.Material3.PopupMenu.Overflow">
             <TextView
-                android:layout_width="300dp"
+                android:layout_width="270dp"
                 android:layout_height="wrap_content"
                 android:textColor="@color/darkPrimary"
                 style="@style/HEAD5_BOLD_18"
