@@ -50,10 +50,10 @@ public class Blogs extends AppCompatActivity {
     private void recyclerViewBlog2() {
         binding.rclBlogs2.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
         ArrayList<com.unipet7.mcommerce.models.Blogs> blogs = new ArrayList<>();
-        blogs.add(new com.unipet7.mcommerce.models.Blogs("5 tiêu chuẩn thức ăn cho mèo mà một Sen chính hiệu cần biết", R.drawable.blog2_image_4, "14.02.2024", "1. Giảm lượng tinh bột trong khẩu phần ăn mỗi ngày. Đúng rằng con người không thể sống thiếu ...",2));
-        blogs.add(new com.unipet7.mcommerce.models.Blogs("Những lưu ý khi triệt sản chó cái", R.drawable.blog2_image_5, "17.02.2024", "1. Triệt sản là gì?Triệt sản (hay thiến) đây là một phẫu thuật loại bỏ cơ quan sinh dục của động vật. Việc này nhằm...",2));
-        blogs.add(new com.unipet7.mcommerce.models.Blogs("Cách xử lý vết thương khi bị chó cắn", R.drawable.blog2_image_6, "20.3.2024", "Hiện nay bệnh dại chưa có thuốc điều trị đặc hiệu. Xử lý vết thương khi bị chó cắn đúng cách và được tiêm vắc-xin...",2));
-        blogs.add(new com.unipet7.mcommerce.models.Blogs("Top 7 giống chó dễ nuôi nhất", R.drawable.blog_image, "20.3.2024", "1. Chó ChihuahuaChihuahua là giống chó đang được nuôi khá nhiều tại Việt Nam. Lý do dòng chó này được yêu chuộng một cách rộng...",2));
+        blogs.add(new com.unipet7.mcommerce.models.Blogs("5 tiêu chuẩn thức ăn cho mèo mà một Sen chính hiệu cần biết", R.drawable.blog2_image_4, "14.02.2024", "1. Giảm lượng tinh bột ...",2));
+        blogs.add(new com.unipet7.mcommerce.models.Blogs("Những lưu ý khi triệt sản chó cái", R.drawable.blog2_image_5, "17.02.2024", "1. Triệt sản là gì?Triệt sản (hay thiến) ...",2));
+        blogs.add(new com.unipet7.mcommerce.models.Blogs("Cách xử lý vết thương khi bị chó cắn", R.drawable.blog2_image_6, "20.3.2024", "Hiện nay bệnh dại chưa có thuốc ...",2));
+        blogs.add(new com.unipet7.mcommerce.models.Blogs("Top 7 giống chó dễ nuôi nhất", R.drawable.blog_image, "20.3.2024", "1. Chó ChihuahuaChihuahua là giống chó đang được ...",2));
         adapter2 = new BlogAdapter(blogs);
         binding.rclBlogs2.setAdapter(adapter2);
     }

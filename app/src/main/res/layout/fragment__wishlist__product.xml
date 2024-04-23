@@ -5,6 +5,7 @@
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
+    android:padding="10dp"
     tools:context=".fragments.Fragment_Wishlist_Product">
 
     <com.google.android.material.appbar.AppBarLayout
@@ -21,11 +22,11 @@
             app:popupTheme="@style/Widget.Material3.PopupMenu.Overflow"
             android:layout_gravity="center">
             <TextView
-                android:layout_width="300dp"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:textColor="@color/darkPrimary"
                 style="@style/HEAD5_BOLD_18"
-                android:gravity="center"
+                android:gravity="center_horizontal"
                 android:text="Sản phẩm yêu thích"/>
         </androidx.appcompat.widget.Toolbar>
     </com.google.android.material.appbar.AppBarLayout>
