@@ -131,14 +131,14 @@ public class Home extends Fragment {
         binding.lvlHomeSale.setAdapter(saleAdapter);
         binding.lvlHomeSale.setHasFixedSize(true);
 
-        adapterDog = new ProductAdapter(productsDog);
+        productDog = new ProductAdapter(productsDog);
         binding.lvlHomeProduct1.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
-        binding.lvlHomeProduct1.setAdapter(adapterDog);
+        binding.lvlHomeProduct1.setAdapter(productDog);
         binding.lvlHomeProduct1.setHasFixedSize(true);
 
-        adapterCat = new ProductAdapter(productsCat);
+        productCat = new ProductAdapter(productsCat);
         binding.lvlHomeProduct2.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
-        binding.lvlHomeProduct2.setAdapter(adapterCat);
+        binding.lvlHomeProduct2.setAdapter(productCat);
         binding.lvlHomeProduct2.setHasFixedSize(true);
     }
 
@@ -151,35 +151,44 @@ public class Home extends Fragment {
     }
 
     private void addEvents() {
-        binding.txtXemThem1.setOnClickListener(v -> {
-            Fragment allproduct = new FragmentAllProduct();
-            FragmentManager fragmentManager = requireActivity().getSupportFragmentManager();
+        binding.txtXemThem1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Fragment allproduct = new FragmentAllProduct();
+                FragmentManager fragmentManager = requireActivity().getSupportFragmentManager();
 
-            // Thực hiện giao diện chuyển đổi Fragment
-            fragmentManager.beginTransaction()
-                    .replace(((ViewGroup) requireView().getParent()).getId(), allproduct)
-                    .addToBackStack(null)
-                    .commit();
+                // Thực hiện giao diện chuyển đổi Fragment
+                fragmentManager.beginTransaction()
+                        .replace(((ViewGroup) requireView().getParent()).getId(), allproduct)
+                        .addToBackStack(null)
+                        .commit();
+            }
         });
-        binding.txtXemThem2.setOnClickListener(v -> {
-            Fragment allproduct = new FragmentAllProduct();
-            FragmentManager fragmentManager = requireActivity().getSupportFragmentManager();
+        binding.txtXemThem2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Fragment allproduct = new FragmentAllProduct();
+                FragmentManager fragmentManager = requireActivity().getSupportFragmentManager();
 
-            // Thực hiện giao diện chuyển đổi Fragment
-            fragmentManager.beginTransaction()
-                    .replace(((ViewGroup) requireView().getParent()).getId(), allproduct)
-                    .addToBackStack(null)
-                    .commit();
+                // Thực hiện giao diện chuyển đổi Fragment
+                fragmentManager.beginTransaction()
+                        .replace(((ViewGroup) requireView().getParent()).getId(), allproduct)
+                        .addToBackStack(null)
+                        .commit();
+            }
         });
-        binding.txtXemthem3.setOnClickListener(v -> {
-            Fragment allproduct = new FragmentAllProduct();
-            FragmentManager fragmentManager = requireActivity().getSupportFragmentManager();
+        binding.txtXemthem3.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Fragment allproduct = new FragmentAllProduct();
+                FragmentManager fragmentManager = requireActivity().getSupportFragmentManager();
 
-            // Thực hiện giao diện chuyển đổi Fragment
-            fragmentManager.beginTransaction()
-                    .replace(((ViewGroup) requireView().getParent()).getId(), allproduct)
-                    .addToBackStack(null)
-                    .commit();
+                // Thực hiện giao diện chuyển đổi Fragment
+                fragmentManager.beginTransaction()
+                        .replace(((ViewGroup) requireView().getParent()).getId(), allproduct)
+                        .addToBackStack(null)
+                        .commit();
+            }
         });
         binding.Xemthem4.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -197,6 +206,7 @@ public class Home extends Fragment {
             public void onClick(View v) {
                 Intent intent = new Intent(getActivity(), Notification.class);
                 startActivity(intent);
+
             }
         });
     }
