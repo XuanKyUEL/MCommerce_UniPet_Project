@@ -1,6 +1,5 @@
 package com.unipet7.mcommerce.firebase;
 
-import android.content.Context;
 import android.util.Log;
 
 import androidx.fragment.app.Fragment;
@@ -10,16 +9,15 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.SetOptions;
 import com.unipet7.mcommerce.activities.DetailProduct;
+import com.unipet7.mcommerce.activities.BlogDetails;
 import com.unipet7.mcommerce.activities.SignUp;
 import com.unipet7.mcommerce.fragments.FragmentAccount;
 import com.unipet7.mcommerce.fragments.FragmentAllProduct;
-import com.unipet7.mcommerce.fragments.FragmentBlogDetails;
 import com.unipet7.mcommerce.fragments.Home;
 import com.unipet7.mcommerce.fragments.Profile;
 import com.unipet7.mcommerce.models.Product;
 import com.unipet7.mcommerce.models.User;
 import com.unipet7.mcommerce.utils.Constants;
-import com.unipet7.mcommerce.utils.LoadingDialog;
 
 import java.util.ArrayList;
 
@@ -93,7 +91,7 @@ public class FireStoreClass {
                     Log.e("FireStoreClass", "getAllProducts: ", e);
                 });
     }
-    public void getAllProductsBlog(FragmentBlogDetails fragment, ArrayList<Product> allProducts) {
+    public void getAllProductsBlog(BlogDetails activity, ArrayList<Product> allProducts) {
         UniPetdb.collection(Constants.PRODUCTS)
                 .get()
                 .addOnSuccessListener(queryDocumentSnapshots -> {
@@ -103,7 +101,7 @@ public class FireStoreClass {
                             allProducts.add(product);
                             Log.i("FireStoreClass", "getAllProducts: " + product.getProductname());
                         }
-                        fragment.configAdaptersBlog();
+                        activity.configAdaptersBlog();
                     }
                 })
                 .addOnFailureListener(e -> {
