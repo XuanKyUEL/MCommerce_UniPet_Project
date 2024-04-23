@@ -17,6 +17,7 @@ import android.widget.ArrayAdapter;
 
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.unipet7.mcommerce.R;
+import com.unipet7.mcommerce.activities.Notification;
 import com.unipet7.mcommerce.activities.ProfileFunction;
 import com.unipet7.mcommerce.adapters.BlogAdapter;
 import com.unipet7.mcommerce.adapters.ProductAdapter;
@@ -192,31 +193,18 @@ public class Home extends Fragment {
         binding.Xemthem4.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Fragment fragmentBlog = new FragmentBlog();
-                FragmentManager fragmentManager = requireActivity().getSupportFragmentManager();
-
-                // Thực hiện giao diện chuyển đổi Fragment
-                fragmentManager.beginTransaction()
-                        .replace(((ViewGroup) requireView().getParent()).getId(), fragmentBlog)
-                        .addToBackStack(null)
-                        .commit();
+                Intent intent = new Intent(getActivity(), com.unipet7.mcommerce.activities.Blogs.class);
+                startActivity(intent);
             }
         });
         binding.imgCate6.setOnClickListener(v -> {
-            Fragment fragmentBlog = new FragmentBlog();
-            FragmentManager fragmentManager = requireActivity().getSupportFragmentManager();
-
-            // Thực hiện giao diện chuyển đổi Fragment
-            fragmentManager.beginTransaction()
-                    .replace(((ViewGroup) requireView().getParent()).getId(), fragmentBlog)
-                    .addToBackStack(null)
-                    .commit();
+            Intent intent = new Intent(getActivity(), com.unipet7.mcommerce.activities.Blogs.class);
+            startActivity(intent);
         });
         binding.imageView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getActivity(), fragment_notification.class);
-                intent.putExtra("function", "notification");
+                Intent intent = new Intent(getActivity(), Notification.class);
                 startActivity(intent);
 
             }
