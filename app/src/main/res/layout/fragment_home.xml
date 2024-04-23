@@ -6,6 +6,7 @@
     android:layout_height="match_parent"
     tools:context=".fragments.Home"
     android:background="@color/white"
+    android:id="@+id/homeLayout"
     android:paddingTop="20dp">
 
     <ScrollView

@@ -24,7 +24,7 @@
             app:popupTheme="@style/Widget.Material3.PopupMenu.Overflow"
             android:layout_gravity="center">
             <TextView
-                android:layout_width="300dp"
+                android:layout_width="250dp"
                 android:layout_height="wrap_content"
                 android:textColor="@color/darkPrimary"
                 style="@style/HEAD5_BOLD_18"
@@ -37,13 +37,12 @@
         android:layout_height="wrap_content"
         android:id="@+id/lvlAddress"
         android:layout_weight="1"
-
         android:padding="10dp"/>
     <Button
         android:id="@+id/btn_addaddress"
-        android:layout_width="250dp"
-        android:layout_height="40dp"
-        style="@style/BODY_MED_BOLD_14"
+        android:layout_width="300dp"
+        android:layout_height="48dp"
+        style="@style/HEAD6_BOLD_16"
         android:text="Thêm địa chỉ"
         android:layout_marginBottom="100dp"
         android:layout_gravity="bottom|center_horizontal"

@@ -31,74 +31,77 @@
         </androidx.appcompat.widget.Toolbar>
     </com.google.android.material.appbar.AppBarLayout>
     <TextView
-        android:layout_width="match_parent"
+        android:layout_width="320dp"
         android:layout_height="wrap_content"
         android:text="Liên hệ"
-        style="@style/BODY_MED_BOLD_14"
-        android:gravity="left"
-        android:paddingLeft="35dp"
-        android:layout_marginTop="15dp"/>
+        android:layout_gravity="center"
+        android:layout_marginTop="10dp"
+        style="@style/HEAD6_BOLD_16"
+        android:textColor="@color/black" />
     <EditText
-        android:layout_marginTop="8dp"
         android:id="@+id/edtuser"
-        android:layout_width="340dp"
-        android:layout_height="40dp"
+        style="@style/BODY_MED_REGULAR_14"
+        android:layout_width="320dp"
+        android:layout_height="48dp"
+        android:layout_gravity="center"
+        android:layout_marginTop="10dp"
+        android:background="@drawable/edittext_conner_profile"
         android:hint="Họ và tên"
-        style="@style/BODY_MED_REG_14"
-        android:textColor="@color/darkPrimary"
-        android:paddingLeft="15dp"
-        android:layout_gravity="center"
-        android:background="@drawable/rectangle_outline"/>
+        android:padding="10dp"
+        android:textColor="@color/black"
+        android:textColorHint="#C4C4C4"/>/>
     <EditText
-        android:layout_marginTop="15dp"
         android:id="@+id/edtphone"
-        android:layout_width="340dp"
-        android:layout_height="40dp"
-        android:hint="Số điện thoại"
-        android:paddingLeft="15dp"
-        style="@style/BODY_MED_REG_14"
-        android:textColor="@color/darkPrimary"
+        style="@style/BODY_MED_REGULAR_14"
+        android:layout_width="320dp"
+        android:layout_height="48dp"
         android:layout_gravity="center"
-        android:background="@drawable/rectangle_outline"/>
+        android:layout_marginTop="10dp"
+        android:background="@drawable/edittext_conner_profile"
+        android:hint="Số điện thoại"
+        android:padding="10dp"
+        android:textColor="@color/black"
+        android:textColorHint="#C4C4C4"/>/>
     <TextView
-        android:layout_width="match_parent"
+        android:layout_width="320dp"
         android:layout_height="wrap_content"
         android:text="Địa chỉ"
-        style="@style/BODY_MED_BOLD_14"
-        android:gravity="left"
-        android:paddingLeft="35dp"
-        android:layout_marginTop="15dp"/>
+        android:layout_gravity="center"
+        android:layout_marginTop="10dp"
+        style="@style/HEAD6_BOLD_16"
+        android:textColor="@color/black" />
     <EditText
-        android:layout_marginTop="8dp"
         android:id="@+id/edtprovince"
-        android:layout_width="340dp"
-        android:layout_height="40dp"
         android:hint="Tỉnh/Thành phố, Quận/Huyện, Phường/Xã"
-        style="@style/BODY_MED_REG_14"
-        android:textColor="@color/darkPrimary"
-        android:paddingLeft="15dp"
+        style="@style/BODY_MED_REGULAR_14"
+        android:layout_width="320dp"
+        android:layout_height="48dp"
         android:layout_gravity="center"
-        android:background="@drawable/rectangle_outline"/>
+        android:layout_marginTop="10dp"
+        android:background="@drawable/edittext_conner_profile"
+        android:padding="10dp"
+        android:textColor="@color/black"
+        android:textColorHint="#C4C4C4"/>/>
     <EditText
-        android:layout_marginTop="15dp"
         android:id="@+id/edtstress"
-        android:layout_width="340dp"
-        android:layout_height="40dp"
         android:hint="Tên đường, Tòa nhà, Số nhà"
-        android:paddingLeft="15dp"
-        style="@style/BODY_MED_REG_14"
-        android:textColor="@color/darkPrimary"
+        style="@style/BODY_MED_REGULAR_14"
+        android:layout_width="320dp"
+        android:layout_height="48dp"
         android:layout_gravity="center"
-        android:background="@drawable/rectangle_outline"/>
-    <!--chỉnh bo góc lấy file xml custom-->
+        android:layout_marginTop="10dp"
+        android:background="@drawable/edittext_conner_profile"
+        android:padding="10dp"
+        android:textColor="@color/black"
+        android:textColorHint="#C4C4C4"/>/>
     <Button
-        android:layout_marginTop="25dp"
+        android:layout_marginTop="50dp"
         android:id="@+id/btn_Done"
-        android:layout_width="250dp"
-        android:layout_height="40dp"
-        style="@style/BODY_MED_BOLD_14"
+        android:layout_width="300dp"
+        android:layout_height="48dp"
+        style="@style/HEAD6_BOLD_16"
         android:layout_gravity="center"
         android:text="Hoàn thành"
-        android:background="@drawable/button_custom"/>
+        android:background="@drawable/custom_button_account"/>
 
 </LinearLayout>
