@@ -27,6 +27,7 @@ import com.unipet7.mcommerce.fragments.Profile;
 import com.unipet7.mcommerce.fragments.fragment_blank_cart;
 import com.unipet7.mcommerce.fragments.fragment_cart;
 import com.unipet7.mcommerce.models.User;
+import com.unipet7.mcommerce.utils.Constants;
 import com.unipet7.mcommerce.utils.LoadingDialog;
 
 public class MainActivity extends AppCompatActivity {
@@ -78,6 +79,10 @@ public class MainActivity extends AppCompatActivity {
                         break;
                     case 1:
                         fragment = new FragmentAllProduct();
+                        // truyền bundle category allproduct cho fragment allproduct
+                        Bundle bundle = new Bundle();
+                        bundle.putString(Constants.CATEGORY, Constants.ALLPRODUCT);
+                        fragment.setArguments(bundle);
                         bottomNavigationView.getMenu().getItem(1).setChecked(true);
                         break;
                     case 2:

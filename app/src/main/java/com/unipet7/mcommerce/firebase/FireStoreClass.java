@@ -85,8 +85,8 @@ public class FireStoreClass {
                             allProducts.add(product);
                             Log.i("FireStoreClass", "getAllProducts: " + product.getProductname());
                         }
-                        fragment.divideProduct();
                     }
+                    fragment.divideProduct(allProducts);
                 })
                 .addOnFailureListener(e -> {
                     Log.e("FireStoreClass", "getAllProducts: ", e);

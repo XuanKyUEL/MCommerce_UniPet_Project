@@ -71,7 +71,7 @@
                 android:layout_height="wrap_content"
                 android:background="@drawable/catepd_states"
                 android:textColor="@color/cate_text_colors"
-                android:layout_marginRight="10dp"
+                android:layout_marginEnd="10dp"
                 android:text="Tất cả" />
 
             <Button
@@ -83,7 +83,7 @@
                 android:clickable="true"
                 android:text="Thức ăn"
                 style="@style/BODY_XS_BOLD_12"
-                android:layout_marginRight="10dp"/>
+                android:layout_marginEnd="10dp"/>
             <Button
                 android:id="@+id/btn_toy"
                 android:layout_width="wrap_content"
@@ -92,7 +92,7 @@
                 android:textColor="@color/cate_text_colors"
                 android:text="Đồ chơi"
                 style="@style/BODY_XS_BOLD_12"
-                android:layout_marginRight="10dp"/>
+                android:layout_marginEnd="10dp"/>
 
             <Button
                 android:id="@+id/btn_item"
@@ -102,7 +102,7 @@
                 android:textColor="@color/cate_text_colors"
                 android:text="Vật dụng"
                 style="@style/BODY_XS_BOLD_12"
-                android:layout_marginRight="10dp"/>
+                android:layout_marginEnd="10dp"/>
 
             <Button
                 android:id="@+id/btn_care"
@@ -112,7 +112,7 @@
                 android:textColor="@color/cate_text_colors"
                 android:text="Chăm sóc"
                 style="@style/BODY_XS_BOLD_12"
-                android:layout_marginRight="5dp"/>
+                android:layout_marginEnd="5dp"/>
             <Button
                 android:id="@+id/btn_card"
                 android:layout_width="wrap_content"
@@ -121,7 +121,7 @@
                 android:textColor="@color/cate_text_colors"
                 android:text="UniCard"
                 style="@style/BODY_XS_BOLD_12"
-                android:layout_marginRight="5dp"/>
+                android:layout_marginEnd="5dp"/>
         </LinearLayout>
     </HorizontalScrollView>
     <androidx.recyclerview.widget.RecyclerView

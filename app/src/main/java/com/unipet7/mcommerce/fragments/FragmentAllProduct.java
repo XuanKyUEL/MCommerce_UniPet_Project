@@ -13,6 +13,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 
 import com.unipet7.mcommerce.R;
 import com.unipet7.mcommerce.adapters.ProductAdapter;
@@ -46,6 +47,8 @@ public class FragmentAllProduct extends Fragment {
     public ProductAdapter allPdadapter;
     public ArrayList<Product> allPdproducts;
 
+    ArrayList<Button> categoryButtons = new ArrayList<>();
+
     ArrayList<Product> foodProducts = new ArrayList<>();
 
     ArrayList<Product> toyProducts = new ArrayList<>();
@@ -53,6 +56,8 @@ public class FragmentAllProduct extends Fragment {
     ArrayList<Product> healthProducts = new ArrayList<>();
 
     ArrayList<Product> itemProducts = new ArrayList<>();
+
+    Button btnAll, btnFood, btnItem, btnCare, btnToy;
 
     public FragmentAllProduct() {
         // Required empty public constructor
@@ -93,18 +98,15 @@ public class FragmentAllProduct extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         binding = FragmentAllProductBinding.inflate(inflater, container, false);
+        mapping();
         setActionBar(binding.toolbarall);
-        addEvents();
-        if (!isAllProductFetched) {
-            LoadingDialog ldDialog = new LoadingDialog();
-            ldDialog.showLoadingDialog(getActivity());
-            FireStoreClass fireStoreClass = new FireStoreClass();
-            allPdproducts = new ArrayList<>();
-            fireStoreClass.getAllProducts(this, allPdproducts);
-            ldDialog.dissmis();
-            isAllProductFetched = true;
-        }
-        allPdadapter = new ProductAdapter(allPdproducts);
+        LoadingDialog ldDialog = new LoadingDialog();
+        ldDialog.showLoadingDialog(this.getContext());
+        FireStoreClass fireStoreClass = new FireStoreClass();
+        allPdproducts = new ArrayList<>();
+        fireStoreClass.getAllProducts(this, allPdproducts);
+        ldDialog.dissmis();
+        loadProduct(allPdproducts);
         cateClickEvent();
         Bundle bundle = getArguments();
         if (bundle != null) {
@@ -114,18 +116,16 @@ public class FragmentAllProduct extends Fragment {
         } else {
             binding.btnAll.performClick();
         }
-        onSelectCateListener();
         return binding.getRoot();
 
     }
 
-    private void addEvents() {
-        binding.toolbarall.setNavigationOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                requireActivity().getOnBackPressedDispatcher().onBackPressed();
-            }
-        });
+    private void mapping() {
+        btnAll = binding.btnAll;
+        btnFood = binding.btnFood;
+        btnItem = binding.btnItem;
+        btnCare = binding.btnCare;
+        btnToy = binding.btnToy;
     }
 
     private void loadProductOnCategory(String category) {
@@ -142,16 +142,23 @@ public class FragmentAllProduct extends Fragment {
             case Constants.TOY:
                 loadProduct(toyProducts);
                 break;
-            default:
+            case  Constants.ALLPRODUCT:
                 loadProduct(allPdproducts);
+                break;
         }
     }
 
-    public void divideProduct() {
+    public void buttonUIDefault(ArrayList<Button> buttons) {
+        for (Button button : buttons) {
+            button.setBackgroundResource(R.drawable.btn_bg_outline);
+            button.setTextColor(getResources().getColor(R.color.black));
+        }
+    }
+
+    public void divideProduct(ArrayList<Product> allPdproducts) {
         for (Product product : allPdproducts) {
             if (product.getCategoryId() == 1 || product.getCategoryId() == 2) {
                 foodProducts.add(product);
-                Log.i("FragmentAllProduct", "divideProduct: " + foodProducts.size());
             }
             if (product.getCategoryId() == 3) {
                 itemProducts.add(product);
@@ -166,34 +173,54 @@ public class FragmentAllProduct extends Fragment {
     }
 
     private void cateClickEvent() {
-        binding.btnAll.setOnClickListener(v -> {
+        btnAll.setOnClickListener(v -> {
+            addOtherButtonToDefault(btnFood, btnItem, btnCare, btnToy);
+            setButtonToPressed(btnAll);
             loadProduct(allPdproducts);
         });
-        binding.btnFood.setOnClickListener(v -> {
+        btnFood.setOnClickListener(v -> {
+            addOtherButtonToDefault(btnAll, btnItem, btnCare, btnToy);
+            setButtonToPressed(btnFood);
             loadProduct(foodProducts);
         });
-        binding.btnItem.setOnClickListener(v -> {
+        btnItem.setOnClickListener(v -> {
+            addOtherButtonToDefault(btnAll, btnFood, btnCare, btnToy);
+            setButtonToPressed(btnItem);
             loadProduct(itemProducts);
         });
-        binding.btnCare.setOnClickListener(v -> {
+        btnCare.setOnClickListener(v -> {
+            addOtherButtonToDefault(btnAll, btnFood, btnItem, btnToy);
+            setButtonToPressed(btnCare);
             loadProduct(healthProducts);
         });
-        binding.btnToy.setOnClickListener(v -> {
+        btnToy.setOnClickListener(v -> {
+            addOtherButtonToDefault(btnAll, btnFood, btnItem, btnCare);
+            setButtonToPressed(btnToy);
             loadProduct(toyProducts);
         });
     }
 
+    private void setButtonToPressed(Button btn) {
+        btn.setBackgroundResource(R.drawable.colorbrand_btn_bg);
+        btn.setTextColor(getResources().getColor(R.color.white));
+    }
+
+    private void addOtherButtonToDefault(Button btn1, Button btn2, Button btn3, Button btn4) {
+        categoryButtons.add(btn1);
+        categoryButtons.add(btn2);
+        categoryButtons.add(btn3);
+        categoryButtons.add(btn4);
+        buttonUIDefault(categoryButtons);
+    }
+
     private void loadProduct(ArrayList<Product> products) {
+        LoadingDialog ldDialog = new LoadingDialog();
+        ldDialog.showLoadingDialog(this.getContext());
         ProductAdapter adapter = new ProductAdapter(products);
         binding.lvlAllProduct.setLayoutManager(new GridLayoutManager(getContext(), 2));
         binding.lvlAllProduct.setAdapter(adapter);
-        binding.lvlAllProduct.setHasFixedSize(true);
-    }
-
-
-    private void onSelectCateListener() {
-        binding.btnFood.setOnClickListener(v -> {
-        });
+        binding.lvlAllProduct.setHasFixedSize(false);
+        ldDialog.dissmis();
     }
 
     public void setActionBar(@Nullable Toolbar toolbar) {
