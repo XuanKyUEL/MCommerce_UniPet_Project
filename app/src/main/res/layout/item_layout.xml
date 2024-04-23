@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="165dp"
-    android:layout_height="wrap_content"
+    android:layout_height="280dp"
     android:layout_margin="8dp"
     android:id="@+id/layoutitem"
     android:background="@drawable/item_background">
@@ -18,7 +18,7 @@
         android:orientation="vertical">
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="125dp">
 
             <ImageView
                 android:id="@+id/imageproduct"
@@ -127,6 +127,7 @@
                 style="@style/BODY_SMALL_MED_12"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:padding="2dp"
                 android:text="4.8"
                 android:textColor="@color/darkTertiary" />
 
@@ -135,7 +136,8 @@
                 style="@style/BODY_SMALL_MED_12"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text=" (199))"
+                android:padding="2dp"
+                android:text="(199)"
                 android:textColor="@color/darkTertiary" />
         </LinearLayout>
         <LinearLayout

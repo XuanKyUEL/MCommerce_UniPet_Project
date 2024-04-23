@@ -25,6 +25,7 @@ import com.unipet7.mcommerce.fragments.Fragment_Empty_Notification;
 import com.unipet7.mcommerce.fragments.Home;
 import com.unipet7.mcommerce.fragments.Profile;
 import com.unipet7.mcommerce.fragments.fragment_blank_cart;
+import com.unipet7.mcommerce.fragments.fragment_cart;
 import com.unipet7.mcommerce.models.User;
 import com.unipet7.mcommerce.utils.LoadingDialog;
 
@@ -80,7 +81,7 @@ public class MainActivity extends AppCompatActivity {
                         bottomNavigationView.getMenu().getItem(1).setChecked(true);
                         break;
                     case 2:
-                        fragment = new fragment_blank_cart();
+                        fragment = new fragment_cart();
                         bottomNavigationView.getMenu().getItem(2).setChecked(true);
                         break;
                     case 3:

@@ -1,5 +1,6 @@
 package com.unipet7.mcommerce.adapters;
 
+import android.graphics.Paint;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -9,6 +10,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
 import com.unipet7.mcommerce.R;
 import com.unipet7.mcommerce.models.IntroLayoutItems;
 import com.unipet7.mcommerce.models.Product;
@@ -36,12 +38,30 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ViewHold
     public void onBindViewHolder(@NonNull ProductAdapter.ViewHolder holder, int position) {
         Product product = productList.get(position);
         holder.productname.setText(product.getProductname());
-        holder.productprice.setText(String.valueOf(product.getProductprice()));
-        holder.productratenum.setText(String.valueOf(product.getProductratenum()));
-        holder.producttotalnum.setText(String.valueOf(product.getProducttotalnum()));
-        holder.presaleprice.setText(String.valueOf(product.getPresaleprice()));
-        holder.salepercent.setText(product.getSalepercent() + " %" );
-        holder.imvThumb.setImageResource(product.getImvThumb());
+        double roundRating = Math.round(product.getProductratenum() * 10) / 10.0;
+        holder.productratenum.setText("4.5");
+        holder.numOfRating.setText("  (130)");
+        if (product.getSalepercent() > 0) {
+            int salepercent = (int) product.getSalepercent();
+            holder.salepercent.setText(salepercent + " %");
+            double percent = product.getSalepercent();
+            double price = product.getProductprice();
+            double saleprice = price - (price * percent / 100);
+
+            String formattedPrice = String.format("%,.0f đ", price);
+            String formattedSalePrice = String.format("%,.0f đ", saleprice);
+
+            holder.productprice.setText(formattedSalePrice);
+            holder.presaleprice.setPaintFlags(holder.presaleprice.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
+            holder.presaleprice.setText(formattedPrice);
+        }else {
+            holder.salepercent.setVisibility(View.GONE);
+            holder.salespercentbg.setVisibility(View.GONE);
+            holder.salebanner.setVisibility(View.INVISIBLE);
+            holder.presaleprice.setVisibility(View.GONE);
+        }
+        // glide imge from firebaseurl
+        Glide.with(holder.itemView.getContext()).load(product.getProductImageUrl()).into(holder.imvThumb);
 
     }
 
@@ -52,19 +72,20 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ViewHold
 
     static class ViewHolder extends RecyclerView.ViewHolder {
 
-        TextView productname ,productprice, productratenum, producttotalnum, presaleprice, salepercent;
-        ImageView imvThumb;
+        TextView productname ,productprice, productratenum, presaleprice, salepercent,numOfRating;
+        ImageView imvThumb, salespercentbg,salebanner;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             productname = itemView.findViewById(R.id.textView);
             productprice = itemView.findViewById(R.id.textView2);
-            producttotalnum = itemView.findViewById(R.id.txtNumberOfRating);
             productratenum = itemView.findViewById(R.id.txtRating);
             imvThumb = itemView.findViewById(R.id.imageproduct);
             salepercent = itemView.findViewById(R.id.textsalepercent);
+            salespercentbg = itemView.findViewById(R.id.imagesale);
+            salebanner = itemView.findViewById(R.id.imagebannersale);
             presaleprice = itemView.findViewById(R.id.textsale);
-
+            numOfRating = itemView.findViewById(R.id.txtNumberOfRating);
         }
     }
 }

@@ -11,6 +11,9 @@ import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.core.content.ContextCompat;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentActivity;
+import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
@@ -19,6 +22,8 @@ import com.bumptech.glide.load.resource.bitmap.CenterCrop;
 import com.bumptech.glide.request.RequestOptions;
 import com.makeramen.roundedimageview.RoundedImageView;
 import com.unipet7.mcommerce.R;
+import com.unipet7.mcommerce.fragments.FragmentAllProduct;
+import com.unipet7.mcommerce.fragments.FragmentBlogDetails;
 import com.unipet7.mcommerce.models.Blogs;
 import com.unipet7.mcommerce.models.Product;
 
@@ -51,12 +56,7 @@ public class BlogAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
         throw new IllegalArgumentException("Invalid view type: " + viewType);
     }
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
-//        Blogs blogs = blogsList.get(position);
-//        holder.blogTitle.setText(blogs.getTitle());
-//        holder.blogDesciption.setText(blogs.getDescription());
-//        holder.blogPubDate.setText(blogs.getPubDate());
-//        holder.blogPic.setImageResource(blogs.getPic());
-//        holder.blogPic2.setImageResource(blogs.getPic());
+
         Blogs blogs = blogsList.get(position);
         if (holder instanceof ImageViewHolder) {
             ImageViewHolder imageViewHolder = (ImageViewHolder) holder;
@@ -69,6 +69,7 @@ public class BlogAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
             imageWithDescriptionViewHolder.textViewDescription.setText(blogs.getDescription());
             imageWithDescriptionViewHolder.textViewDate.setText(blogs.getPubDate());
         }
+
     }
 
     @Override
@@ -86,7 +87,22 @@ public class BlogAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
             super(itemView);
             imageView = itemView.findViewById(R.id.imvblogImage);
             textViewName1 = itemView.findViewById(R.id.txtTitle1);
+
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Fragment details = new FragmentBlogDetails();
+                    FragmentManager fragmentManager = ((FragmentActivity) v.getContext()).getSupportFragmentManager();
+
+                    // Thực hiện giao diện chuyển đổi Fragment
+                    fragmentManager.beginTransaction()
+                            .replace(((ViewGroup) v.getRootView().findViewById(android.R.id.content)).getId(), details)
+                            .addToBackStack(null)
+                            .commit();
+                }
+            });
         }
+
     }
 
     private static class ImageWithDescriptionViewHolder extends RecyclerView.ViewHolder {

@@ -11,7 +11,9 @@ import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
 
+import com.bumptech.glide.Glide;
 import com.google.firebase.auth.FirebaseAuth;
 import com.unipet7.mcommerce.R;
 import com.unipet7.mcommerce.activities.MainActivity;
@@ -50,17 +52,7 @@ public class Profile extends Fragment {
 
     }
 
-    private void addEvents2() {
-        binding.toolbar.setNavigationOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                // Quay về trang MainActivity
-                Intent intent = new Intent(getActivity(), MainActivity.class);
-                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
-                startActivity(intent);
-            }
-        });
-    }
+
 
     public void setActionBar(@Nullable Toolbar toolbar) {
         ((AppCompatActivity) getActivity()).setSupportActionBar(toolbar);
@@ -69,6 +61,19 @@ public class Profile extends Fragment {
         actionBar.setDisplayHomeAsUpEnabled(true);
         actionBar.setHomeAsUpIndicator(R.drawable.ic_back_profile);
         actionBar.setDisplayShowTitleEnabled(false);
+    }
+
+    private void addEvents2() {
+        binding.toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getActivity(), MainActivity.class);
+                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
+                startActivity(intent);
+                requireActivity().finish();
+            }
+        });
+
     }
 
     private void addEvents1() {
@@ -145,6 +150,9 @@ public class Profile extends Fragment {
     public void loadUserData(User user) {
         binding.txtUserName.setText(user.getName());
         binding.txtEmail.setText(user.getEmail());
+        Glide.with(requireContext())
+                .load(user.getImage())
+                .into(binding.profileImage);
         ldDialog.dissmis();
     }
 }

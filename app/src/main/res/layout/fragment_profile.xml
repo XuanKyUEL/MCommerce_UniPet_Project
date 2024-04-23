@@ -46,9 +46,11 @@
         android:layout_marginEnd="30dp"
         android:layout_marginBottom="30dp"
         android:padding="10dp"
-        android:src="@drawable/profile_image"
+        android:scaleType="centerCrop"
+        android:src="@drawable/ic_user_profile_placeholder"
         app:layout_constraintBottom_toTopOf="@+id/cardView"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/appBarLayout" />
 
@@ -120,15 +122,15 @@
                 <ImageView
                     android:layout_width="20dp"
                     android:layout_height="20dp"
-                    android:layout_weight="5"
+                    android:layout_marginEnd="15dp"
                     android:src="@drawable/ic_email_profile" />
 
                 <TextView
                     android:id="@+id/txtEmail"
                     style="@style/HEAD6_BOLD_16"
-                    android:layout_width="wrap_content"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
                     android:layout_height="wrap_content"
-                    android:layout_weight="5"
                     android:text="nhandinh1213@gmail.com"
                     android:textColor="@color/black"/>
 
@@ -142,16 +144,15 @@
                 app:layout_constraintTop_toBottomOf="@+id/lnEmail">
 
                 <ImageView
-                    android:layout_width="23dp"
-                    android:layout_height="23dp"
-                    android:layout_weight="2.2"
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:layout_marginEnd="15dp"
                     android:src="@drawable/ic_phone_profile" />
 
                 <TextView
                     style="@style/HEAD6_BOLD_16"
-                    android:layout_width="wrap_content"
+                    android:layout_width="20dp"
                     android:layout_height="wrap_content"
-                    android:layout_weight="7.8"
                     android:text="0703682103"
                     android:textColor="@color/black"/>
             </LinearLayout>

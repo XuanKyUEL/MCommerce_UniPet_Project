@@ -8,12 +8,16 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.bumptech.glide.Glide;
 import com.unipet7.mcommerce.R;
 import com.unipet7.mcommerce.databinding.FragmentAccountBinding;
+import com.unipet7.mcommerce.firebase.FireStoreClass;
+import com.unipet7.mcommerce.models.User;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -27,6 +31,8 @@ public class FragmentAccount extends Fragment {
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
+
+    FireStoreClass fireStoreClass = new FireStoreClass();
 
     // TODO: Rename and change types of parameters
     private String mParam1;
@@ -68,8 +74,10 @@ public class FragmentAccount extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         binding= FragmentAccountBinding.inflate(inflater, container, false);
+        fireStoreClass.getCurrentUID();
         setActionBar(binding.toolbar);
         addEvents();
+        fireStoreClass.loadLoggedUserUI(this);
         return binding.getRoot();
 
     }
@@ -82,11 +90,22 @@ public class FragmentAccount extends Fragment {
         actionBar.setDisplayShowTitleEnabled(false);
     }
     private void addEvents() {
-        binding.toolbar.setNavigationOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                requireActivity().getOnBackPressedDispatcher().onBackPressed();
-            }
-        });
-}
+        binding.toolbar.setNavigationOnClickListener(v -> requireActivity().getOnBackPressedDispatcher().onBackPressed());
+    }
+
+    public void fetchUserData(User user) {
+        binding.edtUserNameAccount.setText(user.getName());
+        binding.edtEmailAccount.setText(user.getEmail());
+        Log.i("FragmentAccount", "fetchUserData: " + user.getImage());
+        if (user.getImage() != null) {
+            // Load the user image in the ImageView throught img url
+            Glide.with(requireContext())
+                    .load(user.getImage())
+                    .into(binding.imvUserImageAccount);
+        } else {
+            Glide.with(requireContext())
+                    .load(R.drawable.profile_image)
+                    .into(binding.imvUserImageAccount);
+        }
+    }
 }

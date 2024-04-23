@@ -1,6 +1,11 @@
 package com.unipet7.mcommerce.models;
 
-public class Product {
+import android.os.Parcel;
+import android.os.Parcelable;
+
+import androidx.annotation.NonNull;
+
+public class Product implements Parcelable {
 
     private int ProductId;
 
@@ -118,6 +123,22 @@ public class Product {
 
     public void setPresaleprice(double presaleprice) {
         this.presaleprice = presaleprice;
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(@NonNull Parcel dest, int flags) {
+        dest.writeInt(this.imvThumb);
+        dest.writeString(this.productname);
+        dest.writeDouble(this.productprice);
+        dest.writeDouble(this.productratenum);
+        dest.writeDouble(this.producttotalnum);
+        dest.writeDouble(this.salepercent);
+        dest.writeDouble(this.presaleprice);
     }
 }
 
