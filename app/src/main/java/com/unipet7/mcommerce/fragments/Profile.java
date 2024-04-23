@@ -44,8 +44,6 @@ public class Profile extends Fragment {
         }
         addEvents();
         addEvents1();
-        addEvents2();
-        setActionBar(binding.toolbar);
         FireStoreClass fireStoreClass = new FireStoreClass();
         fireStoreClass.loadLoggedUserUI(this);
         return binding.getRoot();
@@ -54,27 +52,6 @@ public class Profile extends Fragment {
 
 
 
-    public void setActionBar(@Nullable Toolbar toolbar) {
-        ((AppCompatActivity) getActivity()).setSupportActionBar(toolbar);
-        ActionBar actionBar = ((AppCompatActivity) getActivity()).getSupportActionBar();
-        assert actionBar != null;
-        actionBar.setDisplayHomeAsUpEnabled(true);
-        actionBar.setHomeAsUpIndicator(R.drawable.ic_back_profile);
-        actionBar.setDisplayShowTitleEnabled(false);
-    }
-
-    private void addEvents2() {
-        binding.toolbar.setNavigationOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(getActivity(), MainActivity.class);
-                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
-                startActivity(intent);
-                requireActivity().finish();
-            }
-        });
-
-    }
 
     private void addEvents1() {
         binding.lnAboutMe.setOnClickListener(new View.OnClickListener() {

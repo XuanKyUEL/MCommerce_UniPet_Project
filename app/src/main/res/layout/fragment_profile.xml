@@ -8,35 +8,26 @@
     tools:context=".fragments.Profile"
     android:id="@+id/fragmentProfile">
 
-    <com.google.android.material.appbar.AppBarLayout
+    <LinearLayout
         android:id="@+id/appBarLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center"
         android:theme="@style/ThemeOverlay.AppCompat.DayNight.ActionBar"
+        android:layout_marginTop="20dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
-
-        <androidx.appcompat.widget.Toolbar
-            android:id="@+id/toolbar"
+        <TextView
+            android:layout_gravity="center_horizontal"
+            android:layout_width="250dp"
+            android:layout_height="wrap_content"
+            android:textColor="@color/darkPrimary"
             style="@style/HEAD5_BOLD_18"
-            android:layout_width="match_parent"
-            android:layout_height="?attr/actionBarSize"
-            android:background="@color/white"
             android:gravity="center"
-            app:popupTheme="@style/Widget.Material3.PopupMenu.Overflow">
-            <TextView
-                android:layout_width="250dp"
-                android:layout_height="wrap_content"
-                android:textColor="@color/darkPrimary"
-                style="@style/HEAD5_BOLD_18"
-                android:gravity="center"
-                android:text="Hồ sơ"/>
-        </androidx.appcompat.widget.Toolbar>
+            android:text="Hồ sơ"/>
 
-    </com.google.android.material.appbar.AppBarLayout>
-
+    </LinearLayout>
     <de.hdodenhof.circleimageview.CircleImageView
         android:id="@+id/profileImage"
         android:layout_width="match_parent"

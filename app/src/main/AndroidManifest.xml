@@ -26,9 +26,6 @@
             android:name=".activities.PaymentMethodDetails"
             android:exported="false" />
         <activity
-            android:name=".activities.BlogDetails"
-            android:exported="false" />
-        <activity
             android:name=".activities.VoucherActivity"
             android:exported="false" />
         <activity
