@@ -1,35 +1,24 @@
 package com.unipet7.mcommerce.adapters;
 
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
-import androidx.cardview.widget.CardView;
-import androidx.constraintlayout.widget.ConstraintLayout;
-import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentActivity;
 import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.bumptech.glide.Glide;
-import com.bumptech.glide.load.MultiTransformation;
-import com.bumptech.glide.load.resource.bitmap.CenterCrop;
-import com.bumptech.glide.request.RequestOptions;
-import com.makeramen.roundedimageview.RoundedImageView;
 import com.unipet7.mcommerce.R;
-import com.unipet7.mcommerce.fragments.FragmentAllProduct;
-import com.unipet7.mcommerce.fragments.FragmentBlogDetails;
+import com.unipet7.mcommerce.activities.BlogDetails;
+import com.unipet7.mcommerce.activities.Notification;
 import com.unipet7.mcommerce.models.Blogs;
-import com.unipet7.mcommerce.models.Product;
 
 import java.util.ArrayList;
-
-import jp.wasabeef.glide.transformations.RoundedCornersTransformation;
 
 public class BlogAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     ArrayList<Blogs>blogsList;
@@ -88,18 +77,9 @@ public class BlogAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
             imageView = itemView.findViewById(R.id.imvblogImage);
             textViewName1 = itemView.findViewById(R.id.txtTitle1);
 
-            itemView.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    Fragment details = new FragmentBlogDetails();
-                    FragmentManager fragmentManager = ((FragmentActivity) v.getContext()).getSupportFragmentManager();
-
-                    // Thực hiện giao diện chuyển đổi Fragment
-                    fragmentManager.beginTransaction()
-                            .replace(((ViewGroup) v.getRootView().findViewById(android.R.id.content)).getId(), details)
-                            .addToBackStack(null)
-                            .commit();
-                }
+            itemView.setOnClickListener(v -> {
+                Intent intent = new Intent(v.getContext(), BlogDetails.class);
+                v.getContext().startActivity(intent);
             });
         }
 
@@ -115,19 +95,11 @@ public class BlogAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
             textViewName = itemView.findViewById(R.id.txtBlog2Title);
             textViewDescription = itemView.findViewById(R.id.txtBlog2Des);
             textViewDate = itemView.findViewById(R.id.txtBlog2PubDate);
-            itemView.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    Fragment details = new FragmentBlogDetails();
-                    FragmentManager fragmentManager = ((FragmentActivity) v.getContext()).getSupportFragmentManager();
-
-                    // Thực hiện giao diện chuyển đổi Fragment
-                    fragmentManager.beginTransaction()
-                            .replace(((ViewGroup) v.getRootView().findViewById(android.R.id.content)).getId(), details)
-                            .addToBackStack(null)
-                            .commit();
-                }
+            itemView.setOnClickListener(v -> {
+                Intent intent = new Intent(v.getContext(), BlogDetails.class);
+                v.getContext().startActivity(intent);
             });
         }
     }
+
 }
