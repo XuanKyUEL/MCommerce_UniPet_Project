@@ -99,7 +99,6 @@ public class FragmentAllProduct extends Fragment {
         // Inflate the layout for this fragment
         binding = FragmentAllProductBinding.inflate(inflater, container, false);
         mapping();
-        setActionBar(binding.toolbarall);
         LoadingDialog ldDialog = new LoadingDialog();
         ldDialog.showLoadingDialog(this.getContext());
         FireStoreClass fireStoreClass = new FireStoreClass();
@@ -223,13 +222,6 @@ public class FragmentAllProduct extends Fragment {
         ldDialog.dissmis();
     }
 
-    public void setActionBar(@Nullable Toolbar toolbar) {
-        ((AppCompatActivity) getActivity()).setSupportActionBar(toolbar);
-        ActionBar actionBar = ((AppCompatActivity) getActivity()).getSupportActionBar();
-        assert actionBar != null;
-        actionBar.setDisplayHomeAsUpEnabled(true);
-        actionBar.setHomeAsUpIndicator(R.drawable.ic_back_profile);
-        actionBar.setDisplayShowTitleEnabled(false);
-    }
+
 
 }

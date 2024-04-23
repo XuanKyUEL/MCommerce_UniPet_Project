@@ -7,6 +7,7 @@ import androidx.viewpager2.adapter.FragmentStateAdapter;
 
 import com.unipet7.mcommerce.fragments.FragmentAllProduct;
 import com.unipet7.mcommerce.fragments.Fragment_Empty_Notification;
+import com.unipet7.mcommerce.fragments.Fragment_Wishlist_Product;
 import com.unipet7.mcommerce.fragments.Home;
 import com.unipet7.mcommerce.fragments.Profile;
 import com.unipet7.mcommerce.fragments.fragment_cart;
@@ -27,7 +28,7 @@ public class MainViewPager2Adapter extends FragmentStateAdapter {
             case 2:
                 return new fragment_cart();
             case 3:
-                return new Fragment_Empty_Notification();
+                return new Fragment_Wishlist_Product();
             case 4:
                 return new Profile();
             default:
