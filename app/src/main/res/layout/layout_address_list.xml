@@ -3,7 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical"
-    android:background="@drawable/rectangle_outline">
+    android:background="@drawable/edittext_conner_profile">
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -16,12 +16,11 @@
 
         <LinearLayout
             android:layout_width="320dp"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:padding="5dp">
+            android:layout_height="48dp"
+            android:orientation="vertical">
             <TextView
                 android:id="@+id/txttitleadress"
-                style="@style/BODY_MED_BOLD_14"
+                style="@style/HEAD6_BOLD_16"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="left"
