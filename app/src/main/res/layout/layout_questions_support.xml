@@ -4,17 +4,14 @@
     android:layout_width="320dp"
     android:layout_height="wrap_content"
     app:cardCornerRadius="5dp"
-    android:layout_gravity="center_horizontal"
-    app:cardElevation="3dp"
-    android:padding="10dp"
-    android:layout_marginBottom="20dp"
-    android:background="@drawable/rectangle_outline"
-    app:cardUseCompatPadding="true">
+    android:layout_gravity="center"
+    android:layout_marginBottom="50dp"
+    app:cardUseCompatPadding="true"
+    android:background="@drawable/edittext_conner_profile">
     <LinearLayout
-        android:layout_width="310dp"
+        android:layout_width="320dp"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:background="@drawable/rectangle_outline"
         android:id="@+id/layout_question">
         <TextView
             android:layout_gravity="center_horizontal"
@@ -23,7 +20,7 @@
             android:id="@+id/question"
             android:text="Chính sách"
             android:textColor="@color/black"
-            style="@style/BODY_LARGE_BOLD_16"
+            style="@style/HEAD6_BOLD_16"
             android:layout_marginRight="5dp"
             android:layout_marginLeft="5dp"
             android:padding="10dp"/>
@@ -42,7 +39,7 @@
             android:layout_marginRight="5dp"
             android:layout_marginLeft="5dp"
             android:textColor="@color/darkPrimary"
-            style="@style/BODY_SMALL_REGULAR_12"
+            style="@style/BODY_MED_REGULAR_14"
             android:id="@+id/answer"/>
         <RelativeLayout
             android:id="@+id/rlt_descript"

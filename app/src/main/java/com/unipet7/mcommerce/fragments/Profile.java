@@ -2,6 +2,7 @@ package com.unipet7.mcommerce.fragments;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -41,6 +42,8 @@ public class Profile extends Fragment {
         ldDialog.showLoadingDialog(getActivity());
         if (binding == null) {
             binding = FragmentProfileBinding.inflate(inflater, container, false);
+            binding.loadingAvatarProfile.setVisibility(View.VISIBLE);
+            binding.loadingAvatarProfile.playAnimation();
         }
         addEvents();
         addEvents1();
@@ -127,9 +130,20 @@ public class Profile extends Fragment {
     public void loadUserData(User user) {
         binding.txtUserName.setText(user.getName());
         binding.txtEmail.setText(user.getEmail());
-        Glide.with(requireContext())
-                .load(user.getImage())
-                .into(binding.profileImage);
+        if (user.getImage() != null) {
+            Glide.with(this).load(user.getImage()).into(binding.profileImage);
+        } else {
+            binding.profileImage.setImageResource(R.drawable.ic_user_profile_placeholder);
+        }
+        binding.loadingAvatarProfile.cancelAnimation();
+        binding.loadingAvatarProfile.setVisibility(View.GONE);
+        Long phoneNumber = user.getMobile();
+        Log.i("Profile", "loadUserData: " + phoneNumber);
+        if (phoneNumber != null) {
+            binding.phoneNumberProfile.setText(phoneNumber.toString());
+        } else {
+            binding.phoneNumberProfile.setText("Chưa cập nhật");
+        }
         ldDialog.dissmis();
     }
 }

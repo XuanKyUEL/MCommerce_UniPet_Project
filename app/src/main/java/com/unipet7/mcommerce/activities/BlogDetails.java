@@ -1,89 +1,78 @@
-package com.unipet7.mcommerce.fragments;
-
-import android.os.Bundle;
+package com.unipet7.mcommerce.activities;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 
-import android.view.LayoutInflater;
+import android.content.Intent;
+import android.os.Bundle;
 import android.view.View;
-import android.view.ViewGroup;
-import android.widget.ImageView;
-import android.widget.TextView;
 
 import com.unipet7.mcommerce.R;
 import com.unipet7.mcommerce.adapters.BlogAdapter;
 import com.unipet7.mcommerce.adapters.ProductAdapter;
-import com.unipet7.mcommerce.databinding.FragmentBlogBinding;
-import com.unipet7.mcommerce.databinding.FragmentBlogDetailsBinding;
+import com.unipet7.mcommerce.databinding.ActivityBlogDetailsBinding;
+import com.unipet7.mcommerce.databinding.ActivityNotificationBinding;
 import com.unipet7.mcommerce.firebase.FireStoreClass;
+import com.unipet7.mcommerce.fragments.Home;
 import com.unipet7.mcommerce.models.Blogs;
 import com.unipet7.mcommerce.models.Product;
 import com.unipet7.mcommerce.utils.LoadingDialog;
 
 import java.util.ArrayList;
+import java.util.Objects;
 
-public class FragmentBlogDetails extends Fragment {
-    FragmentBlogDetailsBinding binding;
+public class BlogDetails extends AppCompatActivity {
+    ActivityBlogDetailsBinding binding;
     BlogAdapter blogAdapter;
     ProductAdapter adapter;
     ArrayList<Product> products;
     public ArrayList<Product> allProducts = new ArrayList<>();
-    public FragmentBlogDetails() {
-        // Required empty public constructor
-    }
-
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        binding = FragmentBlogDetailsBinding.inflate(inflater, container, false);
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        binding = ActivityBlogDetailsBinding.inflate(getLayoutInflater());
         loadProduct();
         addEvents();
-        setActionBar(binding.toolbardetail);
         initBlog();
-        return binding.getRoot();     }
-
+        setContentView(binding.getRoot());
+    }
     private void loadProduct() {
         LoadingDialog ldDialog1 = new LoadingDialog();
-        ldDialog1.showLoadingDialog(getActivity());
+        ldDialog1.showLoadingDialog(this);
         FireStoreClass fireStoreClass = new FireStoreClass();
         fireStoreClass.getAllProductsBlog(this, allProducts);
         ldDialog1.dissmis();
     }
     public void configAdaptersBlog() {
-            adapter = new ProductAdapter(allProducts);
-            binding.rclBlogDetails1.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
-            binding.rclBlogDetails1.setAdapter(adapter);
-            binding.rclBlogDetails1.setHasFixedSize(true);
+        adapter = new ProductAdapter(allProducts);
+        binding.rclBlogDetails1.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
+        binding.rclBlogDetails1.setAdapter(adapter);
+        binding.rclBlogDetails1.setHasFixedSize(true);
 
     }
 
     private void addEvents() {
+        setSupportActionBar(binding.toolbardetail);
+
+        ActionBar actionBar = getSupportActionBar();
+        if (actionBar != null) {
+            actionBar.setDisplayHomeAsUpEnabled(true);
+            actionBar.setHomeAsUpIndicator(R.drawable.ic_back_profile);
+            actionBar.setDisplayShowTitleEnabled(false);
+        }
+
         binding.toolbardetail.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                requireActivity().getOnBackPressedDispatcher().onBackPressed();
+                finish();
             }
         });
     }
-    public void setActionBar(@Nullable Toolbar toolbar) {
-        ((AppCompatActivity) getActivity()).setSupportActionBar(toolbar);
-        ActionBar actionBar = ((AppCompatActivity) getActivity()).getSupportActionBar();
-        assert actionBar != null;
-        actionBar.setDisplayHomeAsUpEnabled(true);
-        actionBar.setHomeAsUpIndicator(R.drawable.ic_back_profile);
-        actionBar.setDisplayShowTitleEnabled(false);
-    }
-
     private void initBlog() {
-        binding.rclBlogDetails2.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false));
+        binding.rclBlogDetails2.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
         ArrayList<Blogs> blogs = new ArrayList<>();
         blogs.add(new Blogs("5 tiêu chuẩn thức ăn cho mèo mà một Sen chính hiệu cần biết", R.drawable.blog2_image_4, "14.02.2024", "1. Giảm lượng tinh bột trong khẩu phần ăn mỗi ngày. Đúng rằng con người không thể sống thiếu ...",2));
         blogs.add(new Blogs("Những lưu ý khi triệt sản chó cái", R.drawable.blog2_image_5, "17.02.2024", "1. Triệt sản là gì?Triệt sản (hay thiến) đây là một phẫu thuật loại bỏ cơ quan sinh dục của động vật. Việc này nhằm...",2));
@@ -92,4 +81,5 @@ public class FragmentBlogDetails extends Fragment {
         blogAdapter = new BlogAdapter(blogs);
         binding.rclBlogDetails2.setAdapter(blogAdapter);
     }
+
 }

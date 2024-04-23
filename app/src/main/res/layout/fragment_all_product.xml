@@ -24,7 +24,7 @@
             app:popupTheme="@style/Widget.Material3.PopupMenu.Overflow"
             android:layout_gravity="center">
             <TextView
-                android:layout_width="300dp"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:textColor="@color/darkPrimary"
                 style="@style/HEAD5_BOLD_18"
@@ -124,11 +124,19 @@
                 android:layout_marginEnd="5dp"/>
         </LinearLayout>
     </HorizontalScrollView>
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/lvlAllProduct"
-        android:layout_gravity="center_horizontal"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="15dp"/>
+        android:layout_gravity="center"
+        android:layout_marginStart="20dp"
+        android:layout_marginEnd="10dp"
+        android:orientation="vertical">
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/lvlAllProduct"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            />
+
+    </LinearLayout>
 
 </LinearLayout>

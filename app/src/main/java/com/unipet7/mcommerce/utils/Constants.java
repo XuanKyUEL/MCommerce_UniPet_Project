@@ -4,7 +4,7 @@ public class Constants {
     public static final String USERS = "users";
     public static final String PRODUCTS = "PRODUCTS";
 
-    public static final String USER_ID = "user_id";
+    public static final String USER_ID = "id";
 
     public static final String IS_SIGNED_IN = "isSignedIn";
     public static final String GREETED = "greeted";
@@ -14,4 +14,11 @@ public class Constants {
     public static final String ITEM = "item";
     public static final String HEALTH = "health";
     public static final String TOY = "toy";
+    public static final String PRODUCTNAME = "productname";
+    public static final String PRODUCT = "product";
+    public static final String PRODUCT_ID = "productid";
+    public static final String USER_AVATAR = "User_Avatar/";
+    public static final String USER_NAME = "name";
+    public static final String USER_PHONE = "mobile";
+    public static final String USER_IMAGE = "image";
 }

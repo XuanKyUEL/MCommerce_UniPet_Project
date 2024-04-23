@@ -17,6 +17,7 @@ import android.util.Log;
 import android.util.Patterns;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.CheckBox;
 import android.widget.RadioButton;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -156,8 +157,9 @@ public class SignUp extends BaseActivity {
             finish();
         });
 
-        binding.rbTerms.setOnClickListener(v -> {
-            isTermsAndConditionsChecked = ((RadioButton) v).isChecked();
+        binding.cbTermsSignUp.setOnClickListener(v -> {
+            isTermsAndConditionsChecked = ((CheckBox) v).isChecked();
+            Log.i("SignUp", "addEvents: " + isTermsAndConditionsChecked);
         });
 
         binding.ibBackSignup.setOnClickListener(v -> {

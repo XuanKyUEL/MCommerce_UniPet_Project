@@ -6,8 +6,12 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+import androidx.viewpager2.widget.CompositePageTransformer;
+import androidx.viewpager2.widget.MarginPageTransformer;
 
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -15,16 +19,25 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.unipet7.mcommerce.R;
+import com.unipet7.mcommerce.activities.Notification;
 import com.unipet7.mcommerce.activities.ProfileFunction;
 import com.unipet7.mcommerce.adapters.BlogAdapter;
 import com.unipet7.mcommerce.adapters.ProductAdapter;
+import com.unipet7.mcommerce.adapters.SliderAdapter;
 import com.unipet7.mcommerce.databinding.FragmentHomeBinding;
 import com.unipet7.mcommerce.firebase.FireStoreClass;
 import com.unipet7.mcommerce.models.Blogs;
 import com.unipet7.mcommerce.models.Product;
+import com.unipet7.mcommerce.models.SliderItems;
 import com.unipet7.mcommerce.models.User;
+import com.unipet7.mcommerce.utils.Constants;
 import com.unipet7.mcommerce.utils.LoadingDialog;
 
 import java.util.ArrayList;
@@ -119,8 +132,45 @@ public class Home extends Fragment {
         loadBlog();
         addEvents();
         loadHomeUserAndProduct();
+        initBanner();
 
         return binding.getRoot();
+    }
+
+    private void initBanner() {
+        DatabaseReference myRef= FirebaseDatabase.getInstance().getReference("Banner");
+        ArrayList<SliderItems> items = new ArrayList<>();
+        myRef.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                if(snapshot.exists()){
+                    for (DataSnapshot issue:snapshot.getChildren()){
+                        items.add(issue.getValue(SliderItems.class));
+                    }
+                    banners(items);
+                }
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+    }
+
+    private void banners(ArrayList<SliderItems> items) {
+
+        binding.viewpageSlider.setAdapter(new SliderAdapter(items, binding.viewpageSlider));
+        binding.viewpageSlider.setClipToPadding(false);
+        binding.viewpageSlider.setClipChildren(false);
+        binding.viewpageSlider.setOffscreenPageLimit(2);
+        binding.viewpageSlider.getChildAt(0).setOverScrollMode(RecyclerView.OVER_SCROLL_NEVER);
+
+        CompositePageTransformer compositePageTransformer= new CompositePageTransformer();
+        compositePageTransformer.addTransformer(new MarginPageTransformer(40));
+
+        binding.viewpageSlider.setPageTransformer(compositePageTransformer);
     }
 
     public void configAdapters() {
@@ -130,14 +180,14 @@ public class Home extends Fragment {
         binding.lvlHomeSale.setAdapter(saleAdapter);
         binding.lvlHomeSale.setHasFixedSize(true);
 
-        productDog = new ProductAdapter(productsDog);
+        adapterDog = new ProductAdapter(productsDog);
         binding.lvlHomeProduct1.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
-        binding.lvlHomeProduct1.setAdapter(productDog);
+        binding.lvlHomeProduct1.setAdapter(adapterDog);
         binding.lvlHomeProduct1.setHasFixedSize(true);
 
-        productCat = new ProductAdapter(productsCat);
+        adapterCat = new ProductAdapter(productsCat);
         binding.lvlHomeProduct2.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
-        binding.lvlHomeProduct2.setAdapter(productCat);
+        binding.lvlHomeProduct2.setAdapter(adapterCat);
         binding.lvlHomeProduct2.setHasFixedSize(true);
     }
 
@@ -150,75 +200,56 @@ public class Home extends Fragment {
     }
 
     private void addEvents() {
-        binding.txtXemThem1.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Fragment allproduct = new FragmentAllProduct();
-                FragmentManager fragmentManager = requireActivity().getSupportFragmentManager();
-
-                // Thực hiện giao diện chuyển đổi Fragment
-                fragmentManager.beginTransaction()
-                        .replace(((ViewGroup) requireView().getParent()).getId(), allproduct)
-                        .addToBackStack(null)
-                        .commit();
-            }
-        });
-        binding.txtXemThem2.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Fragment allproduct = new FragmentAllProduct();
-                FragmentManager fragmentManager = requireActivity().getSupportFragmentManager();
-
-                // Thực hiện giao diện chuyển đổi Fragment
-                fragmentManager.beginTransaction()
-                        .replace(((ViewGroup) requireView().getParent()).getId(), allproduct)
-                        .addToBackStack(null)
-                        .commit();
-            }
-        });
-        binding.txtXemthem3.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Fragment allproduct = new FragmentAllProduct();
-                FragmentManager fragmentManager = requireActivity().getSupportFragmentManager();
-
-                // Thực hiện giao diện chuyển đổi Fragment
-                fragmentManager.beginTransaction()
-                        .replace(((ViewGroup) requireView().getParent()).getId(), allproduct)
-                        .addToBackStack(null)
-                        .commit();
-            }
-        });
-        binding.Xemthem4.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Fragment fragmentBlog = new FragmentBlog();
-                FragmentManager fragmentManager = requireActivity().getSupportFragmentManager();
-
-                // Thực hiện giao diện chuyển đổi Fragment
-                fragmentManager.beginTransaction()
-                        .replace(((ViewGroup) requireView().getParent()).getId(), fragmentBlog)
-                        .addToBackStack(null)
-                        .commit();
-            }
-        });
-        binding.imgCate6.setOnClickListener(v -> {
-            Fragment fragmentBlog = new FragmentBlog();
+        binding.txtXemThem1.setOnClickListener(v -> {
+            Fragment allproduct = new FragmentAllProduct();
             FragmentManager fragmentManager = requireActivity().getSupportFragmentManager();
 
             // Thực hiện giao diện chuyển đổi Fragment
             fragmentManager.beginTransaction()
-                    .replace(((ViewGroup) requireView().getParent()).getId(), fragmentBlog)
+                    .replace(((ViewGroup) requireView().getParent()).getId(), allproduct)
                     .addToBackStack(null)
                     .commit();
         });
+        binding.txtXemThem2.setOnClickListener(v -> {
+            Fragment allproduct = new FragmentAllProduct();
+            FragmentManager fragmentManager = requireActivity().getSupportFragmentManager();
+
+            // Thực hiện giao diện chuyển đổi Fragment
+            fragmentManager.beginTransaction()
+                    .replace(((ViewGroup) requireView().getParent()).getId(), allproduct)
+                    .addToBackStack(null)
+                    .commit();
+        });
+        binding.txtXemthem3.setOnClickListener(v -> {
+            Fragment allproduct = new FragmentAllProduct();
+            FragmentManager fragmentManager = requireActivity().getSupportFragmentManager();
+
+            // Thực hiện giao diện chuyển đổi Fragment
+            fragmentManager.beginTransaction()
+                    .replace(((ViewGroup) requireView().getParent()).getId(), allproduct)
+                    .addToBackStack(null)
+                    .commit();
+        });
+        binding.Xemthem4.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getActivity(), com.unipet7.mcommerce.activities.Blogs.class);
+                startActivity(intent);
+            }
+        });
+        binding.imgCate6.setOnClickListener(v -> {
+            Intent intent = new Intent(getActivity(), com.unipet7.mcommerce.activities.Blogs.class);
+            startActivity(intent);
+        });
+        binding.imgCate1.setOnClickListener(v -> {
+
+        });
+
         binding.imageView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getActivity(), fragment_notification.class);
-                intent.putExtra("function", "notification");
+                Intent intent = new Intent(getActivity(), Notification.class);
                 startActivity(intent);
-
             }
         });
     }
