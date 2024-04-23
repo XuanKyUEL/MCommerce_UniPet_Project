@@ -212,7 +212,7 @@
                 style="@style/BODY_SMALL_BOLD_12"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:marginVertical="6dp"
+                android:paddingVertical="6dp"
                 android:text="Thành phần"
                 android:textColor="@color/brandPrimary" />
             <TextView
@@ -228,7 +228,7 @@
                 style="@style/BODY_SMALL_BOLD_12"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:marginVertical="6dp"
+                android:paddingVertical="6dp"
                 android:text="Lợi ích chính"
                 android:textColor="@color/brandPrimary" />
             <TextView
@@ -247,7 +247,7 @@
                 style="@style/BODY_SMALL_BOLD_12"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:marginVertical="6dp"
+                android:paddingVertical="6dp"
                 android:text="Hướng dẫn sử dụng - Bảo quản"
                 android:textColor="@color/brandPrimary" />
             <TextView
