@@ -9,6 +9,7 @@ import androidx.fragment.app.Fragment;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.FieldValue;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.SetOptions;
 import com.google.firebase.storage.FirebaseStorage;
@@ -174,19 +175,27 @@ public class FireStoreClass {
                 });
     }
 
-//    public void uploadImageToStorage(FragmentAccount fragmentAccount, Uri userAvatarUri) {
-//        sRef = FirebaseStorage.getInstance()
-//                .getReference(Constants.USER_AVATAR)
-//                .child(Constants.USER_AVATAR + System.currentTimeMillis() + Uri.parse(userAvatarUri.toString()).getLastPathSegment());
-//        sRef.putFile(userAvatarUri)
-//                .addOnSuccessListener(taskSnapshot -> {
-//                    taskSnapshot.getStorage().getDownloadUrl()
-//                            .addOnSuccessListener(uri -> {
-//                                fragmentAccount.uploadImageSuccess(uri.toString());
-//                            });
-//                })
-//                .addOnFailureListener(e -> {
-//                    Log.e("FireStoreClass", "uploadImageToStorage: ", e);
-//                });
-//    }
+    public void addFavorite(String currentUID, int fvProductId) {
+        UniPetdb.collection(Constants.USERS)
+                .document(currentUID)
+                .update(Constants.FAVPRODUCTID, FieldValue.arrayUnion(fvProductId))
+                .addOnSuccessListener(aVoid -> {
+                    Log.i("FireStoreClass", "addFavorite: Thành công");
+                })
+                .addOnFailureListener(e -> {
+                    Log.e("FireStoreClass", "addFavorite: ", e);
+                });
+    }
+
+    public void removeFavorite(String currentUID, int fvProductId) {
+        UniPetdb.collection(Constants.USERS)
+                .document(currentUID)
+                .update(Constants.FAVPRODUCTID, FieldValue.arrayRemove(fvProductId))
+                .addOnSuccessListener(aVoid -> {
+                    Log.i("FireStoreClass", "removeFavorite: Thành công");
+                })
+                .addOnFailureListener(e -> {
+                    Log.e("FireStoreClass", "removeFavorite: ", e);
+                });
+    }
 }

@@ -54,11 +54,9 @@ public class Home extends Fragment {
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
+
     public ProductAdapter adapter;
 
-    public ProductAdapter saleAdapter;
-    public ProductAdapter productDog;
-    public ProductAdapter productCat;
 
     // TODO: Rename and change types of parameters
     private String mParam1;
@@ -80,6 +78,8 @@ public class Home extends Fragment {
     public ProductAdapter adapterSale;
     public ProductAdapter adapterDog;
     public ProductAdapter adapterCat;
+
+    FireStoreClass fireStoreClass = new FireStoreClass();
 
     public Home() {
         // Required empty public constructor
@@ -175,9 +175,9 @@ public class Home extends Fragment {
 
     public void configAdapters() {
 
-        saleAdapter = new ProductAdapter(productsSale);
+        adapterSale = new ProductAdapter(productsSale);
         binding.lvlHomeSale.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
-        binding.lvlHomeSale.setAdapter(saleAdapter);
+        binding.lvlHomeSale.setAdapter(adapterSale);
         binding.lvlHomeSale.setHasFixedSize(true);
 
         adapterDog = new ProductAdapter(productsDog);
@@ -194,7 +194,6 @@ public class Home extends Fragment {
     private void loadHomeUserAndProduct() {
         loadingDialog = new LoadingDialog();
         loadingDialog.showLoadingDialog(getContext());
-        FireStoreClass fireStoreClass = new FireStoreClass();
         fireStoreClass.getProductList(this, productsSale, productsDog, productsCat);
         fireStoreClass.loadLoggedUserUI(this);
     }
@@ -230,12 +229,9 @@ public class Home extends Fragment {
                     .addToBackStack(null)
                     .commit();
         });
-        binding.Xemthem4.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(getActivity(), com.unipet7.mcommerce.activities.Blogs.class);
-                startActivity(intent);
-            }
+        binding.Xemthem4.setOnClickListener(v -> {
+            Intent intent = new Intent(getActivity(), com.unipet7.mcommerce.activities.Blogs.class);
+            startActivity(intent);
         });
         binding.imgCate6.setOnClickListener(v -> {
             Intent intent = new Intent(getActivity(), com.unipet7.mcommerce.activities.Blogs.class);
@@ -245,12 +241,9 @@ public class Home extends Fragment {
 
         });
 
-        binding.imageView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(getActivity(), Notification.class);
-                startActivity(intent);
-            }
+        binding.imageView.setOnClickListener(v -> {
+            Intent intent = new Intent(getActivity(), Notification.class);
+            startActivity(intent);
         });
     }
 
@@ -270,4 +263,24 @@ public class Home extends Fragment {
         loadingDialog.dissmis();
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+    }
+
+    public void loadFavoriteProducts(ArrayList<Integer> favProductIds) {
+        for (int i = 0; i < favProductIds.size(); i++) {
+            FirebaseFirestore.getInstance().collection(Constants.PRODUCTS)
+                    .document(favProductIds.get(i).toString())
+                    .get()
+                    .addOnCompleteListener(task -> {
+                        if (task.isSuccessful()) {
+                            Product product = task.getResult().toObject(Product.class);
+                            productsCat.add(product);
+                        } else {
+                            Log.e("HomeFragment", "Error getting documents: ", task.getException());
+                        }
+                    });
+        }
+    }
 }

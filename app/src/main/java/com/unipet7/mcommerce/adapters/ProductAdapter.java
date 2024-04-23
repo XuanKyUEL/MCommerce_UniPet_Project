@@ -7,8 +7,10 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.CheckBox;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.annotation.NonNull;
@@ -19,6 +21,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
 import com.unipet7.mcommerce.R;
 import com.unipet7.mcommerce.activities.DetailProduct;
+import com.unipet7.mcommerce.firebase.FireStoreClass;
 import com.unipet7.mcommerce.models.Product;
 import com.unipet7.mcommerce.utils.Constants;
 
@@ -93,25 +96,42 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ViewHold
 
     static class ViewHolder extends RecyclerView.ViewHolder {
 
+        FireStoreClass fireStoreClass = new FireStoreClass();
+
         TextView productname, productprice, productratenum, presaleprice, salepercent, numOfRating;
         ImageView imvThumb, salespercentbg, salebanner;
 
+        CheckBox favorite;
+
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
-            productname = itemView.findViewById(R.id.textView);
-            productprice = itemView.findViewById(R.id.textView2);
-            productratenum = itemView.findViewById(R.id.txtRating);
-            imvThumb = itemView.findViewById(R.id.imageproduct);
+            productname = itemView.findViewById(R.id.tvNameProduct_item);
+            productprice = itemView.findViewById(R.id.tvProductPrice_item);
+            productratenum = itemView.findViewById(R.id.tvRateValueItem);
+            imvThumb = itemView.findViewById(R.id.ivProductItem);
             salepercent = itemView.findViewById(R.id.textsalepercent);
             salespercentbg = itemView.findViewById(R.id.imagesale);
             salebanner = itemView.findViewById(R.id.imagebannersale);
-            presaleprice = itemView.findViewById(R.id.textsale);
-            numOfRating = itemView.findViewById(R.id.txtNumberOfRating);
+            presaleprice = itemView.findViewById(R.id.tvProductPriceSaleItem);
+            numOfRating = itemView.findViewById(R.id.tvRateCountItem);
 
             itemView.setOnClickListener(v -> {
                 Intent intent = new Intent(v.getContext(), DetailProduct.class);
                 getDetailProduct(productList, getAdapterPosition(), intent);
                 v.getContext().startActivity(intent);
+            });
+
+            favorite = itemView.findViewById(R.id.chkFavouriteItem);
+            favorite.setOnClickListener(v -> {
+                int fvProductId = productList.get(getAdapterPosition()).getProductId();
+                if (favorite.isChecked()) {
+                    Toast.makeText(v.getContext(), "Added to favorite", Toast.LENGTH_SHORT).show();
+                    fireStoreClass.addFavorite(fireStoreClass.getCurrentUID(), fvProductId);
+                } else {
+                    // Remove from favorite
+                    Toast.makeText(v.getContext(), "Removed from favorite", Toast.LENGTH_SHORT).show();
+                    fireStoreClass.removeFavorite(fireStoreClass.getCurrentUID(), fvProductId);
+                }
             });
         }
     }

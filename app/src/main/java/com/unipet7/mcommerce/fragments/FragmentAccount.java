@@ -241,10 +241,19 @@ public class FragmentAccount extends Fragment {
         String phone = binding.edtPhoneAccount.getText().toString().trim();
         if (!name.isEmpty() && !name.equals(user.getName())) {
             userHashMap.put(Constants.USER_NAME, name);
+        } else if (name.isEmpty()) {
+            binding.edtUserNameAccount.setError("Tên không hợp lệ");
+            binding.edtUserNameAccount.requestFocus();
+            return;
         }
-        if (!phone.equals("Chưa cập nhật") && !phone.isEmpty() && !phone.equals(String.valueOf(user.getMobile()))) {
-            long phoneLong = Long.parseLong(phone);
-            userHashMap.put(Constants.USER_PHONE, phoneLong);
+        if (!phone.isEmpty() && !phone.equals(String.valueOf(user.getMobile()))) {
+            try {
+                long phoneLong = Long.parseLong(phone);                userHashMap.put(Constants.USER_PHONE, phoneLong);
+            } catch (NumberFormatException e) {
+                binding.edtPhoneAccount.setError("Số điện thoại không hợp lệ");
+                binding.edtPhoneAccount.requestFocus();
+                return;
+            }
         }
         if (!uriString.isEmpty()) {
             userHashMap.put(Constants.USER_IMAGE, uriString);

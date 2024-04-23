@@ -21,4 +21,5 @@ public class Constants {
     public static final String USER_NAME = "name";
     public static final String USER_PHONE = "mobile";
     public static final String USER_IMAGE = "image";
+    public static final String FAVPRODUCTID = "favProductId";
 }
