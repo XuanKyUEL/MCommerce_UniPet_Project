@@ -123,15 +123,8 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ViewHold
 
             favorite = itemView.findViewById(R.id.chkFavouriteItem);
             favorite.setOnClickListener(v -> {
-                int fvProductId = productList.get(getAdapterPosition()).getProductId();
-                if (favorite.isChecked()) {
-                    Toast.makeText(v.getContext(), "Added to favorite", Toast.LENGTH_SHORT).show();
-                    fireStoreClass.addFavorite(fireStoreClass.getCurrentUID(), fvProductId);
-                } else {
-                    // Remove from favorite
-                    Toast.makeText(v.getContext(), "Removed from favorite", Toast.LENGTH_SHORT).show();
-                    fireStoreClass.removeFavorite(fireStoreClass.getCurrentUID(), fvProductId);
-                }
+                String fvProductName = productList.get(getAdapterPosition()).getProductname();
+                fireStoreClass.findProductByName(fvProductName);
             });
         }
     }

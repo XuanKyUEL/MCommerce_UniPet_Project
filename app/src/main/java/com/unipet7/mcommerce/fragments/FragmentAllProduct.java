@@ -216,9 +216,10 @@ public class FragmentAllProduct extends Fragment {
         LoadingDialog ldDialog = new LoadingDialog();
         ldDialog.showLoadingDialog(this.getContext());
         ProductAdapter adapter = new ProductAdapter(products);
-        binding.lvlAllProduct.setLayoutManager(new GridLayoutManager(getContext(), 2));
+        // set layout manager to grid layout with 2 columns and stretch the items to fill the screen
+        binding.lvlAllProduct.setLayoutManager(new GridLayoutManager(this.getContext(), 2, GridLayoutManager.VERTICAL, false));
         binding.lvlAllProduct.setAdapter(adapter);
-        binding.lvlAllProduct.setHasFixedSize(false);
+        binding.lvlAllProduct.setHasFixedSize(true);
         ldDialog.dissmis();
     }
 

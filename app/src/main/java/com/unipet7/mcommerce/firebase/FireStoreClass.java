@@ -1,8 +1,6 @@
 package com.unipet7.mcommerce.firebase;
 
-import static com.google.common.io.Files.getFileExtension;
-
-import android.net.Uri;
+import android.content.Context;
 import android.util.Log;
 
 import androidx.fragment.app.Fragment;
@@ -19,6 +17,7 @@ import com.unipet7.mcommerce.activities.BlogDetails;
 import com.unipet7.mcommerce.activities.SignUp;
 import com.unipet7.mcommerce.fragments.FragmentAccount;
 import com.unipet7.mcommerce.fragments.FragmentAllProduct;
+import com.unipet7.mcommerce.fragments.Fragment_Wishlist_Product;
 import com.unipet7.mcommerce.fragments.Home;
 import com.unipet7.mcommerce.fragments.Profile;
 import com.unipet7.mcommerce.models.Product;
@@ -27,12 +26,17 @@ import com.unipet7.mcommerce.utils.Constants;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
+import java.util.Objects;
+import java.util.concurrent.atomic.AtomicReference;
 
 public class FireStoreClass {
     private final FirebaseFirestore UniPetdb = FirebaseFirestore.getInstance();
 
     private StorageReference sRef = FirebaseStorage.getInstance().getReference();
     private User currentUser = null;
+
+    Context context;
 
     public String getCurrentUID() {
         FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
@@ -175,9 +179,9 @@ public class FireStoreClass {
                 });
     }
 
-    public void addFavorite(String currentUID, int fvProductId) {
+    public void addFavorite(int fvProductId) {
         UniPetdb.collection(Constants.USERS)
-                .document(currentUID)
+                .document(getCurrentUID())
                 .update(Constants.FAVPRODUCTID, FieldValue.arrayUnion(fvProductId))
                 .addOnSuccessListener(aVoid -> {
                     Log.i("FireStoreClass", "addFavorite: Thành công");
@@ -187,15 +191,98 @@ public class FireStoreClass {
                 });
     }
 
-    public void removeFavorite(String currentUID, int fvProductId) {
+    public void removeFavorite(int fvProductId) {
         UniPetdb.collection(Constants.USERS)
-                .document(currentUID)
+                .document(getCurrentUID())
                 .update(Constants.FAVPRODUCTID, FieldValue.arrayRemove(fvProductId))
                 .addOnSuccessListener(aVoid -> {
                     Log.i("FireStoreClass", "removeFavorite: Thành công");
                 })
                 .addOnFailureListener(e -> {
                     Log.e("FireStoreClass", "removeFavorite: ", e);
+                });
+    }
+
+    public void findProductByName(String fvProductName) {
+        // query product id by name
+        UniPetdb.collection(Constants.PRODUCTS)
+                .whereEqualTo(Constants.PRODUCTNAME, fvProductName)
+                .get()
+                .addOnSuccessListener(queryDocumentSnapshots -> {
+                    if (!queryDocumentSnapshots.isEmpty()) {
+                        int fvProductId = Objects.requireNonNull(queryDocumentSnapshots.getDocuments().get(0).getLong(Constants.PRODUCT_ID)).intValue();
+                        // if fvProductId is in favorite list, remove it, else add it
+                        if (getFavoriteList().contains(fvProductId)) {
+                            removeFavorite(fvProductId);
+                        } else {
+                            addFavorite(fvProductId);
+                        }
+                    }
+                })
+                .addOnFailureListener(e -> {
+                    Log.e("FireStoreClass", "addFavoriteByName: ", e);
+                });
+    }
+
+    public List<Integer> getFavoriteList() {
+        AtomicReference<List<Integer>> favoriteList = new AtomicReference<>(new ArrayList<>());
+        UniPetdb.collection(Constants.USERS)
+                .document(getCurrentUID())
+                .get()
+                .addOnSuccessListener(documentSnapshot -> {
+                    if (documentSnapshot.exists()) {
+                        favoriteList.set((List<Integer>) documentSnapshot.get(Constants.FAVPRODUCTID));
+                    }
+                })
+                .addOnFailureListener(e -> {
+                    Log.e("FireStoreClass", "getFavoriteList: ", e);
+                });
+        return favoriteList.get();
+    }
+
+    public ArrayList<Product> getFavoriteProducts() {
+        ArrayList<Product> favoriteProducts = new ArrayList<>();
+        UniPetdb.collection(Constants.USERS)
+                .document(getCurrentUID())
+                .get()
+                .addOnSuccessListener(documentSnapshot -> {
+                    if (documentSnapshot.exists()) {
+                        List<Integer> favoriteList = (List<Integer>) documentSnapshot.get(Constants.FAVPRODUCTID);
+                        if (favoriteList != null) {
+                            for (int i = 0; i < favoriteList.size(); i++) {
+                                UniPetdb.collection(Constants.PRODUCTS)
+                                        .document(String.valueOf(favoriteList.get(i)))
+                                        .get()
+                                        .addOnSuccessListener(documentSnapshot1 -> {
+                                            if (documentSnapshot1.exists()) {
+                                                Product product = documentSnapshot1.toObject(Product.class);
+                                                favoriteProducts.add(product);
+                                            }
+                                        })
+                                        .addOnFailureListener(e -> {
+                                            Log.e("FireStoreClass", "getFavoriteProducts: ", e);
+                                        });
+                            }
+                        }
+                    }
+                })
+                .addOnFailureListener(e -> {
+                    Log.e("FireStoreClass", "getFavoriteProducts: ", e);
+                });
+        return favoriteProducts;
+    }
+
+    public void getFavoriteList(Fragment_Wishlist_Product wishlistF) {
+        UniPetdb.collection(Constants.USERS)
+                .document(getCurrentUID())
+                .get()
+                .addOnSuccessListener(documentSnapshot -> {
+                    if (documentSnapshot.exists()) {
+                        wishlistF.loadFavoriteList(getFavoriteProducts());
+                    }
+                })
+                .addOnFailureListener(e -> {
+                    Log.e("FireStoreClass", "getFavoriteList: ", e);
                 });
     }
 }

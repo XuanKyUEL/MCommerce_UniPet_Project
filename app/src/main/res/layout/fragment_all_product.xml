@@ -124,19 +124,12 @@
                 android:layout_marginEnd="5dp"/>
         </LinearLayout>
     </HorizontalScrollView>
-    <LinearLayout
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/lvlAllProduct"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:layout_marginStart="20dp"
-        android:layout_marginEnd="10dp"
-        android:orientation="vertical">
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/lvlAllProduct"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            />
-
-    </LinearLayout>
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="10dp" />
 
 </LinearLayout>
