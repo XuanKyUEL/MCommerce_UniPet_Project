@@ -8,11 +8,10 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.SetOptions;
-<<<<<<< HEAD
 import com.unipet7.mcommerce.activities.DetailProduct;
-=======
+
 import com.unipet7.mcommerce.activities.BlogDetails;
->>>>>>> main
+
 import com.unipet7.mcommerce.activities.SignUp;
 import com.unipet7.mcommerce.fragments.FragmentAccount;
 import com.unipet7.mcommerce.fragments.FragmentAllProduct;

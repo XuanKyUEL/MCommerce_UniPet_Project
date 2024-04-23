@@ -23,7 +23,7 @@
             app:popupTheme="@style/Widget.Material3.PopupMenu.Overflow"
             android:layout_gravity="center">
             <TextView
-                android:layout_width="300dp"
+                android:layout_width="250dp"
                 android:layout_height="wrap_content"
                 android:textColor="@color/darkPrimary"
                 style="@style/HEAD5_BOLD_18"
@@ -54,7 +54,8 @@
     <androidx.viewpager2.widget.ViewPager2
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:padding="10dp"
+        android:layout_marginTop="30dp"
         android:layout_marginBottom="10dp"
-        android:id="@+id/viewpayer"/>
+        android:id="@+id/viewpayer"
+        android:layout_marginStart="20dp"/>
 </LinearLayout>
