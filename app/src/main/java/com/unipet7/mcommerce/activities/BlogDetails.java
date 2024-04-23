@@ -22,6 +22,7 @@ import com.unipet7.mcommerce.models.Product;
 import com.unipet7.mcommerce.utils.LoadingDialog;
 
 import java.util.ArrayList;
+import java.util.Objects;
 
 public class BlogDetails extends AppCompatActivity {
     ActivityBlogDetailsBinding binding;

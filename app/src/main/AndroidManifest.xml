@@ -65,6 +65,9 @@
             android:name=".activities.SignIn"
             android:exported="false" />
         <activity
+            android:name=".activities.DetailProduct"
+            android:exported="false" />
+        <activity
             android:name=".activities.SplashScreen"
             android:exported="true"
             android:theme="@style/Theme.UniPet.SplashScreen">

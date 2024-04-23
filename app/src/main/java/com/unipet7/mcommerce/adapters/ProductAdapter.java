@@ -1,28 +1,49 @@
 package com.unipet7.mcommerce.adapters;
 
+import android.app.Activity;
+import android.content.Intent;
 import android.graphics.Paint;
+import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import androidx.activity.result.ActivityResultLauncher;
 import androidx.annotation.NonNull;
+import androidx.fragment.app.FragmentActivity;
+import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.unipet7.mcommerce.R;
-import com.unipet7.mcommerce.models.IntroLayoutItems;
+import com.unipet7.mcommerce.activities.DetailProduct;
 import com.unipet7.mcommerce.models.Product;
+import com.unipet7.mcommerce.utils.Constants;
 
+import java.io.Serializable;
 import java.util.List;
 
 public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ViewHolder> {
 
-    List<Product> productList;
+    static List<Product> productList;
 
     public ProductAdapter(List<Product> productList) {
         this.productList = productList;
+    }
+
+    public static List<Product> getProductList() {
+        return productList;
+    }
+
+    public static void setProductList(List<Product> productList) {
+        ProductAdapter.productList = productList;
+    }
+
+    public static void getDetailProduct(List<Product> pdList, int position, Intent intent) {
+        Product product = pdList.get(position);
+        intent.putExtra(Constants.PRODUCT_ID, product.getProductId());
     }
 
 
@@ -58,11 +79,11 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ViewHold
             holder.salepercent.setVisibility(View.GONE);
             holder.salespercentbg.setVisibility(View.GONE);
             holder.salebanner.setVisibility(View.INVISIBLE);
+            holder.productprice.setText(String.format("%,.0f đ", product.getProductprice()));
             holder.presaleprice.setVisibility(View.GONE);
         }
         // glide imge from firebaseurl
         Glide.with(holder.itemView.getContext()).load(product.getProductImageUrl()).into(holder.imvThumb);
-
     }
 
     @Override
@@ -72,8 +93,8 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ViewHold
 
     static class ViewHolder extends RecyclerView.ViewHolder {
 
-        TextView productname ,productprice, productratenum, presaleprice, salepercent,numOfRating;
-        ImageView imvThumb, salespercentbg,salebanner;
+        TextView productname, productprice, productratenum, presaleprice, salepercent, numOfRating;
+        ImageView imvThumb, salespercentbg, salebanner;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -86,6 +107,12 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ViewHold
             salebanner = itemView.findViewById(R.id.imagebannersale);
             presaleprice = itemView.findViewById(R.id.textsale);
             numOfRating = itemView.findViewById(R.id.txtNumberOfRating);
+
+            itemView.setOnClickListener(v -> {
+                Intent intent = new Intent(v.getContext(), DetailProduct.class);
+                getDetailProduct(productList, getAdapterPosition(), intent);
+                v.getContext().startActivity(intent);
+            });
         }
     }
 }
