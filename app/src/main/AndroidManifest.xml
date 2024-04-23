@@ -56,6 +56,9 @@
             android:name=".activities.SignIn"
             android:exported="false" />
         <activity
+            android:name=".activities.DetailProduct"
+            android:exported="false" />
+        <activity
             android:name=".activities.SplashScreen"
             android:exported="true"
             android:theme="@style/Theme.UniPet.SplashScreen">
@@ -67,7 +70,7 @@
         </activity>
         <activity
             android:name=".activities.SearchProductList"
-            android:exported="false"></activity>
+            android:exported="false" />
     </application>
 
 </manifest>

@@ -63,7 +63,7 @@ public class AdapterVoucher extends BaseAdapter {
             holder = (ViewHolder) convertView.getTag();
         }
         Voucher v = vouchers.get(position);
-        holder.txtVoucherNumb.setText(String.valueOf(Math.round(v.getTxtVoucherNumb())) + "%");
+        holder.txtVoucherNumb.setText(Math.round(v.getTxtVoucherNumb()) + "%");
         holder.txtVoucherCode.setText(v.getTxtVoucherCode());
         holder.txtVoucherDecription.setText(v.getTxtVoucherDecription());
         return convertView;

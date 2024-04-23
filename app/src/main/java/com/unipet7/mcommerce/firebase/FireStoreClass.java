@@ -9,6 +9,7 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.SetOptions;
+import com.unipet7.mcommerce.activities.DetailProduct;
 import com.unipet7.mcommerce.activities.SignUp;
 import com.unipet7.mcommerce.fragments.FragmentAccount;
 import com.unipet7.mcommerce.fragments.FragmentAllProduct;
@@ -134,5 +135,20 @@ public class FireStoreClass {
                     Log.e("FireStoreClass", "getProductList: ", e);
                 })
         ;
+    }
+
+    public void getProductDetailViaId(DetailProduct detailProduct, int productId) {
+        UniPetdb.collection(Constants.PRODUCTS)
+                .document(String.valueOf(productId))
+                .get()
+                .addOnSuccessListener(documentSnapshot -> {
+                    if (documentSnapshot.exists()) {
+                        Product product = documentSnapshot.toObject(Product.class);
+                        detailProduct.loadProductDetail(product);
+                    }
+                })
+                .addOnFailureListener(e -> {
+                    Log.e("FireStoreClass", "getProductDetail: ", e);
+                });
     }
 }
