@@ -17,4 +17,8 @@ public class Constants {
     public static final String PRODUCTNAME = "productname";
     public static final String PRODUCT = "product";
     public static final String PRODUCT_ID = "productid";
+    public static final String USER_AVATAR = "User_Avatar/";
+    public static final String USER_NAME = "name";
+    public static final String USER_PHONE = "mobile";
+    public static final String USER_IMAGE = "image";
 }
