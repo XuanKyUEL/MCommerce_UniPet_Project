@@ -94,6 +94,7 @@ public class FragmentAllProduct extends Fragment {
         // Inflate the layout for this fragment
         binding = FragmentAllProductBinding.inflate(inflater, container, false);
         setActionBar(binding.toolbarall);
+        addEvents();
         if (!isAllProductFetched) {
             LoadingDialog ldDialog = new LoadingDialog();
             ldDialog.showLoadingDialog(getActivity());
@@ -116,6 +117,15 @@ public class FragmentAllProduct extends Fragment {
         onSelectCateListener();
         return binding.getRoot();
 
+    }
+
+    private void addEvents() {
+        binding.toolbarall.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                requireActivity().getOnBackPressedDispatcher().onBackPressed();
+            }
+        });
     }
 
     private void loadProductOnCategory(String category) {
