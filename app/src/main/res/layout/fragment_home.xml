@@ -87,49 +87,39 @@
 
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
+                    android:layout_height="150dp"
                     android:layout_marginTop="12dp">
 
-                    <androidx.cardview.widget.CardView
+                    <androidx.viewpager2.widget.ViewPager2
+                        android:id="@+id/viewpageSlider"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        app:cardCornerRadius="10dp"
+                        android:layout_height="match_parent"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent">
+                        app:layout_constraintTop_toTopOf="parent"></androidx.viewpager2.widget.ViewPager2>
 
-                        <ImageView
-                            android:id="@+id/imageView4"
-                            android:layout_width="wrap_content"
-                            android:layout_height="125dp"
-                            android:background="@drawable/banner_background"
-                            android:scaleType="fitXY"
-                            android:src="@drawable/bannerhome"
-                            app:layout_constraintEnd_toEndOf="parent"
-                            app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toTopOf="parent" />
-                    </androidx.cardview.widget.CardView>
+<!--                    <androidx.cardview.widget.CardView-->
+<!--                        android:layout_width="match_parent"-->
+<!--                        android:layout_height="wrap_content"-->
+<!--                        app:cardCornerRadius="10dp"-->
+<!--                        app:layout_constraintEnd_toEndOf="parent"-->
+<!--                        app:layout_constraintStart_toStartOf="parent"-->
+<!--                        app:layout_constraintTop_toTopOf="parent">-->
+
+<!--                        <ImageView-->
+<!--                            android:id="@+id/imageView4"-->
+<!--                            android:layout_width="wrap_content"-->
+<!--                            android:layout_height="125dp"-->
+<!--                            android:background="@drawable/banner_background"-->
+<!--                            android:scaleType="fitXY"-->
+<!--                            android:src="@drawable/bannerhome"-->
+<!--                            app:layout_constraintEnd_toEndOf="parent"-->
+<!--                            app:layout_constraintStart_toStartOf="parent"-->
+<!--                            app:layout_constraintTop_toTopOf="parent" />-->
+<!--                    </androidx.cardview.widget.CardView>-->
 
 
-                    <!--                    <ImageView-->
-                    <!--                        android:id="@+id/imageView6"-->
-                    <!--                        android:layout_width="wrap_content"-->
-                    <!--                        android:layout_height="wrap_content"-->
-                    <!--                        android:layout_marginBottom="24dp"-->
-                    <!--                        android:src="@drawable/whitecircle"-->
-                    <!--                        app:layout_constraintBottom_toBottomOf="@+id/imageView4"-->
-                    <!--                        app:layout_constraintEnd_toEndOf="@+id/imageView4"-->
-                    <!--                        app:layout_constraintStart_toStartOf="@+id/imageView4" />-->
 
-                    <!--                    <ImageView-->
-                    <!--                        android:id="@+id/imageView6"-->
-                    <!--                        android:layout_width="wrap_content"-->
-                    <!--                        android:layout_height="wrap_content"-->
-                    <!--                        android:layout_marginEnd="8dp"-->
-                    <!--                        android:layout_marginBottom="24dp"-->
-                    <!--                        android:src="@drawable/whitecircle"-->
-                    <!--                        app:layout_constraintBottom_toBottomOf="parent"-->
-                    <!--                        app:layout_constraintEnd_toStartOf="@+id/imageView6" />-->
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
 

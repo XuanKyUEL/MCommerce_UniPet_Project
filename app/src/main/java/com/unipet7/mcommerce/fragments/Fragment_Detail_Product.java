@@ -60,7 +60,7 @@ public class Fragment_Detail_Product extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
+        // Inflate the layout for this fragmen
         return inflater.inflate(R.layout.fragment__detail__product, container, false);
     }
 }
