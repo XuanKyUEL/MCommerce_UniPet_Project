@@ -7,10 +7,6 @@
     android:layout_margin="8dp"
     android:id="@+id/layoutitem"
     android:background="@drawable/item_background">
-<<<<<<< HEAD
-
-=======
->>>>>>> fa1b8614734f9d3329b9b1383fa015ee870ba3f4
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
