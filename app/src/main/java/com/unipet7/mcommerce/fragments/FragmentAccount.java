@@ -1,17 +1,33 @@
 package com.unipet7.mcommerce.fragments;
 
+import static android.app.Activity.RESULT_OK;
+
+import android.app.Dialog;
+import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
+import android.net.Uri;
 import android.os.Bundle;
 
+import androidx.activity.result.ActivityResult;
+import androidx.activity.result.ActivityResultCallback;
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
 
+import android.provider.MediaStore;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.unipet7.mcommerce.R;
@@ -26,6 +42,8 @@ import com.unipet7.mcommerce.models.User;
  */
 public class FragmentAccount extends Fragment {
     FragmentAccountBinding binding;
+    ActivityResultLauncher<Intent> activityResultLauncher;
+    boolean openCam;
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -77,10 +95,67 @@ public class FragmentAccount extends Fragment {
         fireStoreClass.getCurrentUID();
         setActionBar(binding.toolbar);
         addEvents();
+        addEvents1();
+        activityResultLauncher = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), result -> {
+            if (result.getResultCode() == RESULT_OK && result.getData() != null) {
+                if (openCam) {
+                    // Image captured from camera
+                    Bitmap photo = (Bitmap) result.getData().getExtras().get("data");
+                    binding.imvUserImageAccount.setImageBitmap(photo);
+                } else {
+                    // Image selected from gallery
+                    Uri selectedPhotoUri = result.getData().getData();
+                    binding.imvUserImageAccount.setImageURI(selectedPhotoUri);
+                }
+            }
+        });
         fireStoreClass.loadLoggedUserUI(this);
         return binding.getRoot();
 
     }
+
+    private void addEvents1() {
+        binding.frameLayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showBottomSheet();
+            }
+
+            private void showBottomSheet() {
+                Dialog dialog = new Dialog(getActivity());
+                dialog.setContentView(R.layout.account_picture_pick);
+
+                LinearLayout bsCam=dialog.findViewById(R.id.bsCamera);
+                bsCam.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        openCam=true;
+                        Intent intent =new Intent (MediaStore.ACTION_IMAGE_CAPTURE);
+                        activityResultLauncher.launch(intent);
+                        dialog.dismiss();
+                        //Open Camera
+                    }
+                });
+                LinearLayout bsGallery=dialog.findViewById(R.id.bsGallery);
+                bsGallery.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        openCam=false;
+                        //Open Gallery
+                        Intent intent= new Intent(Intent.ACTION_PICK,MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+                        activityResultLauncher.launch(intent);
+                        dialog.dismiss();
+                    }
+                });
+                dialog.show();
+                dialog.getWindow().setLayout(ViewGroup.LayoutParams.MATCH_PARENT,ViewGroup.LayoutParams.WRAP_CONTENT);
+                dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+                dialog.getWindow().setWindowAnimations(R.style.DialogAnimation);
+                dialog.getWindow().setGravity(Gravity.BOTTOM);
+            }
+        });
+    }
+
     public void setActionBar(@Nullable Toolbar toolbar) {
         ((AppCompatActivity) getActivity()).setSupportActionBar(toolbar);
         ActionBar actionBar = ((AppCompatActivity) getActivity()).getSupportActionBar();
@@ -92,6 +167,7 @@ public class FragmentAccount extends Fragment {
     private void addEvents() {
         binding.toolbar.setNavigationOnClickListener(v -> requireActivity().getOnBackPressedDispatcher().onBackPressed());
     }
+
 
     public void fetchUserData(User user) {
         binding.edtUserNameAccount.setText(user.getName());
