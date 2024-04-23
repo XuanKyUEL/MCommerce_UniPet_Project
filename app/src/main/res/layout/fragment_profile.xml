@@ -75,7 +75,7 @@
                     style="@style/HEAD4_BOLD_20"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_weight="8"
+                    android:layout_weight="9"
                     android:text="Nhân Đinh"
                     android:textColor="@color/black"/>
                 <LinearLayout
@@ -114,13 +114,14 @@
                     android:layout_width="20dp"
                     android:layout_height="20dp"
                     android:layout_marginEnd="15dp"
+                    android:layout_weight="1"
                     android:src="@drawable/ic_email_profile" />
 
                 <TextView
                     android:id="@+id/txtEmail"
                     style="@style/HEAD6_BOLD_16"
                     android:layout_width="0dp"
-                    android:layout_weight="1"
+                    android:layout_weight="9"
                     android:layout_height="wrap_content"
                     android:text="nhandinh1213@gmail.com"
                     android:textColor="@color/black"/>
@@ -138,6 +139,7 @@
                     android:layout_width="20dp"
                     android:layout_height="20dp"
                     android:layout_marginEnd="15dp"
+                    android:layout_weight="1"
                     android:src="@drawable/ic_phone_profile" />
 
                 <TextView
@@ -145,6 +147,7 @@
                     android:layout_height="wrap_content"
                     android:layout_width="20dp"
                     android:text="0703682103"
+                    android:layout_weight="9"
                     android:textColor="@color/black"/>
             </LinearLayout>
         </LinearLayout>

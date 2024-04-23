@@ -155,15 +155,16 @@
                     android:clickable="true"
                     android:background="@drawable/bg_ripple_signinup"
                     android:layout_marginTop="24dp">
+
                     <TextView
+                        android:id="@+id/tv_sign_up_cta"
+                        style="@style/HEAD3_BOLD_24"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        style="@style/HEAD3_BOLD_24"
-                        android:text="@string/sign_up"
-                        android:textColor="@color/white"
                         android:layout_centerInParent="true"
-                        android:id="@+id/tv_sign_up_cta"
-                        android:gravity="center"/>
+                        android:gravity="center"
+                        android:text="@string/sign_up"
+                        android:textColor="@color/white" />
                     <com.airbnb.lottie.LottieAnimationView
                         android:layout_width="50dp"
                         android:layout_height="50dp"
