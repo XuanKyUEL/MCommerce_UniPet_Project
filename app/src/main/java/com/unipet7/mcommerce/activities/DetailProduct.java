@@ -3,8 +3,10 @@ package com.unipet7.mcommerce.activities;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.unipet7.mcommerce.R;
 import com.unipet7.mcommerce.databinding.ActivityDetailProductBinding;
@@ -17,6 +19,8 @@ public class DetailProduct extends BaseActivity {
     ActivityDetailProductBinding binding;
 
     TextView tvProductName, tvProductPrice, tvProductDescription, tvScore, tvNumOfRate;
+
+    ImageView ivProductImage;
 
     FireStoreClass fireStoreClass = new FireStoreClass();
     @Override
@@ -34,6 +38,7 @@ public class DetailProduct extends BaseActivity {
         tvProductDescription = binding.txtDescriptionOverall;
         tvScore = binding.txtScoreProductDetail;
         tvNumOfRate = binding.txtNumberOfRating;
+        ivProductImage = binding.productImageDetail;
     }
 
     private void getProductDetail() {
@@ -53,5 +58,7 @@ public class DetailProduct extends BaseActivity {
         tvProductPrice.setText(formattedPrice);
         tvScore.setText("4.5");
         tvNumOfRate.setText("  (130)");
+        // load image
+        Glide.with(this).load(product.getProductImageUrl()).into(ivProductImage);
     }
 }

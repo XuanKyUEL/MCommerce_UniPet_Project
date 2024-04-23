@@ -242,9 +242,9 @@ public class FragmentAccount extends Fragment {
         if (!name.isEmpty() && !name.equals(user.getName())) {
             userHashMap.put(Constants.USER_NAME, name);
         }
-        if (!phone.isEmpty() && !phone.equals(user.getMobile())) {
-            int phoneInt = Integer.parseInt(phone);
-            userHashMap.put(Constants.USER_PHONE, phoneInt);
+        if (!phone.equals("Chưa cập nhật") && !phone.isEmpty() && !phone.equals(String.valueOf(user.getMobile()))) {
+            long phoneLong = Long.parseLong(phone);
+            userHashMap.put(Constants.USER_PHONE, phoneLong);
         }
         if (!uriString.isEmpty()) {
             userHashMap.put(Constants.USER_IMAGE, uriString);
@@ -277,7 +277,11 @@ public class FragmentAccount extends Fragment {
         this.user = user;
         binding.edtUserNameAccount.setText(user.getName());
         binding.edtEmailAccount.setText(user.getEmail());
-        binding.edtPhoneAccount.setText(String.valueOf(user.getMobile()));
+        if (user.getMobile() != null) {
+            binding.edtPhoneAccount.setText(String.valueOf(user.getMobile()));
+        } else {
+            binding.edtPhoneAccount.setText("Chưa cập nhật");
+        }
         Log.i("FragmentAccount", "fetchUserData: " + user.getImage());
         if (user.getImage() != null) {
             // Load the user image in the ImageView throught img url
@@ -286,7 +290,7 @@ public class FragmentAccount extends Fragment {
                     .into(binding.imvUserImageAccount);
         } else {
             Glide.with(requireContext())
-                    .load(R.drawable.profile_image)
+                    .load(R.drawable.ic_user_profile_placeholder)
                     .into(binding.imvUserImageAccount);
         }
     }

@@ -132,11 +132,13 @@
                     android:gravity="center_vertical"
                     android:orientation="horizontal">
 
-                    <RadioButton
-                        android:id="@+id/rb_terms"
+                    <CheckBox
+                        android:id="@+id/cb_termsSignUp"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:buttonTint="@color/brandPrimary" />
+                        android:layout_marginEnd="5dp"
+                        android:button="@drawable/icon_bottom_navigation_selector_account"
+                        android:clickable="true" />
 
                     <TextView
                         android:id="@+id/tv_terms"

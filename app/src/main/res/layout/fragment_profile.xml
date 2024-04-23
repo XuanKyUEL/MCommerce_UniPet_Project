@@ -57,9 +57,7 @@
             android:id="@+id/profileImage"
             android:layout_width="match_parent"
             android:layout_height="200dp"
-            android:layout_centerInParent="true"
-            android:src="@drawable/ic_user_profile_placeholder"
-            />
+            android:src="@drawable/ic_user_profile_placeholder" />
 
     </RelativeLayout>
 
