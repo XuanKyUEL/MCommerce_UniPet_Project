@@ -7,6 +7,7 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 
@@ -24,27 +25,23 @@ public class Blogs extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         binding = ActivityBlogsBinding.inflate(getLayoutInflater());
+        setActionBar(binding.toolbarblog);
         addEvents();
         recyclerViewBlog();
         recyclerViewBlog2();
         setContentView(binding.getRoot());
     }
-    private void addEvents() {
-        setSupportActionBar(binding.toolbar);
-
+    public void setActionBar(@Nullable Toolbar toolbar) {
+        setSupportActionBar(toolbar);
         ActionBar actionBar = getSupportActionBar();
         if (actionBar != null) {
             actionBar.setDisplayHomeAsUpEnabled(true);
             actionBar.setHomeAsUpIndicator(R.drawable.ic_back_profile);
             actionBar.setDisplayShowTitleEnabled(false);
         }
-
-        binding.toolbar.setNavigationOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                finish();
-            }
-        });
+    }
+    private void addEvents() {
+        binding.toolbarblog.setNavigationOnClickListener(v -> finish());
     }
 
     private void recyclerViewBlog2() {
