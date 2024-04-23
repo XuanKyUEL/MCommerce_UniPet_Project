@@ -1,6 +1,8 @@
 package com.unipet7.mcommerce.firebase;
 
-import android.content.Context;
+import static com.google.common.io.Files.getFileExtension;
+
+import android.net.Uri;
 import android.util.Log;
 
 import androidx.fragment.app.Fragment;
@@ -9,21 +11,26 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.SetOptions;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
+import com.unipet7.mcommerce.activities.DetailProduct;
+import com.unipet7.mcommerce.activities.BlogDetails;
 import com.unipet7.mcommerce.activities.SignUp;
 import com.unipet7.mcommerce.fragments.FragmentAccount;
 import com.unipet7.mcommerce.fragments.FragmentAllProduct;
-import com.unipet7.mcommerce.fragments.FragmentBlogDetails;
 import com.unipet7.mcommerce.fragments.Home;
 import com.unipet7.mcommerce.fragments.Profile;
 import com.unipet7.mcommerce.models.Product;
 import com.unipet7.mcommerce.models.User;
 import com.unipet7.mcommerce.utils.Constants;
-import com.unipet7.mcommerce.utils.LoadingDialog;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 public class FireStoreClass {
     private final FirebaseFirestore UniPetdb = FirebaseFirestore.getInstance();
+
+    private StorageReference sRef = FirebaseStorage.getInstance().getReference();
     private User currentUser = null;
 
     public String getCurrentUID() {
@@ -92,7 +99,7 @@ public class FireStoreClass {
                     Log.e("FireStoreClass", "getAllProducts: ", e);
                 });
     }
-    public void getAllProductsBlog(FragmentBlogDetails fragment, ArrayList<Product> allProducts) {
+    public void getAllProductsBlog(BlogDetails activity, ArrayList<Product> allProducts) {
         UniPetdb.collection(Constants.PRODUCTS)
                 .get()
                 .addOnSuccessListener(queryDocumentSnapshots -> {
@@ -102,7 +109,7 @@ public class FireStoreClass {
                             allProducts.add(product);
                             Log.i("FireStoreClass", "getAllProducts: " + product.getProductname());
                         }
-                        fragment.configAdaptersBlog();
+                        activity.configAdaptersBlog();
                     }
                 })
                 .addOnFailureListener(e -> {
@@ -135,4 +142,51 @@ public class FireStoreClass {
                 })
         ;
     }
+
+    public void getProductDetailViaId(DetailProduct detailProduct, int productId) {
+        UniPetdb.collection(Constants.PRODUCTS)
+                .document(String.valueOf(productId))
+                .get()
+                .addOnSuccessListener(documentSnapshot -> {
+                    if (documentSnapshot.exists()) {
+                        Product product = documentSnapshot.toObject(Product.class);
+                        detailProduct.loadProductDetail(product);
+                    }
+                })
+                .addOnFailureListener(e -> {
+                    Log.e("FireStoreClass", "getProductDetail: ", e);
+                });
+    }
+
+    public void updateUser(Fragment fragment, HashMap<String, Object> userHashMap) {
+        UniPetdb.collection(Constants.USERS)
+                .document(getCurrentUID())
+                .update(userHashMap)
+                .addOnSuccessListener(aVoid -> {
+                    Log.i("FireStoreClass", "updateUser: Thành công");
+                    if (fragment instanceof FragmentAccount) {
+                        FragmentAccount fragmentAccount = (FragmentAccount) fragment;
+                        fragmentAccount.updateUserSuccess();
+                    }
+                })
+                .addOnFailureListener(e -> {
+                    Log.e("FireStoreClass", "updateUser: ", e);
+                });
+    }
+
+//    public void uploadImageToStorage(FragmentAccount fragmentAccount, Uri userAvatarUri) {
+//        sRef = FirebaseStorage.getInstance()
+//                .getReference(Constants.USER_AVATAR)
+//                .child(Constants.USER_AVATAR + System.currentTimeMillis() + Uri.parse(userAvatarUri.toString()).getLastPathSegment());
+//        sRef.putFile(userAvatarUri)
+//                .addOnSuccessListener(taskSnapshot -> {
+//                    taskSnapshot.getStorage().getDownloadUrl()
+//                            .addOnSuccessListener(uri -> {
+//                                fragmentAccount.uploadImageSuccess(uri.toString());
+//                            });
+//                })
+//                .addOnFailureListener(e -> {
+//                    Log.e("FireStoreClass", "uploadImageToStorage: ", e);
+//                });
+//    }
 }

@@ -25,6 +25,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.unipet7.mcommerce.R;
+import com.unipet7.mcommerce.activities.Notification;
 import com.unipet7.mcommerce.activities.ProfileFunction;
 import com.unipet7.mcommerce.adapters.BlogAdapter;
 import com.unipet7.mcommerce.adapters.ProductAdapter;
@@ -177,14 +178,14 @@ public class Home extends Fragment {
         binding.lvlHomeSale.setAdapter(saleAdapter);
         binding.lvlHomeSale.setHasFixedSize(true);
 
-        productDog = new ProductAdapter(productsDog);
+        adapterDog = new ProductAdapter(productsDog);
         binding.lvlHomeProduct1.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
-        binding.lvlHomeProduct1.setAdapter(productDog);
+        binding.lvlHomeProduct1.setAdapter(adapterDog);
         binding.lvlHomeProduct1.setHasFixedSize(true);
 
-        productCat = new ProductAdapter(productsCat);
+        adapterCat = new ProductAdapter(productsCat);
         binding.lvlHomeProduct2.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
-        binding.lvlHomeProduct2.setAdapter(productCat);
+        binding.lvlHomeProduct2.setAdapter(adapterCat);
         binding.lvlHomeProduct2.setHasFixedSize(true);
     }
 
@@ -197,75 +198,52 @@ public class Home extends Fragment {
     }
 
     private void addEvents() {
-        binding.txtXemThem1.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Fragment allproduct = new FragmentAllProduct();
-                FragmentManager fragmentManager = requireActivity().getSupportFragmentManager();
-
-                // Thực hiện giao diện chuyển đổi Fragment
-                fragmentManager.beginTransaction()
-                        .replace(((ViewGroup) requireView().getParent()).getId(), allproduct)
-                        .addToBackStack(null)
-                        .commit();
-            }
-        });
-        binding.txtXemThem2.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Fragment allproduct = new FragmentAllProduct();
-                FragmentManager fragmentManager = requireActivity().getSupportFragmentManager();
-
-                // Thực hiện giao diện chuyển đổi Fragment
-                fragmentManager.beginTransaction()
-                        .replace(((ViewGroup) requireView().getParent()).getId(), allproduct)
-                        .addToBackStack(null)
-                        .commit();
-            }
-        });
-        binding.txtXemthem3.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Fragment allproduct = new FragmentAllProduct();
-                FragmentManager fragmentManager = requireActivity().getSupportFragmentManager();
-
-                // Thực hiện giao diện chuyển đổi Fragment
-                fragmentManager.beginTransaction()
-                        .replace(((ViewGroup) requireView().getParent()).getId(), allproduct)
-                        .addToBackStack(null)
-                        .commit();
-            }
-        });
-        binding.Xemthem4.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Fragment fragmentBlog = new FragmentBlog();
-                FragmentManager fragmentManager = requireActivity().getSupportFragmentManager();
-
-                // Thực hiện giao diện chuyển đổi Fragment
-                fragmentManager.beginTransaction()
-                        .replace(((ViewGroup) requireView().getParent()).getId(), fragmentBlog)
-                        .addToBackStack(null)
-                        .commit();
-            }
-        });
-        binding.imgCate6.setOnClickListener(v -> {
-            Fragment fragmentBlog = new FragmentBlog();
+        binding.txtXemThem1.setOnClickListener(v -> {
+            Fragment allproduct = new FragmentAllProduct();
             FragmentManager fragmentManager = requireActivity().getSupportFragmentManager();
 
             // Thực hiện giao diện chuyển đổi Fragment
             fragmentManager.beginTransaction()
-                    .replace(((ViewGroup) requireView().getParent()).getId(), fragmentBlog)
+                    .replace(((ViewGroup) requireView().getParent()).getId(), allproduct)
                     .addToBackStack(null)
                     .commit();
+        });
+        binding.txtXemThem2.setOnClickListener(v -> {
+            Fragment allproduct = new FragmentAllProduct();
+            FragmentManager fragmentManager = requireActivity().getSupportFragmentManager();
+
+            // Thực hiện giao diện chuyển đổi Fragment
+            fragmentManager.beginTransaction()
+                    .replace(((ViewGroup) requireView().getParent()).getId(), allproduct)
+                    .addToBackStack(null)
+                    .commit();
+        });
+        binding.txtXemthem3.setOnClickListener(v -> {
+            Fragment allproduct = new FragmentAllProduct();
+            FragmentManager fragmentManager = requireActivity().getSupportFragmentManager();
+
+            // Thực hiện giao diện chuyển đổi Fragment
+            fragmentManager.beginTransaction()
+                    .replace(((ViewGroup) requireView().getParent()).getId(), allproduct)
+                    .addToBackStack(null)
+                    .commit();
+        });
+        binding.Xemthem4.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getActivity(), com.unipet7.mcommerce.activities.Blogs.class);
+                startActivity(intent);
+            }
+        });
+        binding.imgCate6.setOnClickListener(v -> {
+            Intent intent = new Intent(getActivity(), com.unipet7.mcommerce.activities.Blogs.class);
+            startActivity(intent);
         });
         binding.imageView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getActivity(), fragment_notification.class);
-                intent.putExtra("function", "notification");
+                Intent intent = new Intent(getActivity(), Notification.class);
                 startActivity(intent);
-
             }
         });
     }

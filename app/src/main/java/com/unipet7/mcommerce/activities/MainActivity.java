@@ -22,6 +22,7 @@ import com.unipet7.mcommerce.databinding.ActivityMainBinding;
 import com.unipet7.mcommerce.fragments.FragmentAllProduct;
 import com.unipet7.mcommerce.firebase.FireStoreClass;
 import com.unipet7.mcommerce.fragments.Fragment_Empty_Notification;
+import com.unipet7.mcommerce.fragments.Fragment_Wishlist_Product;
 import com.unipet7.mcommerce.fragments.Home;
 import com.unipet7.mcommerce.fragments.Profile;
 import com.unipet7.mcommerce.fragments.fragment_blank_cart;
@@ -90,7 +91,7 @@ public class MainActivity extends AppCompatActivity {
                         bottomNavigationView.getMenu().getItem(2).setChecked(true);
                         break;
                     case 3:
-                        fragment = new Fragment_Empty_Notification();
+                        fragment = new Fragment_Wishlist_Product();
                         bottomNavigationView.getMenu().getItem(3).setChecked(true);
                         break;
                     case 4:

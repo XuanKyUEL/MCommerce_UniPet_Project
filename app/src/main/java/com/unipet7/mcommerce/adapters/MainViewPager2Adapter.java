@@ -9,9 +9,7 @@ import com.unipet7.mcommerce.fragments.FragmentAllProduct;
 import com.unipet7.mcommerce.fragments.Fragment_Empty_Notification;
 import com.unipet7.mcommerce.fragments.Home;
 import com.unipet7.mcommerce.fragments.Profile;
-import com.unipet7.mcommerce.fragments.fragment_blank_cart;
 import com.unipet7.mcommerce.fragments.fragment_cart;
-import com.unipet7.mcommerce.fragments.fragment_notification;
 
 public class MainViewPager2Adapter extends FragmentStateAdapter {
     public MainViewPager2Adapter(@NonNull FragmentActivity fragmentActivity) {
