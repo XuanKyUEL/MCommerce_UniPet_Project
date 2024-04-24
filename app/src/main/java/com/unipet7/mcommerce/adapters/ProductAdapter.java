@@ -7,9 +7,11 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.CheckBox;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.annotation.NonNull;
@@ -24,28 +26,20 @@ import com.unipet7.mcommerce.firebase.FireStoreClass;
 import com.unipet7.mcommerce.models.Product;
 import com.unipet7.mcommerce.utils.Constants;
 
-import java.io.Serializable;
 import java.util.List;
 
 public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ViewHolder> {
 
-    static List<Product> productList;
+    List<Product> productList;
+
+    private OnItemClickListener listener;
+
+    public ProductAdapter(OnItemClickListener listener) {
+        this.listener = listener;
+    }
 
     public ProductAdapter(List<Product> productList) {
         this.productList = productList;
-    }
-
-    public static List<Product> getProductList() {
-        return productList;
-    }
-
-    public static void setProductList(List<Product> productList) {
-        ProductAdapter.productList = productList;
-    }
-
-    public static void getDetailProduct(List<Product> pdList, int position, Intent intent) {
-        Product product = pdList.get(position);
-        intent.putExtra(Constants.PRODUCT_ID, product.getProductId());
     }
 
 
@@ -97,6 +91,14 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ViewHold
         }
         // glide imge from firebaseurl
         Glide.with(holder.itemView.getContext()).load(product.getProductImageUrl()).into(holder.imvThumb);
+
+        // get product from list
+        holder.itemView.setOnClickListener(v -> {
+            int productId = product.getProductId();
+            Intent intent = new Intent(v.getContext(), DetailProduct.class);
+            intent.putExtra(Constants.PRODUCT_ID, productId);
+            v.getContext().startActivity(intent);
+        });
     }
 
     @Override
@@ -105,32 +107,29 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ViewHold
     }
 
     static class ViewHolder extends RecyclerView.ViewHolder {
-
         TextView productname, productprice, productratenum, presaleprice, salepercent, numOfRating;
         ImageView imvThumb, salespercentbg, salebanner;
         Button btnAddCart;
 
+        CheckBox favorite;
+
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
-            productname = itemView.findViewById(R.id.textView);
-            productprice = itemView.findViewById(R.id.textView2);
-            productratenum = itemView.findViewById(R.id.txtRating);
-            imvThumb = itemView.findViewById(R.id.imageproduct);
+            productname = itemView.findViewById(R.id.tvNameProduct_item);
+            productprice = itemView.findViewById(R.id.tvProductPrice_item);
+            productratenum = itemView.findViewById(R.id.tvRateValueItem);
+            imvThumb = itemView.findViewById(R.id.ivProductItem);
             salepercent = itemView.findViewById(R.id.textsalepercent);
             salespercentbg = itemView.findViewById(R.id.imagesale);
             salebanner = itemView.findViewById(R.id.imagebannersale);
-            presaleprice = itemView.findViewById(R.id.textsale);
-            numOfRating = itemView.findViewById(R.id.txtNumberOfRating);
+            presaleprice = itemView.findViewById(R.id.tvProductPriceSaleItem);
+            numOfRating = itemView.findViewById(R.id.tvRateCountItem);
             btnAddCart = itemView.findViewById(R.id.btnAddCart);
-            itemView.setOnClickListener(v -> {
-                Intent intent = new Intent(v.getContext(), DetailProduct.class);
-                getDetailProduct(productList, getAdapterPosition(), intent);
-                v.getContext().startActivity(intent);
-            });
-
-
-
-
+            favorite = itemView.findViewById(R.id.chkFavouriteItem);
         }
+    }
+
+    public interface OnItemClickListener {
+        void onItemClick(Product product);
     }
 }

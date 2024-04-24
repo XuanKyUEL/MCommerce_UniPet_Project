@@ -43,7 +43,7 @@ public class BlogDetails extends AppCompatActivity {
         LoadingDialog ldDialog1 = new LoadingDialog();
         ldDialog1.showLoadingDialog(this);
         FireStoreClass fireStoreClass = new FireStoreClass();
-        fireStoreClass.getAllProductsBlog(this, allProducts);
+        fireStoreClass.getProductBlog(this, allProducts);
         ldDialog1.dissmis();
     }
     public void configAdaptersBlog() {
@@ -51,7 +51,6 @@ public class BlogDetails extends AppCompatActivity {
         binding.rclBlogDetails1.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
         binding.rclBlogDetails1.setAdapter(adapter);
         binding.rclBlogDetails1.setHasFixedSize(true);
-
     }
 
     private void addEvents() {

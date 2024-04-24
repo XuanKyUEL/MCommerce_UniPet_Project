@@ -54,11 +54,9 @@ public class Home extends Fragment {
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
+
     public ProductAdapter adapter;
 
-    public ProductAdapter saleAdapter;
-    public ProductAdapter productDog;
-    public ProductAdapter productCat;
 
     // TODO: Rename and change types of parameters
     private String mParam1;
@@ -71,15 +69,13 @@ public class Home extends Fragment {
     private static final String KEY_FLAG = "isLoadUser";
     boolean isLoadUser = false;
 
-    public ArrayList<Product> products = new ArrayList<>();
+    private ArrayList<Product> productsSale = new ArrayList<>();
+    private ArrayList<Product> productsDog = new ArrayList<>();
+    private ArrayList<Product> productsCat = new ArrayList<>();
 
-    public ArrayList<Product> productsSale = new ArrayList<>();
-    public ArrayList<Product> productsDog = new ArrayList<>();
-    public ArrayList<Product> productsCat = new ArrayList<>();
+    private RecyclerView saleRecyclerView, dogRecyclerView, catRecyclerView;
 
-    public ProductAdapter adapterSale;
-    public ProductAdapter adapterDog;
-    public ProductAdapter adapterCat;
+    FireStoreClass fireStoreClass = new FireStoreClass();
 
     public Home() {
         // Required empty public constructor
@@ -116,25 +112,28 @@ public class Home extends Fragment {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
-        if (savedInstanceState != null) {
-            isLoadUser = savedInstanceState.getBoolean(KEY_FLAG);
-            Log.i("HomeFragment", "onCreate: " + isLoadUser);
-        }
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        if (binding == null) {
-            binding = FragmentHomeBinding.inflate(inflater, container, false);
-        }
+        binding = FragmentHomeBinding.inflate(inflater, container, false);
+        mapping();
         loadBlog();
         addEvents();
+        fireStoreClass.getSalesProducts(this);
+        fireStoreClass.getProductsByCategoryIdHome(this, 1);
+        fireStoreClass.getProductsByCategoryIdHome(this, 2);
         loadHomeUserAndProduct();
         initBanner();
-
         return binding.getRoot();
+    }
+
+    private void mapping() {
+        saleRecyclerView = binding.lvlHomeSale;
+        dogRecyclerView = binding.lvlHomeProduct1;
+        catRecyclerView = binding.lvlHomeProduct2;
     }
 
     private void initBanner() {
@@ -173,31 +172,12 @@ public class Home extends Fragment {
         binding.viewpageSlider.setPageTransformer(compositePageTransformer);
     }
 
-    public void configAdapters() {
-
-        saleAdapter = new ProductAdapter(productsSale);
-        binding.lvlHomeSale.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
-        binding.lvlHomeSale.setAdapter(saleAdapter);
-        binding.lvlHomeSale.setHasFixedSize(true);
-
-        adapterDog = new ProductAdapter(productsDog);
-        binding.lvlHomeProduct1.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
-        binding.lvlHomeProduct1.setAdapter(adapterDog);
-        binding.lvlHomeProduct1.setHasFixedSize(true);
-
-        adapterCat = new ProductAdapter(productsCat);
-        binding.lvlHomeProduct2.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
-        binding.lvlHomeProduct2.setAdapter(adapterCat);
-        binding.lvlHomeProduct2.setHasFixedSize(true);
-    }
-
     private void loadHomeUserAndProduct() {
         loadingDialog = new LoadingDialog();
         loadingDialog.showLoadingDialog(getContext());
-        FireStoreClass fireStoreClass = new FireStoreClass();
-        fireStoreClass.getProductList(this, productsSale, productsDog, productsCat);
         fireStoreClass.loadLoggedUserUI(this);
     }
+
 
     private void addEvents() {
         binding.txtXemThem1.setOnClickListener(v -> {
@@ -230,12 +210,9 @@ public class Home extends Fragment {
                     .addToBackStack(null)
                     .commit();
         });
-        binding.Xemthem4.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(getActivity(), com.unipet7.mcommerce.activities.Blogs.class);
-                startActivity(intent);
-            }
+        binding.Xemthem4.setOnClickListener(v -> {
+            Intent intent = new Intent(getActivity(), com.unipet7.mcommerce.activities.Blogs.class);
+            startActivity(intent);
         });
         binding.imgCate6.setOnClickListener(v -> {
             Intent intent = new Intent(getActivity(), com.unipet7.mcommerce.activities.Blogs.class);
@@ -245,12 +222,9 @@ public class Home extends Fragment {
 
         });
 
-        binding.imageView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(getActivity(), Notification.class);
-                startActivity(intent);
-            }
+        binding.imageView.setOnClickListener(v -> {
+            Intent intent = new Intent(getActivity(), Notification.class);
+            startActivity(intent);
         });
     }
 
@@ -270,4 +244,30 @@ public class Home extends Fragment {
         loadingDialog.dissmis();
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+    }
+
+    public void loadSalesProducts(ArrayList<Product> productsSale) {
+        ProductAdapter adapterSale = new ProductAdapter(productsSale);
+        saleRecyclerView.setAdapter(adapterSale);
+        saleRecyclerView.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
+        saleRecyclerView.setHasFixedSize(true);
+    }
+
+    public void loadProductsByCategoryId(ArrayList<Product> products, int categoryId) {
+        ProductAdapter adapter = new ProductAdapter(products);
+        RecyclerView recyclerView;
+        if (categoryId == 1) {
+            recyclerView = catRecyclerView;
+        } else if (categoryId == 2) {
+            recyclerView = dogRecyclerView;
+        } else {
+            return;
+        }
+        recyclerView.setAdapter(adapter);
+        recyclerView.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
+        recyclerView.setHasFixedSize(true);
+    }
 }
