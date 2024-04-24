@@ -8,6 +8,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CheckBox;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -84,6 +85,17 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ViewHold
             holder.salebanner.setVisibility(View.INVISIBLE);
             holder.productprice.setText(String.format("%,.0f đ", product.getProductprice()));
             holder.presaleprice.setVisibility(View.GONE);
+            holder.btnAddCart.setOnClickListener(v -> {
+                // Lấy thông tin sản phẩm tương ứng
+                Product product1 = productList.get(position);
+                String productName = product.getProductname();
+                double productPrice = product.getProductprice();
+                String productImage = product.getProductImageUrl();
+
+                // Gọi phương thức addToCart để lưu thông tin sản phẩm vào Firestore cart collection
+                FireStoreClass fireStoreClass = new FireStoreClass();
+                fireStoreClass.addToCart(productName, productPrice, productImage);
+            });
         }
         // glide imge from firebaseurl
         Glide.with(holder.itemView.getContext()).load(product.getProductImageUrl()).into(holder.imvThumb);
@@ -100,6 +112,7 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ViewHold
 
         TextView productname, productprice, productratenum, presaleprice, salepercent, numOfRating;
         ImageView imvThumb, salespercentbg, salebanner;
+        Button btnAddCart;
 
         CheckBox favorite;
 
@@ -114,7 +127,7 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ViewHold
             salebanner = itemView.findViewById(R.id.imagebannersale);
             presaleprice = itemView.findViewById(R.id.tvProductPriceSaleItem);
             numOfRating = itemView.findViewById(R.id.tvRateCountItem);
-
+            btnAddCart = itemView.findViewById(R.id.btnAddCart);
             itemView.setOnClickListener(v -> {
                 Intent intent = new Intent(v.getContext(), DetailProduct.class);
                 getDetailProduct(productList, getAdapterPosition(), intent);

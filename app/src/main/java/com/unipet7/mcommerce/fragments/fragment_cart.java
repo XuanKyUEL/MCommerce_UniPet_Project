@@ -90,7 +90,7 @@ public class fragment_cart extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         binding = FragmentCartBinding.inflate(inflater, container, false);
-        setActionBar(binding.toolbar);
+        setActionBar(binding.toolbarall);
         binding.btnCircleVoucher.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -140,30 +140,12 @@ public class fragment_cart extends Fragment {
 
 
     public void setActionBar(@Nullable Toolbar toolbar) {
-        AppCompatActivity activity = (AppCompatActivity) getActivity();
-        if (activity != null) {
-            activity.setSupportActionBar(toolbar);
-            ActionBar actionBar = activity.getSupportActionBar();
-            if (actionBar != null) {
-                actionBar.setDisplayHomeAsUpEnabled(true);
-                actionBar.setHomeAsUpIndicator(R.drawable.next_btn_intro_white);
-                actionBar.setDisplayShowTitleEnabled(false);
-                actionBar.setDisplayShowCustomEnabled(true);
-
-                // Create a TextView programmatically
-                TextView textView = new TextView(activity);
-                textView.setText("Giỏ hàng");
-                textView.setTextColor(Color.BLACK);
-                textView.setGravity(Gravity.CENTER_HORIZONTAL);
-                SpannableString spannableString = new SpannableString(textView.getText());
-                spannableString.setSpan(new TextAppearanceSpan(activity, R.style.HEAD5_BOLD_18), 0, spannableString.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
-                textView.setText(spannableString);
-                Toolbar.LayoutParams layoutParams = new Toolbar.LayoutParams(Toolbar.LayoutParams.MATCH_PARENT, Toolbar.LayoutParams.WRAP_CONTENT);
-                layoutParams.gravity = Gravity.CENTER;
-                textView.setLayoutParams(layoutParams);
-                actionBar.setCustomView(textView);
-            }
-        }
+        ((AppCompatActivity) getActivity()).setSupportActionBar(toolbar);
+        ActionBar actionBar = ((AppCompatActivity) getActivity()).getSupportActionBar();
+        assert actionBar != null;
+        actionBar.setDisplayHomeAsUpEnabled(true);
+        actionBar.setHomeAsUpIndicator(R.drawable.ic_back_profile);
+        actionBar.setDisplayShowTitleEnabled(false);
     }
     @Override
     public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
