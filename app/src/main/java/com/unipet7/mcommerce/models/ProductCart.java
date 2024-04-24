@@ -5,6 +5,10 @@ public class ProductCart {
     String txtProductName;
     Double txtProductPrice, txtSumNumbPrice, txtNumberOrder;
 
+    public ProductCart() {
+        // Constructor không đối số
+    }
+
     public int getImvProductCart() {
         return imvProductCart;
     }
