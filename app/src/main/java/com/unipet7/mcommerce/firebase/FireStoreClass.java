@@ -9,6 +9,8 @@ import androidx.fragment.app.Fragment;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.SetOptions;
 import com.google.firebase.storage.FirebaseStorage;
@@ -189,4 +191,35 @@ public class FireStoreClass {
 //                    Log.e("FireStoreClass", "uploadImageToStorage: ", e);
 //                });
 //    }
+
+
+
+    public void addToCart(String productName, double productPrice, String productImage) {
+        // Lấy reference đến collection "cart"
+        CollectionReference cartRef = UniPetdb.collection("cart");
+
+        // Tạo một document mới trong collection "cart"
+        DocumentReference newCartItemRef = cartRef.document();
+
+        // Tạo một đối tượng HashMap chứa thông tin sản phẩm
+        HashMap<String, Object> cartItem = new HashMap<>();
+        cartItem.put("productName", productName);
+        cartItem.put("productPrice", productPrice);
+        cartItem.put("productImage", productImage);
+        cartItem.put("numbProduct", 1);
+        cartItem.put("totalPrice", productPrice);
+
+        // Thêm thông tin sản phẩm vào document mới
+        newCartItemRef.set(cartItem)
+                .addOnSuccessListener(aVoid -> {
+                    // Thêm thành công
+                    Log.i("FireStoreClass", "addToCart: Thành công");
+                })
+                .addOnFailureListener(e -> {
+                    // Xảy ra lỗi
+                    Log.e("FireStoreClass", "addToCart: Fail", e);
+                });
+    }
 }
+
+
