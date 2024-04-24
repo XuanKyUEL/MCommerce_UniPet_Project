@@ -16,10 +16,12 @@ public class Constants {
     public static final String TOY = "toy";
     public static final String PRODUCTNAME = "ProductName";
     public static final String PRODUCT = "product";
-    public static final String PRODUCT_ID = "productid";
+    public static final String PRODUCT_ID = "productId";
     public static final String USER_AVATAR = "User_Avatar/";
     public static final String USER_NAME = "name";
     public static final String USER_PHONE = "mobile";
     public static final String USER_IMAGE = "image";
     public static final String FAVPRODUCTID = "favProductId";
+    public static final String CATEGORYID = "categoryId";
+    public static final String SALESPERCENT = "salepercent";
 }

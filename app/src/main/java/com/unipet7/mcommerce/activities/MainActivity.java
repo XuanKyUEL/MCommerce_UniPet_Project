@@ -10,6 +10,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
+import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewpager2.widget.ViewPager2;
 
 import com.airbnb.lottie.L;
@@ -30,6 +31,7 @@ import com.unipet7.mcommerce.fragments.fragment_cart;
 import com.unipet7.mcommerce.models.User;
 import com.unipet7.mcommerce.utils.Constants;
 import com.unipet7.mcommerce.utils.LoadingDialog;
+import com.unipet7.mcommerce.utils.NonSwipeAbleViewPager;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -41,7 +43,6 @@ public class MainActivity extends AppCompatActivity {
     LoadingDialog loadingDialog;
     BottomNavigationView bottomNavigationView;
     FloatingActionButton fabCart;
-
     private FirebaseFirestore db;
 
     Fragment fragment = null;
@@ -63,6 +64,9 @@ public class MainActivity extends AppCompatActivity {
     private void mapping() {
         bottomNavigationView = binding.bottomNavigationView;
         mainViewPager2 = binding.viewPagerMain;
+        mainViewPager2.setUserInputEnabled(false);
+        RecyclerView recyclerView = (RecyclerView) mainViewPager2.getChildAt(0);
+        recyclerView.addOnItemTouchListener(new NonSwipeAbleViewPager());
         fabCart = binding.fabCart;
         db = FirebaseFirestore.getInstance();
     }

@@ -1,5 +1,6 @@
 package com.unipet7.mcommerce.firebase;
 
+import android.app.Activity;
 import android.content.Context;
 import android.util.Log;
 
@@ -30,6 +31,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Objects;
+import java.util.Random;
 import java.util.concurrent.atomic.AtomicReference;
 
 public class FireStoreClass {
@@ -100,13 +102,30 @@ public class FireStoreClass {
                             Log.i("FireStoreClass", "getAllProducts: " + product.getProductname());
                         }
                     }
-                    fragment.divideProduct(allProducts);
+                    fragment.divideProduct();
                 })
                 .addOnFailureListener(e -> {
                     Log.e("FireStoreClass", "getAllProducts: ", e);
                 });
     }
-    public void getAllProductsBlog(BlogDetails activity, ArrayList<Product> allProducts) {
+    public void getProductBlog(BlogDetails activity, ArrayList<Product> allProducts) {
+        UniPetdb.collection(Constants.PRODUCT)
+                .get()
+                .addOnSuccessListener(queryDocumentSnapshots -> {
+                    if (!queryDocumentSnapshots.isEmpty()) {
+                        for (int i = 0; i < queryDocumentSnapshots.size(); i++) {
+                            Product product = queryDocumentSnapshots.getDocuments().get(i).toObject(Product.class);
+                            allProducts.add(product);
+                        }
+                    }
+                    activity.configAdaptersBlog();
+                })
+                .addOnFailureListener(e -> {
+                    Log.e("FireStoreClass", "getProductBlog: ", e);
+                });
+    }
+    public ArrayList<Product> getAllProductFrag (Fragment fragment) {
+        ArrayList<Product> allProducts = new ArrayList<>();
         UniPetdb.collection(Constants.PRODUCTS)
                 .get()
                 .addOnSuccessListener(queryDocumentSnapshots -> {
@@ -114,40 +133,57 @@ public class FireStoreClass {
                         for (int i = 0; i < queryDocumentSnapshots.size(); i++) {
                             Product product = queryDocumentSnapshots.getDocuments().get(i).toObject(Product.class);
                             allProducts.add(product);
-                            Log.i("FireStoreClass", "getAllProducts: " + product.getProductname());
                         }
-                        activity.configAdaptersBlog();
+                        if (fragment instanceof FragmentAllProduct) {
+                            FragmentAllProduct fragmentAllProduct = (FragmentAllProduct) fragment;
+                            fragmentAllProduct.loadProduct(allProducts);
+                        }
                     }
                 })
                 .addOnFailureListener(e -> {
                     Log.e("FireStoreClass", "getAllProducts: ", e);
                 });
+        return allProducts;
     }
-    public void getProductList(Home home, ArrayList<Product> productsSale, ArrayList<Product> productsDog, ArrayList<Product> productsCat) {
 
+    public void getSalesProducts(Home home) {
+        ArrayList<Product> productsSale = new ArrayList<>();
         UniPetdb.collection(Constants.PRODUCTS)
+                .whereGreaterThan(Constants.SALESPERCENT, 0)
                 .get()
                 .addOnSuccessListener(queryDocumentSnapshots -> {
                     if (!queryDocumentSnapshots.isEmpty()) {
                         for (int i = 0; i < queryDocumentSnapshots.size(); i++) {
                             Product product = queryDocumentSnapshots.getDocuments().get(i).toObject(Product.class);
-                            if (product.getSalepercent() > 0) {
-                                productsSale.add(product);
-                            }
-                            if (product.getCategoryId() == 1) {
-                                productsDog.add(product);
-                            }
-                            if (product.getCategoryId() == 2) {
-                                productsCat.add(product);
-                            }
+                            assert product != null;
+                            productsSale.add(product);
                         }
-                        home.configAdapters();
                     }
+                    home.loadSalesProducts(productsSale);
                 })
                 .addOnFailureListener(e -> {
-                    Log.e("FireStoreClass", "getProductList: ", e);
+                    Log.e("FireStoreClass", "getSalesProducts: ", e);
+                });
+    }
+
+    public void getProductsByCategoryIdHome(Home home, int categoryId) {
+        ArrayList<Product> products = new ArrayList<>();
+        UniPetdb.collection(Constants.PRODUCTS)
+                .whereEqualTo(Constants.CATEGORYID, categoryId)
+                .get()
+                .addOnSuccessListener(queryDocumentSnapshots -> {
+                    if (!queryDocumentSnapshots.isEmpty()) {
+                        for (int i = 0; i < queryDocumentSnapshots.size(); i++) {
+                            Product product = queryDocumentSnapshots.getDocuments().get(i).toObject(Product.class);
+                            assert product != null;
+                            products.add(product);
+                        }
+                    }
+                    home.loadProductsByCategoryId(products, categoryId);
                 })
-        ;
+                .addOnFailureListener(e -> {
+                    Log.e("FireStoreClass", "getProductsByCategoryId: ", e);
+                });
     }
 
     public void getProductDetailViaId(DetailProduct detailProduct, int productId) {

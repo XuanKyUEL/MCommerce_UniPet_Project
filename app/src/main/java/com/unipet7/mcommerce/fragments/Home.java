@@ -69,15 +69,11 @@ public class Home extends Fragment {
     private static final String KEY_FLAG = "isLoadUser";
     boolean isLoadUser = false;
 
-    public ArrayList<Product> products = new ArrayList<>();
+    private ArrayList<Product> productsSale = new ArrayList<>();
+    private ArrayList<Product> productsDog = new ArrayList<>();
+    private ArrayList<Product> productsCat = new ArrayList<>();
 
-    public ArrayList<Product> productsSale = new ArrayList<>();
-    public ArrayList<Product> productsDog = new ArrayList<>();
-    public ArrayList<Product> productsCat = new ArrayList<>();
-
-    public ProductAdapter adapterSale;
-    public ProductAdapter adapterDog;
-    public ProductAdapter adapterCat;
+    private RecyclerView saleRecyclerView, dogRecyclerView, catRecyclerView;
 
     FireStoreClass fireStoreClass = new FireStoreClass();
 
@@ -116,25 +112,28 @@ public class Home extends Fragment {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
-        if (savedInstanceState != null) {
-            isLoadUser = savedInstanceState.getBoolean(KEY_FLAG);
-            Log.i("HomeFragment", "onCreate: " + isLoadUser);
-        }
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        if (binding == null) {
-            binding = FragmentHomeBinding.inflate(inflater, container, false);
-        }
+        binding = FragmentHomeBinding.inflate(inflater, container, false);
+        mapping();
         loadBlog();
         addEvents();
+        fireStoreClass.getSalesProducts(this);
+        fireStoreClass.getProductsByCategoryIdHome(this, 1);
+        fireStoreClass.getProductsByCategoryIdHome(this, 2);
         loadHomeUserAndProduct();
         initBanner();
-
         return binding.getRoot();
+    }
+
+    private void mapping() {
+        saleRecyclerView = binding.lvlHomeSale;
+        dogRecyclerView = binding.lvlHomeProduct1;
+        catRecyclerView = binding.lvlHomeProduct2;
     }
 
     private void initBanner() {
@@ -173,30 +172,12 @@ public class Home extends Fragment {
         binding.viewpageSlider.setPageTransformer(compositePageTransformer);
     }
 
-    public void configAdapters() {
-
-        adapterSale = new ProductAdapter(productsSale);
-        binding.lvlHomeSale.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
-        binding.lvlHomeSale.setAdapter(adapterSale);
-        binding.lvlHomeSale.setHasFixedSize(true);
-
-        adapterDog = new ProductAdapter(productsDog);
-        binding.lvlHomeProduct1.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
-        binding.lvlHomeProduct1.setAdapter(adapterDog);
-        binding.lvlHomeProduct1.setHasFixedSize(true);
-
-        adapterCat = new ProductAdapter(productsCat);
-        binding.lvlHomeProduct2.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
-        binding.lvlHomeProduct2.setAdapter(adapterCat);
-        binding.lvlHomeProduct2.setHasFixedSize(true);
-    }
-
     private void loadHomeUserAndProduct() {
         loadingDialog = new LoadingDialog();
         loadingDialog.showLoadingDialog(getContext());
-        fireStoreClass.getProductList(this, productsSale, productsDog, productsCat);
         fireStoreClass.loadLoggedUserUI(this);
     }
+
 
     private void addEvents() {
         binding.txtXemThem1.setOnClickListener(v -> {
@@ -268,19 +249,25 @@ public class Home extends Fragment {
         super.onResume();
     }
 
-    public void loadFavoriteProducts(ArrayList<Integer> favProductIds) {
-        for (int i = 0; i < favProductIds.size(); i++) {
-            FirebaseFirestore.getInstance().collection(Constants.PRODUCTS)
-                    .document(favProductIds.get(i).toString())
-                    .get()
-                    .addOnCompleteListener(task -> {
-                        if (task.isSuccessful()) {
-                            Product product = task.getResult().toObject(Product.class);
-                            productsCat.add(product);
-                        } else {
-                            Log.e("HomeFragment", "Error getting documents: ", task.getException());
-                        }
-                    });
+    public void loadSalesProducts(ArrayList<Product> productsSale) {
+        ProductAdapter adapterSale = new ProductAdapter(productsSale);
+        saleRecyclerView.setAdapter(adapterSale);
+        saleRecyclerView.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
+        saleRecyclerView.setHasFixedSize(true);
+    }
+
+    public void loadProductsByCategoryId(ArrayList<Product> products, int categoryId) {
+        ProductAdapter adapter = new ProductAdapter(products);
+        RecyclerView recyclerView;
+        if (categoryId == 1) {
+            recyclerView = catRecyclerView;
+        } else if (categoryId == 2) {
+            recyclerView = dogRecyclerView;
+        } else {
+            return;
         }
+        recyclerView.setAdapter(adapter);
+        recyclerView.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
+        recyclerView.setHasFixedSize(true);
     }
 }

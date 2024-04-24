@@ -26,28 +26,20 @@ import com.unipet7.mcommerce.firebase.FireStoreClass;
 import com.unipet7.mcommerce.models.Product;
 import com.unipet7.mcommerce.utils.Constants;
 
-import java.io.Serializable;
 import java.util.List;
 
 public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ViewHolder> {
 
-    static List<Product> productList;
+    List<Product> productList;
+
+    private OnItemClickListener listener;
+
+    public ProductAdapter(OnItemClickListener listener) {
+        this.listener = listener;
+    }
 
     public ProductAdapter(List<Product> productList) {
         this.productList = productList;
-    }
-
-    public static List<Product> getProductList() {
-        return productList;
-    }
-
-    public static void setProductList(List<Product> productList) {
-        ProductAdapter.productList = productList;
-    }
-
-    public static void getDetailProduct(List<Product> pdList, int position, Intent intent) {
-        Product product = pdList.get(position);
-        intent.putExtra(Constants.PRODUCT_ID, product.getProductId());
     }
 
 
@@ -99,6 +91,14 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ViewHold
         }
         // glide imge from firebaseurl
         Glide.with(holder.itemView.getContext()).load(product.getProductImageUrl()).into(holder.imvThumb);
+
+        // get product from list
+        holder.itemView.setOnClickListener(v -> {
+            int productId = product.getProductId();
+            Intent intent = new Intent(v.getContext(), DetailProduct.class);
+            intent.putExtra(Constants.PRODUCT_ID, productId);
+            v.getContext().startActivity(intent);
+        });
     }
 
     @Override
@@ -107,9 +107,6 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ViewHold
     }
 
     static class ViewHolder extends RecyclerView.ViewHolder {
-
-        FireStoreClass fireStoreClass = new FireStoreClass();
-
         TextView productname, productprice, productratenum, presaleprice, salepercent, numOfRating;
         ImageView imvThumb, salespercentbg, salebanner;
         Button btnAddCart;
@@ -128,17 +125,11 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ViewHold
             presaleprice = itemView.findViewById(R.id.tvProductPriceSaleItem);
             numOfRating = itemView.findViewById(R.id.tvRateCountItem);
             btnAddCart = itemView.findViewById(R.id.btnAddCart);
-            itemView.setOnClickListener(v -> {
-                Intent intent = new Intent(v.getContext(), DetailProduct.class);
-                getDetailProduct(productList, getAdapterPosition(), intent);
-                v.getContext().startActivity(intent);
-            });
-
             favorite = itemView.findViewById(R.id.chkFavouriteItem);
-            favorite.setOnClickListener(v -> {
-                String fvProductName = productList.get(getAdapterPosition()).getProductname();
-                fireStoreClass.findProductByName(fvProductName);
-            });
         }
+    }
+
+    public interface OnItemClickListener {
+        void onItemClick(Product product);
     }
 }

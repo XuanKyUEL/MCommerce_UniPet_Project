@@ -45,7 +45,7 @@ public class FragmentAllProduct extends Fragment {
     private String mParam2;
     FragmentAllProductBinding binding;
     public ProductAdapter allPdadapter;
-    public ArrayList<Product> allPdproducts;
+    private ArrayList<Product> allProducts;
 
     ArrayList<Button> categoryButtons = new ArrayList<>();
 
@@ -102,19 +102,12 @@ public class FragmentAllProduct extends Fragment {
         LoadingDialog ldDialog = new LoadingDialog();
         ldDialog.showLoadingDialog(this.getContext());
         FireStoreClass fireStoreClass = new FireStoreClass();
-        allPdproducts = new ArrayList<>();
-        fireStoreClass.getAllProducts(this, allPdproducts);
+        allProducts = new ArrayList<>();
+        fireStoreClass.getAllProducts(this, allProducts);
         ldDialog.dissmis();
-        loadProduct(allPdproducts);
+        loadProduct(allProducts);
         cateClickEvent();
-        Bundle bundle = getArguments();
-        if (bundle != null) {
-            String category = bundle.getString(Constants.CATEGORY);
-            assert category != null;
-            loadProductOnCategory(category);
-        } else {
-            binding.btnAll.performClick();
-        }
+        binding.btnAll.performClick();
         return binding.getRoot();
 
     }
@@ -142,8 +135,10 @@ public class FragmentAllProduct extends Fragment {
                 loadProduct(toyProducts);
                 break;
             case  Constants.ALLPRODUCT:
-                loadProduct(allPdproducts);
+                loadProduct(allProducts);
                 break;
+            default:
+                loadProduct(allProducts);
         }
     }
 
@@ -154,8 +149,8 @@ public class FragmentAllProduct extends Fragment {
         }
     }
 
-    public void divideProduct(ArrayList<Product> allPdproducts) {
-        for (Product product : allPdproducts) {
+    public void divideProduct() {
+        for (Product product : allProducts) {
             if (product.getCategoryId() == 1 || product.getCategoryId() == 2) {
                 foodProducts.add(product);
             }
@@ -175,7 +170,7 @@ public class FragmentAllProduct extends Fragment {
         btnAll.setOnClickListener(v -> {
             addOtherButtonToDefault(btnFood, btnItem, btnCare, btnToy);
             setButtonToPressed(btnAll);
-            loadProduct(allPdproducts);
+            loadProduct(allProducts);
         });
         btnFood.setOnClickListener(v -> {
             addOtherButtonToDefault(btnAll, btnItem, btnCare, btnToy);
@@ -212,7 +207,7 @@ public class FragmentAllProduct extends Fragment {
         buttonUIDefault(categoryButtons);
     }
 
-    private void loadProduct(ArrayList<Product> products) {
+    public void loadProduct(ArrayList<Product> products) {
         LoadingDialog ldDialog = new LoadingDialog();
         ldDialog.showLoadingDialog(this.getContext());
         ProductAdapter adapter = new ProductAdapter(products);
