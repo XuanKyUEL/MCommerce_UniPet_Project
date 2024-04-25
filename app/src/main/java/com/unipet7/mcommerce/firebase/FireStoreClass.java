@@ -299,9 +299,6 @@ public class FireStoreClass {
 
     public void addToCart(double productId, String productName, double productPrice, String productImageUrl) {
         String currentUserId = getCurrentUID();
-
-        // Tạo một HashMap để lưu thông tin sản phẩm
-    public void addToCart(String productName, double productPrice, String productImage) {
         // Lấy reference đến collection "cart"
         CollectionReference cartRef = UniPetdb.collection("cart");
 
