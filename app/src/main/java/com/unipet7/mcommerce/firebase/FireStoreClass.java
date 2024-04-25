@@ -386,6 +386,8 @@ public class FireStoreClass {
                                         .addOnSuccessListener(documentSnapshot1 -> {
                                             if (documentSnapshot1.exists()) {
                                                 Product product = documentSnapshot1.toObject(Product.class);
+                                                assert product != null;
+                                                product.setIsFavorite(true);
                                                 favProducts.add(product);
                                             }
                                             if (fragment instanceof Fragment_Wishlist_Product) {

@@ -80,7 +80,7 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ViewHold
     @Override
     public void onBindViewHolder(@NonNull ProductAdapter.ViewHolder holder, int position) {
         Product product = productList.get(position);
-        holder.favorite.setChecked(product.isFavoriteProduct(favList));
+        holder.favorite.setChecked(product.isFavorite());
         holder.productname.setText(product.getProductname());
         double roundRating = Math.round(product.getProductratenum() * 10) / 10.0;
         holder.productratenum.setText("4.5");
