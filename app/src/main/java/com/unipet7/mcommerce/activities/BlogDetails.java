@@ -43,7 +43,7 @@ public class BlogDetails extends AppCompatActivity {
         LoadingDialog ldDialog1 = new LoadingDialog();
         ldDialog1.showLoadingDialog(this);
         FireStoreClass fireStoreClass = new FireStoreClass();
-        fireStoreClass.getProductBlog(this, allProducts);
+        fireStoreClass.getAllProductsBlog(this, allProducts);
         ldDialog1.dissmis();
     }
     public void configAdaptersBlog() {
@@ -63,12 +63,7 @@ public class BlogDetails extends AppCompatActivity {
             actionBar.setDisplayShowTitleEnabled(false);
         }
 
-        binding.toolbardetail.setNavigationOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                finish();
-            }
-        });
+        binding.toolbardetail.setNavigationOnClickListener(v -> finish());
     }
     private void initBlog() {
         binding.rclBlogDetails2.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));

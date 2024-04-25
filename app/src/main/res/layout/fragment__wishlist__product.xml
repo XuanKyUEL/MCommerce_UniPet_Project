@@ -34,6 +34,7 @@
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/favlist"
         android:layout_width="match_parent"
+        android:layout_marginStart="15dp"
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="12dp"/>
 

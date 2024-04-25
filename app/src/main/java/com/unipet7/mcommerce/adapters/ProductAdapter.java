@@ -4,6 +4,8 @@ import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Paint;
 import android.os.Bundle;
+import android.os.Handler;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -26,20 +28,27 @@ import com.unipet7.mcommerce.firebase.FireStoreClass;
 import com.unipet7.mcommerce.models.Product;
 import com.unipet7.mcommerce.utils.Constants;
 
+import java.util.ArrayList;
 import java.util.List;
 
-public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ViewHolder> {
+public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ViewHolder> implements FavProductInterface {
 
     List<Product> productList;
 
-    private OnItemClickListener listener;
+    FireStoreClass fireStoreClass = new FireStoreClass();
+    private List<Integer> favList = new ArrayList<>();
 
+    @Override
+    public void onDataLoaded(List<Integer> favList) {
+        this.favList = favList;
+        notifyDataSetChanged();
+    }
     public ProductAdapter(OnItemClickListener listener) {
-        this.listener = listener;
     }
 
     public ProductAdapter(List<Product> productList) {
         this.productList = productList;
+        fireStoreClass.getFavoriteList(this);
     }
 
 
@@ -54,13 +63,21 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ViewHold
     @Override
     public void onBindViewHolder(@NonNull ProductAdapter.ViewHolder holder, int position) {
         Product product = productList.get(position);
+        Handler handler = new Handler();
+        handler.postDelayed(() -> {
+            if (favList.contains(product.getProductId())) {
+                holder.favorite.setChecked(true);
+            } else {
+                holder.favorite.setChecked(false);
+            }
+        }, 1000);
         holder.productname.setText(product.getProductname());
         double roundRating = Math.round(product.getProductratenum() * 10) / 10.0;
         holder.productratenum.setText("4.5");
         holder.numOfRating.setText("  (130)");
         if (product.getSalepercent() > 0) {
             int salepercent = (int) product.getSalepercent();
-            holder.salepercent.setText(salepercent + " %");
+            holder.salepercent.setText("-"+ salepercent + " %");
             double percent = product.getSalepercent();
             double price = product.getProductprice();
             double saleprice = price - (price * percent / 100);
@@ -79,7 +96,6 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ViewHold
             holder.presaleprice.setVisibility(View.GONE);
             holder.btnAddCart.setOnClickListener(v -> {
                 // Lấy thông tin sản phẩm tương ứng
-                Product product1 = productList.get(position);
                 String productName = product.getProductname();
                 double productPrice = product.getProductprice();
                 String productImage = product.getProductImageUrl();
@@ -99,12 +115,20 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ViewHold
             intent.putExtra(Constants.PRODUCT_ID, productId);
             v.getContext().startActivity(intent);
         });
+        holder.favorite.setOnCheckedChangeListener((buttonView, isChecked) -> {
+            if (isChecked)
+                fireStoreClass.addFavorite(buttonView.getContext(),product.getProductId());
+            else {
+                fireStoreClass.removeFavorite(buttonView.getContext(),product.getProductId());
+            }
+        });
     }
 
     @Override
     public int getItemCount() {
         return productList.size();
     }
+
 
     static class ViewHolder extends RecyclerView.ViewHolder {
         TextView productname, productprice, productratenum, presaleprice, salepercent, numOfRating;
