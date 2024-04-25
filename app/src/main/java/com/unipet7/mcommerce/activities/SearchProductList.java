@@ -24,20 +24,26 @@ import com.unipet7.mcommerce.R;
 import com.unipet7.mcommerce.adapters.ProductAdapter;
 import com.unipet7.mcommerce.databinding.ActivitySearchProductListBinding;
 import com.unipet7.mcommerce.databinding.ActivitySupportContactBinding;
+import com.unipet7.mcommerce.firebase.FireStoreClass;
 import com.unipet7.mcommerce.models.Product;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class SearchProductList extends AppCompatActivity {
     ActivitySearchProductListBinding binding;
     ProductAdapter adapter;
     ArrayList<Product> products;
+
+    List<Integer> favList = new ArrayList<>();
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         binding = ActivitySearchProductListBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
         setActionBar(binding.toolbarsearch);
+        FireStoreClass fireStoreClass = new FireStoreClass();
         addEvents();
         initData();
         loadData();

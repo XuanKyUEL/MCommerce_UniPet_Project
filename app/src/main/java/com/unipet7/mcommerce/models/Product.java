@@ -7,6 +7,8 @@ import androidx.annotation.NonNull;
 
 import com.unipet7.mcommerce.firebase.FireStoreClass;
 
+import java.util.List;
+
 public class Product implements Parcelable {
 
     private int ProductId;
@@ -15,8 +17,14 @@ public class Product implements Parcelable {
 
     boolean isFavorite;
 
+
+
     public boolean isFavorite() {
         return isFavorite;
+    }
+
+    public boolean isFavoriteProduct(List<Integer> favList) {
+        return favList.contains(this.ProductId);
     }
 
     public void setFavorite(boolean favorite) {

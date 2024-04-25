@@ -42,13 +42,25 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ViewHold
     public void onDataLoaded(List<Integer> favList) {
         this.favList = favList;
         notifyDataSetChanged();
+        Log.d("ProductAdapter", "onDataLoaded: " + favList);
     }
-    public ProductAdapter(OnItemClickListener listener) {
+
+    public ProductAdapter() {
+        // Không cần truyền danh sách sản phẩm ban đầu ở đây
     }
+
+
 
     public ProductAdapter(List<Product> productList) {
         this.productList = productList;
-        fireStoreClass.getFavoriteList(this);
+        fireStoreClass.getFavList(favList -> {
+            ProductAdapter.this.favList = favList;
+            notifyDataSetChanged();
+        });
+        Log.d("ProductAdapter", "ProductAdapter: " + favList);
+    }
+
+    public ProductAdapter(OnItemClickListener listener) {
     }
 
 
@@ -60,17 +72,15 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ViewHold
         return new ViewHolder(view);
     }
 
+    public void updateFavCheckBoxes(int position, boolean isInFavList) {
+        productList.get(position).setFavorite(isInFavList);
+        notifyItemChanged(position);
+    }
+
     @Override
     public void onBindViewHolder(@NonNull ProductAdapter.ViewHolder holder, int position) {
         Product product = productList.get(position);
-        Handler handler = new Handler();
-        handler.postDelayed(() -> {
-            if (favList.contains(product.getProductId())) {
-                holder.favorite.setChecked(true);
-            } else {
-                holder.favorite.setChecked(false);
-            }
-        }, 1000);
+        holder.favorite.setChecked(product.isFavoriteProduct(favList));
         holder.productname.setText(product.getProductname());
         double roundRating = Math.round(product.getProductratenum() * 10) / 10.0;
         holder.productratenum.setText("4.5");
