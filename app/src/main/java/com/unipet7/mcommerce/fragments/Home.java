@@ -146,7 +146,7 @@ public class Home extends Fragment {
                     for (DataSnapshot issue:snapshot.getChildren()){
                         items.add(issue.getValue(SliderItems.class));
                     }
-                    banners(items);
+
                 }
 
             }
@@ -158,19 +158,7 @@ public class Home extends Fragment {
         });
     }
 
-    private void banners(ArrayList<SliderItems> items) {
 
-        binding.viewpageSlider.setAdapter(new SliderAdapter(items, binding.viewpageSlider));
-        binding.viewpageSlider.setClipToPadding(false);
-        binding.viewpageSlider.setClipChildren(false);
-        binding.viewpageSlider.setOffscreenPageLimit(2);
-        binding.viewpageSlider.getChildAt(0).setOverScrollMode(RecyclerView.OVER_SCROLL_NEVER);
-
-        CompositePageTransformer compositePageTransformer= new CompositePageTransformer();
-        compositePageTransformer.addTransformer(new MarginPageTransformer(40));
-
-        binding.viewpageSlider.setPageTransformer(compositePageTransformer);
-    }
 
     private void loadHomeUserAndProduct() {
         loadingDialog = new LoadingDialog();

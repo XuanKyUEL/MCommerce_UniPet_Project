@@ -71,6 +71,18 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ViewHold
             holder.productprice.setText(formattedSalePrice);
             holder.presaleprice.setPaintFlags(holder.presaleprice.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
             holder.presaleprice.setText(formattedPrice);
+            holder.btnAddCart.setOnClickListener(v -> {
+                // Lấy thông tin sản phẩm tương ứng
+                Product product1 = productList.get(position);
+                String productName = product.getProductname();
+                double productPrice = product.getProductprice();
+                String productImage = product.getProductImageUrl();
+                double productID = product.getProductId();
+
+                // Gọi phương thức addToCart để lưu thông tin sản phẩm vào Firestore cart collection
+                FireStoreClass fireStoreClass = new FireStoreClass();
+                fireStoreClass.addToCart(productID, productName, productPrice, productImage);
+            });
         }else {
             holder.salepercent.setVisibility(View.GONE);
             holder.salespercentbg.setVisibility(View.GONE);
@@ -83,10 +95,11 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ViewHold
                 String productName = product.getProductname();
                 double productPrice = product.getProductprice();
                 String productImage = product.getProductImageUrl();
+                double productID = product.getProductId();
 
                 // Gọi phương thức addToCart để lưu thông tin sản phẩm vào Firestore cart collection
                 FireStoreClass fireStoreClass = new FireStoreClass();
-                fireStoreClass.addToCart(productName, productPrice, productImage);
+                fireStoreClass.addToCart(productID, productName, productPrice, productImage);
             });
         }
         // glide imge from firebaseurl

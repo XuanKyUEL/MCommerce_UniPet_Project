@@ -1,59 +1,71 @@
 package com.unipet7.mcommerce.models;
 
 public class ProductCart {
-    int imvProductCart;
-    String txtProductName;
-    Double txtProductPrice, txtSumNumbPrice, txtNumberOrder;
+    private String productImageUrl;
+    private String productName;
+    private Double productPrice;
+    private Double totalPrice;
+    private Integer numOfProduct;
+    private Integer productId;
 
+    public ProductCart(String productImageUrl, String productName, Double productPrice, Double totalPrice, Integer numOfProduct, Integer productId) {
+        this.productImageUrl = productImageUrl;
+        this.productName = productName;
+        this.productPrice = productPrice;
+        this.totalPrice = totalPrice;
+        this.numOfProduct = numOfProduct;
+        this.productId = productId;
+    }
+
+    public Integer getProductId() {
+        return productId;
+    }
+
+    public void setProductId(Integer productId) {
+        this.productId = productId;
+    }
+
+    public String getProductImageUrl() {
+        return productImageUrl;
+    }
+
+    public void setProductImageUrl(String productImageUrl) {
+        this.productImageUrl = productImageUrl;
+    }
+
+    public String getProductName() {
+        return productName;
+    }
+
+    public void setProductName(String productName) {
+        this.productName = productName;
+    }
+
+    public Double getProductPrice() {
+        return productPrice;
+    }
+
+    public void setProductPrice(Double productPrice) {
+        this.productPrice = productPrice;
+    }
+
+    public Double getTotalPrice() {
+        return totalPrice;
+    }
+
+    public void setTotalPrice(Double totalPrice) {
+        this.totalPrice = totalPrice;
+    }
+
+    public Integer getNumOfProduct() {
+        return numOfProduct;
+    }
+
+    public void setNumOfProduct(Integer numOfProduct) {
+        this.numOfProduct = numOfProduct;
+    }
+
+    // Constructor mặc định (cần cho việc deserialization từ Firebase)
     public ProductCart() {
-        // Constructor không đối số
-    }
-
-    public int getImvProductCart() {
-        return imvProductCart;
-    }
-
-    public void setImvProductCart(int imvProductCart) {
-        this.imvProductCart = imvProductCart;
-    }
-
-    public String getTxtProductName() {
-        return txtProductName;
-    }
-
-    public void setTxtProductName(String txtProductName) {
-        this.txtProductName = txtProductName;
-    }
-
-    public Double getTxtProductPrice() {
-        return txtProductPrice;
-    }
-
-    public void setTxtProductPrice(Double txtProductPrice) {
-        this.txtProductPrice = txtProductPrice;
-    }
-
-    public Double getTxtSumNumbPrice() {
-        return txtSumNumbPrice;
-    }
-
-    public void setTxtSumNumbPrice(Double txtSumNumbPrice) {
-        this.txtSumNumbPrice = txtSumNumbPrice;
-    }
-
-    public Double getTxtNumberOrder() {
-        return txtNumberOrder;
-    }
-
-    public void setTxtNumberOrder(Double txtNumberOrder) {
-        this.txtNumberOrder = txtNumberOrder;
-    }
-
-    public ProductCart(int imvProductCart, String txtProductName, Double txtProductPrice, Double txtSumNumbPrice, Double txtNumberOrder) {
-        this.imvProductCart = imvProductCart;
-        this.txtProductName = txtProductName;
-        this.txtProductPrice = txtProductPrice;
-        this.txtSumNumbPrice = txtSumNumbPrice;
-        this.txtNumberOrder = txtNumberOrder;
     }
 }
