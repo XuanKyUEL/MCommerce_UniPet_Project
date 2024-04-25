@@ -126,7 +126,6 @@ public class Home extends Fragment {
         fireStoreClass.getProductsByCategoryIdHome(this, 1);
         fireStoreClass.getProductsByCategoryIdHome(this, 2);
         loadHomeUserAndProduct();
-        initBanner();
         return binding.getRoot();
     }
 
@@ -134,42 +133,6 @@ public class Home extends Fragment {
         saleRecyclerView = binding.lvlHomeSale;
         dogRecyclerView = binding.lvlHomeProduct1;
         catRecyclerView = binding.lvlHomeProduct2;
-    }
-
-    private void initBanner() {
-        DatabaseReference myRef= FirebaseDatabase.getInstance().getReference("Banner");
-        ArrayList<SliderItems> items = new ArrayList<>();
-        myRef.addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                if(snapshot.exists()){
-                    for (DataSnapshot issue:snapshot.getChildren()){
-                        items.add(issue.getValue(SliderItems.class));
-                    }
-                    banners(items);
-                }
-
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-
-            }
-        });
-    }
-
-    private void banners(ArrayList<SliderItems> items) {
-
-        binding.viewpageSlider.setAdapter(new SliderAdapter(items, binding.viewpageSlider));
-        binding.viewpageSlider.setClipToPadding(false);
-        binding.viewpageSlider.setClipChildren(false);
-        binding.viewpageSlider.setOffscreenPageLimit(2);
-        binding.viewpageSlider.getChildAt(0).setOverScrollMode(RecyclerView.OVER_SCROLL_NEVER);
-
-        CompositePageTransformer compositePageTransformer= new CompositePageTransformer();
-        compositePageTransformer.addTransformer(new MarginPageTransformer(40));
-
-        binding.viewpageSlider.setPageTransformer(compositePageTransformer);
     }
 
     private void loadHomeUserAndProduct() {

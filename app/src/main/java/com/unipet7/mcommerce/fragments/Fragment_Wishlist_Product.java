@@ -28,7 +28,9 @@ public class Fragment_Wishlist_Product extends Fragment {
     private String mParam1;
     private String mParam2;
     FragmentWishlistProductBinding binding;
-    ProductAdapter productAdapter;
+    public ProductAdapter fvAdapter;
+
+    ArrayList<Product> favoriteList = new ArrayList<>();
 
     RecyclerView fvRecyclerView;
 
@@ -53,13 +55,21 @@ public class Fragment_Wishlist_Product extends Fragment {
         // Inflate the layout for this fragment
         binding= FragmentWishlistProductBinding.inflate(inflater, container, false);
         fvRecyclerView = binding.favlist;
+        fireStoreClass.getUserFavorites(this,favoriteList);
         return binding.getRoot();
     }
-    public void loadFavoriteList(ArrayList<Product> favoriteList) {
-        productAdapter = new ProductAdapter(favoriteList);
-        fvRecyclerView.setAdapter(productAdapter);
-        fvRecyclerView.setLayoutManager(new GridLayoutManager(getContext(), 2));
-        fvRecyclerView.setHasFixedSize(true);
 
+    @Override
+    public void onResume() {
+        super.onResume();
+        favoriteList.clear();
+        fireStoreClass.getUserFavorites(this,favoriteList);
+    }
+
+    public void loadFavoriteProducts(ArrayList<Product> favProducts) {
+        fvAdapter = new ProductAdapter(favProducts);
+        fvRecyclerView.setLayoutManager(new GridLayoutManager(getContext(),2));
+        fvRecyclerView.setAdapter(fvAdapter);
+        fvRecyclerView.setHasFixedSize(true);
     }
 }

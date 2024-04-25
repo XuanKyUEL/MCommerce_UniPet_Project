@@ -4,7 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="165dp"
     android:layout_height="280dp"
-    android:layout_marginEnd="8dp"
+    android:layout_marginStart="8dp"
+    android:layout_marginEnd="12dp"
     android:layout_marginTop="10dp"
     android:id="@+id/layoutitem"
     android:background="@drawable/item_background">
@@ -160,7 +161,6 @@
                 android:layout_marginStart="3dp"
                 android:layout_width="30dp"
                 android:layout_height="30dp"
-                android:layout_marginTop="2dp"
                 android:button="@drawable/selector_favourite_item"
                 android:layout_gravity="center_vertical" />
         </LinearLayout>
