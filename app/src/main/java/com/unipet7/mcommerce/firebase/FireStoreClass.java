@@ -8,16 +8,19 @@ import androidx.fragment.app.Fragment;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FieldValue;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.SetOptions;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.unipet7.mcommerce.activities.DetailProduct;
 import com.unipet7.mcommerce.activities.BlogDetails;
 import com.unipet7.mcommerce.activities.SignUp;
+import com.unipet7.mcommerce.adapters.CartAdapter;
 import com.unipet7.mcommerce.adapters.FavProductInterface;
 import com.unipet7.mcommerce.fragments.FragmentAccount;
 import com.unipet7.mcommerce.fragments.FragmentAllProduct;
@@ -25,6 +28,7 @@ import com.unipet7.mcommerce.fragments.Fragment_Wishlist_Product;
 import com.unipet7.mcommerce.fragments.Home;
 import com.unipet7.mcommerce.fragments.Profile;
 import com.unipet7.mcommerce.models.Product;
+import com.unipet7.mcommerce.models.ProductCart;
 import com.unipet7.mcommerce.models.User;
 import com.unipet7.mcommerce.utils.Constants;
 import com.unipet7.mcommerce.utils.LoadingDialog;
@@ -293,6 +297,10 @@ public class FireStoreClass {
         return favoriteProducts;
     }
 
+    public void addToCart(double productId, String productName, double productPrice, String productImageUrl) {
+        String currentUserId = getCurrentUID();
+
+        // Tạo một HashMap để lưu thông tin sản phẩm
     public void addToCart(String productName, double productPrice, String productImage) {
         // Lấy reference đến collection "cart"
         CollectionReference cartRef = UniPetdb.collection("cart");
@@ -302,21 +310,86 @@ public class FireStoreClass {
 
         // Tạo một đối tượng HashMap chứa thông tin sản phẩm
         HashMap<String, Object> cartItem = new HashMap<>();
-        cartItem.put("productName", productName);
+        cartItem.put("productId", productId);
         cartItem.put("productPrice", productPrice);
-        cartItem.put("productImage", productImage);
-        cartItem.put("numbProduct", 1);
-        cartItem.put("totalPrice", productPrice);
+        cartItem.put("productImageUrl", productImageUrl);
+        cartItem.put("productName", productName);
+        cartItem.put("numOfProduct", 1); // Mặc định số lượng sản phẩm là 1
+        cartItem.put("totalPrice", productPrice); // Tổng giá tiền ban đầu là giá tiền của sản phẩm
 
-        // Thêm thông tin sản phẩm vào document mới
-        newCartItemRef.set(cartItem)
-                .addOnSuccessListener(aVoid -> {
-                    // Thêm thành công
-                    Log.i("FireStoreClass", "addToCart: Thành công");
+        // Kiểm tra xem sản phẩm đã tồn tại trong giỏ hàng chưa
+        UniPetdb.collection("cart")
+                .whereEqualTo("productId", productId)
+                .get()
+                .addOnSuccessListener(queryDocumentSnapshots -> {
+                    if (!queryDocumentSnapshots.isEmpty()) {
+                        // Nếu sản phẩm đã tồn tại trong giỏ hàng, tăng số lượng sản phẩm
+                        DocumentSnapshot doc = queryDocumentSnapshots.getDocuments().get(0);
+                        int currentNumOfProduct = doc.getLong("numOfProduct").intValue();
+                        double currentTotalPrice = doc.getDouble("totalPrice");
+
+                        // Cập nhật số lượng sản phẩm và tổng giá tiền mới
+                        cartItem.put("numOfProduct", currentNumOfProduct + 1);
+                        cartItem.put("totalPrice", currentTotalPrice + productPrice);
+
+                        // Cập nhật thông tin sản phẩm trong giỏ hàng
+                        doc.getReference().set(cartItem, SetOptions.merge());
+                    } else {
+                        // Nếu sản phẩm chưa tồn tại trong giỏ hàng, thêm sản phẩm mới vào giỏ hàng
+                        UniPetdb.collection("cart").document().set(cartItem);
+                    }
                 })
                 .addOnFailureListener(e -> {
-                    // Xảy ra lỗi
-                    Log.e("FireStoreClass", "addToCart: Fail", e);
+                    Log.e("FireStoreClass", "Error checking cart for existing product", e);
+                });
+    }
+
+
+
+    public void getCartItemsRealtime(Context context, CartAdapter.OnQuantityChangeListener listener) {
+        UniPetdb.collection("cart")
+                .addSnapshotListener((value, error) -> {
+                    if (error != null) {
+                        Log.e("FireStoreClass", "Error listening for cart updates", error);
+                        return;
+                    }
+                    if (value != null) {
+                        ArrayList<ProductCart> cartItems = new ArrayList<>();
+                        for (DocumentSnapshot document : value.getDocuments()) {
+                            ProductCart productCart = document.toObject(ProductCart.class);
+                            if (productCart != null) {
+                                cartItems.add(productCart);
+                            }
+                        }
+
+                        // Gửi danh sách sản phẩm về adapter
+                        CartAdapter adapter = new CartAdapter(context, cartItems);
+                        adapter.setOnQuantityChangeListener(listener);
+                    }
+                });
+    }
+    public void deleteCartItem(String productId) {
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+        db.collection("cart")
+                .whereEqualTo("productId", Double.parseDouble(productId))
+                .get()
+                .addOnSuccessListener(queryDocumentSnapshots -> {
+                    if (!queryDocumentSnapshots.isEmpty()) {
+                        for (QueryDocumentSnapshot document : queryDocumentSnapshots) {
+                            document.getReference().delete()
+                                    .addOnSuccessListener(aVoid -> {
+                                        // Xóa thành công
+                                        Log.d("FireStoreClass", "Xóa sản phẩm khỏi cơ sở dữ liệu thành công");
+                                    })
+                                    .addOnFailureListener(e -> {
+                                        // Xảy ra lỗi khi xóa
+                                        Log.e("FireStoreClass", "Lỗi khi xóa sản phẩm khỏi cơ sở dữ liệu", e);
+                                    });
+                        }
+                    }
+                })
+                .addOnFailureListener(e -> {
+                    Log.e("FireStoreClass", "Error checking cart for existing product", e);
                 });
     }
 
