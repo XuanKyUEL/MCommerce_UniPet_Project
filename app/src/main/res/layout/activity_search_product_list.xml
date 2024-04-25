@@ -5,6 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
+    android:id="@+id/searchproduct"
     tools:context=".activities.SearchProductList"
     android:background="@color/white">
     <com.google.android.material.appbar.AppBarLayout
@@ -21,7 +22,7 @@
             app:popupTheme="@style/Widget.Material3.PopupMenu.Overflow"
             android:layout_gravity="center">
             <EditText
-                android:id="@+id/editTextText"
+                android:id="@+id/editTextSearch"
                 style="@style/BODY_SMALL_REGULAR_12"
                 android:layout_width="290dp"
                 android:layout_height="40dp"
@@ -33,6 +34,15 @@
                 android:inputType="text"
                 android:padding="12dp"
                 android:textColorHint="@color/darkTertiary" />
+            <ImageButton
+                android:id="@+id/imageCart"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@color/white"
+                android:padding="5dp"
+                android:layout_gravity="right"
+                android:layout_marginEnd="12dp"
+                android:src="@drawable/detailproduct_cart" />
         </androidx.appcompat.widget.Toolbar>
     </com.google.android.material.appbar.AppBarLayout>
     <View
@@ -127,14 +137,8 @@
             android:layout_marginLeft="5dp"
             style="@style/BODY_MED_MED_14"
             android:textColor="@color/darkSecondary"
-            android:text="352"/>
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="5dp"
-            style="@style/BODY_MED_MED_14"
-            android:textColor="@color/darkSecondary"
-            android:text="Kết quả tìm kiếm"/>
+            android:text=""/>
+
     </LinearLayout>
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/lvlProductList"
@@ -142,4 +146,8 @@
         android:layout_marginLeft="20dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"/>
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="20dp"
+        android:background="@color/white"/>
 </LinearLayout>

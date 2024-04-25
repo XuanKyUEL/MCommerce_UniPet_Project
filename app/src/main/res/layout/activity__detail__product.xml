@@ -35,13 +35,6 @@
                 android:layout_marginEnd="12dp"
                 android:src="@drawable/detailproduct_cart" />
 
-            <!--            <ImageButton-->
-            <!--                style="@style/HEAD5_BOLD_18"-->
-            <!--                android:layout_width="300dp"-->
-            <!--                android:layout_height="wrap_content"-->
-            <!--                android:gravity="center"-->
-            <!--                android:text="Sản phẩm yêu thích"-->
-            <!--                android:textColor="@color/darkPrimary" />-->
         </androidx.appcompat.widget.Toolbar>
 
 

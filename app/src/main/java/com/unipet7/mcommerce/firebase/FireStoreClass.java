@@ -19,6 +19,7 @@ import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.unipet7.mcommerce.activities.DetailProduct;
 import com.unipet7.mcommerce.activities.BlogDetails;
+import com.unipet7.mcommerce.activities.SearchProductList;
 import com.unipet7.mcommerce.activities.SignUp;
 import com.unipet7.mcommerce.adapters.CartAdapter;
 import com.unipet7.mcommerce.adapters.FavProductInterface;
@@ -418,6 +419,42 @@ public class FireStoreClass {
                 })
                 .addOnFailureListener(e -> {
                     Log.e("FireStoreClass", "getFavList: ", e);
+                });
+    }
+    public void getSalesPFilter(SearchProductList searchProductList) {
+        ArrayList<Product> productsSale = new ArrayList<>();
+        UniPetdb.collection(Constants.PRODUCTS)
+                .whereGreaterThan(Constants.SALESPERCENT, 0)
+                .get()
+                .addOnSuccessListener(queryDocumentSnapshots -> {
+                    if (!queryDocumentSnapshots.isEmpty()) {
+                        for (int i = 0; i < queryDocumentSnapshots.size(); i++) {
+                            Product product = queryDocumentSnapshots.getDocuments().get(i).toObject(Product.class);
+                            assert product != null;
+                            productsSale.add(product);
+                        }
+                    }
+                    searchProductList.loadSalesProducts(productsSale);
+                })
+                .addOnFailureListener(e -> {
+                    Log.e("FireStoreClass", "getSalesProducts: ", e);
+                });
+    }
+    public void SearchAllProducts(SearchProductList searchProductList, ArrayList<Product> allProducts) {
+        UniPetdb.collection(Constants.PRODUCTS)
+                .get()
+                .addOnSuccessListener(queryDocumentSnapshots -> {
+                    if (!queryDocumentSnapshots.isEmpty()) {
+                        for (int i = 0; i < queryDocumentSnapshots.size(); i++) {
+                            Product product = queryDocumentSnapshots.getDocuments().get(i).toObject(Product.class);
+                            allProducts.add(product);
+                            Log.i("FireStoreClass", "SearchAllProducts: " + product.getProductname());
+                        }
+                    }
+                    searchProductList.configAdaptersSearch();
+                })
+                .addOnFailureListener(e -> {
+                    Log.e("FireStoreClass", "SearchAllProducts: ", e);
                 });
     }
 }

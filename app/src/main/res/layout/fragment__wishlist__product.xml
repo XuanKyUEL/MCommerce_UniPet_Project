@@ -37,5 +37,9 @@
         android:layout_marginStart="15dp"
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="12dp"/>
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="20dp"
+        android:background="@color/white"/>
 
 </LinearLayout>

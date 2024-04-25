@@ -22,14 +22,14 @@ public class Blogs extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         binding = ActivityBlogsBinding.inflate(getLayoutInflater());
-        setActionBar(binding.toolbarblog);
         addEvents();
         recyclerViewBlog();
         recyclerViewBlog2();
         setContentView(binding.getRoot());
     }
-    public void setActionBar(@Nullable Toolbar toolbar) {
-        setSupportActionBar(toolbar);
+    private void addEvents() {
+        setSupportActionBar(binding.toolbarblog);
+
         ActionBar actionBar = getSupportActionBar();
         if (actionBar != null) {
             actionBar.setDisplayHomeAsUpEnabled(true);
@@ -37,9 +37,12 @@ public class Blogs extends AppCompatActivity {
             actionBar.setDisplayShowTitleEnabled(false);
         }
 
-    }
-    private void addEvents() {
-        binding.toolbarblog.setNavigationOnClickListener(v -> finish());
+        binding.toolbarblog.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
     }
 
     private void recyclerViewBlog2() {

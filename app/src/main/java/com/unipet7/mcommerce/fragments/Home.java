@@ -15,6 +15,8 @@ import android.view.ViewGroup;
 
 import com.unipet7.mcommerce.R;
 import com.unipet7.mcommerce.activities.Notification;
+import com.unipet7.mcommerce.activities.ProfileFunction;
+import com.unipet7.mcommerce.activities.SearchProductList;
 import com.unipet7.mcommerce.adapters.BlogAdapter;
 import com.unipet7.mcommerce.adapters.ProductAdapter;
 import com.unipet7.mcommerce.databinding.FragmentHomeBinding;
@@ -108,12 +110,14 @@ public class Home extends Fragment {
         mapping();
         loadBlog();
         addEvents();
+        searchproduct();
         fireStoreClass.getSalesProducts(this);
         fireStoreClass.getProductsByCategoryIdHome(this, 1);
         fireStoreClass.getProductsByCategoryIdHome(this, 2);
         loadHomeUserAndProduct();
         return binding.getRoot();
     }
+
 
     private void mapping() {
         saleRecyclerView = binding.lvlHomeSale;
@@ -187,7 +191,15 @@ public class Home extends Fragment {
         blogAdapter = new BlogAdapter(blogs);
         binding.homeblog.setAdapter(blogAdapter);
     }
-
+    private void searchproduct() {
+        binding.searchbar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getActivity(), SearchProductList.class);
+                startActivity(intent);
+            }
+        });
+    }
     public void greeting(User user) {
         binding.txtUserName.setText("Xin chào " + user.getName());
         loadingDialog.dissmis();

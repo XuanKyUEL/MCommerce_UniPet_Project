@@ -13,9 +13,12 @@ import androidx.fragment.app.FragmentTransaction;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 
 import com.unipet7.mcommerce.R;
 import com.unipet7.mcommerce.databinding.FragmentHistoryOrdersBinding;
+
+import java.util.ArrayList;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -33,6 +36,9 @@ public class FragmentHistoryOrders extends Fragment {
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
+    ArrayList<Button> statusbutton = new ArrayList<>();
+    Button btnAll1, btnConfirm, btnDelivery, btnReceived, btnCancel;
+
 
     public FragmentHistoryOrders() {
         // Required empty public constructor
@@ -71,10 +77,35 @@ public class FragmentHistoryOrders extends Fragment {
         // Inflate the layout for this fragment
         binding= FragmentHistoryOrdersBinding.inflate(inflater, container, false);
         setActionBar(binding.toolbar);
+        mapping();
         addEvents();
         addEvents1();
         return binding.getRoot();
 
+    }
+    private void mapping() {
+        btnAll1 = binding.btnAll1;
+        btnConfirm = binding.btnConfirm;
+        btnDelivery = binding.btnDelivery;
+        btnReceived = binding.btnReceived;
+        btnCancel = binding.btnCancel;
+    }
+    public void buttonUIDefault(ArrayList<Button> buttons) {
+        for (Button button : buttons) {
+            button.setBackgroundResource(R.drawable.btn_bg_outline);
+            button.setTextColor(getResources().getColor(R.color.black));
+        }
+    }
+    private void setButtonToPressed(Button btn) {
+        btn.setBackgroundResource(R.drawable.colorbrand_btn_bg);
+        btn.setTextColor(getResources().getColor(R.color.white));
+    }
+    private void addOtherButtonToDefault(Button btn1, Button btn2, Button btn3, Button btn4) {
+        statusbutton.add(btn1);
+        statusbutton.add(btn2);
+        statusbutton.add(btn3);
+        statusbutton.add(btn4);
+        buttonUIDefault(statusbutton);
     }
     public void setActionBar(@Nullable Toolbar toolbar) {
         ((AppCompatActivity) getActivity()).setSupportActionBar(toolbar);
@@ -98,16 +129,33 @@ public class FragmentHistoryOrders extends Fragment {
             FragmentManager manager = requireActivity().getSupportFragmentManager();
             FragmentTransaction transaction = manager.beginTransaction();
             Fragment fragmnent = null;
-            if (v.equals(binding.btnAll))
+            if (v.equals(btnAll1)) {
+                addOtherButtonToDefault(btnConfirm, btnDelivery, btnReceived, btnCancel);
+                setButtonToPressed(btnAll1);
                 fragmnent = new HistoryOrder_All();
-            else if (v.equals(binding.btnConfirmorder))
+            }
+            else if (v.equals(btnConfirm))
+            {
+                addOtherButtonToDefault(btnAll1, btnDelivery, btnReceived, btnCancel);
+                setButtonToPressed(btnConfirm);
                 fragmnent = new HistoryOrder_Confirm();
-            else if (v.equals(binding.btnDeliverorder))
+            }
+            else if (v.equals(btnDelivery))
+            {
+                addOtherButtonToDefault(btnAll1, btnConfirm, btnReceived, btnCancel);
+                setButtonToPressed(btnDelivery);
                 fragmnent = new HistoryOrder_Delivery();
-            else if (v.equals(binding.btnReceivedorder))
+            } else if (v.equals(btnReceived))
+            {
+                addOtherButtonToDefault(btnAll1, btnConfirm, btnDelivery, btnCancel);
+                setButtonToPressed(btnReceived);
                 fragmnent = new HistoryOrder_Received();
-            else if (v.equals(binding.btnCancelorder))
+            }
+            else if (v.equals(btnCancel)){
+                addOtherButtonToDefault(btnAll1, btnConfirm, btnDelivery, btnReceived);
+                setButtonToPressed(btnCancel);
                 fragmnent = new HistoryOrder_Cancel();
+            }
             assert fragmnent != null;
             transaction.replace(R.id.containerLayout, fragmnent);
             transaction.commit();
@@ -115,11 +163,11 @@ public class FragmentHistoryOrders extends Fragment {
     };
 
     private void addEvents1() {
-        binding.btnAll.setOnClickListener(onClickListener);
-        binding.btnConfirmorder.setOnClickListener(onClickListener);
-        binding.btnDeliverorder.setOnClickListener(onClickListener);
-        binding.btnReceivedorder.setOnClickListener(onClickListener);
-        binding.btnCancelorder.setOnClickListener(onClickListener);
+        btnAll1.setOnClickListener(onClickListener);
+        btnConfirm.setOnClickListener(onClickListener);
+        btnDelivery.setOnClickListener(onClickListener);
+        btnReceived.setOnClickListener(onClickListener);
+        btnCancel.setOnClickListener(onClickListener);
 
     }
 }
