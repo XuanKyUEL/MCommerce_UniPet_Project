@@ -65,7 +65,10 @@ android:background="@color/white">
 Dẫu có những khác biệt đó, nếu gộp lại bạn chẳng thể bắt chó mèo ăn chay, hoặc cắt giảm toàn bộ lượng đạm và thay thế cho tinh bột được.
 Ngoài ra, việc chó mèo dùng rất nhiều tinh bột cho một bữa ăn sẽ làm chúng gia tăng khả năng béo phì."
             android:textColor="@color/black" />
-
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="20dp"
+            android:background="@color/white"/>
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rclBlogDetails1"
             android:layout_width="match_parent"
@@ -94,6 +97,10 @@ Ngoài ra, việc chó mèo dùng rất nhiều tinh bột cho một bữa ăn s
             android:layout_width="match_parent"
             android:padding="10dp"
             android:layout_height="wrap_content" />
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="20dp"
+            android:background="@color/white"/>
     </LinearLayout>
 </ScrollView>
 

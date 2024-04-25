@@ -71,21 +71,11 @@
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
                 </androidx.constraintlayout.widget.ConstraintLayout>
-                <EditText
-                    android:id="@+id/editTextText"
-                    style="@style/BODY_SMALL_REGULAR_12"
+                <ImageView
+                    android:id="@+id/searchbar"
                     android:layout_width="match_parent"
                     android:layout_height="40dp"
-                    android:background="@drawable/search_background"
-                    android:drawableStart="@drawable/search"
-                    android:drawableEnd="@drawable/search_filter"
-                    android:drawablePadding="8dp"
-                    android:ems="10"
-                    android:hint="Tìm kiếm"
-                    android:inputType="text"
-                    android:padding="12dp"
-                    android:textColorHint="@color/darkTertiary" />
-
+                    android:src="@drawable/input_field"/>
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="match_parent"
                     android:layout_height="150dp"
@@ -465,6 +455,10 @@
                 android:id="@+id/homeblog"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent" />
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="20dp"
+                android:background="@color/white"/>
         </LinearLayout>
     </ScrollView>
 

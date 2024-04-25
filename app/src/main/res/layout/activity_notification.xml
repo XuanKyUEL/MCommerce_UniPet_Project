@@ -59,6 +59,10 @@
                 android:id="@+id/rvNewNoti"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent" />
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="20dp"
+                android:background="@color/white"/>
         </LinearLayout>
 
         <LinearLayout
@@ -83,6 +87,10 @@
                 android:id="@+id/rvOldNoti"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent" />
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="20dp"
+                android:background="@color/white"/>
         </LinearLayout>
 
     </androidx.constraintlayout.widget.ConstraintLayout>

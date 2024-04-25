@@ -28,6 +28,7 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.unipet7.mcommerce.R;
 import com.unipet7.mcommerce.activities.Notification;
 import com.unipet7.mcommerce.activities.ProfileFunction;
+import com.unipet7.mcommerce.activities.SearchProductList;
 import com.unipet7.mcommerce.adapters.BlogAdapter;
 import com.unipet7.mcommerce.adapters.ProductAdapter;
 import com.unipet7.mcommerce.adapters.SliderAdapter;
@@ -122,13 +123,14 @@ public class Home extends Fragment {
         mapping();
         loadBlog();
         addEvents();
+        searchproduct();
         fireStoreClass.getSalesProducts(this);
         fireStoreClass.getProductsByCategoryIdHome(this, 1);
         fireStoreClass.getProductsByCategoryIdHome(this, 2);
         loadHomeUserAndProduct();
-        initBanner();
         return binding.getRoot();
     }
+
 
     private void mapping() {
         saleRecyclerView = binding.lvlHomeSale;
@@ -136,41 +138,6 @@ public class Home extends Fragment {
         catRecyclerView = binding.lvlHomeProduct2;
     }
 
-    private void initBanner() {
-        DatabaseReference myRef= FirebaseDatabase.getInstance().getReference("Banner");
-        ArrayList<SliderItems> items = new ArrayList<>();
-        myRef.addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                if(snapshot.exists()){
-                    for (DataSnapshot issue:snapshot.getChildren()){
-                        items.add(issue.getValue(SliderItems.class));
-                    }
-                    banners(items);
-                }
-
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-
-            }
-        });
-    }
-
-    private void banners(ArrayList<SliderItems> items) {
-
-        binding.viewpageSlider.setAdapter(new SliderAdapter(items, binding.viewpageSlider));
-        binding.viewpageSlider.setClipToPadding(false);
-        binding.viewpageSlider.setClipChildren(false);
-        binding.viewpageSlider.setOffscreenPageLimit(2);
-        binding.viewpageSlider.getChildAt(0).setOverScrollMode(RecyclerView.OVER_SCROLL_NEVER);
-
-        CompositePageTransformer compositePageTransformer= new CompositePageTransformer();
-        compositePageTransformer.addTransformer(new MarginPageTransformer(40));
-
-        binding.viewpageSlider.setPageTransformer(compositePageTransformer);
-    }
 
     private void loadHomeUserAndProduct() {
         loadingDialog = new LoadingDialog();
@@ -238,7 +205,15 @@ public class Home extends Fragment {
         blogAdapter = new BlogAdapter(blogs);
         binding.homeblog.setAdapter(blogAdapter);
     }
-
+    private void searchproduct() {
+        binding.searchbar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getActivity(), SearchProductList.class);
+                startActivity(intent);
+            }
+        });
+    }
     public void greeting(User user) {
         binding.txtUserName.setText("Xin chào " + user.getName());
         loadingDialog.dissmis();
