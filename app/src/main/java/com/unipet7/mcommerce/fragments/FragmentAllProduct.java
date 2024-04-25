@@ -24,6 +24,7 @@ import com.unipet7.mcommerce.utils.Constants;
 import com.unipet7.mcommerce.utils.LoadingDialog;
 
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -58,6 +59,8 @@ public class FragmentAllProduct extends Fragment {
     ArrayList<Product> itemProducts = new ArrayList<>();
 
     Button btnAll, btnFood, btnItem, btnCare, btnToy;
+
+    List<Integer> favList = new ArrayList<>();
 
     public FragmentAllProduct() {
         // Required empty public constructor
