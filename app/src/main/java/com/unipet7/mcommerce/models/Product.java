@@ -187,5 +187,9 @@ public class Product implements Parcelable {
         dest.writeDouble(this.salepercent);
         dest.writeDouble(this.presaleprice);
     }
+
+    public void setIsFavorite(boolean b) {
+        isFavorite = b;
+    }
 }
 
