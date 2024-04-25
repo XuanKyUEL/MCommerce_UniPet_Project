@@ -461,5 +461,4 @@
                 android:background="@color/white"/>
         </LinearLayout>
     </ScrollView>
-
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -44,8 +44,11 @@ import com.unipet7.mcommerce.models.Product;
 import com.unipet7.mcommerce.utils.LoadingDialog;
 
 import java.util.ArrayList;
+
 import java.util.Collections;
 import java.util.Comparator;
+
+import java.util.List;
 
 public class SearchProductList extends AppCompatActivity {
     ActivitySearchProductListBinding binding;
@@ -54,8 +57,9 @@ public class SearchProductList extends AppCompatActivity {
     private ArrayList<Product> productsSale = new ArrayList<>();
     private ArrayList<Product> filteredProductList = new ArrayList<>();
     FireStoreClass fireStoreClass = new FireStoreClass();
+    ArrayList<Product> products;
 
-
+    List<Integer> favList = new ArrayList<>();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

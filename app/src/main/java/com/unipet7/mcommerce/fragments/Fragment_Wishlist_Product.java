@@ -6,6 +6,7 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,6 +17,7 @@ import com.unipet7.mcommerce.firebase.FireStoreClass;
 import com.unipet7.mcommerce.models.Product;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class Fragment_Wishlist_Product extends Fragment {
 
@@ -28,7 +30,11 @@ public class Fragment_Wishlist_Product extends Fragment {
     private String mParam1;
     private String mParam2;
     FragmentWishlistProductBinding binding;
-    ProductAdapter productAdapter;
+    public ProductAdapter fvAdapter;
+
+    ArrayList<Product> favoriteList = new ArrayList<>();
+
+    List<Integer> favList = new ArrayList<>();
 
     RecyclerView fvRecyclerView;
 
@@ -53,13 +59,23 @@ public class Fragment_Wishlist_Product extends Fragment {
         // Inflate the layout for this fragment
         binding= FragmentWishlistProductBinding.inflate(inflater, container, false);
         fvRecyclerView = binding.favlist;
+        fireStoreClass.getUserFavorites(this,favoriteList);
         return binding.getRoot();
     }
-    public void loadFavoriteList(ArrayList<Product> favoriteList) {
-        productAdapter = new ProductAdapter(favoriteList);
-        fvRecyclerView.setAdapter(productAdapter);
-        fvRecyclerView.setLayoutManager(new GridLayoutManager(getContext(), 2));
-        fvRecyclerView.setHasFixedSize(true);
 
+    @Override
+    public void onResume() {
+        super.onResume();
+        // remove the previous data
+        favoriteList.clear();
+        fireStoreClass.getUserFavorites(this,favoriteList);
+    }
+
+    public void loadFavoriteProducts(ArrayList<Product> favProducts) {
+        fvAdapter = new ProductAdapter(favProducts);
+        Log.d("TAG", "loadFavoriteProducts: "+ favProducts.size());
+        fvRecyclerView.setLayoutManager(new GridLayoutManager(getContext(),2));
+        fvRecyclerView.setAdapter(fvAdapter);
+        fvRecyclerView.setHasFixedSize(true);
     }
 }

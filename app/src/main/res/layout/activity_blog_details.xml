@@ -69,6 +69,14 @@ Ngoài ra, việc chó mèo dùng rất nhiều tinh bột cho một bữa ăn s
             android:layout_width="match_parent"
             android:layout_height="20dp"
             android:background="@color/white"/>
+        <TextView
+            style="@style/HEAD6_BOLD_16"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="CÁC SẢN PHẨM LIÊN QUAN"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="10dp"
+            android:textColor="@color/brandPrimary" />
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rclBlogDetails1"
             android:layout_width="match_parent"
@@ -96,7 +104,8 @@ Ngoài ra, việc chó mèo dùng rất nhiều tinh bột cho một bữa ăn s
             android:id="@+id/rclBlogDetails2"
             android:layout_width="match_parent"
             android:padding="10dp"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="10dp"/>
         <View
             android:layout_width="match_parent"
             android:layout_height="20dp"
