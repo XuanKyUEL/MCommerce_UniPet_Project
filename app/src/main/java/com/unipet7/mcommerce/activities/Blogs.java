@@ -7,20 +7,17 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.content.Intent;
 import android.os.Bundle;
-import android.view.View;
 
 import com.unipet7.mcommerce.R;
 import com.unipet7.mcommerce.adapters.BlogAdapter;
 import com.unipet7.mcommerce.databinding.ActivityBlogsBinding;
-import com.unipet7.mcommerce.databinding.ActivityNotificationBinding;
 
 import java.util.ArrayList;
 
 public class Blogs extends AppCompatActivity {
     ActivityBlogsBinding binding;
-    private RecyclerView.Adapter adapter, adapter2;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -53,7 +50,7 @@ public class Blogs extends AppCompatActivity {
         blogs.add(new com.unipet7.mcommerce.models.Blogs("Cách xử lý vết thương khi bị chó cắn", R.drawable.blog2_image_6, "20.3.2024", "Hiện nay bệnh dại chưa có thuốc điều trị đặc hiệu. Xử lý vết thương khi bị chó cắn đúng cách và được tiêm vắc-xin...",2));
         blogs.add(new com.unipet7.mcommerce.models.Blogs("Top 7 giống chó dễ nuôi nhất", R.drawable.blog2_image_7, "20.3.2024", "1. Chó ChihuahuaChihuahua là giống chó đang được nuôi khá nhiều tại Việt Nam. Lý do dòng chó này được yêu chuộng một cách rộng...",2));
         blogs.add(new com.unipet7.mcommerce.models.Blogs("Những bài học cuộc sống mà thú cưng dạy cho bạn", R.drawable.blog2_image_8, "20.3.2024", "Thú cưng không chỉ là một liều thuốc bổ cho tinh thần mà chúng còn dạy bạn rất nhiều bài học quý báu về cuộc...",2));
-        adapter2 = new BlogAdapter(blogs);
+        RecyclerView.Adapter adapter2 = new BlogAdapter(blogs);
         binding.rclBlogs2.setAdapter(adapter2);
     }
 
@@ -65,7 +62,7 @@ public class Blogs extends AppCompatActivity {
         blogs.add(new com.unipet7.mcommerce.models.Blogs("Mách bạn 8 lý do khiến mèo bỏ ăn", R.drawable.blog_image_1, "a", "a",1));
         blogs.add(new com.unipet7.mcommerce.models.Blogs("Những bài học cuộc sống mà thú cưng dạy cho bạn", R.drawable.blog_image_2, "a", "a",1));
         blogs.add(new com.unipet7.mcommerce.models.Blogs("Cách xử lý vết thương khi bị chó cắn", R.drawable.blog2_image_6, "20.3.2024", "Hiện nay bệnh dại chưa có thuốc điều trị đặc hiệu. Xử lý vết thương khi bị chó cắn đúng cách và được tiêm vắc-xin...",1));
-        adapter = new BlogAdapter(blogs);
+        RecyclerView.Adapter<RecyclerView.ViewHolder> adapter = new BlogAdapter(blogs);
         binding.rclBlogs.setAdapter(adapter);
 
     }

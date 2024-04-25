@@ -126,7 +126,6 @@ public class Home extends Fragment {
         fireStoreClass.getProductsByCategoryIdHome(this, 1);
         fireStoreClass.getProductsByCategoryIdHome(this, 2);
         loadHomeUserAndProduct();
-        initBanner();
         return binding.getRoot();
     }
 
@@ -135,30 +134,6 @@ public class Home extends Fragment {
         dogRecyclerView = binding.lvlHomeProduct1;
         catRecyclerView = binding.lvlHomeProduct2;
     }
-
-    private void initBanner() {
-        DatabaseReference myRef= FirebaseDatabase.getInstance().getReference("Banner");
-        ArrayList<SliderItems> items = new ArrayList<>();
-        myRef.addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                if(snapshot.exists()){
-                    for (DataSnapshot issue:snapshot.getChildren()){
-                        items.add(issue.getValue(SliderItems.class));
-                    }
-
-                }
-
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-
-            }
-        });
-    }
-
-
 
     private void loadHomeUserAndProduct() {
         loadingDialog = new LoadingDialog();
