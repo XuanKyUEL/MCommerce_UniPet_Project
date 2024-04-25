@@ -8,6 +8,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.Bundle;
+import android.view.View;
 
 import com.unipet7.mcommerce.R;
 import com.unipet7.mcommerce.adapters.BlogAdapter;
