@@ -15,7 +15,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.unipet7.mcommerce.R;
+import com.unipet7.mcommerce.activities.MainActivity;
 import com.unipet7.mcommerce.adapters.ProductAdapter;
 import com.unipet7.mcommerce.databinding.FragmentAllProductBinding;
 import com.unipet7.mcommerce.firebase.FireStoreClass;
@@ -80,6 +82,14 @@ public class FragmentAllProduct extends Fragment {
         fragment.setArguments(args);
         return fragment;
     }
+    public static FragmentAllProduct newInstance(String category) {
+        FragmentAllProduct fragment = new FragmentAllProduct();
+        Bundle args = new Bundle();
+        args.putString("category", category);
+        fragment.setArguments(args);
+        return fragment;
+    }
+
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -221,6 +231,8 @@ public class FragmentAllProduct extends Fragment {
         binding.lvlAllProduct.setHasFixedSize(false);
         ldDialog.dissmis();
     }
+
+
 
 
 

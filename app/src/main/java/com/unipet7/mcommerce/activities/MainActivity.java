@@ -2,17 +2,12 @@ package com.unipet7.mcommerce.activities;
 
 import android.os.Bundle;
 import android.util.Log;
-import android.view.Menu;
 import android.view.MenuItem;
 
-import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentTransaction;
 import androidx.viewpager2.widget.ViewPager2;
 
-import com.airbnb.lottie.L;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -20,18 +15,15 @@ import com.unipet7.mcommerce.R;
 import com.unipet7.mcommerce.adapters.MainViewPager2Adapter;
 import com.unipet7.mcommerce.databinding.ActivityMainBinding;
 import com.unipet7.mcommerce.fragments.FragmentAllProduct;
-import com.unipet7.mcommerce.firebase.FireStoreClass;
-import com.unipet7.mcommerce.fragments.Fragment_Empty_Notification;
 import com.unipet7.mcommerce.fragments.Fragment_Wishlist_Product;
 import com.unipet7.mcommerce.fragments.Home;
 import com.unipet7.mcommerce.fragments.Profile;
-import com.unipet7.mcommerce.fragments.fragment_blank_cart;
 import com.unipet7.mcommerce.fragments.fragment_cart;
-import com.unipet7.mcommerce.models.User;
 import com.unipet7.mcommerce.utils.Constants;
 import com.unipet7.mcommerce.utils.LoadingDialog;
 
 public class MainActivity extends AppCompatActivity {
+    private ViewPager2 viewPager2;
 
     private static final String TAG = "MainActivity";
     ActivityMainBinding binding;
@@ -49,6 +41,7 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
         Log.i(TAG, "onCreate: ");
         setTheme(R.style.Base_Theme_UniPet);
         super.onCreate(savedInstanceState);
@@ -60,13 +53,17 @@ public class MainActivity extends AppCompatActivity {
         navigateFragment();
     }
 
+
     private void mapping() {
         bottomNavigationView = binding.bottomNavigationView;
         mainViewPager2 = binding.viewPagerMain;
         fabCart = binding.fabCart;
         db = FirebaseFirestore.getInstance();
     }
-    
+
+    public BottomNavigationView getBottomNavigationView() {
+        return bottomNavigationView;
+    }
 
     private void navigateFragment() {
         mainViewPager2.registerOnPageChangeCallback(new ViewPager2.OnPageChangeCallback() {
@@ -120,4 +117,13 @@ public class MainActivity extends AppCompatActivity {
             mainViewPager2.setCurrentItem(2);
         });
     }
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        BottomNavigationView bottomNavigationView = findViewById(R.id.bottomNavigationView);
+        bottomNavigationView.setSelectedItemId(R.id.home_icon_bottom);
+    }
+
+
+
 }

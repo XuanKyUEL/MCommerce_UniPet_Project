@@ -1,10 +1,15 @@
 package com.unipet7.mcommerce.fragments;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 
+import androidx.activity.OnBackPressedCallback;
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentActivity;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.GridLayoutManager;
@@ -12,13 +17,17 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewpager2.widget.CompositePageTransformer;
 import androidx.viewpager2.widget.MarginPageTransformer;
+import androidx.viewpager2.widget.ViewPager2;
 
 import android.util.Log;
+import android.view.ActionMode;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 
+import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.android.material.navigation.NavigationBarView;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -26,6 +35,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.unipet7.mcommerce.R;
+import com.unipet7.mcommerce.activities.MainActivity;
 import com.unipet7.mcommerce.activities.Notification;
 import com.unipet7.mcommerce.activities.ProfileFunction;
 import com.unipet7.mcommerce.adapters.BlogAdapter;
@@ -80,6 +90,8 @@ public class Home extends Fragment {
     public ProductAdapter adapterSale;
     public ProductAdapter adapterDog;
     public ProductAdapter adapterCat;
+    private BottomNavigationView bottomNavigationView;
+    private MainActivity mainActivity;
 
     public Home() {
         // Required empty public constructor
@@ -122,13 +134,17 @@ public class Home extends Fragment {
         }
     }
 
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         if (binding == null) {
             binding = FragmentHomeBinding.inflate(inflater, container, false);
+
         }
+
+
         loadBlog();
         addEvents();
         loadHomeUserAndProduct();
@@ -136,6 +152,7 @@ public class Home extends Fragment {
 
         return binding.getRoot();
     }
+
 
     private void initBanner() {
         DatabaseReference myRef= FirebaseDatabase.getInstance().getReference("Banner");
@@ -209,6 +226,9 @@ public class Home extends Fragment {
                     .replace(((ViewGroup) requireView().getParent()).getId(), allproduct)
                     .addToBackStack(null)
                     .commit();
+            MainActivity activity = (MainActivity) requireActivity();
+            BottomNavigationView bottomNavigationView = activity.getBottomNavigationView();
+            bottomNavigationView.getMenu().getItem(1).setChecked(true);
         });
         binding.txtXemThem2.setOnClickListener(v -> {
             Fragment allproduct = new FragmentAllProduct();
@@ -219,6 +239,10 @@ public class Home extends Fragment {
                     .replace(((ViewGroup) requireView().getParent()).getId(), allproduct)
                     .addToBackStack(null)
                     .commit();
+            MainActivity activity = (MainActivity) requireActivity();
+            BottomNavigationView bottomNavigationView = activity.getBottomNavigationView();
+            bottomNavigationView.getMenu().getItem(1).setChecked(true);
+
         });
         binding.txtXemthem3.setOnClickListener(v -> {
             Fragment allproduct = new FragmentAllProduct();
@@ -229,6 +253,10 @@ public class Home extends Fragment {
                     .replace(((ViewGroup) requireView().getParent()).getId(), allproduct)
                     .addToBackStack(null)
                     .commit();
+            MainActivity activity = (MainActivity) requireActivity();
+            BottomNavigationView bottomNavigationView = activity.getBottomNavigationView();
+            bottomNavigationView.getMenu().getItem(1).setChecked(true);
+
         });
         binding.Xemthem4.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -236,14 +264,94 @@ public class Home extends Fragment {
                 Intent intent = new Intent(getActivity(), com.unipet7.mcommerce.activities.Blogs.class);
                 startActivity(intent);
             }
+
         });
         binding.imgCate6.setOnClickListener(v -> {
             Intent intent = new Intent(getActivity(), com.unipet7.mcommerce.activities.Blogs.class);
             startActivity(intent);
         });
-        binding.imgCate1.setOnClickListener(v -> {
+        binding.imgCate1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String category = "Food";
+                FragmentAllProduct fragment = FragmentAllProduct.newInstance(category);
+                FragmentTransaction transaction = getParentFragmentManager().beginTransaction();
+                transaction.replace(R.id.homeLayout, fragment);
+                transaction.addToBackStack(null);
+                transaction.commit();
 
+                MainActivity activity = (MainActivity) requireActivity();
+                BottomNavigationView bottomNavigationView = activity.getBottomNavigationView();
+                bottomNavigationView.getMenu().getItem(1).setChecked(true);
+
+            }
         });
+        binding.imgCate2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String category = "Food";
+                FragmentAllProduct fragment = FragmentAllProduct.newInstance(category);
+                FragmentTransaction transaction = getParentFragmentManager().beginTransaction();
+                transaction.replace(R.id.homeLayout, fragment);
+                transaction.addToBackStack(null);
+                transaction.commit();
+
+                MainActivity activity = (MainActivity) requireActivity();
+                BottomNavigationView bottomNavigationView = activity.getBottomNavigationView();
+                bottomNavigationView.getMenu().getItem(1).setChecked(true);
+
+            }
+        });
+        binding.imgCate3.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String category = "Food";
+                FragmentAllProduct fragment = FragmentAllProduct.newInstance(category);
+                FragmentTransaction transaction = getParentFragmentManager().beginTransaction();
+                transaction.replace(R.id.homeLayout, fragment);
+                transaction.addToBackStack(null);
+                transaction.commit();
+
+                MainActivity activity = (MainActivity) requireActivity();
+                BottomNavigationView bottomNavigationView = activity.getBottomNavigationView();
+                bottomNavigationView.getMenu().getItem(1).setChecked(true);
+
+            }
+        });
+        binding.imgCate4.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String category = "Food";
+                FragmentAllProduct fragment = FragmentAllProduct.newInstance(category);
+                FragmentTransaction transaction = getParentFragmentManager().beginTransaction();
+                transaction.replace(R.id.homeLayout, fragment);
+                transaction.addToBackStack(null);
+                transaction.commit();
+
+                MainActivity activity = (MainActivity) requireActivity();
+                BottomNavigationView bottomNavigationView = activity.getBottomNavigationView();
+                bottomNavigationView.getMenu().getItem(1).setChecked(true);
+
+            }
+        });
+        binding.imgCate5.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String category = "Food";
+                FragmentAllProduct fragment = FragmentAllProduct.newInstance(category);
+                FragmentTransaction transaction = getParentFragmentManager().beginTransaction();
+                transaction.replace(R.id.homeLayout, fragment);
+                transaction.addToBackStack(null);
+                transaction.commit();
+
+                MainActivity activity = (MainActivity) requireActivity();
+                BottomNavigationView bottomNavigationView = activity.getBottomNavigationView();
+                bottomNavigationView.getMenu().getItem(1).setChecked(true);
+
+            }
+        });
+
+
 
         binding.imageView.setOnClickListener(new View.OnClickListener() {
             @Override
