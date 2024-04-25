@@ -37,8 +37,6 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ViewHold
 
     FireStoreClass fireStoreClass = new FireStoreClass();
     private List<Integer> favList = new ArrayList<>();
-    
-
 
     @Override
     public void onDataLoaded(List<Integer> favList) {
@@ -62,17 +60,6 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ViewHold
     @Override
     public void onBindViewHolder(@NonNull ProductAdapter.ViewHolder holder, int position) {
         Product product = productList.get(position);
-        if (favList != null) {
-            Handler handler = new Handler();
-            handler.postDelayed(() -> {
-                if (favList.contains(product.getProductId())) {
-                    holder.favorite.setChecked(true);
-                } else {
-                    holder.favorite.setChecked(false);
-                }
-            }, 1000);
-        }
-
         holder.productname.setText(product.getProductname());
         double roundRating = Math.round(product.getProductratenum() * 10) / 10.0;
         holder.productratenum.setText("4.5");

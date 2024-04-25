@@ -6,42 +6,26 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentTransaction;
-import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-import androidx.viewpager2.widget.CompositePageTransformer;
-import androidx.viewpager2.widget.MarginPageTransformer;
 
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
 
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
-import com.google.firebase.firestore.FirebaseFirestore;
 import com.unipet7.mcommerce.R;
 import com.unipet7.mcommerce.activities.Notification;
-import com.unipet7.mcommerce.activities.ProfileFunction;
 import com.unipet7.mcommerce.adapters.BlogAdapter;
 import com.unipet7.mcommerce.adapters.ProductAdapter;
-import com.unipet7.mcommerce.adapters.SliderAdapter;
 import com.unipet7.mcommerce.databinding.FragmentHomeBinding;
 import com.unipet7.mcommerce.firebase.FireStoreClass;
 import com.unipet7.mcommerce.models.Blogs;
 import com.unipet7.mcommerce.models.Product;
-import com.unipet7.mcommerce.models.SliderItems;
 import com.unipet7.mcommerce.models.User;
-import com.unipet7.mcommerce.utils.Constants;
 import com.unipet7.mcommerce.utils.LoadingDialog;
 
 import java.util.ArrayList;
-import java.util.Objects;
+import java.util.List;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -72,6 +56,8 @@ public class Home extends Fragment {
     private ArrayList<Product> productsSale = new ArrayList<>();
     private ArrayList<Product> productsDog = new ArrayList<>();
     private ArrayList<Product> productsCat = new ArrayList<>();
+
+    private List<Integer> favList = new ArrayList<>();
 
     private RecyclerView saleRecyclerView, dogRecyclerView, catRecyclerView;
 
@@ -219,8 +205,8 @@ public class Home extends Fragment {
         saleRecyclerView.setHasFixedSize(true);
     }
 
-    public void loadProductsByCategoryId(ArrayList<Product> products, int categoryId) {
-        ProductAdapter adapter = new ProductAdapter(products);
+    public void loadProductsByCategoryId(ArrayList<Product> productsList, int categoryId) {
+        ProductAdapter adapter = new ProductAdapter(productsList);
         RecyclerView recyclerView;
         if (categoryId == 1) {
             recyclerView = catRecyclerView;
