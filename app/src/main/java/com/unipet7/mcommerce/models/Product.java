@@ -24,7 +24,10 @@ public class Product implements Parcelable {
     }
 
     public boolean isFavoriteProduct(List<Integer> favList) {
-        return favList.contains(this.ProductId);
+        if (favList != null) {
+            return favList.contains(this.ProductId);
+        }
+        return false;
     }
 
     public void setFavorite(boolean favorite) {

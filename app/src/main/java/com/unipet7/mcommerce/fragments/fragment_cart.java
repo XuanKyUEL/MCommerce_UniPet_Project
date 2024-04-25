@@ -27,6 +27,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.unipet7.mcommerce.R;
+import com.unipet7.mcommerce.activities.PaymentMethodDetails;
 import com.unipet7.mcommerce.activities.VoucherActivity;
 import com.unipet7.mcommerce.adapters.CartAdapter;
 import com.unipet7.mcommerce.databinding.FragmentCartBinding;
@@ -121,6 +122,13 @@ public class fragment_cart extends Fragment {
         setActionBar(binding.toolbarall);
         itemTouchHelper = new ItemTouchHelper(simpleCallback);
         itemTouchHelper.attachToRecyclerView(binding.rcCart);
+        binding.btnPaymentNow.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getActivity(), PaymentMethodDetails.class);
+                startActivity(intent);
+            }
+        });
 
         binding.btnCircleVoucher.setOnClickListener(v -> startActivityForResult(new Intent(getContext(), VoucherActivity.class), REQUEST_CODE_VOUCHER));
         binding.btnVoucher.setOnClickListener(v -> {
@@ -173,8 +181,6 @@ public class fragment_cart extends Fragment {
         ((AppCompatActivity) requireActivity()).setSupportActionBar(toolbar);
         ActionBar actionBar = ((AppCompatActivity) requireActivity()).getSupportActionBar();
         if (actionBar != null) {
-            actionBar.setDisplayHomeAsUpEnabled(true);
-            actionBar.setHomeAsUpIndicator(R.drawable.ic_back_profile);
             actionBar.setDisplayShowTitleEnabled(false);
         }
     }

@@ -50,9 +50,13 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.ViewHolder> {
         ProductCart productCart = productCarts.get(position);
 
         holder.txtProductName.setText(productCart.getProductName());
-        holder.txtProductPrice.setText(String.valueOf(productCart.getProductPrice()) + " đ");
+        double price = productCart.getProductPrice();
+        String formattedPPrice = String.format("%,.0f đ", price);
+        holder.txtProductPrice.setText(formattedPPrice);
         holder.txtNumberOrder.setText(String.valueOf(productCart.getNumOfProduct()));
-        holder.txtSumNumbPrice.setText(String.valueOf(productCart.getTotalPrice()) + " đ");
+        double sumnumbprice = productCart.getTotalPrice();
+        String formattedsumPrice = String.format("%,.0f đ", sumnumbprice);
+        holder.txtSumNumbPrice.setText(formattedsumPrice);
 
         // Load image from URL using Glide
         Glide.with(context).load(productCart.getProductImageUrl()).into(holder.imvProductCart);
