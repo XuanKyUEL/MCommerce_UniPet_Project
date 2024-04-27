@@ -133,7 +133,7 @@
             android:hint="@string/update_phone_cta"
             android:padding="10dp"
             android:textColor="@color/black"
-            android:textColorHint="#C4C4C4"/>
+            android:textColorHint="#C4C4C4" />
 
 
         <Button
