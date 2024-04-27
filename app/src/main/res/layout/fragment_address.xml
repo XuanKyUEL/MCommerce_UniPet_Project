@@ -38,6 +38,10 @@
         android:id="@+id/lvlAddress"
         android:layout_weight="1"
         android:padding="10dp"/>
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="20dp"
+        android:background="@color/white"/>
     <Button
         android:id="@+id/btn_addaddress"
         android:layout_width="300dp"

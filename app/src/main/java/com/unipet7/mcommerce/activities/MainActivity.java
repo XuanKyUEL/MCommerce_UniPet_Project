@@ -2,12 +2,12 @@ package com.unipet7.mcommerce.activities;
 
 import android.os.Bundle;
 import android.util.Log;
-import android.view.MenuItem;
-
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
+import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewpager2.widget.ViewPager2;
-
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -21,6 +21,7 @@ import com.unipet7.mcommerce.fragments.Profile;
 import com.unipet7.mcommerce.fragments.fragment_cart;
 import com.unipet7.mcommerce.utils.Constants;
 import com.unipet7.mcommerce.utils.LoadingDialog;
+import com.unipet7.mcommerce.utils.NonSwipeAbleViewPager;
 
 public class MainActivity extends AppCompatActivity {
     private ViewPager2 viewPager2;
@@ -33,7 +34,6 @@ public class MainActivity extends AppCompatActivity {
     LoadingDialog loadingDialog;
     BottomNavigationView bottomNavigationView;
     FloatingActionButton fabCart;
-
     private FirebaseFirestore db;
 
     Fragment fragment = null;
@@ -57,13 +57,13 @@ public class MainActivity extends AppCompatActivity {
     private void mapping() {
         bottomNavigationView = binding.bottomNavigationView;
         mainViewPager2 = binding.viewPagerMain;
+        mainViewPager2.setUserInputEnabled(false);
+        RecyclerView recyclerView = (RecyclerView) mainViewPager2.getChildAt(0);
+        recyclerView.addOnItemTouchListener(new NonSwipeAbleViewPager());
         fabCart = binding.fabCart;
         db = FirebaseFirestore.getInstance();
     }
 
-    public BottomNavigationView getBottomNavigationView() {
-        return bottomNavigationView;
-    }
 
     private void navigateFragment() {
         mainViewPager2.registerOnPageChangeCallback(new ViewPager2.OnPageChangeCallback() {
@@ -75,6 +75,7 @@ public class MainActivity extends AppCompatActivity {
                         fragment = new Home();
                         bottomNavigationView.getMenu().getItem(0).setChecked(true);
                         break;
+
                     case 1:
                         fragment = new FragmentAllProduct();
                         // truyền bundle category allproduct cho fragment allproduct
@@ -97,11 +98,15 @@ public class MainActivity extends AppCompatActivity {
                         break;
                 }
             }
+
         });
         bottomNavigationView.setOnItemSelectedListener(item -> {
             int id = item.getItemId();
             if (id == R.id.home_icon_bottom) {
+                removeAllFragments();
                 mainViewPager2.setCurrentItem(0);
+
+
             } else if (id == R.id.product_icon_bottom) {
                 mainViewPager2.setCurrentItem(1);
             } else if (id == R.id.fab_nav_shop) {
@@ -113,9 +118,15 @@ public class MainActivity extends AppCompatActivity {
             }
             return true;
         });
+
         fabCart.setOnClickListener(v -> {
             mainViewPager2.setCurrentItem(2);
         });
+    }
+    private void removeAllFragments() {
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        fragmentManager.popBackStackImmediate(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
+        fragmentManager.executePendingTransactions();
     }
     @Override
     public void onBackPressed() {
@@ -123,6 +134,7 @@ public class MainActivity extends AppCompatActivity {
         BottomNavigationView bottomNavigationView = findViewById(R.id.bottomNavigationView);
         bottomNavigationView.setSelectedItemId(R.id.home_icon_bottom);
     }
+
 
 
 

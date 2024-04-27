@@ -3,6 +3,10 @@ package com.unipet7.mcommerce.models;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
+
 public class User implements Parcelable {
     private String id;
     private String name;
@@ -10,6 +14,25 @@ public class User implements Parcelable {
     private String image;
     private Long mobile;
     private String fcmToken;
+
+    private List<Integer> favProductId;
+    private List<Integer> orderHistoryId;
+
+    public List<Integer> getFavProductId() {
+        return favProductId;
+    }
+
+    public void setFavProductId(List<Integer> favProductId) {
+        this.favProductId = favProductId;
+    }
+
+    public List<Integer> getOrderHistoryId() {
+        return orderHistoryId;
+    }
+
+    public void setOrderHistoryId(List<Integer> orderHistoryId) {
+        this.orderHistoryId = orderHistoryId;
+    }
 
     public User() {
         // Empty constructor required by Firebase
@@ -22,6 +45,10 @@ public class User implements Parcelable {
         image = in.readString();
         mobile = in.readLong();
         fcmToken = in.readString();
+        favProductId = new ArrayList<>();
+        in.readList(favProductId, Integer.class.getClassLoader());
+        orderHistoryId = new ArrayList<>();
+        in.readList(orderHistoryId, Integer.class.getClassLoader());
     }
 
     public static final Creator<User> CREATOR = new Creator<User>() {
@@ -103,5 +130,7 @@ public class User implements Parcelable {
         dest.writeString(image);
         dest.writeLong(mobile != null ? mobile : 0L);
         dest.writeString(fcmToken);
+        dest.writeList(favProductId);
+        dest.writeList(orderHistoryId);
     }
 }

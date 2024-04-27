@@ -33,6 +33,8 @@ public class Profile extends Fragment {
     MessageDialogAdapter messageDialogAdapter;
     MessageDialog messageDialog;
 
+    FireStoreClass fireStoreClass = new FireStoreClass();
+
     LoadingDialog ldDialog;
 
     @Nullable
@@ -47,7 +49,6 @@ public class Profile extends Fragment {
         }
         addEvents();
         addEvents1();
-        FireStoreClass fireStoreClass = new FireStoreClass();
         fireStoreClass.loadLoggedUserUI(this);
         return binding.getRoot();
 
@@ -145,5 +146,11 @@ public class Profile extends Fragment {
             binding.phoneNumberProfile.setText("Chưa cập nhật");
         }
         ldDialog.dissmis();
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        fireStoreClass.loadLoggedUserUI(this);
     }
 }

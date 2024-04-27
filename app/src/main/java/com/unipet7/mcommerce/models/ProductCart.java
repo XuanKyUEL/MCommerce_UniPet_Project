@@ -1,55 +1,71 @@
 package com.unipet7.mcommerce.models;
 
 public class ProductCart {
-    int imvProductCart;
-    String txtProductName;
-    Double txtProductPrice, txtSumNumbPrice, txtNumberOrder;
+    private String productImageUrl;
+    private String productName;
+    private Double productPrice;
+    private Double totalPrice;
+    private Integer numOfProduct;
+    private Integer productId;
 
-    public int getImvProductCart() {
-        return imvProductCart;
+    public ProductCart(String productImageUrl, String productName, Double productPrice, Double totalPrice, Integer numOfProduct, Integer productId) {
+        this.productImageUrl = productImageUrl;
+        this.productName = productName;
+        this.productPrice = productPrice;
+        this.totalPrice = totalPrice;
+        this.numOfProduct = numOfProduct;
+        this.productId = productId;
     }
 
-    public void setImvProductCart(int imvProductCart) {
-        this.imvProductCart = imvProductCart;
+    public Integer getProductId() {
+        return productId;
     }
 
-    public String getTxtProductName() {
-        return txtProductName;
+    public void setProductId(Integer productId) {
+        this.productId = productId;
     }
 
-    public void setTxtProductName(String txtProductName) {
-        this.txtProductName = txtProductName;
+    public String getProductImageUrl() {
+        return productImageUrl;
     }
 
-    public Double getTxtProductPrice() {
-        return txtProductPrice;
+    public void setProductImageUrl(String productImageUrl) {
+        this.productImageUrl = productImageUrl;
     }
 
-    public void setTxtProductPrice(Double txtProductPrice) {
-        this.txtProductPrice = txtProductPrice;
+    public String getProductName() {
+        return productName;
     }
 
-    public Double getTxtSumNumbPrice() {
-        return txtSumNumbPrice;
+    public void setProductName(String productName) {
+        this.productName = productName;
     }
 
-    public void setTxtSumNumbPrice(Double txtSumNumbPrice) {
-        this.txtSumNumbPrice = txtSumNumbPrice;
+    public Double getProductPrice() {
+        return productPrice;
     }
 
-    public Double getTxtNumberOrder() {
-        return txtNumberOrder;
+    public void setProductPrice(Double productPrice) {
+        this.productPrice = productPrice;
     }
 
-    public void setTxtNumberOrder(Double txtNumberOrder) {
-        this.txtNumberOrder = txtNumberOrder;
+    public Double getTotalPrice() {
+        return totalPrice;
     }
 
-    public ProductCart(int imvProductCart, String txtProductName, Double txtProductPrice, Double txtSumNumbPrice, Double txtNumberOrder) {
-        this.imvProductCart = imvProductCart;
-        this.txtProductName = txtProductName;
-        this.txtProductPrice = txtProductPrice;
-        this.txtSumNumbPrice = txtSumNumbPrice;
-        this.txtNumberOrder = txtNumberOrder;
+    public void setTotalPrice(Double totalPrice) {
+        this.totalPrice = totalPrice;
+    }
+
+    public Integer getNumOfProduct() {
+        return numOfProduct;
+    }
+
+    public void setNumOfProduct(Integer numOfProduct) {
+        this.numOfProduct = numOfProduct;
+    }
+
+    // Constructor mặc định (cần cho việc deserialization từ Firebase)
+    public ProductCart() {
     }
 }

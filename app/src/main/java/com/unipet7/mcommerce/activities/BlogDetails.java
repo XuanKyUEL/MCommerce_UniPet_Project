@@ -22,6 +22,7 @@ import com.unipet7.mcommerce.models.Product;
 import com.unipet7.mcommerce.utils.LoadingDialog;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 public class BlogDetails extends AppCompatActivity {
@@ -29,11 +30,14 @@ public class BlogDetails extends AppCompatActivity {
     BlogAdapter blogAdapter;
     ProductAdapter adapter;
     ArrayList<Product> products;
+
+    List<Integer> favList = new ArrayList<>();
     public ArrayList<Product> allProducts = new ArrayList<>();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         binding = ActivityBlogDetailsBinding.inflate(getLayoutInflater());
+        FireStoreClass fireStoreClass = new FireStoreClass();
         loadProduct();
         addEvents();
         initBlog();
@@ -51,7 +55,6 @@ public class BlogDetails extends AppCompatActivity {
         binding.rclBlogDetails1.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
         binding.rclBlogDetails1.setAdapter(adapter);
         binding.rclBlogDetails1.setHasFixedSize(true);
-
     }
 
     private void addEvents() {
@@ -64,12 +67,7 @@ public class BlogDetails extends AppCompatActivity {
             actionBar.setDisplayShowTitleEnabled(false);
         }
 
-        binding.toolbardetail.setNavigationOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                finish();
-            }
-        });
+        binding.toolbardetail.setNavigationOnClickListener(v -> finish());
     }
     private void initBlog() {
         binding.rclBlogDetails2.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));

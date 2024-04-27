@@ -71,53 +71,44 @@
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
                 </androidx.constraintlayout.widget.ConstraintLayout>
-                <EditText
-                    android:id="@+id/editTextText"
-                    style="@style/BODY_SMALL_REGULAR_12"
+                <ImageView
+                    android:id="@+id/searchbar"
                     android:layout_width="match_parent"
                     android:layout_height="40dp"
-                    android:background="@drawable/search_background"
-                    android:drawableStart="@drawable/search"
-                    android:drawableEnd="@drawable/search_filter"
-                    android:drawablePadding="8dp"
-                    android:ems="10"
-                    android:hint="Tìm kiếm"
-                    android:inputType="text"
-                    android:padding="12dp"
-                    android:textColorHint="@color/darkTertiary" />
-
+                    android:src="@drawable/input_field"/>
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="match_parent"
                     android:layout_height="150dp"
                     android:layout_marginTop="12dp">
 
-                    <androidx.viewpager2.widget.ViewPager2
-                        android:id="@+id/viewpageSlider"
+                    <ViewFlipper
                         android:layout_width="match_parent"
-                        android:layout_height="match_parent"
+                        android:layout_height="150dp"
+                        android:autoStart="true"
+                        android:flipInterval="2000"
+                        android:inAnimation="@android:anim/slide_in_left"
+                        android:outAnimation="@android:anim/slide_out_right"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent"></androidx.viewpager2.widget.ViewPager2>
+                        app:layout_constraintTop_toTopOf="parent">
 
-<!--                    <androidx.cardview.widget.CardView-->
-<!--                        android:layout_width="match_parent"-->
-<!--                        android:layout_height="wrap_content"-->
-<!--                        app:cardCornerRadius="10dp"-->
-<!--                        app:layout_constraintEnd_toEndOf="parent"-->
-<!--                        app:layout_constraintStart_toStartOf="parent"-->
-<!--                        app:layout_constraintTop_toTopOf="parent">-->
+                        <ImageView
+                            android:id="@+id/imgBanner1"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:src="@drawable/bannerhome"
+                            android:scaleType="fitXY"
+                            android:background="@drawable/banner_background"/>
+                        <ImageView
+                            android:id="@+id/imgBanner2"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:src="@drawable/banner02"
+                            android:scaleType="fitXY"
+                            android:background="@drawable/banner_background"/>
+                    </ViewFlipper>
 
-<!--                        <ImageView-->
-<!--                            android:id="@+id/imageView4"-->
-<!--                            android:layout_width="wrap_content"-->
-<!--                            android:layout_height="125dp"-->
-<!--                            android:background="@drawable/banner_background"-->
-<!--                            android:scaleType="fitXY"-->
-<!--                            android:src="@drawable/bannerhome"-->
-<!--                            app:layout_constraintEnd_toEndOf="parent"-->
-<!--                            app:layout_constraintStart_toStartOf="parent"-->
-<!--                            app:layout_constraintTop_toTopOf="parent" />-->
-<!--                    </androidx.cardview.widget.CardView>-->
+
 
 
 
@@ -464,7 +455,10 @@
                 android:id="@+id/homeblog"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent" />
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="20dp"
+                android:background="@color/white"/>
         </LinearLayout>
     </ScrollView>
-
 </androidx.constraintlayout.widget.ConstraintLayout>

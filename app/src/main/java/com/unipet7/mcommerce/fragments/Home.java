@@ -12,19 +12,20 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentActivity;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
-import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+
 import androidx.viewpager2.widget.CompositePageTransformer;
 import androidx.viewpager2.widget.MarginPageTransformer;
 import androidx.viewpager2.widget.ViewPager2;
 
 import android.util.Log;
 import android.view.ActionMode;
+
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
+import android.widget.ImageView;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationBarView;
@@ -34,24 +35,24 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
+
 import com.unipet7.mcommerce.R;
 import com.unipet7.mcommerce.activities.MainActivity;
 import com.unipet7.mcommerce.activities.Notification;
 import com.unipet7.mcommerce.activities.ProfileFunction;
+import com.unipet7.mcommerce.activities.SearchProductList;
 import com.unipet7.mcommerce.adapters.BlogAdapter;
 import com.unipet7.mcommerce.adapters.ProductAdapter;
-import com.unipet7.mcommerce.adapters.SliderAdapter;
 import com.unipet7.mcommerce.databinding.FragmentHomeBinding;
 import com.unipet7.mcommerce.firebase.FireStoreClass;
 import com.unipet7.mcommerce.models.Blogs;
 import com.unipet7.mcommerce.models.Product;
 import com.unipet7.mcommerce.models.SliderItems;
 import com.unipet7.mcommerce.models.User;
-import com.unipet7.mcommerce.utils.Constants;
 import com.unipet7.mcommerce.utils.LoadingDialog;
 
 import java.util.ArrayList;
-import java.util.Objects;
+import java.util.List;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -64,11 +65,9 @@ public class Home extends Fragment {
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
+
     public ProductAdapter adapter;
 
-    public ProductAdapter saleAdapter;
-    public ProductAdapter productDog;
-    public ProductAdapter productCat;
 
     // TODO: Rename and change types of parameters
     private String mParam1;
@@ -81,17 +80,26 @@ public class Home extends Fragment {
     private static final String KEY_FLAG = "isLoadUser";
     boolean isLoadUser = false;
 
-    public ArrayList<Product> products = new ArrayList<>();
+    private ArrayList<Product> productsSale = new ArrayList<>();
+    private ArrayList<Product> productsDog = new ArrayList<>();
+    private ArrayList<Product> productsCat = new ArrayList<>();
 
-    public ArrayList<Product> productsSale = new ArrayList<>();
-    public ArrayList<Product> productsDog = new ArrayList<>();
-    public ArrayList<Product> productsCat = new ArrayList<>();
+    private List<Integer> favList = new ArrayList<>();
+
 
     public ProductAdapter adapterSale;
     public ProductAdapter adapterDog;
     public ProductAdapter adapterCat;
     private BottomNavigationView bottomNavigationView;
     private MainActivity mainActivity;
+    private FragmentTransaction transaction;
+
+    private String sId;
+
+    private RecyclerView saleRecyclerView, dogRecyclerView, catRecyclerView;
+
+    FireStoreClass fireStoreClass = new FireStoreClass();
+
 
     public Home() {
         // Required empty public constructor
@@ -128,10 +136,6 @@ public class Home extends Fragment {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
-        if (savedInstanceState != null) {
-            isLoadUser = savedInstanceState.getBoolean(KEY_FLAG);
-            Log.i("HomeFragment", "onCreate: " + isLoadUser);
-        }
     }
 
 
@@ -139,132 +143,70 @@ public class Home extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
+
         if (binding == null) {
             binding = FragmentHomeBinding.inflate(inflater, container, false);
 
         }
 
 
+        binding = FragmentHomeBinding.inflate(inflater, container, false);
+        mapping();
         loadBlog();
         addEvents();
+        searchproduct();
+        fireStoreClass.getSalesProducts(this);
+        fireStoreClass.getProductsByCategoryIdHome(this, 1);
+        fireStoreClass.getProductsByCategoryIdHome(this, 2);
         loadHomeUserAndProduct();
-        initBanner();
-
         return binding.getRoot();
     }
 
 
-    private void initBanner() {
-        DatabaseReference myRef= FirebaseDatabase.getInstance().getReference("Banner");
-        ArrayList<SliderItems> items = new ArrayList<>();
-        myRef.addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                if(snapshot.exists()){
-                    for (DataSnapshot issue:snapshot.getChildren()){
-                        items.add(issue.getValue(SliderItems.class));
-                    }
-                    banners(items);
-                }
 
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-
-            }
-        });
-    }
-
-    private void banners(ArrayList<SliderItems> items) {
-
-        binding.viewpageSlider.setAdapter(new SliderAdapter(items, binding.viewpageSlider));
-        binding.viewpageSlider.setClipToPadding(false);
-        binding.viewpageSlider.setClipChildren(false);
-        binding.viewpageSlider.setOffscreenPageLimit(2);
-        binding.viewpageSlider.getChildAt(0).setOverScrollMode(RecyclerView.OVER_SCROLL_NEVER);
-
-        CompositePageTransformer compositePageTransformer= new CompositePageTransformer();
-        compositePageTransformer.addTransformer(new MarginPageTransformer(40));
-
-        binding.viewpageSlider.setPageTransformer(compositePageTransformer);
-    }
-
-    public void configAdapters() {
-
-        saleAdapter = new ProductAdapter(productsSale);
-        binding.lvlHomeSale.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
-        binding.lvlHomeSale.setAdapter(saleAdapter);
-        binding.lvlHomeSale.setHasFixedSize(true);
-
-        adapterDog = new ProductAdapter(productsDog);
-        binding.lvlHomeProduct1.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
-        binding.lvlHomeProduct1.setAdapter(adapterDog);
-        binding.lvlHomeProduct1.setHasFixedSize(true);
-
-        adapterCat = new ProductAdapter(productsCat);
-        binding.lvlHomeProduct2.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
-        binding.lvlHomeProduct2.setAdapter(adapterCat);
-        binding.lvlHomeProduct2.setHasFixedSize(true);
+    private void mapping() {
+        saleRecyclerView = binding.lvlHomeSale;
+        dogRecyclerView = binding.lvlHomeProduct1;
+        catRecyclerView = binding.lvlHomeProduct2;
     }
 
     private void loadHomeUserAndProduct() {
         loadingDialog = new LoadingDialog();
         loadingDialog.showLoadingDialog(getContext());
-        FireStoreClass fireStoreClass = new FireStoreClass();
-        fireStoreClass.getProductList(this, productsSale, productsDog, productsCat);
         fireStoreClass.loadLoggedUserUI(this);
     }
 
+
     private void addEvents() {
         binding.txtXemThem1.setOnClickListener(v -> {
-            Fragment allproduct = new FragmentAllProduct();
-            FragmentManager fragmentManager = requireActivity().getSupportFragmentManager();
+            sId = "null";
+            open();
 
-            // Thực hiện giao diện chuyển đổi Fragment
-            fragmentManager.beginTransaction()
-                    .replace(((ViewGroup) requireView().getParent()).getId(), allproduct)
-                    .addToBackStack(null)
-                    .commit();
-            MainActivity activity = (MainActivity) requireActivity();
-            BottomNavigationView bottomNavigationView = activity.getBottomNavigationView();
-            bottomNavigationView.getMenu().getItem(1).setChecked(true);
         });
         binding.txtXemThem2.setOnClickListener(v -> {
-            Fragment allproduct = new FragmentAllProduct();
-            FragmentManager fragmentManager = requireActivity().getSupportFragmentManager();
+            sId = "null";
+            open();
 
-            // Thực hiện giao diện chuyển đổi Fragment
-            fragmentManager.beginTransaction()
-                    .replace(((ViewGroup) requireView().getParent()).getId(), allproduct)
-                    .addToBackStack(null)
-                    .commit();
-            MainActivity activity = (MainActivity) requireActivity();
-            BottomNavigationView bottomNavigationView = activity.getBottomNavigationView();
-            bottomNavigationView.getMenu().getItem(1).setChecked(true);
 
         });
         binding.txtXemthem3.setOnClickListener(v -> {
-            Fragment allproduct = new FragmentAllProduct();
-            FragmentManager fragmentManager = requireActivity().getSupportFragmentManager();
-
-            // Thực hiện giao diện chuyển đổi Fragment
-            fragmentManager.beginTransaction()
-                    .replace(((ViewGroup) requireView().getParent()).getId(), allproduct)
-                    .addToBackStack(null)
-                    .commit();
-            MainActivity activity = (MainActivity) requireActivity();
-            BottomNavigationView bottomNavigationView = activity.getBottomNavigationView();
-            bottomNavigationView.getMenu().getItem(1).setChecked(true);
+            sId = "null";
+            open();
 
         });
+
         binding.Xemthem4.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(getActivity(), com.unipet7.mcommerce.activities.Blogs.class);
                 startActivity(intent);
             }
+        });
 
+
+        binding.Xemthem4.setOnClickListener(v -> {
+            Intent intent = new Intent(getActivity(), com.unipet7.mcommerce.activities.Blogs.class);
+            startActivity(intent);
         });
         binding.imgCate6.setOnClickListener(v -> {
             Intent intent = new Intent(getActivity(), com.unipet7.mcommerce.activities.Blogs.class);
@@ -273,93 +215,53 @@ public class Home extends Fragment {
         binding.imgCate1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String category = "Food";
-                FragmentAllProduct fragment = FragmentAllProduct.newInstance(category);
-                FragmentTransaction transaction = getParentFragmentManager().beginTransaction();
-                transaction.replace(R.id.homeLayout, fragment);
-                transaction.addToBackStack(null);
-                transaction.commit();
-
-                MainActivity activity = (MainActivity) requireActivity();
-                BottomNavigationView bottomNavigationView = activity.getBottomNavigationView();
-                bottomNavigationView.getMenu().getItem(1).setChecked(true);
+                sId = "0";
+                open();
 
             }
         });
         binding.imgCate2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String category = "Food";
-                FragmentAllProduct fragment = FragmentAllProduct.newInstance(category);
-                FragmentTransaction transaction = getParentFragmentManager().beginTransaction();
-                transaction.replace(R.id.homeLayout, fragment);
-                transaction.addToBackStack(null);
-                transaction.commit();
+                sId = "1";
+                open();
 
-                MainActivity activity = (MainActivity) requireActivity();
-                BottomNavigationView bottomNavigationView = activity.getBottomNavigationView();
-                bottomNavigationView.getMenu().getItem(1).setChecked(true);
 
             }
         });
         binding.imgCate3.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String category = "Food";
-                FragmentAllProduct fragment = FragmentAllProduct.newInstance(category);
-                FragmentTransaction transaction = getParentFragmentManager().beginTransaction();
-                transaction.replace(R.id.homeLayout, fragment);
-                transaction.addToBackStack(null);
-                transaction.commit();
-
-                MainActivity activity = (MainActivity) requireActivity();
-                BottomNavigationView bottomNavigationView = activity.getBottomNavigationView();
-                bottomNavigationView.getMenu().getItem(1).setChecked(true);
+                sId = "2";
+                open();
 
             }
         });
         binding.imgCate4.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String category = "Food";
-                FragmentAllProduct fragment = FragmentAllProduct.newInstance(category);
-                FragmentTransaction transaction = getParentFragmentManager().beginTransaction();
-                transaction.replace(R.id.homeLayout, fragment);
-                transaction.addToBackStack(null);
-                transaction.commit();
-
-                MainActivity activity = (MainActivity) requireActivity();
-                BottomNavigationView bottomNavigationView = activity.getBottomNavigationView();
-                bottomNavigationView.getMenu().getItem(1).setChecked(true);
+                sId = "3";
+                open();
 
             }
         });
         binding.imgCate5.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String category = "Food";
-                FragmentAllProduct fragment = FragmentAllProduct.newInstance(category);
-                FragmentTransaction transaction = getParentFragmentManager().beginTransaction();
-                transaction.replace(R.id.homeLayout, fragment);
-                transaction.addToBackStack(null);
-                transaction.commit();
+                sId = "4";
+                open();
 
-                MainActivity activity = (MainActivity) requireActivity();
-                BottomNavigationView bottomNavigationView = activity.getBottomNavigationView();
-                bottomNavigationView.getMenu().getItem(1).setChecked(true);
 
             }
         });
 
 
 
-        binding.imageView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(getActivity(), Notification.class);
-                startActivity(intent);
-            }
+        binding.imageView.setOnClickListener(v -> {
+            Intent intent = new Intent(getActivity(), Notification.class);
+            startActivity(intent);
         });
+
     }
 
 
@@ -372,10 +274,53 @@ public class Home extends Fragment {
         blogAdapter = new BlogAdapter(blogs);
         binding.homeblog.setAdapter(blogAdapter);
     }
-
+    private void searchproduct() {
+        binding.searchbar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getActivity(), SearchProductList.class);
+                startActivity(intent);
+            }
+        });
+    }
     public void greeting(User user) {
         binding.txtUserName.setText("Xin chào " + user.getName());
         loadingDialog.dissmis();
     }
+    private void open(){
+        FragmentAllProduct fg = new FragmentAllProduct();
+        fg.SetId(sId);
+        transaction = getParentFragmentManager().beginTransaction();
+        transaction.replace(R.id.homeLayout,fg);
+        transaction.addToBackStack(null);
+        transaction.commit();
+    }
 
+
+    @Override
+    public void onResume() {
+        super.onResume();
+    }
+
+    public void loadSalesProducts(ArrayList<Product> productsSale) {
+        ProductAdapter adapterSale = new ProductAdapter(productsSale);
+        saleRecyclerView.setAdapter(adapterSale);
+        saleRecyclerView.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
+        saleRecyclerView.setHasFixedSize(true);
+    }
+
+    public void loadProductsByCategoryId(ArrayList<Product> productsList, int categoryId) {
+        ProductAdapter adapter = new ProductAdapter(productsList);
+        RecyclerView recyclerView;
+        if (categoryId == 1) {
+            recyclerView = catRecyclerView;
+        } else if (categoryId == 2) {
+            recyclerView = dogRecyclerView;
+        } else {
+            return;
+        }
+        recyclerView.setAdapter(adapter);
+        recyclerView.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
+        recyclerView.setHasFixedSize(true);
+    }
 }

@@ -5,11 +5,60 @@ import android.os.Parcelable;
 
 import androidx.annotation.NonNull;
 
+import com.unipet7.mcommerce.firebase.FireStoreClass;
+
+import java.util.List;
+
 public class Product implements Parcelable {
 
     private int ProductId;
 
     private int CategoryId;
+
+    boolean isFavorite;
+
+
+
+    public boolean isFavorite() {
+        return isFavorite;
+    }
+
+    public boolean isFavoriteProduct(List<Integer> favList) {
+        if (favList != null) {
+            return favList.contains(this.ProductId);
+        }
+        return false;
+    }
+
+    public void setFavorite(boolean favorite) {
+        isFavorite = favorite;
+    }
+
+    protected Product(Parcel in) {
+        ProductId = in.readInt();
+        CategoryId = in.readInt();
+        ProductDescription = in.readString();
+        ProductImageUrl = in.readString();
+        imvThumb = in.readInt();
+        productname = in.readString();
+        productprice = in.readDouble();
+        productratenum = in.readDouble();
+        producttotalnum = in.readDouble();
+        salepercent = in.readDouble();
+        presaleprice = in.readDouble();
+    }
+
+    public static final Creator<Product> CREATOR = new Creator<Product>() {
+        @Override
+        public Product createFromParcel(Parcel in) {
+            return new Product(in);
+        }
+
+        @Override
+        public Product[] newArray(int size) {
+            return new Product[size];
+        }
+    };
 
     public int getProductId() {
         return ProductId;
@@ -132,6 +181,7 @@ public class Product implements Parcelable {
 
     @Override
     public void writeToParcel(@NonNull Parcel dest, int flags) {
+        dest.writeInt(this.ProductId);
         dest.writeInt(this.imvThumb);
         dest.writeString(this.productname);
         dest.writeDouble(this.productprice);
@@ -139,6 +189,10 @@ public class Product implements Parcelable {
         dest.writeDouble(this.producttotalnum);
         dest.writeDouble(this.salepercent);
         dest.writeDouble(this.presaleprice);
+    }
+
+    public void setIsFavorite(boolean b) {
+        isFavorite = b;
     }
 }
 

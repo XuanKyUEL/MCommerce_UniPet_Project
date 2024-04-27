@@ -128,12 +128,12 @@
             android:layout_height="48dp"
             android:layout_gravity="center"
             android:layout_marginTop="10dp"
+            android:inputType="phone"
             android:background="@drawable/edittext_conner_profile"
             android:hint="@string/update_phone_cta"
             android:padding="10dp"
             android:textColor="@color/black"
-            android:textColorHint="#C4C4C4"
-            android:inputType="phone"/>
+            android:textColorHint="#C4C4C4" />
 
 
         <Button

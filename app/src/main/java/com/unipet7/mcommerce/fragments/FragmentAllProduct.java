@@ -47,7 +47,12 @@ public class FragmentAllProduct extends Fragment {
     private String mParam2;
     FragmentAllProductBinding binding;
     public ProductAdapter allPdadapter;
-    public ArrayList<Product> allPdproducts;
+    public ArrayList<Product> allProducts;
+    private String sKey;
+
+    public void SetId(String id) {
+        sKey = id;
+    }
 
     ArrayList<Button> categoryButtons = new ArrayList<>();
 
@@ -82,6 +87,7 @@ public class FragmentAllProduct extends Fragment {
         fragment.setArguments(args);
         return fragment;
     }
+
     public static FragmentAllProduct newInstance(String category) {
         FragmentAllProduct fragment = new FragmentAllProduct();
         Bundle args = new Bundle();
@@ -112,10 +118,10 @@ public class FragmentAllProduct extends Fragment {
         LoadingDialog ldDialog = new LoadingDialog();
         ldDialog.showLoadingDialog(this.getContext());
         FireStoreClass fireStoreClass = new FireStoreClass();
-        allPdproducts = new ArrayList<>();
-        fireStoreClass.getAllProducts(this, allPdproducts);
+        allProducts = new ArrayList<>();
+        fireStoreClass.getAllProducts(this, allProducts);
         ldDialog.dissmis();
-        loadProduct(allPdproducts);
+        loadProduct(allProducts);
         cateClickEvent();
         Bundle bundle = getArguments();
         if (bundle != null) {
@@ -151,8 +157,8 @@ public class FragmentAllProduct extends Fragment {
             case Constants.TOY:
                 loadProduct(toyProducts);
                 break;
-            case  Constants.ALLPRODUCT:
-                loadProduct(allPdproducts);
+            case Constants.ALLPRODUCT:
+                loadProduct(allProducts);
                 break;
         }
     }
@@ -164,8 +170,8 @@ public class FragmentAllProduct extends Fragment {
         }
     }
 
-    public void divideProduct(ArrayList<Product> allPdproducts) {
-        for (Product product : allPdproducts) {
+    public void divideProduct() {
+        for (Product product : allProducts) {
             if (product.getCategoryId() == 1 || product.getCategoryId() == 2) {
                 foodProducts.add(product);
             }
@@ -185,7 +191,7 @@ public class FragmentAllProduct extends Fragment {
         btnAll.setOnClickListener(v -> {
             addOtherButtonToDefault(btnFood, btnItem, btnCare, btnToy);
             setButtonToPressed(btnAll);
-            loadProduct(allPdproducts);
+            loadProduct(allProducts);
         });
         btnFood.setOnClickListener(v -> {
             addOtherButtonToDefault(btnAll, btnItem, btnCare, btnToy);
@@ -232,8 +238,99 @@ public class FragmentAllProduct extends Fragment {
         ldDialog.dissmis();
     }
 
+    @Override
+    public void onViewCreated(View view, Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        if (sKey != null && sKey.equals("0")) {
+            LoadingDialog ldDialog = new LoadingDialog();
+            ldDialog.showLoadingDialog(this.getContext());
+            view.postDelayed(() -> btnFood.performClick(), 300);
+            // Set the second menu item in the bottomNavigationView to be checked
+            if (getActivity() != null && getActivity() instanceof AppCompatActivity) {
+                BottomNavigationView bottomNavigationView = ((AppCompatActivity) getActivity()).findViewById(R.id.bottomNavigationView);
+                bottomNavigationView.getMenu().getItem(1).setChecked(true);
+            }
+            ldDialog.dissmis();
+
+        }
+        else if (sKey != null && sKey.equals("1")) {
+            LoadingDialog ldDialog = new LoadingDialog();
+            ldDialog.showLoadingDialog(this.getContext());
+            view.postDelayed(() -> btnToy.performClick(), 300);
+            // Set the second menu item in the bottomNavigationView to be checked
+            if (getActivity() != null && getActivity() instanceof AppCompatActivity) {
+                BottomNavigationView bottomNavigationView = ((AppCompatActivity) getActivity()).findViewById(R.id.bottomNavigationView);
+                bottomNavigationView.getMenu().getItem(1).setChecked(true);
+            }
+            ldDialog.dissmis();
+
+        }
+        else if (sKey != null && sKey.equals("2")) {
+            LoadingDialog ldDialog = new LoadingDialog();
+            ldDialog.showLoadingDialog(this.getContext());
+            view.postDelayed(() -> btnItem.performClick(), 300);
+            // Set the second menu item in the bottomNavigationView to be checked
+            if (getActivity() != null && getActivity() instanceof AppCompatActivity) {
+                BottomNavigationView bottomNavigationView = ((AppCompatActivity) getActivity()).findViewById(R.id.bottomNavigationView);
+                bottomNavigationView.getMenu().getItem(1).setChecked(true);
+            }
+            ldDialog.dissmis();
+
+        }
+        else if (sKey != null && sKey.equals("3")) {
+            LoadingDialog ldDialog = new LoadingDialog();
+            ldDialog.showLoadingDialog(this.getContext());
+            view.postDelayed(() -> btnCare.performClick(), 300);
+            // Set the second menu item in the bottomNavigationView to be checked
+            if (getActivity() != null && getActivity() instanceof AppCompatActivity) {
+                BottomNavigationView bottomNavigationView = ((AppCompatActivity) getActivity()).findViewById(R.id.bottomNavigationView);
+                bottomNavigationView.getMenu().getItem(1).setChecked(true);
+            }
+            ldDialog.dissmis();
+
+        }
+//        else if (sKey != null && sKey.equals("3")) {
+//            LoadingDialog ldDialog = new LoadingDialog();
+//            ldDialog.showLoadingDialog(this.getContext());
+//            view.postDelayed(() -> btnCare.performClick(), 300);
+//            // Set the second menu item in the bottomNavigationView to be checked
+//            if (getActivity() != null && getActivity() instanceof AppCompatActivity) {
+//                BottomNavigationView bottomNavigationView = ((AppCompatActivity) getActivity()).findViewById(R.id.bottomNavigationView);
+//                bottomNavigationView.getMenu().getItem(1).setChecked(true);
+//            }
+//            ldDialog.dissmis();
+//
+//        }
+        else if (sKey != null && sKey.equals("null")){
+            LoadingDialog ldDialog = new LoadingDialog();
+            ldDialog.showLoadingDialog(this.getContext());
+            view.postDelayed(() -> btnAll.performClick(), 300);
+            // Set the second menu item in the bottomNavigationView to be checked
+            if (getActivity() != null && getActivity() instanceof AppCompatActivity) {
+                BottomNavigationView bottomNavigationView = ((AppCompatActivity) getActivity()).findViewById(R.id.bottomNavigationView);
+                bottomNavigationView.getMenu().getItem(1).setChecked(true);
+            }
+            ldDialog.dissmis();
+        }
+        else {
+            LoadingDialog ldDialog = new LoadingDialog();
+            ldDialog.showLoadingDialog(this.getContext());
+            view.postDelayed(() -> btnAll.performClick(), 300);
+            // Set the second menu item in the bottomNavigationView to be checked
+            if (getActivity() != null && getActivity() instanceof AppCompatActivity) {
+                BottomNavigationView bottomNavigationView = ((AppCompatActivity) getActivity()).findViewById(R.id.bottomNavigationView);
+                bottomNavigationView.getMenu().getItem(1).setChecked(true);
+            }
+            ldDialog.dissmis();
+        }
 
 
-
-
+    }
 }
+
+
+
+
+
+
+

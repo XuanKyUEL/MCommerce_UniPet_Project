@@ -42,4 +42,5 @@
     <string name="insert_email_fgpw_cta">Vui lòng nhập Email đăng ký của bạn để thay đổi mật khẩu.</string>
     <string name="update_phone_nu_cta">Vui lòng cập nhật số điện thoại của bạn</string>
     <string name="update_phone_cta">Cập nhật số điện thoại của bạn tại đây</string>
+    <string name="err">lỗi</string>
 </resources>

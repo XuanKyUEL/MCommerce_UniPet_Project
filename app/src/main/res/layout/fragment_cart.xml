@@ -15,13 +15,21 @@
         android:gravity="center"
         tools:ignore="MissingConstraints">
         <androidx.appcompat.widget.Toolbar
-            android:id="@+id/toolbar"
+            android:id="@+id/toolbarall"
             style="@style/HEAD5_BOLD_18"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
+            android:layout_gravity="center"
             android:background="@color/white"
-            android:gravity="center"
             app:popupTheme="@style/Widget.Material3.PopupMenu.Overflow">
+
+            <TextView
+                style="@style/HEAD5_BOLD_18"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="Giỏ hàng"
+                android:textColor="@color/darkPrimary" />
         </androidx.appcompat.widget.Toolbar>
     </com.google.android.material.appbar.AppBarLayout>
     <androidx.recyclerview.widget.RecyclerView

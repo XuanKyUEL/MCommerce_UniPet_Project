@@ -30,24 +30,17 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:background="@color/white"
-                android:padding="5dp"
+                android:padding="10dp"
                 android:layout_gravity="right"
                 android:layout_marginEnd="12dp"
                 android:src="@drawable/detailproduct_cart" />
 
-            <!--            <ImageButton-->
-            <!--                style="@style/HEAD5_BOLD_18"-->
-            <!--                android:layout_width="300dp"-->
-            <!--                android:layout_height="wrap_content"-->
-            <!--                android:gravity="center"-->
-            <!--                android:text="Sản phẩm yêu thích"-->
-            <!--                android:textColor="@color/darkPrimary" />-->
         </androidx.appcompat.widget.Toolbar>
 
 
     </com.google.android.material.appbar.AppBarLayout>
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <RelativeLayout
         android:id="@+id/constraintLayout"
         android:layout_width="match_parent"
         android:layout_height="250dp"
@@ -60,11 +53,31 @@
         app:layout_constraintTop_toBottomOf="@+id/appBarLayout2">
 
         <ImageView
+            android:id="@+id/imagesale"
+            android:layout_width="60dp"
+            android:layout_height="50dp"
+            android:layout_marginTop="18dp"
+            android:src="@drawable/salelayout"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/textsalepercent"
+            style="@style/HEAD5_BOLD_18"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="30dp"
+            android:layout_marginStart="5dp"
+            android:text="-35%"
+            android:textColor="@color/white" />
+
+        <ImageView
             android:id="@+id/productImageDetail"
-            android:layout_width="match_parent"
+            android:layout_width="350dp"
+            android:layout_centerInParent="true"
             android:layout_height="match_parent"
             android:src="@drawable/pate1"/>
-    </androidx.constraintlayout.widget.ConstraintLayout>
+    </RelativeLayout>
 
     <ScrollView
         android:layout_width="match_parent"
@@ -147,10 +160,10 @@
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
                 <CheckBox
+                    android:id="@+id/chkFavouriteProductDetail"
                     android:layout_width="30dp"
                     android:layout_height="30dp"
                     android:layout_gravity="center_vertical"
-                    android:layout_marginTop="2dp"
                     android:button="@drawable/selector_favourite_item" />
 
             </LinearLayout>
