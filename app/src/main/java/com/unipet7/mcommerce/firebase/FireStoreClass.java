@@ -30,6 +30,7 @@ import com.unipet7.mcommerce.fragments.Profile;
 import com.unipet7.mcommerce.models.Product;
 import com.unipet7.mcommerce.models.ProductCart;
 import com.unipet7.mcommerce.models.User;
+import com.unipet7.mcommerce.models.Voucher;
 import com.unipet7.mcommerce.utils.Constants;
 import com.unipet7.mcommerce.utils.LoadingDialog;
 
@@ -297,73 +298,84 @@ public class FireStoreClass {
         return favoriteProducts;
     }
 
-    public void addToCart(double productId, String productName, double productPrice, String productImageUrl) {
+    public void addToCart(String userId, double productId, String productName, double productPrice, String productImageUrl) {
         String currentUserId = getCurrentUID();
-        // Lấy reference đến collection "cart"
-        CollectionReference cartRef = UniPetdb.collection("cart");
-
-        // Tạo một document mới trong collection "cart"
-        DocumentReference newCartItemRef = cartRef.document();
-
-        // Tạo một đối tượng HashMap chứa thông tin sản phẩm
-        HashMap<String, Object> cartItem = new HashMap<>();
-        cartItem.put("productId", productId);
-        cartItem.put("productPrice", productPrice);
-        cartItem.put("productImageUrl", productImageUrl);
-        cartItem.put("productName", productName);
-        cartItem.put("numOfProduct", 1); // Mặc định số lượng sản phẩm là 1
-        cartItem.put("totalPrice", productPrice); // Tổng giá tiền ban đầu là giá tiền của sản phẩm
-
-        // Kiểm tra xem sản phẩm đã tồn tại trong giỏ hàng chưa
-        UniPetdb.collection("cart")
-                .whereEqualTo("productId", productId)
-                .get()
-                .addOnSuccessListener(queryDocumentSnapshots -> {
-                    if (!queryDocumentSnapshots.isEmpty()) {
-                        // Nếu sản phẩm đã tồn tại trong giỏ hàng, tăng số lượng sản phẩm
-                        DocumentSnapshot doc = queryDocumentSnapshots.getDocuments().get(0);
-                        int currentNumOfProduct = doc.getLong("numOfProduct").intValue();
-                        double currentTotalPrice = doc.getDouble("totalPrice");
-
-                        // Cập nhật số lượng sản phẩm và tổng giá tiền mới
-                        cartItem.put("numOfProduct", currentNumOfProduct + 1);
-                        cartItem.put("totalPrice", currentTotalPrice + productPrice);
-
-                        // Cập nhật thông tin sản phẩm trong giỏ hàng
-                        doc.getReference().set(cartItem, SetOptions.merge());
-                    } else {
-                        // Nếu sản phẩm chưa tồn tại trong giỏ hàng, thêm sản phẩm mới vào giỏ hàng
-                        UniPetdb.collection("cart").document().set(cartItem);
+        DocumentReference userRef = UniPetdb.collection("users").document(currentUserId);
+        userRef.get()
+                .addOnSuccessListener(documentSnapshot -> {
+                    if (documentSnapshot.exists()) {
+                        User user = documentSnapshot.toObject(User.class);
+                        if (user != null) {
+                            String userID = user.getId();
+                            CollectionReference cartRef = UniPetdb.collection("cart");
+                            DocumentReference newCartItemRef = cartRef.document();
+                            HashMap<String, Object> cartItem = new HashMap<>();
+                            cartItem.put("userId", currentUserId);
+                            cartItem.put("productId", productId);
+                            cartItem.put("productPrice", productPrice);
+                            cartItem.put("productImageUrl", productImageUrl);
+                            cartItem.put("productName", productName);
+                            cartItem.put("numOfProduct", 1);
+                            cartItem.put("totalPrice", productPrice);
+                            UniPetdb.collection("cart")
+                                    .whereEqualTo("productId", productId)
+                                    .whereEqualTo("userId", currentUserId)
+                                    .get()
+                                    .addOnSuccessListener(queryDocumentSnapshots -> {
+                                        if (!queryDocumentSnapshots.isEmpty()) {
+                                            DocumentSnapshot doc = queryDocumentSnapshots.getDocuments().get(0);
+                                            int currentNumOfProduct = doc.getLong("numOfProduct").intValue();
+                                            double currentTotalPrice = doc.getDouble("totalPrice");
+                                            cartItem.put("numOfProduct", currentNumOfProduct + 1);
+                                            cartItem.put("totalPrice", currentTotalPrice + productPrice);
+                                            doc.getReference().set(cartItem, SetOptions.merge());
+                                        } else {
+                                            newCartItemRef.set(cartItem);
+                                        }
+                                    })
+                                    .addOnFailureListener(e -> {
+                                        Log.e("FireStoreClass", "Error checking cart for existing product", e);
+                                    });
+                        }
                     }
                 })
                 .addOnFailureListener(e -> {
-                    Log.e("FireStoreClass", "Error checking cart for existing product", e);
+                    Log.e("FireStoreClass", "Error getting user information", e);
                 });
     }
-
-
-
     public void getCartItemsRealtime(Context context, CartAdapter.OnQuantityChangeListener listener) {
-        UniPetdb.collection("cart")
-                .addSnapshotListener((value, error) -> {
-                    if (error != null) {
-                        Log.e("FireStoreClass", "Error listening for cart updates", error);
-                        return;
-                    }
-                    if (value != null) {
-                        ArrayList<ProductCart> cartItems = new ArrayList<>();
-                        for (DocumentSnapshot document : value.getDocuments()) {
-                            ProductCart productCart = document.toObject(ProductCart.class);
-                            if (productCart != null) {
-                                cartItems.add(productCart);
-                            }
+        String currentUserId = getCurrentUID();
+        if (currentUserId != null && !currentUserId.isEmpty()) {
+            UniPetdb.collection("cart")
+                    .whereEqualTo("userId", currentUserId)
+                    .addSnapshotListener((value, error) -> {
+                        if (error != null) {
+                            Log.e("FireStoreClass", "Error listening for cart updates", error);
+                            return;
                         }
-
-                        // Gửi danh sách sản phẩm về adapter
-                        CartAdapter adapter = new CartAdapter(context, cartItems);
-                        adapter.setOnQuantityChangeListener(listener);
-                    }
-                });
+                        if (value != null) {
+                            ArrayList<ProductCart> cartItems = new ArrayList<>();
+                            for (DocumentSnapshot document : value.getDocuments()) {
+                                ProductCart productCart = document.toObject(ProductCart.class);
+                                if (productCart != null) {
+                                    Log.d("Firestore", "productCart userId: " + productCart.getUserId());
+                                    Log.d("Firestore", "currentUserId: " + currentUserId);
+                                    if (productCart.getUserId().equals(currentUserId)) {
+                                        cartItems.add(productCart);
+                                    }
+                                } else {
+                                    Log.e("Firestore", "productCart is null");
+                                }
+                            }
+                            CartAdapter adapter = new CartAdapter(context, cartItems);
+                            adapter.setOnQuantityChangeListener(listener);
+                        } else {
+                            Log.e("Firestore", "value is null");
+                        }
+                    });
+        } else {
+            Log.e("FireStoreClass", "Current user ID is null or empty");
+        }
     }
     public void deleteCartItem(String productId) {
         FirebaseFirestore db = FirebaseFirestore.getInstance();
@@ -375,11 +387,9 @@ public class FireStoreClass {
                         for (QueryDocumentSnapshot document : queryDocumentSnapshots) {
                             document.getReference().delete()
                                     .addOnSuccessListener(aVoid -> {
-                                        // Xóa thành công
                                         Log.d("FireStoreClass", "Xóa sản phẩm khỏi cơ sở dữ liệu thành công");
                                     })
                                     .addOnFailureListener(e -> {
-                                        // Xảy ra lỗi khi xóa
                                         Log.e("FireStoreClass", "Lỗi khi xóa sản phẩm khỏi cơ sở dữ liệu", e);
                                     });
                         }
@@ -389,6 +399,35 @@ public class FireStoreClass {
                     Log.e("FireStoreClass", "Error checking cart for existing product", e);
                 });
     }
+    public void getAllVouchers(OnVoucherListListener listener) {
+        UniPetdb.collection("vouchers")
+                .get()
+                .addOnSuccessListener(queryDocumentSnapshots -> {
+                    ArrayList<Voucher> vouchers = new ArrayList<>();
+                    for (DocumentSnapshot document : queryDocumentSnapshots.getDocuments()) {
+                        Voucher voucher = document.toObject(Voucher.class);
+                        vouchers.add(voucher);
+                    }
+                    listener.onSuccess(vouchers);
+                })
+                .addOnFailureListener(e -> {
+                    listener.onFailure("Error fetching vouchers: " + e.getMessage());
+                });
+    }
+    public interface OnVoucherListListener {
+        void onSuccess(ArrayList<Voucher> vouchers);
+        void onFailure(String errorMessage);
+    }
+
+
+
+
+
+
+
+
+
+
 
     public void addToFavoriteFrag(Fragment fragment, int productId) {
         UniPetdb.collection(Constants.USERS)
@@ -397,7 +436,6 @@ public class FireStoreClass {
                 .addOnSuccessListener(aVoid -> {
                     Toast.makeText(context, "Đã thêm vào danh sách yêu thích", Toast.LENGTH_SHORT).show();
                     userFav();
-                    // if fragment instance of Home and allProduct then send notification wishlist fragment to update
                     if (fragment instanceof Fragment_Wishlist_Product) {
                         Fragment_Wishlist_Product fragment_wishlist_product = (Fragment_Wishlist_Product) fragment;
                         fragment_wishlist_product.loadFavoriteProducts(userFav());

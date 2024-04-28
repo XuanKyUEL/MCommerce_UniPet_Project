@@ -7,14 +7,24 @@ public class ProductCart {
     private Double totalPrice;
     private Integer numOfProduct;
     private Integer productId;
+    private String userId;
 
-    public ProductCart(String productImageUrl, String productName, Double productPrice, Double totalPrice, Integer numOfProduct, Integer productId) {
+    public String getUserId() {
+        return userId;
+    }
+
+    public void setUserId(String userId) {
+        this.userId = userId;
+    }
+
+    public ProductCart(String productImageUrl, String productName, Double productPrice, Double totalPrice, Integer numOfProduct, Integer productId, String userId) {
         this.productImageUrl = productImageUrl;
         this.productName = productName;
         this.productPrice = productPrice;
         this.totalPrice = totalPrice;
         this.numOfProduct = numOfProduct;
         this.productId = productId;
+        this.userId = userId;
     }
 
     public Integer getProductId() {
@@ -65,7 +75,6 @@ public class ProductCart {
         this.numOfProduct = numOfProduct;
     }
 
-    // Constructor mặc định (cần cho việc deserialization từ Firebase)
     public ProductCart() {
     }
 }
