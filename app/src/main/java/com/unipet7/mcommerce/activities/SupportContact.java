@@ -60,7 +60,7 @@ public class SupportContact extends AppCompatActivity {
         assert actionBar != null;
         actionBar.setDisplayHomeAsUpEnabled(true);
         // Set icon arrow
-        actionBar.setHomeAsUpIndicator(R.drawable.ic_back);
+        actionBar.setHomeAsUpIndicator(R.drawable.ic_back_profile);
         actionBar.setDisplayShowTitleEnabled(false);;
     }
 }
