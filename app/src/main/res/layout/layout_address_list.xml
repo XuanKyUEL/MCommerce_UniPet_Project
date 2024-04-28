@@ -7,7 +7,8 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        android:layout_weight="8">
         <ImageView
             android:paddingLeft="5dp"
             android:layout_width="30dp"
@@ -36,13 +37,16 @@
                 android:paddingLeft="10dp"
                 android:text="2972 Westheimer Rd. Santa Ana "
                 android:textColor="@color/darkPrimary" />
+
         </LinearLayout>
         <ImageView
             android:id="@+id/editlayout"
-            android:layout_width="match_parent"
+            android:layout_width="20dp"
             android:layout_height="20dp"
             android:src="@drawable/ic_address_edit"
-            android:layout_gravity="end|center_horizontal"/>
+            android:layout_weight="2"
+            android:layout_gravity="center_vertical"/>
+
 
     </LinearLayout>
 

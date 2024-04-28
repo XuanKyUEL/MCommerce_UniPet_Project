@@ -8,7 +8,7 @@
     android:orientation="vertical"
     android:padding="10dp"
     android:background="@color/white"
-    android:id="@+id/HistoryPurchase">
+    android:id="@+id/product">
 
     <com.google.android.material.appbar.AppBarLayout
         android:layout_width="match_parent"
@@ -131,5 +131,9 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="20dp"
         android:layout_marginTop="10dp" />
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="20dp"
+        android:background="@color/white"/>
 
 </LinearLayout>
