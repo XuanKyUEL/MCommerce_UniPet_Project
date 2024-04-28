@@ -4,9 +4,10 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:id="@+id/containerpayment"
+    android:padding="5dp"
     tools:context=".activities.PaymentMethodDetails"
-    android:background="@color/white"
-    android:padding="15dp">
+    android:background="@color/white">
     <com.google.android.material.appbar.AppBarLayout
         android:id="@+id/appBarLayout"
         android:layout_width="match_parent"
@@ -18,7 +19,7 @@
         app:layout_constraintTop_toTopOf="parent">
 
         <androidx.appcompat.widget.Toolbar
-            android:id="@+id/toolbar"
+            android:id="@+id/toolbarcheckout"
             style="@style/HEAD5_BOLD_18"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
@@ -36,6 +37,7 @@
         <ScrollView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:padding="10dp"
             android:background="@color/white">
             <LinearLayout
                 android:layout_width="match_parent"
@@ -48,59 +50,71 @@
                     android:textColor="@color/brandPrimary"
                     style="@style/HEAD6_BOLD_16"/>
                 <androidx.cardview.widget.CardView
-                    android:layout_width="320dp"
-                    android:layout_height="108dp"
+                    android:layout_width="340dp"
+                    android:layout_height="120dp"
                     android:layout_gravity="center"
                     app:cardCornerRadius="8dp"
                     app:cardElevation="8dp"
                     android:layout_marginTop="10dp"
                     android:background="@color/white">
+
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
                         android:orientation="vertical"
-                        android:padding="10dp"
-                        android:layout_gravity="center_vertical">
+                        android:padding="10dp">
+
                         <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:orientation="horizontal"
-                            android:layout_marginBottom="10dp">
+                            android:layout_marginBottom="10dp"
+                            android:orientation="horizontal">
+
                             <TextView
                                 android:id="@+id/txtUserName"
-                                style="@style/HEAD6_BOLD_16"
+                                style="@style/BODY_LARGE_SEMI_BOLD_16"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="8"
                                 android:text="Nhân Đinh"
-                                android:textColor="@color/black"/>
+                                android:textColor="@color/black" />
 
                             <TextView
                                 android:id="@+id/txtChangeAddress"
+                                style="@style/BODY_SMALL_MED_12"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:text="Thay đổi"
-                                style="@style/BODY_SMALL_MED_12"
-                                android:textColor="@color/brandPrimary"/>
+                                android:textColor="@color/brandPrimary" />
 
                         </LinearLayout>
+
+                        <TextView
+                            android:id="@+id/txtphonenumber"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginBottom="5dp"
+                            android:text="09048937492"
+                            android:textColor="@color/black"
+                            style="@style/BODY_MED_REG_14" />
+
                         <TextView
                             android:id="@+id/txtAddressStreetName"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
+                            android:layout_marginBottom="5dp"
                             android:text="36 Nguyễn Tri Phương"
-                            android:textSize="14dp"
-                            android:fontFamily="@font/svn_gilroy_regular"
                             android:textColor="@color/black"
-                            android:layout_marginBottom="5dp"/>
+                            style="@style/BODY_MED_REG_14" />
+
                         <TextView
                             android:id="@+id/txtOtherAddressInfo"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:text="Đông Hòa, Dĩ An, Bình Dương"
-                            android:textSize="14dp"
-                            android:fontFamily="@font/svn_gilroy_regular"
-                            android:textColor="@color/black" />
+                            android:textColor="@color/black"
+                            style="@style/BODY_MED_REG_14" />
                     </LinearLayout>
 
                 </androidx.cardview.widget.CardView>
@@ -113,8 +127,8 @@
                     android:layout_marginTop="10dp"/>
 
                 <androidx.cardview.widget.CardView
-                    android:layout_width="320dp"
-                    android:layout_height="wrap_content"
+                    android:layout_width="340dp"
+                    android:layout_height="40dp"
                     android:layout_gravity="center"
                     android:layout_marginTop="10dp"
                     android:background="@color/white"
@@ -135,11 +149,11 @@
 
                             <TextView
                                 android:id="@+id/txtPaymentMethodName"
-                                style="@style/HEAD6_BOLD_16"
+                                style="@style/BODY_MED_SEM_14"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="8"
-                                android:text="Thanh toán khi nhận hàng"
+                                android:text="Hãy chọn phương thức thanh toán"
                                 android:textColor="@color/black" />
 
                             <TextView
@@ -188,8 +202,7 @@
                             android:id="@+id/edtDiscountCode"
                             android:layout_width="222dp"
                             android:layout_height="35dp"
-                            android:fontFamily="@font/svn_gilroy_regular"
-                            android:textSize="12dp"
+                            style="@style/BODY_MED_REGULAR_14"
                             android:text="Nhập mã khuyến mãi"
                             android:textColor="#A2A2A2"
                             android:background="@drawable/search_background"
@@ -202,13 +215,14 @@
                             android:layout_gravity="end|center" />
                     </FrameLayout>
                     <Button
+                        android:id="@+id/btnvoucheruse"
                         android:layout_width="wrap_content"
                         android:layout_height="35dp"
                         android:layout_gravity="center_vertical"
                         android:text="Áp dụng"
                         android:textStyle="bold"
                         android:textSize="12dp"
-                        android:layout_marginStart="30dp"
+                        android:layout_marginStart="20dp"
                         android:layout_weight="3"
                         android:textColor="@color/white"
                         android:background="@drawable/custom_button_paymenmethoddetails"/>
@@ -314,7 +328,7 @@
                             android:layout_gravity="center"
                             android:text="Thanh toán"
                             style="@style/HEAD6_BOLD_16"
-                            android:layout_marginTop="10dp"
+                            android:layout_marginTop="20dp"
                             android:background="@drawable/button_custom"/>
 
                     </LinearLayout>

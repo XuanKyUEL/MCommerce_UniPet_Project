@@ -133,6 +133,25 @@ public class FireStoreClass {
                 }));
 
     }
+    public void getDetailProducts(DetailProduct activity, ArrayList<Product> allProducts) {
+        getFavList(favList -> UniPetdb.collection(Constants.PRODUCTS)
+                .get()
+                .addOnSuccessListener(queryDocumentSnapshots -> {
+                    if (!queryDocumentSnapshots.isEmpty()) {
+                        for (int i = 0; i < queryDocumentSnapshots.size(); i++) {
+                            Product product = queryDocumentSnapshots.getDocuments().get(i).toObject(Product.class);
+                            product.isFavoriteProduct(favList);
+                            allProducts.add(product);
+                            Log.i("FireStoreClass", "getDetailProducts: " + product.getProductname());
+                        }
+                        activity.configAdaptersProductDetail();
+                    }
+                })
+                .addOnFailureListener(e -> {
+                    Log.e("FireStoreClass", "getDetailProducts: ", e);
+                }));
+
+    }
 
     public void getSalesProducts(Home home) {
         ArrayList<Product> productsSale = new ArrayList<>();
