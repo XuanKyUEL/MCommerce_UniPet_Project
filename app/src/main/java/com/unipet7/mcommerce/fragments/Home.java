@@ -1,19 +1,43 @@
 package com.unipet7.mcommerce.fragments;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 
+import androidx.activity.OnBackPressedCallback;
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentActivity;
 import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+
+import androidx.viewpager2.widget.CompositePageTransformer;
+import androidx.viewpager2.widget.MarginPageTransformer;
+import androidx.viewpager2.widget.ViewPager2;
+
+import android.util.Log;
+import android.view.ActionMode;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
+
+import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.android.material.navigation.NavigationBarView;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.firestore.FirebaseFirestore;
 
 import com.unipet7.mcommerce.R;
+import com.unipet7.mcommerce.activities.MainActivity;
 import com.unipet7.mcommerce.activities.Notification;
 import com.unipet7.mcommerce.activities.ProfileFunction;
 import com.unipet7.mcommerce.activities.SearchProductList;
@@ -23,6 +47,7 @@ import com.unipet7.mcommerce.databinding.FragmentHomeBinding;
 import com.unipet7.mcommerce.firebase.FireStoreClass;
 import com.unipet7.mcommerce.models.Blogs;
 import com.unipet7.mcommerce.models.Product;
+import com.unipet7.mcommerce.models.SliderItems;
 import com.unipet7.mcommerce.models.User;
 import com.unipet7.mcommerce.utils.LoadingDialog;
 
@@ -61,9 +86,20 @@ public class Home extends Fragment {
 
     private List<Integer> favList = new ArrayList<>();
 
+
+    public ProductAdapter adapterSale;
+    public ProductAdapter adapterDog;
+    public ProductAdapter adapterCat;
+    private BottomNavigationView bottomNavigationView;
+    private MainActivity mainActivity;
+    private FragmentTransaction transaction;
+
+    private String sId;
+
     private RecyclerView saleRecyclerView, dogRecyclerView, catRecyclerView;
 
     FireStoreClass fireStoreClass = new FireStoreClass();
+
 
     public Home() {
         // Required empty public constructor
@@ -102,10 +138,18 @@ public class Home extends Fragment {
         }
     }
 
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
+
+        if (binding == null) {
+            binding = FragmentHomeBinding.inflate(inflater, container, false);
+
+        }
+
+
         binding = FragmentHomeBinding.inflate(inflater, container, false);
         mapping();
         loadBlog();
@@ -117,6 +161,7 @@ public class Home extends Fragment {
         loadHomeUserAndProduct();
         return binding.getRoot();
     }
+
 
 
     private void mapping() {
@@ -134,35 +179,31 @@ public class Home extends Fragment {
 
     private void addEvents() {
         binding.txtXemThem1.setOnClickListener(v -> {
-            Fragment allproduct = new FragmentAllProduct();
-            FragmentManager fragmentManager = requireActivity().getSupportFragmentManager();
+            sId = "null";
+            open();
 
-            // Thực hiện giao diện chuyển đổi Fragment
-            fragmentManager.beginTransaction()
-                    .replace(((ViewGroup) requireView().getParent()).getId(), allproduct)
-                    .addToBackStack(null)
-                    .commit();
         });
         binding.txtXemThem2.setOnClickListener(v -> {
-            Fragment allproduct = new FragmentAllProduct();
-            FragmentManager fragmentManager = requireActivity().getSupportFragmentManager();
+            sId = "null";
+            open();
 
-            // Thực hiện giao diện chuyển đổi Fragment
-            fragmentManager.beginTransaction()
-                    .replace(((ViewGroup) requireView().getParent()).getId(), allproduct)
-                    .addToBackStack(null)
-                    .commit();
+
         });
         binding.txtXemthem3.setOnClickListener(v -> {
-            Fragment allproduct = new FragmentAllProduct();
-            FragmentManager fragmentManager = requireActivity().getSupportFragmentManager();
+            sId = "null";
+            open();
 
-            // Thực hiện giao diện chuyển đổi Fragment
-            fragmentManager.beginTransaction()
-                    .replace(((ViewGroup) requireView().getParent()).getId(), allproduct)
-                    .addToBackStack(null)
-                    .commit();
         });
+
+        binding.Xemthem4.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getActivity(), com.unipet7.mcommerce.activities.Blogs.class);
+                startActivity(intent);
+            }
+        });
+
+
         binding.Xemthem4.setOnClickListener(v -> {
             Intent intent = new Intent(getActivity(), com.unipet7.mcommerce.activities.Blogs.class);
             startActivity(intent);
@@ -171,14 +212,56 @@ public class Home extends Fragment {
             Intent intent = new Intent(getActivity(), com.unipet7.mcommerce.activities.Blogs.class);
             startActivity(intent);
         });
-        binding.imgCate1.setOnClickListener(v -> {
+        binding.imgCate1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                sId = "0";
+                open();
 
+            }
         });
+        binding.imgCate2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                sId = "1";
+                open();
+
+
+            }
+        });
+        binding.imgCate3.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                sId = "2";
+                open();
+
+            }
+        });
+        binding.imgCate4.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                sId = "3";
+                open();
+
+            }
+        });
+        binding.imgCate5.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                sId = "4";
+                open();
+
+
+            }
+        });
+
+
 
         binding.imageView.setOnClickListener(v -> {
             Intent intent = new Intent(getActivity(), Notification.class);
             startActivity(intent);
         });
+
     }
 
 
@@ -204,6 +287,15 @@ public class Home extends Fragment {
         binding.txtUserName.setText("Xin chào " + user.getName());
         loadingDialog.dissmis();
     }
+    private void open(){
+        FragmentAllProduct fg = new FragmentAllProduct();
+        fg.SetId(sId);
+        transaction = getParentFragmentManager().beginTransaction();
+        transaction.replace(R.id.homeLayout,fg);
+        transaction.addToBackStack(null);
+        transaction.commit();
+    }
+
 
     @Override
     public void onResume() {

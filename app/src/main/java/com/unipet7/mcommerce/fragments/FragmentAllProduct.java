@@ -15,7 +15,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.unipet7.mcommerce.R;
+import com.unipet7.mcommerce.activities.MainActivity;
 import com.unipet7.mcommerce.adapters.ProductAdapter;
 import com.unipet7.mcommerce.databinding.FragmentAllProductBinding;
 import com.unipet7.mcommerce.firebase.FireStoreClass;
@@ -24,7 +26,6 @@ import com.unipet7.mcommerce.utils.Constants;
 import com.unipet7.mcommerce.utils.LoadingDialog;
 
 import java.util.ArrayList;
-import java.util.List;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -46,7 +47,12 @@ public class FragmentAllProduct extends Fragment {
     private String mParam2;
     FragmentAllProductBinding binding;
     public ProductAdapter allPdadapter;
-    private ArrayList<Product> allProducts;
+    public ArrayList<Product> allProducts;
+    private String sKey;
+
+    public void SetId(String id) {
+        sKey = id;
+    }
 
     ArrayList<Button> categoryButtons = new ArrayList<>();
 
@@ -59,8 +65,6 @@ public class FragmentAllProduct extends Fragment {
     ArrayList<Product> itemProducts = new ArrayList<>();
 
     Button btnAll, btnFood, btnItem, btnCare, btnToy;
-
-    List<Integer> favList = new ArrayList<>();
 
     public FragmentAllProduct() {
         // Required empty public constructor
@@ -83,6 +87,15 @@ public class FragmentAllProduct extends Fragment {
         fragment.setArguments(args);
         return fragment;
     }
+
+    public static FragmentAllProduct newInstance(String category) {
+        FragmentAllProduct fragment = new FragmentAllProduct();
+        Bundle args = new Bundle();
+        args.putString("category", category);
+        fragment.setArguments(args);
+        return fragment;
+    }
+
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -110,7 +123,14 @@ public class FragmentAllProduct extends Fragment {
         ldDialog.dissmis();
         loadProduct(allProducts);
         cateClickEvent();
-        binding.btnAll.performClick();
+        Bundle bundle = getArguments();
+        if (bundle != null) {
+            String category = bundle.getString(Constants.CATEGORY);
+            assert category != null;
+            loadProductOnCategory(category);
+        } else {
+            binding.btnAll.performClick();
+        }
         return binding.getRoot();
 
     }
@@ -137,11 +157,9 @@ public class FragmentAllProduct extends Fragment {
             case Constants.TOY:
                 loadProduct(toyProducts);
                 break;
-            case  Constants.ALLPRODUCT:
+            case Constants.ALLPRODUCT:
                 loadProduct(allProducts);
                 break;
-            default:
-                loadProduct(allProducts);
         }
     }
 
@@ -210,17 +228,109 @@ public class FragmentAllProduct extends Fragment {
         buttonUIDefault(categoryButtons);
     }
 
-    public void loadProduct(ArrayList<Product> products) {
+    private void loadProduct(ArrayList<Product> products) {
         LoadingDialog ldDialog = new LoadingDialog();
         ldDialog.showLoadingDialog(this.getContext());
         ProductAdapter adapter = new ProductAdapter(products);
-        // set layout manager to grid layout with 2 columns and stretch the items to fill the screen
-        binding.lvlAllProduct.setLayoutManager(new GridLayoutManager(this.getContext(), 2, GridLayoutManager.VERTICAL, false));
+        binding.lvlAllProduct.setLayoutManager(new GridLayoutManager(getContext(), 2));
         binding.lvlAllProduct.setAdapter(adapter);
-        binding.lvlAllProduct.setHasFixedSize(true);
+        binding.lvlAllProduct.setHasFixedSize(false);
         ldDialog.dissmis();
     }
 
+    @Override
+    public void onViewCreated(View view, Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        if (sKey != null && sKey.equals("0")) {
+            LoadingDialog ldDialog = new LoadingDialog();
+            ldDialog.showLoadingDialog(this.getContext());
+            view.postDelayed(() -> btnFood.performClick(), 300);
+            // Set the second menu item in the bottomNavigationView to be checked
+            if (getActivity() != null && getActivity() instanceof AppCompatActivity) {
+                BottomNavigationView bottomNavigationView = ((AppCompatActivity) getActivity()).findViewById(R.id.bottomNavigationView);
+                bottomNavigationView.getMenu().getItem(1).setChecked(true);
+            }
+            ldDialog.dissmis();
+
+        }
+        else if (sKey != null && sKey.equals("1")) {
+            LoadingDialog ldDialog = new LoadingDialog();
+            ldDialog.showLoadingDialog(this.getContext());
+            view.postDelayed(() -> btnToy.performClick(), 300);
+            // Set the second menu item in the bottomNavigationView to be checked
+            if (getActivity() != null && getActivity() instanceof AppCompatActivity) {
+                BottomNavigationView bottomNavigationView = ((AppCompatActivity) getActivity()).findViewById(R.id.bottomNavigationView);
+                bottomNavigationView.getMenu().getItem(1).setChecked(true);
+            }
+            ldDialog.dissmis();
+
+        }
+        else if (sKey != null && sKey.equals("2")) {
+            LoadingDialog ldDialog = new LoadingDialog();
+            ldDialog.showLoadingDialog(this.getContext());
+            view.postDelayed(() -> btnItem.performClick(), 300);
+            // Set the second menu item in the bottomNavigationView to be checked
+            if (getActivity() != null && getActivity() instanceof AppCompatActivity) {
+                BottomNavigationView bottomNavigationView = ((AppCompatActivity) getActivity()).findViewById(R.id.bottomNavigationView);
+                bottomNavigationView.getMenu().getItem(1).setChecked(true);
+            }
+            ldDialog.dissmis();
+
+        }
+        else if (sKey != null && sKey.equals("3")) {
+            LoadingDialog ldDialog = new LoadingDialog();
+            ldDialog.showLoadingDialog(this.getContext());
+            view.postDelayed(() -> btnCare.performClick(), 300);
+            // Set the second menu item in the bottomNavigationView to be checked
+            if (getActivity() != null && getActivity() instanceof AppCompatActivity) {
+                BottomNavigationView bottomNavigationView = ((AppCompatActivity) getActivity()).findViewById(R.id.bottomNavigationView);
+                bottomNavigationView.getMenu().getItem(1).setChecked(true);
+            }
+            ldDialog.dissmis();
+
+        }
+//        else if (sKey != null && sKey.equals("3")) {
+//            LoadingDialog ldDialog = new LoadingDialog();
+//            ldDialog.showLoadingDialog(this.getContext());
+//            view.postDelayed(() -> btnCare.performClick(), 300);
+//            // Set the second menu item in the bottomNavigationView to be checked
+//            if (getActivity() != null && getActivity() instanceof AppCompatActivity) {
+//                BottomNavigationView bottomNavigationView = ((AppCompatActivity) getActivity()).findViewById(R.id.bottomNavigationView);
+//                bottomNavigationView.getMenu().getItem(1).setChecked(true);
+//            }
+//            ldDialog.dissmis();
+//
+//        }
+        else if (sKey != null && sKey.equals("null")){
+            LoadingDialog ldDialog = new LoadingDialog();
+            ldDialog.showLoadingDialog(this.getContext());
+            view.postDelayed(() -> btnAll.performClick(), 300);
+            // Set the second menu item in the bottomNavigationView to be checked
+            if (getActivity() != null && getActivity() instanceof AppCompatActivity) {
+                BottomNavigationView bottomNavigationView = ((AppCompatActivity) getActivity()).findViewById(R.id.bottomNavigationView);
+                bottomNavigationView.getMenu().getItem(1).setChecked(true);
+            }
+            ldDialog.dissmis();
+        }
+        else {
+            LoadingDialog ldDialog = new LoadingDialog();
+            ldDialog.showLoadingDialog(this.getContext());
+            view.postDelayed(() -> btnAll.performClick(), 300);
+            // Set the second menu item in the bottomNavigationView to be checked
+            if (getActivity() != null && getActivity() instanceof AppCompatActivity) {
+                BottomNavigationView bottomNavigationView = ((AppCompatActivity) getActivity()).findViewById(R.id.bottomNavigationView);
+                bottomNavigationView.getMenu().getItem(1).setChecked(true);
+            }
+            ldDialog.dissmis();
+        }
 
 
+    }
 }
+
+
+
+
+
+
+
