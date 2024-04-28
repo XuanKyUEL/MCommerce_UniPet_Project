@@ -37,6 +37,7 @@ import com.unipet7.mcommerce.firebase.FireStoreClass;
 import com.unipet7.mcommerce.models.ProductCart;
 
 import java.util.ArrayList;
+import java.util.Map;
 
 public class fragment_cart extends Fragment {
     private static final int REQUEST_CODE_VOUCHER = 1;
@@ -135,7 +136,7 @@ public class fragment_cart extends Fragment {
             if (voucherCode.isEmpty()) {
                 startActivityForResult(new Intent(getContext(), VoucherActivity.class), REQUEST_CODE_VOUCHER);
             } else {
-                Toast.makeText(getContext(), "Voucher code entered: " + voucherCode, Toast.LENGTH_SHORT).show();
+                checkVoucherExistence(voucherCode);
             }
         });
         FireStoreClass fireStoreClass = new FireStoreClass();
@@ -152,6 +153,49 @@ public class fragment_cart extends Fragment {
 
         return binding.getRoot();
     }
+    private void checkVoucherExistence(String voucherCode) {
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+        db.collection("vouchers")
+                .whereEqualTo("voucher_code", voucherCode)
+                .get()
+                .addOnSuccessListener(queryDocumentSnapshots -> {
+                    if (!queryDocumentSnapshots.isEmpty()) {
+                        DocumentSnapshot voucherDoc = queryDocumentSnapshots.getDocuments().get(0);
+                        if (voucherDoc != null && voucherDoc.exists()) {
+                            this.voucherCode = voucherCode;
+                            Map<String, Object> voucherData = voucherDoc.getData();
+                            if (voucherData != null && voucherData.containsKey("voucher_numb")) {
+                                this.voucherNumb = voucherDoc.getDouble("voucher_numb");
+                            } else {
+                                Toast.makeText(getContext(), "Dữ liệu voucher numb không hợp lệ.", Toast.LENGTH_SHORT).show();
+                                return; // Thoát khỏi phương thức nếu dữ liệu không hợp lệ
+                            }
+                            if (voucherData != null && voucherData.containsKey("voucher_max_discount")) {
+                                this.voucherMaxDiscount = voucherDoc.getDouble("voucher_max_discount");
+                            } else {
+                                Toast.makeText(getContext(), "Dữ liệu voucher max không hợp lệ.", Toast.LENGTH_SHORT).show();
+                                return; // Thoát khỏi phương thức nếu dữ liệu không hợp lệ
+                            }
+                            if (voucherData != null && voucherData.containsKey("voucher_minium_value")) {
+                                this.voucherMiniumValue = voucherDoc.getDouble("voucher_minium_value");
+                            } else {
+                                Toast.makeText(getContext(), "Dữ liệu voucher min không hợp lệ.", Toast.LENGTH_SHORT).show();
+                                return; // Thoát khỏi phương thức nếu dữ liệu không hợp lệ
+                            }
+                            CalculateVoucher();
+                        } else {
+                            Toast.makeText(getContext(), "Dữ liệu voucher chung không hợp lệ.", Toast.LENGTH_SHORT).show();
+                        }
+                    } else {
+                        Toast.makeText(getContext(), "Voucher không tồn tại.", Toast.LENGTH_SHORT).show();
+                    }
+                })
+                .addOnFailureListener(e -> {
+                    Log.e("Firestore", "Error fetching voucher documents: ", e);
+                    Toast.makeText(getContext(), "Đã xảy ra lỗi khi kiểm tra voucher.", Toast.LENGTH_SHORT).show();
+                });
+    }
+
 
     public void updateCartItem(ProductCart productCart) {
         FirebaseFirestore db = FirebaseFirestore.getInstance();
@@ -276,6 +320,7 @@ public class fragment_cart extends Fragment {
             binding.edtVoucher.setText("Nhập mã giảm giá");
             double valueNeed = voucherMiniumValue - totalCartPrice;
             binding.txtDiscoutNumb.setText(String.valueOf(Math.round(0.0)) + " đ");
+            binding.txtTotalNumb.setText(String.valueOf(Math.round(totalCartPrice)) + " đ");
             Toast.makeText(getContext(), "Bạn cần mua thêm " + String.valueOf(Math.round(valueNeed)) + " đ để sử dụng voucher.", Toast.LENGTH_SHORT).show();
         }
     }

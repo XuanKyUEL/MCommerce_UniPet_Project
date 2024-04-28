@@ -23,14 +23,14 @@ public class VoucherActivity extends AppCompatActivity {
     ActivityVoucherBinding binding;
     ArrayList<Voucher> vouchers;
     AdapterVoucher adapter;
-    FireStoreClass fireStoreClass; // Thêm FireStoreClass để lấy dữ liệu từ Firestore
+    FireStoreClass fireStoreClass;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         binding = ActivityVoucherBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
-        fireStoreClass = new FireStoreClass(); // Khởi tạo FireStoreClass
+        fireStoreClass = new FireStoreClass();
         loadData();
         addEvents();
         setActionBar(binding.toolbarall);

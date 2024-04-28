@@ -228,7 +228,7 @@ public class FragmentAllProduct extends Fragment {
         buttonUIDefault(categoryButtons);
     }
 
-    private void loadProduct(ArrayList<Product> products) {
+    public void loadProduct(ArrayList<Product> products) {
         LoadingDialog ldDialog = new LoadingDialog();
         ldDialog.showLoadingDialog(this.getContext());
         ProductAdapter adapter = new ProductAdapter(products);
