@@ -9,14 +9,19 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.ActionBar;
+import androidx.recyclerview.widget.LinearLayoutManager;
 
 import com.bumptech.glide.Glide;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.unipet7.mcommerce.R;
+import com.unipet7.mcommerce.adapters.ProductAdapter;
 import com.unipet7.mcommerce.databinding.ActivityDetailProductBinding;
 import com.unipet7.mcommerce.firebase.FireStoreClass;
 import com.unipet7.mcommerce.models.Product;
 import com.unipet7.mcommerce.utils.Constants;
+import com.unipet7.mcommerce.utils.LoadingDialog;
+
+import java.util.ArrayList;
 
 public class DetailProduct extends BaseActivity {
 
@@ -31,6 +36,8 @@ public class DetailProduct extends BaseActivity {
     FireStoreClass fireStoreClass = new FireStoreClass();
 
     Product product;
+    ProductAdapter adapter;
+    public ArrayList<Product> allProducts = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,7 +53,21 @@ public class DetailProduct extends BaseActivity {
             this.product.setProductId(productId);
             Log.d("DetailProduct", "Product: " + product);
         }
+        loadProductDetail();
         addEvents();
+    }
+    private void loadProductDetail() {
+        LoadingDialog ldDialog1 = new LoadingDialog();
+        ldDialog1.showLoadingDialog(this);
+        FireStoreClass fireStoreClass = new FireStoreClass();
+        fireStoreClass.getDetailProducts(this, allProducts);
+        ldDialog1.dissmis();
+    }
+    public void configAdaptersProductDetail() {
+        adapter = new ProductAdapter(allProducts);
+        binding.rclProductDetail.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
+        binding.rclProductDetail.setAdapter(adapter);
+        binding.rclProductDetail.setHasFixedSize(true);
     }
 
     private void addEvents() {

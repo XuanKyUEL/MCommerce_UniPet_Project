@@ -1,5 +1,6 @@
 package com.unipet7.mcommerce.fragments;
 
+import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 
@@ -17,10 +18,15 @@ import android.widget.RadioButton;
 import android.widget.RadioGroup;
 
 import com.unipet7.mcommerce.R;
+import com.unipet7.mcommerce.adapters.PaymentMethodListener;
 import com.unipet7.mcommerce.databinding.FragmentPaymentMethodBinding;
+
+import org.checkerframework.checker.nullness.qual.NonNull;
 
 public class FragmentPaymentMethod extends Fragment {
     FragmentPaymentMethodBinding binding;
+    private PaymentMethodListener paymentMethodListener;
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -30,8 +36,16 @@ public class FragmentPaymentMethod extends Fragment {
         setActionBar(binding.toolbar);
         chooseMethod();
         addEvents();
+
         return binding.getRoot();
 
+    }
+    @Override
+    public void onAttach(@NonNull Context context) {
+        super.onAttach(context);
+        if (context instanceof PaymentMethodListener) {
+            paymentMethodListener = (PaymentMethodListener) context;
+        }
     }
 
     private void chooseMethod() {
@@ -50,6 +64,12 @@ public class FragmentPaymentMethod extends Fragment {
                 SharedPreferences.Editor editor = sharedPreferences.edit();
                 editor.putInt("checkedRadioButtonId", checkedId);
                 editor.apply();
+                // Gọi phương thức onPaymentMethodSelected của listener và truyền phương thức thanh toán được chọn
+                RadioButton checkedRadioButton = binding.paymentRadio.findViewById(checkedId);
+                String selectedPaymentMethod = checkedRadioButton.getText().toString();
+                if (paymentMethodListener != null) {
+                    paymentMethodListener.onPaymentMethodSelected(selectedPaymentMethod);
+                }
             }
         });
 

@@ -122,12 +122,9 @@ public class fragment_cart extends Fragment {
         setActionBar(binding.toolbarall);
         itemTouchHelper = new ItemTouchHelper(simpleCallback);
         itemTouchHelper.attachToRecyclerView(binding.rcCart);
-        binding.btnPaymentNow.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(getActivity(), PaymentMethodDetails.class);
-                startActivity(intent);
-            }
+        binding.btnPaymentNow.setOnClickListener(v -> {
+            Intent intent = new Intent(getActivity(), PaymentMethodDetails.class);
+            startActivity(intent);
         });
 
         binding.btnCircleVoucher.setOnClickListener(v -> startActivityForResult(new Intent(getContext(), VoucherActivity.class), REQUEST_CODE_VOUCHER));
