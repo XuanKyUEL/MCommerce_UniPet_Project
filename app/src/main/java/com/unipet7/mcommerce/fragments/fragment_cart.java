@@ -9,6 +9,7 @@ import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
@@ -24,6 +25,7 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.unipet7.mcommerce.R;
@@ -37,10 +39,16 @@ import com.unipet7.mcommerce.models.ProductCart;
 import java.util.ArrayList;
 
 public class fragment_cart extends Fragment {
+    private static final int REQUEST_CODE_VOUCHER = 1;
+    private String voucherCode;
+    private double voucherNumb;
+    private double voucherMaxDiscount;
+    private double voucherMiniumValue;
+
     FragmentCartBinding binding;
     ArrayList<ProductCart> productCarts;
+    private double totalCartPrice = 0.0;
     CartAdapter adapter;
-    private static final int REQUEST_CODE_VOUCHER = 101;
     ItemTouchHelper.SimpleCallback simpleCallback = new ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT | ItemTouchHelper.RIGHT) {
 
         @Override
@@ -52,12 +60,12 @@ public class fragment_cart extends Fragment {
         public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int direction) {
             int position = viewHolder.getAdapterPosition();
             if (direction == ItemTouchHelper.LEFT) {
-                String cartItemId = String.valueOf(productCarts.get(position).getProductId()); // Lấy cartItemId tương ứng với vị trí
+                String cartItemId = String.valueOf(productCarts.get(position).getProductId());
                 deleteItem(cartItemId, position);
             } else if (direction == ItemTouchHelper.RIGHT) {
-                // Xử lý khi vuốt sang phải nếu cần
             }
         }
+
 
         @Override
         public void onChildDraw(
@@ -71,49 +79,43 @@ public class fragment_cart extends Fragment {
             paint.setTextSize(30f);
             paint.setAntiAlias(true);
 
-            // Fix position for button
             float deleteButtonLeft = view.getRight() - (view.getRight() / 5f);
             float deleteButtonTop = view.getTop();
             float deleteButtonRight = view.getRight() - view.getPaddingRight();
             float deleteButtonBottom = view.getBottom();
 
-            // Draw a button
             float radius = 20f;
             RectF deleteButtonDelete = new RectF(deleteButtonLeft, deleteButtonTop, deleteButtonRight, deleteButtonBottom);
             c.drawRoundRect(deleteButtonDelete, radius, radius, paint);
 
-            // Set color for draw text inside button
             paint.setColor(getResources().getColor(R.color.white));
 
-            // Load the vector drawable
-            Drawable deleteIconDrawable = AppCompatResources.getDrawable(getContext(), R.drawable.ic_cart_delete); // Replace R.drawable.ic_cart_delete with your actual vector icon
+            Drawable deleteIconDrawable = AppCompatResources.getDrawable(getContext(), R.drawable.ic_cart_delete);
 
-            // Set the bounds for the drawable
             int iconWidth = deleteIconDrawable.getIntrinsicWidth();
             int iconHeight = deleteIconDrawable.getIntrinsicHeight();
             int iconLeft = (int) (deleteButtonDelete.centerX() - iconWidth / 2f);
             int iconTop = (int) (deleteButtonDelete.centerY() - iconHeight / 2f);
             deleteIconDrawable.setBounds(iconLeft, iconTop, iconLeft + iconWidth, iconTop + iconHeight);
 
-            // Draw the vector icon
             deleteIconDrawable.draw(c);
 
-            // dX of item run from 0 to `-X` width of screen
-            // Item will stop in dX / 5
             super.onChildDraw(c, recyclerView, viewHolder, dX / 5f, dY, actionState, isCurrentlyActive);
         }
 
+
+
         private void deleteItem(String productId, int position) {
-            // Xóa sản phẩm khỏi danh sách hiển thị
             productCarts.remove(position);
             adapter.notifyItemRemoved(position);
-
-            // Xóa sản phẩm khỏi cơ sở dữ liệu Firebase
             FireStoreClass fireStoreClass = new FireStoreClass();
             fireStoreClass.deleteCartItem(productId);
+            calculateTotalCartPrice();
+            CalculateVoucher();
         }
 
     };
+
     ItemTouchHelper itemTouchHelper;
 
     @Override
@@ -133,8 +135,6 @@ public class fragment_cart extends Fragment {
             if (voucherCode.isEmpty()) {
                 startActivityForResult(new Intent(getContext(), VoucherActivity.class), REQUEST_CODE_VOUCHER);
             } else {
-                // Add logic to handle voucher code
-                // For example:
                 Toast.makeText(getContext(), "Voucher code entered: " + voucherCode, Toast.LENGTH_SHORT).show();
             }
         });
@@ -142,37 +142,100 @@ public class fragment_cart extends Fragment {
         fireStoreClass.getCartItemsRealtime(getContext(), new CartAdapter.OnQuantityChangeListener() {
             @Override
             public void onQuantityChange(int position, double quantity) {
-                // Perform necessary actions when quantity changes in the cart
+                ProductCart productCart = productCarts.get(position);
+                productCart.setNumOfProduct((int) quantity);
+                productCart.setTotalPrice(productCart.getProductPrice() * quantity);
+                adapter.notifyItemChanged(position);
+                calculateTotalCartPrice();
             }
         });
 
         return binding.getRoot();
     }
 
+    public void updateCartItem(ProductCart productCart) {
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+        db.collection("cart")
+                .whereEqualTo("productId", productCart.getProductId())
+                .whereEqualTo("userId", productCart.getUserId())
+                .get()
+                .addOnSuccessListener(queryDocumentSnapshots -> {
+                    if (!queryDocumentSnapshots.isEmpty()) {
+                        DocumentSnapshot doc = queryDocumentSnapshots.getDocuments().get(0);
+                        doc.getReference().update("numOfProduct", productCart.getNumOfProduct(), "totalPrice", productCart.getTotalPrice());
+                    }
+                });
+        calculateTotalCartPrice();
+        CalculateVoucher();
+    }
+
+
     @Override
     public void onResume() {
-        loadData();
         super.onResume();
+        loadData();
+
+        if (adapter != null) {
+            adapter.setOnQuantityChangeListener(new CartAdapter.OnQuantityChangeListener() {
+                @Override
+                public void onQuantityChange(int position, double quantity) {
+                    ProductCart productCart = productCarts.get(position);
+                    productCart.setNumOfProduct((int) quantity);
+                    productCart.setTotalPrice(productCart.getProductPrice() * quantity);
+                    adapter.updateCartItem(productCart);
+                    adapter.notifyItemChanged(position);
+                    calculateTotalCartPrice();
+                    CalculateVoucher();
+                }
+            });
+        }
     }
+
 
     private void loadData() {
         FirebaseFirestore db = FirebaseFirestore.getInstance();
-        db.collection("cart")
-                .get()
-                .addOnSuccessListener(queryDocumentSnapshots -> {
-                    productCarts = new ArrayList<>();
-                    for (QueryDocumentSnapshot document : queryDocumentSnapshots) {
-                        ProductCart productCart = document.toObject(ProductCart.class);
-                        productCarts.add(productCart);
-                    }
-
-                    // Create adapter and update data
-                    adapter = new CartAdapter(requireContext(), productCarts);
-                    binding.rcCart.setLayoutManager(new GridLayoutManager(getContext(), 1));
-                    binding.rcCart.setAdapter(adapter);
-                })
-                .addOnFailureListener(e -> Log.e("Firestore", "Error fetching documents: ", e));
+        String currentUserId = new FireStoreClass().getCurrentUID();
+        if (currentUserId != null && !currentUserId.isEmpty()) {
+            db.collection("cart")
+                    .whereEqualTo("userId", currentUserId)
+                    .get()
+                    .addOnSuccessListener(queryDocumentSnapshots -> {
+                        productCarts = new ArrayList<>();
+                        for (QueryDocumentSnapshot document : queryDocumentSnapshots) {
+                            ProductCart productCart = document.toObject(ProductCart.class);
+                            productCarts.add(productCart);
+                        }
+                        adapter = new CartAdapter(requireContext(), productCarts);
+                        adapter.setOnQuantityChangeListener((position, newQuantity) -> {
+                            ProductCart productCart = productCarts.get(position);
+                            productCart.setNumOfProduct((int) newQuantity);
+                            productCart.setTotalPrice(productCart.getProductPrice() * newQuantity);
+                            adapter.notifyItemChanged(position);
+                            updateCartItem(productCart);
+                        });
+                        binding.rcCart.setLayoutManager(new GridLayoutManager(getContext(), 1));
+                        binding.rcCart.setAdapter(adapter);
+                        calculateTotalCartPrice();
+                    })
+                    .addOnFailureListener(e -> Log.e("Firestore", "Error fetching documents: ", e));
+        } else {
+            Log.e("Firestore", "Current user ID is null or empty");
+        }
     }
+    private void calculateTotalCartPrice() {
+        totalCartPrice = 0;
+        for (ProductCart cartItem : productCarts) {
+            totalCartPrice += cartItem.getTotalPrice();
+        }
+        binding.txtPreNumb.setText(String.valueOf(Math.round(totalCartPrice) + " đ"));
+
+        // Check if a voucher is applied
+        String voucherCode = binding.edtVoucher.getText().toString().trim();
+        if (!voucherCode.isEmpty()) {
+        } else {
+            binding.txtTotalNumb.setText(String.valueOf(Math.round(totalCartPrice) + " đ"));}
+    }
+
 
     public void setActionBar(@Nullable Toolbar toolbar) {
         ((AppCompatActivity) requireActivity()).setSupportActionBar(toolbar);
@@ -186,8 +249,35 @@ public class fragment_cart extends Fragment {
     public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == REQUEST_CODE_VOUCHER && resultCode == Activity.RESULT_OK && data != null) {
-            String voucherCode = data.getStringExtra("voucher_code");
-            binding.edtVoucher.setText(voucherCode);
+            voucherCode = data.getStringExtra("voucher_code");
+            voucherNumb = data.getDoubleExtra("voucher_numb", 0.0);
+            voucherMaxDiscount = data.getDoubleExtra("voucher_max", 0.0);
+            voucherMiniumValue = data.getDoubleExtra("voucher_minium_value", 0.0);
+            CalculateVoucher();
         }
     }
+
+    private void CalculateVoucher() {
+        if (totalCartPrice >= voucherMiniumValue) {
+            double discountPrice = totalCartPrice * voucherNumb / 100;
+            if (discountPrice <= voucherMaxDiscount) {
+                binding.edtVoucher.setText(voucherCode);
+                double finalPrice = totalCartPrice - discountPrice;
+                binding.txtDiscoutNumb.setText(String.valueOf(Math.round(discountPrice)) + " đ");
+                binding.txtTotalNumb.setText(String.valueOf(Math.round(finalPrice)) + " đ");
+            } else {
+                binding.edtVoucher.setText(voucherCode);
+                binding.txtDiscoutNumb.setText(String.valueOf(Math.round(voucherMaxDiscount)) + " đ");
+                double finalPrice = totalCartPrice - voucherMaxDiscount;
+                binding.txtTotalNumb.setText(String.valueOf(Math.round(finalPrice)) + " đ");
+            }
+        }
+        else {
+            binding.edtVoucher.setText("Nhập mã giảm giá");
+            double valueNeed = voucherMiniumValue - totalCartPrice;
+            binding.txtDiscoutNumb.setText(String.valueOf(Math.round(0.0)) + " đ");
+            Toast.makeText(getContext(), "Bạn cần mua thêm " + String.valueOf(Math.round(valueNeed)) + " đ để sử dụng voucher.", Toast.LENGTH_SHORT).show();
+        }
+    }
+
 }

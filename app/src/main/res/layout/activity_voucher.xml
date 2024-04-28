@@ -15,18 +15,24 @@
         android:layout_height="wrap_content"
         android:theme="@style/ThemeOverlay.AppCompat.DayNight.ActionBar"
         android:gravity="center"
-        app:layout_constraintTop_toTopOf="parent">
-
-        <!-- Toolbar -->
+        tools:ignore="MissingConstraints">
         <androidx.appcompat.widget.Toolbar
-            android:id="@+id/toolbar"
+            android:id="@+id/toolbarall"
             style="@style/HEAD5_BOLD_18"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
-            android:background="#FDF6FE"
-            android:gravity="center"
-            app:popupTheme="@style/Widget.Material3.PopupMenu.Overflow" />
+            android:layout_gravity="center"
+            android:background="@color/white"
+            app:popupTheme="@style/Widget.Material3.PopupMenu.Overflow">
 
+            <TextView
+                style="@style/HEAD5_BOLD_18"
+                android:layout_width="300dp"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="Voucher"
+                android:textColor="@color/darkPrimary" />
+        </androidx.appcompat.widget.Toolbar>
     </com.google.android.material.appbar.AppBarLayout>
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rvDiscountVoucher"
