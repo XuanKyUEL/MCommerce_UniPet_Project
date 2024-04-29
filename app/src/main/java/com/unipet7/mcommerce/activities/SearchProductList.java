@@ -14,6 +14,8 @@ import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.Gravity;
 import android.view.KeyEvent;
 import android.view.View;
@@ -34,6 +36,8 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.unipet7.mcommerce.R;
 import com.unipet7.mcommerce.adapters.ProductAdapter;
 import com.unipet7.mcommerce.databinding.ActivitySearchProductListBinding;
@@ -41,6 +45,7 @@ import com.unipet7.mcommerce.databinding.ActivitySupportContactBinding;
 import com.unipet7.mcommerce.firebase.FireStoreClass;
 import com.unipet7.mcommerce.fragments.fragment_cart;
 import com.unipet7.mcommerce.models.Product;
+import com.unipet7.mcommerce.utils.Constants;
 import com.unipet7.mcommerce.utils.LoadingDialog;
 
 import java.util.ArrayList;
@@ -57,7 +62,9 @@ public class SearchProductList extends AppCompatActivity {
     private ArrayList<Product> productsSale = new ArrayList<>();
     private ArrayList<Product> filteredProductList = new ArrayList<>();
     FireStoreClass fireStoreClass = new FireStoreClass();
-    ArrayList<Product> products;
+    ArrayList<Product> product;
+    private final FirebaseFirestore UniPetdb = FirebaseFirestore.getInstance();
+    List<Product> searchResults = new ArrayList<>();
 
     List<Integer> favList = new ArrayList<>();
     @Override
@@ -68,20 +75,41 @@ public class SearchProductList extends AppCompatActivity {
         setActionBar(binding.toolbarsearch);
         FireStoreClass fireStoreClass = new FireStoreClass();
         allProducts = new ArrayList<>();
+        searchkeyword();
         fireStoreClass.SearchAllProducts(this, allProducts);
         addEvents();
     }
-    private void addEvents() {
-        binding.toolbarsearch.setNavigationOnClickListener(v -> finish());
-        binding.arrangefilter.setOnClickListener(v -> showBottomSheet());
-        binding.filter.setOnClickListener(v -> showBottomSheet2());
-        binding.voucherfilter.setOnClickListener(v -> fireStoreClass.getSalesPFilter(SearchProductList.this));
-    }
-    public void loadSalesProducts(ArrayList<Product> productsSale) {
-        ProductAdapter adapterSale = new ProductAdapter(productsSale);
-        binding.lvlProductList.setAdapter(adapterSale);
-        binding.lvlProductList.setLayoutManager(new GridLayoutManager(this, 2, GridLayoutManager.VERTICAL, false));
-        binding.lvlProductList.setHasFixedSize(true);
+
+    private void searchkeyword() {
+            binding.editTextSearch.addTextChangedListener(new TextWatcher() {
+                @Override
+                public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+                }
+
+                @Override
+                public void onTextChanged(CharSequence s, int start, int before, int count) {
+                    String keyword = s.toString().trim().toLowerCase();
+                    searchResults.clear();
+
+                    for (Product product : allProducts) {
+                        if (product.getProductname().toLowerCase().contains(keyword)) {
+                            searchResults.add(product);
+                        }
+                    }
+                    int numberOfSearchResults = searchResults.size();
+                    String numberSearchText = numberOfSearchResults + " Kết quả tìm kiếm";
+                    binding.numbersearch.setText(numberSearchText);
+                    adapter.setData(searchResults);
+                    adapter.notifyDataSetChanged();
+                }
+
+
+                @Override
+                public void afterTextChanged(Editable s) {
+
+                }
+            });
     }
     public void configAdaptersSearch() {
         int numberOfProducts = allProducts.size();
@@ -90,6 +118,19 @@ public class SearchProductList extends AppCompatActivity {
         adapter = new ProductAdapter(allProducts);
         binding.lvlProductList.setLayoutManager(new GridLayoutManager(this, 2, GridLayoutManager.VERTICAL, false));
         binding.lvlProductList.setAdapter(adapter);
+        binding.lvlProductList.setHasFixedSize(true);
+    }
+
+    private void addEvents() {
+        binding.toolbarsearch.setNavigationOnClickListener(v -> finish());
+        binding.arrangefilter.setOnClickListener(v -> showBottomSheet());
+        binding.filter.setOnClickListener(v -> showBottomSheet2());
+        binding.voucherfilter.setOnClickListener(v -> fireStoreClass.getSalesPFilter(SearchProductList.this));
+        }
+    public void loadSalesProducts(ArrayList<Product> productsSale) {
+        ProductAdapter adapterSale = new ProductAdapter(productsSale);
+        binding.lvlProductList.setAdapter(adapterSale);
+        binding.lvlProductList.setLayoutManager(new GridLayoutManager(this, 2, GridLayoutManager.VERTICAL, false));
         binding.lvlProductList.setHasFixedSize(true);
     }
     private void showBottomSheet() {
