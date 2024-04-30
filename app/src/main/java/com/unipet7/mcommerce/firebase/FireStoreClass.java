@@ -318,7 +318,7 @@ public class FireStoreClass {
         return favoriteProducts;
     }
 
-    public void addToCart(String userId, double productId, String productName, double productPrice, String productImageUrl) {
+    public void addToCart(String userId, double productId, String productName, double productPrice, double numOfProduct ,String productImageUrl) {
         String currentUserId = getCurrentUID();
         DocumentReference userRef = UniPetdb.collection("users").document(currentUserId);
         userRef.get()
@@ -335,8 +335,8 @@ public class FireStoreClass {
                             cartItem.put("productPrice", productPrice);
                             cartItem.put("productImageUrl", productImageUrl);
                             cartItem.put("productName", productName);
-                            cartItem.put("numOfProduct", 1);
-                            cartItem.put("totalPrice", productPrice);
+                            cartItem.put("numOfProduct", numOfProduct);
+                            cartItem.put("totalPrice", productPrice*numOfProduct);
                             UniPetdb.collection("cart")
                                     .whereEqualTo("productId", productId)
                                     .whereEqualTo("userId", currentUserId)
@@ -346,8 +346,8 @@ public class FireStoreClass {
                                             DocumentSnapshot doc = queryDocumentSnapshots.getDocuments().get(0);
                                             int currentNumOfProduct = doc.getLong("numOfProduct").intValue();
                                             double currentTotalPrice = doc.getDouble("totalPrice");
-                                            cartItem.put("numOfProduct", currentNumOfProduct + 1);
-                                            cartItem.put("totalPrice", currentTotalPrice + productPrice);
+                                            cartItem.put("numOfProduct", currentNumOfProduct + numOfProduct);
+                                            cartItem.put("totalPrice", currentTotalPrice + productPrice*numOfProduct);
                                             doc.getReference().set(cartItem, SetOptions.merge());
                                         } else {
                                             newCartItemRef.set(cartItem);

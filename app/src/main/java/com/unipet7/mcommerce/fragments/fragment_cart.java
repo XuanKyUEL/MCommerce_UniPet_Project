@@ -1,5 +1,6 @@
 package com.unipet7.mcommerce.fragments;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Canvas;
@@ -12,11 +13,14 @@ import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.ActionBar;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.content.res.AppCompatResources;
 import androidx.appcompat.widget.Toolbar;
@@ -51,22 +55,55 @@ public class fragment_cart extends Fragment {
     private double totalCartPrice = 0.0;
     CartAdapter adapter;
     ItemTouchHelper.SimpleCallback simpleCallback = new ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT | ItemTouchHelper.RIGHT) {
+        private int lastSwipedPosition = -1;
 
         @Override
         public boolean onMove(@NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder, @NonNull RecyclerView.ViewHolder target) {
             return false;
         }
 
-        @Override
         public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int direction) {
-            int position = viewHolder.getAdapterPosition();
+            final int position = viewHolder.getAdapterPosition();
             if (direction == ItemTouchHelper.LEFT) {
-                String cartItemId = String.valueOf(productCarts.get(position).getProductId());
-                deleteItem(cartItemId, position);
-            } else if (direction == ItemTouchHelper.RIGHT) {
+                AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+                LayoutInflater inflater = LayoutInflater.from(getContext());
+                View dialogView = inflater.inflate(R.layout.dialogmessage, null);
+                builder.setView(dialogView);
+
+                TextView dialogMessage = dialogView.findViewById(R.id.tv_message_details_dialog);
+                @SuppressLint({"MissingInflatedId", "LocalSuppress"}) TextView dialogTitle = dialogView.findViewById(R.id.tv_title_dialog);
+                Button btnCancel = dialogView.findViewById(R.id.btn_cancel_dialog);
+                Button btnConfirm = dialogView.findViewById(R.id.btn_ok_dialog);
+                btnCancel.setText("Hủy");
+                btnConfirm.setText("Xóa");
+
+                final AlertDialog alertDialog = builder.create();
+
+                btnCancel.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        alertDialog.dismiss();
+                        if (lastSwipedPosition != -1) {
+                            adapter.notifyItemChanged(lastSwipedPosition);
+                            lastSwipedPosition = -1;
+                        }
+                    }
+                });
+                dialogMessage.setText("Bạn có muốn xóa sản phẩm khỏi giỏ hàng?");
+                dialogTitle.setText("Xóa sản phẩm");
+
+                btnConfirm.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        String cartItemId = String.valueOf(productCarts.get(position).getProductId());
+                        deleteItem(cartItemId, position);
+                        alertDialog.dismiss();
+                    }
+                });
+                alertDialog.show();
+                lastSwipedPosition = position;
             }
         }
-
 
         @Override
         public void onChildDraw(
@@ -104,8 +141,6 @@ public class fragment_cart extends Fragment {
             super.onChildDraw(c, recyclerView, viewHolder, dX / 5f, dY, actionState, isCurrentlyActive);
         }
 
-
-
         private void deleteItem(String productId, int position) {
             productCarts.remove(position);
             adapter.notifyItemRemoved(position);
@@ -114,8 +149,8 @@ public class fragment_cart extends Fragment {
             calculateTotalCartPrice();
             CalculateVoucher();
         }
-
     };
+
 
     ItemTouchHelper itemTouchHelper;
 
@@ -168,19 +203,19 @@ public class fragment_cart extends Fragment {
                                 this.voucherNumb = voucherDoc.getDouble("voucher_numb");
                             } else {
                                 Toast.makeText(getContext(), "Dữ liệu voucher numb không hợp lệ.", Toast.LENGTH_SHORT).show();
-                                return; // Thoát khỏi phương thức nếu dữ liệu không hợp lệ
+                                return;
                             }
                             if (voucherData != null && voucherData.containsKey("voucher_max_discount")) {
                                 this.voucherMaxDiscount = voucherDoc.getDouble("voucher_max_discount");
                             } else {
                                 Toast.makeText(getContext(), "Dữ liệu voucher max không hợp lệ.", Toast.LENGTH_SHORT).show();
-                                return; // Thoát khỏi phương thức nếu dữ liệu không hợp lệ
+                                return;
                             }
                             if (voucherData != null && voucherData.containsKey("voucher_minium_value")) {
                                 this.voucherMiniumValue = voucherDoc.getDouble("voucher_minium_value");
                             } else {
                                 Toast.makeText(getContext(), "Dữ liệu voucher min không hợp lệ.", Toast.LENGTH_SHORT).show();
-                                return; // Thoát khỏi phương thức nếu dữ liệu không hợp lệ
+                                return;
                             }
                             CalculateVoucher();
                         } else {
@@ -324,5 +359,4 @@ public class fragment_cart extends Fragment {
             Toast.makeText(getContext(), "Bạn cần mua thêm " + String.valueOf(Math.round(valueNeed)) + " đ để sử dụng voucher.", Toast.LENGTH_SHORT).show();
         }
     }
-
 }
