@@ -47,7 +47,9 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ViewHold
         this.productList = productList;
         fireStoreClass.getFavoriteList(this);
     }
-
+    public void setData(List<Product> newData) {
+        productList = newData;
+    }
 
     @NonNull
     @Override

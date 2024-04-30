@@ -33,14 +33,13 @@
         </androidx.appcompat.widget.Toolbar>
     </com.google.android.material.appbar.AppBarLayout>
     <EditText
-        android:id="@+id/editTextText"
+        android:id="@+id/searchallproduct"
         style="@style/BODY_SMALL_REGULAR_12"
         android:layout_width="match_parent"
         android:layout_height="40dp"
         android:layout_marginTop="8dp"
         android:background="@drawable/search_background"
         android:drawableStart="@drawable/search"
-        android:drawableEnd="@drawable/search_filter"
         android:drawablePadding="8dp"
         android:ems="10"
         android:hint="Tìm kiếm"

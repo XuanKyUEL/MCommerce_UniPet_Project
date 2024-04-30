@@ -9,6 +9,8 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
 
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -26,6 +28,7 @@ import com.unipet7.mcommerce.utils.Constants;
 import com.unipet7.mcommerce.utils.LoadingDialog;
 
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -53,6 +56,9 @@ public class FragmentAllProduct extends Fragment {
     public void SetId(String id) {
         sKey = id;
     }
+    List<Product> searchResults = new ArrayList<>();
+//    ProductAdapter adapter;
+private String currentCategory = Constants.ALLPRODUCT;
 
     ArrayList<Button> categoryButtons = new ArrayList<>();
 
@@ -122,6 +128,7 @@ public class FragmentAllProduct extends Fragment {
         fireStoreClass.getAllProducts(this, allProducts);
         ldDialog.dissmis();
         loadProduct(allProducts);
+        searchproduct();
         cateClickEvent();
         Bundle bundle = getArguments();
         if (bundle != null) {
@@ -135,6 +142,53 @@ public class FragmentAllProduct extends Fragment {
 
     }
 
+    private void searchproduct() {
+        ProductAdapter adapter = new ProductAdapter(new ArrayList<>());
+
+        binding.searchallproduct.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                String keyword = s.toString().trim().toLowerCase();
+                searchResults.clear();
+
+                ArrayList<Product> searchList;
+                if (currentCategory.equals(Constants.FOOD)) {
+                    searchList = foodProducts;
+                }
+                else if (currentCategory.equals(Constants.ITEM)){
+                    searchList = itemProducts;
+                }
+                else if (currentCategory.equals(Constants.HEALTH)){
+                    searchList = healthProducts;
+                }
+                else if (currentCategory.equals(Constants.TOY)){
+                    searchList = toyProducts;
+                } else searchList = allProducts;
+
+                for (Product product : searchList) {
+                    if (product.getProductname().toLowerCase().contains(keyword)) {
+                        searchResults.add(product);
+                    }
+                }
+                adapter.setData(searchResults);
+                adapter.notifyDataSetChanged();
+                binding.lvlAllProduct.setAdapter(adapter);
+
+            }
+
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+            }
+        });
+    }
+
     private void mapping() {
         btnAll = binding.btnAll;
         btnFood = binding.btnFood;
@@ -144,6 +198,7 @@ public class FragmentAllProduct extends Fragment {
     }
 
     private void loadProductOnCategory(String category) {
+        currentCategory = category;
         switch (category) {
             case Constants.FOOD:
                 loadProduct(foodProducts);
@@ -189,26 +244,31 @@ public class FragmentAllProduct extends Fragment {
 
     private void cateClickEvent() {
         btnAll.setOnClickListener(v -> {
+            currentCategory = Constants.ALLPRODUCT;
             addOtherButtonToDefault(btnFood, btnItem, btnCare, btnToy);
             setButtonToPressed(btnAll);
             loadProduct(allProducts);
         });
         btnFood.setOnClickListener(v -> {
+            currentCategory = Constants.FOOD;
             addOtherButtonToDefault(btnAll, btnItem, btnCare, btnToy);
             setButtonToPressed(btnFood);
             loadProduct(foodProducts);
         });
         btnItem.setOnClickListener(v -> {
+            currentCategory = Constants.ITEM;
             addOtherButtonToDefault(btnAll, btnFood, btnCare, btnToy);
             setButtonToPressed(btnItem);
             loadProduct(itemProducts);
         });
         btnCare.setOnClickListener(v -> {
+            currentCategory = Constants.HEALTH;
             addOtherButtonToDefault(btnAll, btnFood, btnItem, btnToy);
             setButtonToPressed(btnCare);
             loadProduct(healthProducts);
         });
         btnToy.setOnClickListener(v -> {
+            currentCategory = Constants.TOY;
             addOtherButtonToDefault(btnAll, btnFood, btnItem, btnCare);
             setButtonToPressed(btnToy);
             loadProduct(toyProducts);
@@ -228,7 +288,7 @@ public class FragmentAllProduct extends Fragment {
         buttonUIDefault(categoryButtons);
     }
 
-    private void loadProduct(ArrayList<Product> products) {
+    public void loadProduct(ArrayList<Product> products) {
         LoadingDialog ldDialog = new LoadingDialog();
         ldDialog.showLoadingDialog(this.getContext());
         ProductAdapter adapter = new ProductAdapter(products);
