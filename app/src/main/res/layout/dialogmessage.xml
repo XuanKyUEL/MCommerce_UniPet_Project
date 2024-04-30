@@ -23,7 +23,7 @@
             android:orientation="vertical">
 
             <TextView
-                android:id="@+id/tv_titel_dialog"
+                android:id="@+id/tv_title_dialog"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="@string/title_sample"
@@ -45,6 +45,8 @@
                 android:layout_height="wrap_content"
                 android:text="@string/message_details"
                 android:gravity="center"
+                android:layout_marginStart="10dp"
+                android:layout_marginEnd="10dp"
                 style="@style/BODY_LARGE_REGULAR_16"
                 android:layout_marginBottom="10dp"/>
 

@@ -3,6 +3,8 @@ package com.unipet7.mcommerce.activities;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
+import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -32,6 +34,7 @@ public class DetailProduct extends BaseActivity {
     ImageView ivProductImage, imvSalePercent;
 
     CheckBox cbFavorite;
+    Button btnAddcart;
 
     FireStoreClass fireStoreClass = new FireStoreClass();
 
@@ -95,6 +98,38 @@ public class DetailProduct extends BaseActivity {
                 Log.d("DetailProduct", "Remove product from favorite " + product.getProductId());
             }
         });
+        binding.imvPlus.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                increaseProductQuantity();
+            }
+        });
+        binding.imvMinus.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                decreaseProductQuantity();
+            }
+        });
+    }
+
+
+    private void increaseProductQuantity() {
+        int currentQuantity = Integer.parseInt(binding.txtNumberOrder.getText().toString());
+        if (currentQuantity < 999) {
+            currentQuantity++;
+            binding.txtNumberOrder.setText(String.valueOf(currentQuantity));
+        } else {
+            Toast.makeText(this, "Số lượng sản phẩm đã đạt giới hạn tối đa", Toast.LENGTH_SHORT).show();
+        }
+    }
+    private void decreaseProductQuantity() {
+        int currentQuantity = Integer.parseInt(binding.txtNumberOrder.getText().toString());
+        if (currentQuantity > 1) {
+            currentQuantity--;
+            binding.txtNumberOrder.setText(String.valueOf(currentQuantity));
+        } else {
+            Toast.makeText(this, "Số lượng sản phẩm đã đạt giới hạn tối thiểu", Toast.LENGTH_SHORT).show();
+        }
     }
 
     private void mapping() {
@@ -108,6 +143,7 @@ public class DetailProduct extends BaseActivity {
         imvSalePercent = binding.imagesale;
         ivProductImage = binding.productImageDetail;
         cbFavorite = binding.chkFavouriteProductDetail;
+        btnAddcart = binding.btnAddtoCart;
     }
 
     private void getProductDetail() {
@@ -132,13 +168,50 @@ public class DetailProduct extends BaseActivity {
             tvProductPrice.setText(formattedSalePrice);
             tvProductPresale.setPaintFlags(tvProductPresale.getPaintFlags() | android.graphics.Paint.STRIKE_THRU_TEXT_FLAG);
             tvProductPresale.setText(formattedPrice);
+            btnAddcart.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    String productName = product.getProductname();
+                    double productPrice = product.getProductprice() - (product.getProductprice()*product.getSalepercent() / 100);
+                    String productImage = product.getProductImageUrl();
+                    double productId = product.getProductId();
+                    double numOfProduct = Double.parseDouble(binding.txtNumberOrder.getText().toString());
+                    String userId = fireStoreClass.getCurrentUID();
+                    Log.d("DetailProduct", "productName: " + productName);
+                    Log.d("DetailProduct", "productPrice: " + productPrice);
+                    Log.d("DetailProduct", "numOfProduct: " + numOfProduct);
+                    Log.d("DetailProduct", "productImageUrl: " + productImage);
+                    Log.d("DetailProduct", "productId: " + productId);
+                    fireStoreClass.addToCart(userId, productId, productName, productPrice,numOfProduct ,productImage);
+                    Toast.makeText(DetailProduct.this, "Thêm vào giỏ hàng thành công", Toast.LENGTH_SHORT).show();
+                }
+            });
         } else {
             imvSalePercent.setVisibility(ImageView.INVISIBLE);
             tvSalePercent.setVisibility(TextView.INVISIBLE);
             tvProductPresale.setVisibility(TextView.INVISIBLE);
             tvProductPrice.setText(formattedPrice);
+            btnAddcart.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    String productName = product.getProductname();
+                    double productPrice = product.getProductprice() - (product.getProductprice()*product.getSalepercent() / 100);
+                    String productImage = product.getProductImageUrl();
+                    double productId = product.getProductId();
+                    double numOfProduct = Double.parseDouble(binding.txtNumberOrder.getText().toString());
+                    String userId = fireStoreClass.getCurrentUID();
+                    Log.d("DetailProduct", "productName: " + productName);
+                    Log.d("DetailProduct", "productPrice: " + productPrice);
+                    Log.d("DetailProduct", "numOfProduct: " + numOfProduct);
+                    Log.d("DetailProduct", "productImageUrl: " + productImage);
+                    Log.d("DetailProduct", "productId: " + productId);
+                    fireStoreClass.addToCart(userId, productId, productName, productPrice,numOfProduct ,productImage);
+                    Toast.makeText(DetailProduct.this, "Thêm vào giỏ hàng thành công", Toast.LENGTH_SHORT).show();
+                }
+            });
         }
         // load image
         Glide.with(this).load(product.getProductImageUrl()).into(ivProductImage);
     }
+
 }

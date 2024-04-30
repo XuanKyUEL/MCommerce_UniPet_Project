@@ -31,7 +31,7 @@ public class MessageDialogAdapter extends MessageDialog {
         dialog.setContentView(R.layout.dialogmessage);
         Objects.requireNonNull(dialog.getWindow()).setBackgroundDrawableResource(android.R.color.transparent);
 
-        TextView tvTitle = dialog.findViewById(R.id.tv_titel_dialog);
+        TextView tvTitle = dialog.findViewById(R.id.tv_title_dialog);
         TextView tvMessage = dialog.findViewById(R.id.tv_message_details_dialog);
         Button btnCancel = dialog.findViewById(R.id.btn_cancel_dialog);
         Button btnOk = dialog.findViewById(R.id.btn_ok_dialog);

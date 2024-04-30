@@ -84,10 +84,15 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ViewHold
                 double productPrice = product.getProductprice() - (product.getProductprice()*product.getSalepercent() / 100);
                 String productImage = product.getProductImageUrl();
                 double productId = product.getProductId();
-
+                double numOfProduct = 1.0;
                 String userId = fireStoreClass.getCurrentUID();
-
-                fireStoreClass.addToCart(userId, productId, productName, productPrice, productImage);
+                Log.d("DetailProduct", "productName: " + productName);
+                Log.d("DetailProduct", "productPrice: " + productPrice);
+                Log.d("DetailProduct", "numOfProduct: " + numOfProduct);
+                Log.d("DetailProduct", "productImageUrl: " + productImage);
+                Log.d("DetailProduct", "productId: " + productId);
+                Toast.makeText(v.getContext(), "Thêm vào giỏ hàng thành công", Toast.LENGTH_SHORT).show();
+                fireStoreClass.addToCart(userId, productId, productName, productPrice,numOfProduct ,productImage);
             });
 
         }else {
@@ -101,10 +106,15 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ViewHold
                 double productPrice = product.getProductprice() - (product.getProductprice()*product.getSalepercent() / 100);
                 String productImage = product.getProductImageUrl();
                 double productId = product.getProductId();
-
+                double numOfProduct = 1.0;
                 String userId = fireStoreClass.getCurrentUID();
-
-                fireStoreClass.addToCart(userId, productId, productName, productPrice, productImage);
+                Log.d("DetailProduct", "productName: " + productName);
+                Log.d("DetailProduct", "productPrice: " + productPrice);
+                Log.d("DetailProduct", "numOfProduct: " + numOfProduct);
+                Log.d("DetailProduct", "productImageUrl: " + productImage);
+                Log.d("DetailProduct", "productId: " + productId);
+                Toast.makeText(v.getContext(), "Thêm vào giỏ hàng thành công", Toast.LENGTH_SHORT).show();
+                fireStoreClass.addToCart(userId, productId, productName, productPrice,numOfProduct ,productImage);
             });
 
         }
