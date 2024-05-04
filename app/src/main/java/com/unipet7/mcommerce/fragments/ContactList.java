@@ -113,7 +113,7 @@ public class ContactList extends Fragment {
             public void onClick(View v) {
                 Intent intent = new Intent();
                 intent.setAction(Intent.ACTION_VIEW);
-                Uri uri = Uri.parse("https://www.facebook.com/unipet.mee");
+                Uri uri = Uri.parse("https://www.tiktok.com/@unipet.me");
                 intent.setData(uri);
                 startActivity(intent);
             }

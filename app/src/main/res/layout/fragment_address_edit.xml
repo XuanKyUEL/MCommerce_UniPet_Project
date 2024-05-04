@@ -98,16 +98,16 @@
         style="@style/HEAD6_BOLD_16"
         android:layout_gravity="center"
         android:text="Xóa địa chỉ"
-        android:background="@drawable/custom_button_account" />
+        android:background="@drawable/bg_btn_cartpayment" />
     <Button
         android:layout_marginTop="25dp"
-        android:id="@+id/btn_Done"
+        android:id="@+id/btn_Doneedit"
         android:layout_width="300dp"
         android:layout_height="48dp"
         style="@style/HEAD6_BOLD_16"
         android:layout_gravity="center"
         android:text="Hoàn thành"
-        android:background="@drawable/custom_button_account" />
+        android:background="@drawable/bg_btn_cartpayment" />
 
 
 </LinearLayout>

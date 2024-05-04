@@ -27,85 +27,97 @@ android:background="@color/white">
         tools:popupTheme="@style/Widget.Material3.PopupMenu.Overflow"/>
 </com.google.android.material.appbar.AppBarLayout>
 
-<ScrollView
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    app:layout_constraintTop_toBottomOf="@+id/apptoolbar"
-    tools:layout_editor_absoluteX="10dp">
-    <LinearLayout
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical">
+        android:layout_height="match_parent"
+        android:layout_marginTop="50dp"
+        app:layout_constraintTop_toTopOf="@+id/apptoolbar"
+        tools:layout_editor_absoluteX="10dp">
 
-        <com.makeramen.roundedimageview.RoundedImageView
-            android:id="@+id/imvBlogDetailImage"
-            android:layout_width="320dp"
-            android:layout_height="209dp"
-            android:layout_gravity="center"
-            android:src="@drawable/blog_image_3"
-            app:riv_corner_radius="16dp" />
-
-        <TextView
-            android:id="@+id/txtBlogDetailTitle"
-            style="@style/HEAD4_BOLD_20"
-            android:lineHeight="20dp"
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="5 tiêu chuẩn thức ăn cho mèo mà một Sen chính hiệu cần biết"
-            android:textColor="@color/brandPrimary" />
+            android:orientation="vertical">
 
-        <TextView
-            android:id="@+id/txtBlogDetailContent"
-            style="@style/BODY_MED_REGULAR_14"
-            android:lineHeight="18dp"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="5dp"
-            android:text="1. Giảm lượng tinh bột trong khẩu phần ăn mỗi ngày\n\nĐúng rằng con người không thể sống thiếu tinh bột mỗi ngày, tuy nhiên bạn phải biết không chó là giống động vật ăn thịt chính, nhưng mèo thì là loài ăn thịt hoàn toàn.
+            <com.makeramen.roundedimageview.RoundedImageView
+                android:id="@+id/imvBlogDetailImage"
+                android:layout_width="320dp"
+                android:layout_height="209dp"
+                android:layout_gravity="center"
+                android:src="@drawable/blog_image_3"
+                app:riv_corner_radius="16dp" />
+
+            <TextView
+                android:id="@+id/txtBlogDetailTitle"
+                style="@style/HEAD4_BOLD_20"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:lineHeight="20dp"
+                android:text="5 tiêu chuẩn thức ăn cho mèo mà một Sen chính hiệu cần biết"
+                android:textColor="@color/brandPrimary" />
+
+            <TextView
+                android:id="@+id/txtBlogDetailContent"
+                style="@style/BODY_MED_REGULAR_14"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:lineHeight="18dp"
+                android:text="1. Giảm lượng tinh bột trong khẩu phần ăn mỗi ngày\n\nĐúng rằng con người không thể sống thiếu tinh bột mỗi ngày, tuy nhiên bạn phải biết không chó là giống động vật ăn thịt chính, nhưng mèo thì là loài ăn thịt hoàn toàn.
 Dẫu có những khác biệt đó, nếu gộp lại bạn chẳng thể bắt chó mèo ăn chay, hoặc cắt giảm toàn bộ lượng đạm và thay thế cho tinh bột được.
 Ngoài ra, việc chó mèo dùng rất nhiều tinh bột cho một bữa ăn sẽ làm chúng gia tăng khả năng béo phì."
-            android:textColor="@color/black" />
+                android:textColor="@color/black" />
 
-        <TextView
-            style="@style/HEAD6_BOLD_16"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="CÁC SẢN PHẨM LIÊN QUAN"
-            android:layout_marginTop="10dp"
-            android:layout_marginBottom="10dp"
-            android:textColor="@color/brandPrimary" />
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="20dp"
+                android:background="@color/white" />
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/rclBlogDetails1"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="10dp" />
+            <TextView
+                style="@style/HEAD6_BOLD_16"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="10dp"
+                android:text="CÁC SẢN PHẨM LIÊN QUAN"
+                android:textColor="@color/brandPrimary" />
 
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:layout_margin="20dp"
-            android:layout_marginStart="20dp"
-            android:layout_marginTop="15dp"
-            android:layout_marginEnd="20dp"
-            android:background="#E0E0E0" />
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rclBlogDetails1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp" />
 
-        <TextView
-            style="@style/HEAD6_BOLD_16"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="CÓ THỂ BẠN QUAN TÂM"
-            android:layout_marginBottom="10dp"
-            android:textColor="@color/brandPrimary" />
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_margin="20dp"
+                android:layout_marginStart="20dp"
+                android:layout_marginTop="15dp"
+                android:layout_marginEnd="20dp"
+                android:background="#E0E0E0" />
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/rclBlogDetails2"
-            android:layout_width="match_parent"
-            android:padding="10dp"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="10dp"/>
-    </LinearLayout>
-</ScrollView>
+            <TextView
+                style="@style/HEAD6_BOLD_16"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp"
+                android:text="CÓ THỂ BẠN QUAN TÂM"
+                android:textColor="@color/brandPrimary" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rclBlogDetails2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp"
+                android:padding="10dp" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="20dp"
+                android:background="@color/white" />
+        </LinearLayout>
+    </ScrollView>
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

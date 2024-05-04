@@ -42,27 +42,14 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ViewHold
     public void onDataLoaded(List<Integer> favList) {
         this.favList = favList;
         notifyDataSetChanged();
-        Log.d("ProductAdapter", "onDataLoaded: " + favList);
     }
-
-    public ProductAdapter() {
-        // Không cần truyền danh sách sản phẩm ban đầu ở đây
-    }
-
-
-
     public ProductAdapter(List<Product> productList) {
         this.productList = productList;
-        fireStoreClass.getFavList(favList -> {
-            ProductAdapter.this.favList = favList;
-            notifyDataSetChanged();
-        });
-        Log.d("ProductAdapter", "ProductAdapter: " + favList);
+        fireStoreClass.getFavoriteList(this);
     }
-
-    public ProductAdapter(OnItemClickListener listener) {
+    public void setData(List<Product> newData) {
+        productList = newData;
     }
-
 
     @NonNull
     @Override
@@ -70,11 +57,6 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ViewHold
         // TODO: Inflate your layout and return your view holder
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_layout, parent, false);
         return new ViewHolder(view);
-    }
-
-    public void updateFavCheckBoxes(int position, boolean isInFavList) {
-        productList.get(position).setFavorite(isInFavList);
-        notifyItemChanged(position);
     }
 
     @Override
@@ -100,17 +82,21 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ViewHold
             holder.presaleprice.setPaintFlags(holder.presaleprice.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
             holder.presaleprice.setText(formattedPrice);
             holder.btnAddCart.setOnClickListener(v -> {
-                // Lấy thông tin sản phẩm tương ứng
-                Product product1 = productList.get(position);
                 String productName = product.getProductname();
-                double productPrice = product.getProductprice();
+                double productPrice = product.getProductprice() - (product.getProductprice()*product.getSalepercent() / 100);
                 String productImage = product.getProductImageUrl();
-                double productID = product.getProductId();
-
-                // Gọi phương thức addToCart để lưu thông tin sản phẩm vào Firestore cart collection
-                FireStoreClass fireStoreClass = new FireStoreClass();
-                fireStoreClass.addToCart(productID, productName, productPrice, productImage);
+                double productId = product.getProductId();
+                double numOfProduct = 1.0;
+                String userId = fireStoreClass.getCurrentUID();
+                Log.d("DetailProduct", "productName: " + productName);
+                Log.d("DetailProduct", "productPrice: " + productPrice);
+                Log.d("DetailProduct", "numOfProduct: " + numOfProduct);
+                Log.d("DetailProduct", "productImageUrl: " + productImage);
+                Log.d("DetailProduct", "productId: " + productId);
+                Toast.makeText(v.getContext(), "Thêm vào giỏ hàng thành công", Toast.LENGTH_SHORT).show();
+                fireStoreClass.addToCart(userId, productId, productName, productPrice,numOfProduct ,productImage);
             });
+
         }else {
             holder.salepercent.setVisibility(View.GONE);
             holder.salespercentbg.setVisibility(View.GONE);
@@ -118,21 +104,24 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ViewHold
             holder.productprice.setText(String.format("%,.0f đ", product.getProductprice()));
             holder.presaleprice.setVisibility(View.GONE);
             holder.btnAddCart.setOnClickListener(v -> {
-                // Lấy thông tin sản phẩm tương ứng
                 String productName = product.getProductname();
-                double productPrice = product.getProductprice();
+                double productPrice = product.getProductprice() - (product.getProductprice()*product.getSalepercent() / 100);
                 String productImage = product.getProductImageUrl();
-                double productID = product.getProductId();
-
-                // Gọi phương thức addToCart để lưu thông tin sản phẩm vào Firestore cart collection
-                FireStoreClass fireStoreClass = new FireStoreClass();
-                fireStoreClass.addToCart(productID, productName, productPrice, productImage);
+                double productId = product.getProductId();
+                double numOfProduct = 1.0;
+                String userId = fireStoreClass.getCurrentUID();
+                Log.d("DetailProduct", "productName: " + productName);
+                Log.d("DetailProduct", "productPrice: " + productPrice);
+                Log.d("DetailProduct", "numOfProduct: " + numOfProduct);
+                Log.d("DetailProduct", "productImageUrl: " + productImage);
+                Log.d("DetailProduct", "productId: " + productId);
+                Toast.makeText(v.getContext(), "Thêm vào giỏ hàng thành công", Toast.LENGTH_SHORT).show();
+                fireStoreClass.addToCart(userId, productId, productName, productPrice,numOfProduct ,productImage);
             });
+
         }
-        // glide imge from firebaseurl
         Glide.with(holder.itemView.getContext()).load(product.getProductImageUrl()).into(holder.imvThumb);
 
-        // get product from list
         holder.itemView.setOnClickListener(v -> {
             Intent intent = new Intent(v.getContext(), DetailProduct.class);
             intent.putExtra(Constants.PRODUCT_ID, productId);

@@ -25,7 +25,7 @@
 
             <TextView
                 style="@style/HEAD5_BOLD_18"
-                android:layout_width="300dp"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center"
                 android:text="Giỏ hàng"
@@ -180,7 +180,7 @@
                 android:id="@+id/txtDiscoutNumb"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="0"
+                android:text="0 đ"
                 android:fontFamily="@font/svn_gilroy_bold"
                 android:textSize="15dp"
                 android:layout_marginTop="5dp"

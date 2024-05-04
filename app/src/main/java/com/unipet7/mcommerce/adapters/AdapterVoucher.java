@@ -40,9 +40,9 @@ public class AdapterVoucher extends RecyclerView.Adapter<AdapterVoucher.ViewHold
 
     @Override
     public void onBindViewHolder(@NonNull AdapterVoucher.ViewHolder holder, int position) {
-        holder.txtVoucherNumb.setText(String.valueOf(Math.round(vouchers.get(position).getTxtVoucherNumb())) + " %");
-        holder.txtVoucherCode.setText(vouchers.get(position).getTxtVoucherCode());
-        holder.txtVoucherDecription.setText(vouchers.get(position).getTxtVoucherDecription());
+        holder.txtVoucherNumb.setText(String.valueOf(Math.round(vouchers.get(position).getVoucher_numb())) + " %");
+        holder.txtVoucherCode.setText(vouchers.get(position).getVoucher_code());
+        holder.txtVoucherDecription.setText(vouchers.get(position).getVoucher_descript());
         holder.rbVoucher.setChecked(position == selectedPosition);
         holder.rbVoucher.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -64,8 +64,6 @@ public class AdapterVoucher extends RecyclerView.Adapter<AdapterVoucher.ViewHold
     public int getSelectedPosition() {
         return selectedPosition;
     }
-
-
     public class ViewHolder extends RecyclerView.ViewHolder {
         TextView txtVoucherCode, txtVoucherDecription, txtVoucherNumb;
         RadioButton rbVoucher;

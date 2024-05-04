@@ -102,6 +102,6 @@
         style="@style/HEAD6_BOLD_16"
         android:layout_gravity="center"
         android:text="Hoàn thành"
-        android:background="@drawable/custom_button_account"/>
+        android:background="@drawable/bg_btn_cartpayment"/>
 
 </LinearLayout>

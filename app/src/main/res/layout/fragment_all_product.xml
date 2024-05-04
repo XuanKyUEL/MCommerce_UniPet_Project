@@ -8,7 +8,7 @@
     android:orientation="vertical"
     android:padding="10dp"
     android:background="@color/white"
-    android:id="@+id/HistoryPurchase">
+    android:id="@+id/product">
 
     <com.google.android.material.appbar.AppBarLayout
         android:layout_width="match_parent"
@@ -33,14 +33,13 @@
         </androidx.appcompat.widget.Toolbar>
     </com.google.android.material.appbar.AppBarLayout>
     <EditText
-        android:id="@+id/editTextText"
+        android:id="@+id/searchallproduct"
         style="@style/BODY_SMALL_REGULAR_12"
         android:layout_width="match_parent"
         android:layout_height="40dp"
         android:layout_marginTop="8dp"
         android:background="@drawable/search_background"
         android:drawableStart="@drawable/search"
-        android:drawableEnd="@drawable/search_filter"
         android:drawablePadding="8dp"
         android:ems="10"
         android:hint="Tìm kiếm"
@@ -131,5 +130,9 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="20dp"
         android:layout_marginTop="10dp" />
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="20dp"
+        android:background="@color/white"/>
 
 </LinearLayout>

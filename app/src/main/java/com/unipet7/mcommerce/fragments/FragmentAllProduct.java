@@ -9,13 +9,17 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
 
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.unipet7.mcommerce.R;
+import com.unipet7.mcommerce.activities.MainActivity;
 import com.unipet7.mcommerce.adapters.ProductAdapter;
 import com.unipet7.mcommerce.databinding.FragmentAllProductBinding;
 import com.unipet7.mcommerce.firebase.FireStoreClass;
@@ -46,7 +50,15 @@ public class FragmentAllProduct extends Fragment {
     private String mParam2;
     FragmentAllProductBinding binding;
     public ProductAdapter allPdadapter;
-    private ArrayList<Product> allProducts;
+    public ArrayList<Product> allProducts;
+    private String sKey;
+
+    public void SetId(String id) {
+        sKey = id;
+    }
+    List<Product> searchResults = new ArrayList<>();
+//    ProductAdapter adapter;
+private String currentCategory = Constants.ALLPRODUCT;
 
     ArrayList<Button> categoryButtons = new ArrayList<>();
 
@@ -59,8 +71,6 @@ public class FragmentAllProduct extends Fragment {
     ArrayList<Product> itemProducts = new ArrayList<>();
 
     Button btnAll, btnFood, btnItem, btnCare, btnToy;
-
-    List<Integer> favList = new ArrayList<>();
 
     public FragmentAllProduct() {
         // Required empty public constructor
@@ -83,6 +93,15 @@ public class FragmentAllProduct extends Fragment {
         fragment.setArguments(args);
         return fragment;
     }
+
+    public static FragmentAllProduct newInstance(String category) {
+        FragmentAllProduct fragment = new FragmentAllProduct();
+        Bundle args = new Bundle();
+        args.putString("category", category);
+        fragment.setArguments(args);
+        return fragment;
+    }
+
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -109,10 +128,65 @@ public class FragmentAllProduct extends Fragment {
         fireStoreClass.getAllProducts(this, allProducts);
         ldDialog.dissmis();
         loadProduct(allProducts);
+        searchproduct();
         cateClickEvent();
-        binding.btnAll.performClick();
+        Bundle bundle = getArguments();
+        if (bundle != null) {
+            String category = bundle.getString(Constants.CATEGORY);
+            assert category != null;
+            loadProductOnCategory(category);
+        } else {
+            binding.btnAll.performClick();
+        }
         return binding.getRoot();
 
+    }
+
+    private void searchproduct() {
+        ProductAdapter adapter = new ProductAdapter(new ArrayList<>());
+
+        binding.searchallproduct.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                String keyword = s.toString().trim().toLowerCase();
+                searchResults.clear();
+
+                ArrayList<Product> searchList;
+                if (currentCategory.equals(Constants.FOOD)) {
+                    searchList = foodProducts;
+                }
+                else if (currentCategory.equals(Constants.ITEM)){
+                    searchList = itemProducts;
+                }
+                else if (currentCategory.equals(Constants.HEALTH)){
+                    searchList = healthProducts;
+                }
+                else if (currentCategory.equals(Constants.TOY)){
+                    searchList = toyProducts;
+                } else searchList = allProducts;
+
+                for (Product product : searchList) {
+                    if (product.getProductname().toLowerCase().contains(keyword)) {
+                        searchResults.add(product);
+                    }
+                }
+                adapter.setData(searchResults);
+                adapter.notifyDataSetChanged();
+                binding.lvlAllProduct.setAdapter(adapter);
+
+            }
+
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+            }
+        });
     }
 
     private void mapping() {
@@ -124,6 +198,7 @@ public class FragmentAllProduct extends Fragment {
     }
 
     private void loadProductOnCategory(String category) {
+        currentCategory = category;
         switch (category) {
             case Constants.FOOD:
                 loadProduct(foodProducts);
@@ -137,11 +212,9 @@ public class FragmentAllProduct extends Fragment {
             case Constants.TOY:
                 loadProduct(toyProducts);
                 break;
-            case  Constants.ALLPRODUCT:
+            case Constants.ALLPRODUCT:
                 loadProduct(allProducts);
                 break;
-            default:
-                loadProduct(allProducts);
         }
     }
 
@@ -171,26 +244,31 @@ public class FragmentAllProduct extends Fragment {
 
     private void cateClickEvent() {
         btnAll.setOnClickListener(v -> {
+            currentCategory = Constants.ALLPRODUCT;
             addOtherButtonToDefault(btnFood, btnItem, btnCare, btnToy);
             setButtonToPressed(btnAll);
             loadProduct(allProducts);
         });
         btnFood.setOnClickListener(v -> {
+            currentCategory = Constants.FOOD;
             addOtherButtonToDefault(btnAll, btnItem, btnCare, btnToy);
             setButtonToPressed(btnFood);
             loadProduct(foodProducts);
         });
         btnItem.setOnClickListener(v -> {
+            currentCategory = Constants.ITEM;
             addOtherButtonToDefault(btnAll, btnFood, btnCare, btnToy);
             setButtonToPressed(btnItem);
             loadProduct(itemProducts);
         });
         btnCare.setOnClickListener(v -> {
+            currentCategory = Constants.HEALTH;
             addOtherButtonToDefault(btnAll, btnFood, btnItem, btnToy);
             setButtonToPressed(btnCare);
             loadProduct(healthProducts);
         });
         btnToy.setOnClickListener(v -> {
+            currentCategory = Constants.TOY;
             addOtherButtonToDefault(btnAll, btnFood, btnItem, btnCare);
             setButtonToPressed(btnToy);
             loadProduct(toyProducts);
@@ -214,13 +292,105 @@ public class FragmentAllProduct extends Fragment {
         LoadingDialog ldDialog = new LoadingDialog();
         ldDialog.showLoadingDialog(this.getContext());
         ProductAdapter adapter = new ProductAdapter(products);
-        // set layout manager to grid layout with 2 columns and stretch the items to fill the screen
-        binding.lvlAllProduct.setLayoutManager(new GridLayoutManager(this.getContext(), 2, GridLayoutManager.VERTICAL, false));
+        binding.lvlAllProduct.setLayoutManager(new GridLayoutManager(getContext(), 2));
         binding.lvlAllProduct.setAdapter(adapter);
-        binding.lvlAllProduct.setHasFixedSize(true);
+        binding.lvlAllProduct.setHasFixedSize(false);
         ldDialog.dissmis();
     }
 
+    @Override
+    public void onViewCreated(View view, Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        if (sKey != null && sKey.equals("0")) {
+            LoadingDialog ldDialog = new LoadingDialog();
+            ldDialog.showLoadingDialog(this.getContext());
+            view.postDelayed(() -> btnFood.performClick(), 300);
+            // Set the second menu item in the bottomNavigationView to be checked
+            if (getActivity() != null && getActivity() instanceof AppCompatActivity) {
+                BottomNavigationView bottomNavigationView = ((AppCompatActivity) getActivity()).findViewById(R.id.bottomNavigationView);
+                bottomNavigationView.getMenu().getItem(1).setChecked(true);
+            }
+            ldDialog.dissmis();
+
+        }
+        else if (sKey != null && sKey.equals("1")) {
+            LoadingDialog ldDialog = new LoadingDialog();
+            ldDialog.showLoadingDialog(this.getContext());
+            view.postDelayed(() -> btnToy.performClick(), 300);
+            // Set the second menu item in the bottomNavigationView to be checked
+            if (getActivity() != null && getActivity() instanceof AppCompatActivity) {
+                BottomNavigationView bottomNavigationView = ((AppCompatActivity) getActivity()).findViewById(R.id.bottomNavigationView);
+                bottomNavigationView.getMenu().getItem(1).setChecked(true);
+            }
+            ldDialog.dissmis();
+
+        }
+        else if (sKey != null && sKey.equals("2")) {
+            LoadingDialog ldDialog = new LoadingDialog();
+            ldDialog.showLoadingDialog(this.getContext());
+            view.postDelayed(() -> btnItem.performClick(), 300);
+            // Set the second menu item in the bottomNavigationView to be checked
+            if (getActivity() != null && getActivity() instanceof AppCompatActivity) {
+                BottomNavigationView bottomNavigationView = ((AppCompatActivity) getActivity()).findViewById(R.id.bottomNavigationView);
+                bottomNavigationView.getMenu().getItem(1).setChecked(true);
+            }
+            ldDialog.dissmis();
+
+        }
+        else if (sKey != null && sKey.equals("3")) {
+            LoadingDialog ldDialog = new LoadingDialog();
+            ldDialog.showLoadingDialog(this.getContext());
+            view.postDelayed(() -> btnCare.performClick(), 300);
+            // Set the second menu item in the bottomNavigationView to be checked
+            if (getActivity() != null && getActivity() instanceof AppCompatActivity) {
+                BottomNavigationView bottomNavigationView = ((AppCompatActivity) getActivity()).findViewById(R.id.bottomNavigationView);
+                bottomNavigationView.getMenu().getItem(1).setChecked(true);
+            }
+            ldDialog.dissmis();
+
+        }
+//        else if (sKey != null && sKey.equals("3")) {
+//            LoadingDialog ldDialog = new LoadingDialog();
+//            ldDialog.showLoadingDialog(this.getContext());
+//            view.postDelayed(() -> btnCare.performClick(), 300);
+//            // Set the second menu item in the bottomNavigationView to be checked
+//            if (getActivity() != null && getActivity() instanceof AppCompatActivity) {
+//                BottomNavigationView bottomNavigationView = ((AppCompatActivity) getActivity()).findViewById(R.id.bottomNavigationView);
+//                bottomNavigationView.getMenu().getItem(1).setChecked(true);
+//            }
+//            ldDialog.dissmis();
+//
+//        }
+        else if (sKey != null && sKey.equals("null")){
+            LoadingDialog ldDialog = new LoadingDialog();
+            ldDialog.showLoadingDialog(this.getContext());
+            view.postDelayed(() -> btnAll.performClick(), 300);
+            // Set the second menu item in the bottomNavigationView to be checked
+            if (getActivity() != null && getActivity() instanceof AppCompatActivity) {
+                BottomNavigationView bottomNavigationView = ((AppCompatActivity) getActivity()).findViewById(R.id.bottomNavigationView);
+                bottomNavigationView.getMenu().getItem(1).setChecked(true);
+            }
+            ldDialog.dissmis();
+        }
+        else {
+            LoadingDialog ldDialog = new LoadingDialog();
+            ldDialog.showLoadingDialog(this.getContext());
+            view.postDelayed(() -> btnAll.performClick(), 300);
+            // Set the second menu item in the bottomNavigationView to be checked
+            if (getActivity() != null && getActivity() instanceof AppCompatActivity) {
+                BottomNavigationView bottomNavigationView = ((AppCompatActivity) getActivity()).findViewById(R.id.bottomNavigationView);
+                bottomNavigationView.getMenu().getItem(1).setChecked(true);
+            }
+            ldDialog.dissmis();
+        }
 
 
+    }
 }
+
+
+
+
+
+
+

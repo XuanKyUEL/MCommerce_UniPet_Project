@@ -78,11 +78,11 @@ public class Question extends Fragment {
     private void initData() {
         questionsList = new ArrayList<>();
         questionsList.add(new Questions("Chính sách đổi trả?","Bạn có thể đổi trả sản phẩm trong vòng 7 ngày sau khi nhận hàng, khi lỗi thuộc về Unipet và đơn  vị vận chuyển.", false));
-        questionsList.add(new Questions("Tôi có thêm sản phẩm yêu thích để xem sau?","Bạn có thể đổi trả sản phẩm trong vòng 7 ngày sau khi nhận hàng, khi lỗi thuộc về Unipet và đơn  vị vận chuyển.",false));
+        questionsList.add(new Questions("UniPet có quy định về thời gian đặt hàng online hay không?","Quý khách có thể đặt hàng 24/24h mỗi ngày, UniPet luôn sẵn sàng nhận đơn hàng online của Quý khách.",false));
         questionsList.add(new Questions("Tôi có thể liên hệ với bộ phận hỗ trợ bằng cách nào?","Bạn có thể đổi trả sản phẩm trong vòng 7 ngày sau khi nhận hàng, khi lỗi thuộc về Unipet và đơn  vị vận chuyển.",false));
-//        questionsList.add(new Questions("Làm sao để thêm đánh giá về sản phẩm?","Bạn có thể đổi trả sản phẩm trong vòng 7 ngày sau khi nhận hàng, khi lỗi thuộc về Unipet và đơn  vị vận chuyển."));
-//        questionsList.add(new Questions("Những phương thức thanh toán nào được chấp nhận?","Bạn có thể đổi trả sản phẩm trong vòng 7 ngày sau khi nhận hàng, khi lỗi thuộc về Unipet và đơn  vị vận chuyển."));
-//        questionsList.add(new Questions("UniCard được sử dụng như thế nào?","Bạn có thể đổi trả sản phẩm trong vòng 7 ngày sau khi nhận hàng, khi lỗi thuộc về Unipet và đơn  vị vận chuyển."));
+        questionsList.add(new Questions("Làm sao để thêm đánh giá về sản phẩm?","Bạn có thể đánh giá sản phẩm tại mục 'Lịch sử mua hàng' ở trang Tài khoản", false));
+        questionsList.add(new Questions("Những phương thức thanh toán nào được chấp nhận?","Quý khách có thể chọn hình thức thanh toán COD (thanh toán khi nhận hàng) , thanh toán chuyển khoản trực tuyến hoặc ví điện tử Momo.", false));
+        questionsList.add(new Questions("UniCard được sử dụng như thế nào?","Unicard được dùng để tặng người thân/bạn bè. Khi hoàn tất mua sắm, Unipet sẽ gửi mã Card đến email của bạn.", false));
         questionAdapter = new QuestionAdapter(getActivity(),questionsList);
 
     }
