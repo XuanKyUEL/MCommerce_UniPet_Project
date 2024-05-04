@@ -3,10 +3,10 @@ package com.unipet7.mcommerce.activities;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -14,7 +14,6 @@ import androidx.appcompat.app.ActionBar;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
 import com.bumptech.glide.Glide;
-import com.google.firebase.firestore.FirebaseFirestore;
 import com.unipet7.mcommerce.R;
 import com.unipet7.mcommerce.adapters.ProductAdapter;
 import com.unipet7.mcommerce.databinding.ActivityDetailProductBinding;
@@ -58,6 +57,7 @@ public class DetailProduct extends BaseActivity {
         }
         loadProductDetail();
         addEvents();
+        fireStoreClass.getCountUserCartItems(this);
     }
     private void loadProductDetail() {
         LoadingDialog ldDialog1 = new LoadingDialog();
@@ -167,8 +167,9 @@ public class DetailProduct extends BaseActivity {
             Log.d("DetailProduct", "numOfProduct: " + numOfProduct);
             Log.d("DetailProduct", "productImageUrl: " + productImage);
             Log.d("DetailProduct", "productId: " + productId);
-            fireStoreClass.addToCart(userId, productId, productName, productPrice, numOfProduct, productImage);
+            fireStoreClass.addToCart(productId, productName, productPrice, numOfProduct, productImage);
             Toast.makeText(DetailProduct.this, "Thêm vào giỏ hàng thành công", Toast.LENGTH_SHORT).show();
+            fireStoreClass.getCountUserCartItems(DetailProduct.this);
         });
         // check if product is on sale
         if (product.getSalepercent() > 0) {
@@ -189,4 +190,10 @@ public class DetailProduct extends BaseActivity {
         Glide.with(this).load(product.getProductImageUrl()).into(ivProductImage);
     }
 
+    public void loadCartCount(int count) {
+        RelativeLayout cartCountLayout = binding.rlCartNumber;
+        cartCountLayout.setVisibility(RelativeLayout.VISIBLE);
+        TextView cartCount = binding.txtNumberCart;
+        cartCount.setText(String.valueOf(count));
+    }
 }

@@ -24,7 +24,6 @@ import com.unipet7.mcommerce.utils.Constants;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.atomic.AtomicReference;
 
 public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ViewHolder> implements FavProductInterface {
 
@@ -79,7 +78,7 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ViewHold
             Log.d("DetailProduct", "productImageUrl: " + productImage);
             Log.d("DetailProduct", "productId: " + productId);
             Toast.makeText(v.getContext(), "Thêm vào giỏ hàng thành công", Toast.LENGTH_SHORT).show();
-            fireStoreClass.addToCart(userId, productId, productName, price,numOfProduct ,productImage);
+            fireStoreClass.addToCart(productId, productName, price,numOfProduct ,productImage);
         });
 
         if (product.getSalepercent() > 0) {

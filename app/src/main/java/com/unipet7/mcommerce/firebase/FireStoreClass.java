@@ -389,7 +389,7 @@ public class FireStoreClass {
         return favoriteProducts;
     }
 
-    public void addToCart(String userId, double productId, String productName, double productPrice, double numOfProduct ,String productImageUrl) {
+    public void addToCart(double productId, String productName, double productPrice, double numOfProduct , String productImageUrl) {
         String currentUserId = getCurrentUID();
         DocumentReference userRef = UniPetdb.collection("users").document(currentUserId);
         userRef.get()
@@ -397,7 +397,6 @@ public class FireStoreClass {
                     if (documentSnapshot.exists()) {
                         User user = documentSnapshot.toObject(User.class);
                         if (user != null) {
-                            String userID = user.getId();
                             CollectionReference cartRef = UniPetdb.collection("cart");
                             DocumentReference newCartItemRef = cartRef.document();
                             HashMap<String, Object> cartItem = new HashMap<>();
@@ -408,9 +407,9 @@ public class FireStoreClass {
                             cartItem.put("productName", productName);
                             cartItem.put("numOfProduct", numOfProduct);
                             cartItem.put("totalPrice", productPrice*numOfProduct);
-                            UniPetdb.collection("cart")
-                                    .whereEqualTo("productId", productId)
-                                    .whereEqualTo("userId", currentUserId)
+                            UniPetdb.collection(Constants.CART)
+                                    .whereEqualTo(Constants.PRODUCT_ID, productId)
+                                    .whereEqualTo(Constants.USER_ID, currentUserId)
                                     .get()
                                     .addOnSuccessListener(queryDocumentSnapshots -> {
                                         if (!queryDocumentSnapshots.isEmpty()) {
@@ -419,9 +418,17 @@ public class FireStoreClass {
                                             double currentTotalPrice = doc.getDouble("totalPrice");
                                             cartItem.put("numOfProduct", currentNumOfProduct + numOfProduct);
                                             cartItem.put("totalPrice", currentTotalPrice + productPrice*numOfProduct);
-                                            doc.getReference().set(cartItem, SetOptions.merge());
+                                            doc.getReference().set(cartItem, SetOptions.merge()).addOnSuccessListener(aVoid -> {
+                                                if (context instanceof DetailProduct) {
+                                                    getCountUserCartItems((DetailProduct) context);
+                                                }
+                                            });
                                         } else {
-                                            newCartItemRef.set(cartItem);
+                                            newCartItemRef.set(cartItem).addOnSuccessListener(aVoid -> {
+                                                if (context instanceof DetailProduct) {
+                                                    getCountUserCartItems((DetailProduct) context);
+                                                }
+                                            });
                                         }
                                     })
                                     .addOnFailureListener(e -> {
@@ -434,11 +441,27 @@ public class FireStoreClass {
                     Log.e("FireStoreClass", "Error getting user information", e);
                 });
     }
+
+    public void getCountUserCartItems(DetailProduct detailProduct) {
+        UniPetdb.collection(Constants.CART)
+                .whereEqualTo("userId", getCurrentUID())
+                .get()
+                .addOnSuccessListener(queryDocumentSnapshots -> {
+                    int count = queryDocumentSnapshots.size();
+                    Log.i("FireStoreClass", "getCountUserCartItems: " + count);
+                    if (count > 0) {
+                        detailProduct.loadCartCount(count);
+                    }
+                })
+                .addOnFailureListener(e -> {
+                    Log.e("FireStoreClass", "getCountUserCartItems: ", e);
+                });
+    }
     public void getCartItemsRealtime(Context context, CartAdapter.OnQuantityChangeListener listener) {
         String currentUserId = getCurrentUID();
         if (currentUserId != null && !currentUserId.isEmpty()) {
-            UniPetdb.collection("cart")
-                    .whereEqualTo("userId", currentUserId)
+            UniPetdb.collection(Constants.CART)
+                    .whereEqualTo(Constants.USER_ID, currentUserId)
                     .addSnapshotListener((value, error) -> {
                         if (error != null) {
                             Log.e("FireStoreClass", "Error listening for cart updates", error);

@@ -52,17 +52,14 @@ public class PaymentMethodDetails extends AppCompatActivity implements PaymentMe
     }
 
     private void addEvents() {
-        binding.txtChangePaymentMethod.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                FragmentPaymentMethod editAdrressFragment = new FragmentPaymentMethod();
-                getSupportFragmentManager()
-                        .beginTransaction()
-                        .add(R.id.containerpayment, editAdrressFragment, "editAddressFragment")
-                        .addToBackStack(null)
-                        .commit();
+        binding.txtChangePaymentMethod.setOnClickListener(v -> {
+            FragmentPaymentMethod editAdrressFragment = new FragmentPaymentMethod();
+            getSupportFragmentManager()
+                    .beginTransaction()
+                    .add(R.id.containerpayment, editAdrressFragment, "editAddressFragment")
+                    .addToBackStack(null)
+                    .commit();
 
-            }
         });
         binding.btnShowDiscountCode.setOnClickListener(v -> startActivityForResult(new Intent(PaymentMethodDetails.this, VoucherActivity.class), REQUEST_CODE_VOUCHER));
         binding.btnvoucheruse.setOnClickListener(v -> {
