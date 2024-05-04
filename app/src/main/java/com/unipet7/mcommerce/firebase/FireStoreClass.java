@@ -37,8 +37,11 @@ import com.unipet7.mcommerce.utils.LoadingDialog;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Objects;
+import java.util.Random;
+import java.util.Set;
 import java.util.concurrent.atomic.AtomicReference;
 
 public class FireStoreClass {
@@ -142,6 +145,51 @@ public class FireStoreClass {
                     Log.e("FireStoreClass", "getAllProducts: ", e);
                 });
     }
+
+    public void getRandomProductsBlog(BlogDetails activity, ArrayList<Product> randomProducts, int limit) {
+        UniPetdb.collection(Constants.PRODUCTS)
+                .limit(limit) // Giới hạn số lượng sản phẩm trả về
+                .get()
+                .addOnSuccessListener(queryDocumentSnapshots -> {
+                    if (!queryDocumentSnapshots.isEmpty()) {
+                        List<DocumentSnapshot> documents = queryDocumentSnapshots.getDocuments();
+                        List<DocumentSnapshot> randomDocuments = getRandomDocuments(documents, limit);
+
+                        for (DocumentSnapshot document : randomDocuments) {
+                            Product product = document.toObject(Product.class);
+                            if (product != null) {
+                                randomProducts.add(product);
+                                if (userFav().contains(product.getProductId())) {
+                                    product.setIsFavorite(true);
+                                }
+                                Log.i("FireStoreClass", "getRandomProducts: " + product.getProductname());
+                            }
+                        }
+                        activity.configAdaptersBlog();
+                    }
+                })
+                .addOnFailureListener(e -> {
+                    Log.e("FireStoreClass", "getRandomProducts: ", e);
+                });
+    }
+
+    private List<DocumentSnapshot> getRandomDocuments(List<DocumentSnapshot> documents, int limit) {
+        List<DocumentSnapshot> randomDocuments = new ArrayList<>();
+        Random random = new Random();
+        int size = documents.size();
+        if (size <= limit) {
+            return documents;
+        }
+        Set<Integer> indexes = new HashSet<>();
+        while (indexes.size() < limit) {
+            indexes.add(random.nextInt(size));
+        }
+        for (int index : indexes) {
+            randomDocuments.add(documents.get(index));
+        }
+        return randomDocuments;
+    }
+
     public ArrayList<Product> getAllProductFrag (Fragment fragment) {
         ArrayList<Product> allProducts = new ArrayList<>();
         UniPetdb.collection(Constants.PRODUCTS)
