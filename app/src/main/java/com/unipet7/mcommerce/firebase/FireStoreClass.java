@@ -225,7 +225,7 @@ public class FireStoreClass {
                             }
                         }
                     }
-                    home.loadProductsByCategoryId(products, categoryId);
+                    home.loadProductsByCategoryId(productsList, categoryId);
                 })
                 .addOnFailureListener(e -> {
                     Log.e("FireStoreClass", "getProductsByCategoryId: ", e);
@@ -462,49 +462,6 @@ public class FireStoreClass {
         void onFailure(String errorMessage);
     }
 
-
-
-
-
-
-
-
-
-
-
-    public void addToFavoriteFrag(Fragment fragment, int productId) {
-        UniPetdb.collection(Constants.USERS)
-                .document(getCurrentUID())
-                .update(Constants.FAVPRODUCTID, FieldValue.arrayUnion(productId))
-                .addOnSuccessListener(aVoid -> {
-                    Toast.makeText(context, "Đã thêm vào danh sách yêu thích", Toast.LENGTH_SHORT).show();
-                    userFav();
-                    if (fragment instanceof Fragment_Wishlist_Product) {
-                        Fragment_Wishlist_Product fragment_wishlist_product = (Fragment_Wishlist_Product) fragment;
-                        fragment_wishlist_product.loadFavoriteProducts(userFav());
-                    }
-                })
-                .addOnFailureListener(e -> {
-                    Log.e("FireStoreClass", "addToFavorite: ", e);
-                });
-    }
-
-    public void removeFromFavoriteFrag(Fragment fragment, int productId) {
-        UniPetdb.collection(Constants.USERS)
-                .document(getCurrentUID())
-                .update(Constants.FAVPRODUCTID, FieldValue.arrayRemove(productId))
-                .addOnSuccessListener(aVoid -> {
-                    Toast.makeText(context, "Đã xóa khỏi danh sách yêu thích", Toast.LENGTH_SHORT).show();
-                    userFav();
-                    if (fragment instanceof Fragment_Wishlist_Product) {
-                        Fragment_Wishlist_Product fragment_wishlist_product = (Fragment_Wishlist_Product) fragment;
-                        fragment_wishlist_product.loadFavoriteProducts(userFav());
-                    }
-                })
-                .addOnFailureListener(e -> {
-                    Log.e("FireStoreClass", "removeFromFavorite: ", e);
-                });
-    }
 
     public List<Integer> userFav() {
         AtomicReference<List<Integer>> favProducts = new AtomicReference<>(new ArrayList<>());
