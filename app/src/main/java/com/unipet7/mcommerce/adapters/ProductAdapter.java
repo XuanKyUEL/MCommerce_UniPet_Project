@@ -85,7 +85,6 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ViewHold
                 String productName = product.getProductname();
                 double productPrice = product.getProductprice() - (product.getProductprice()*product.getSalepercent() / 100);
                 String productImage = product.getProductImageUrl();
-                double productId = product.getProductId();
                 double numOfProduct = 1.0;
                 String userId = fireStoreClass.getCurrentUID();
                 Log.d("DetailProduct", "productName: " + productName);
@@ -107,7 +106,6 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ViewHold
                 String productName = product.getProductname();
                 double productPrice = product.getProductprice() - (product.getProductprice()*product.getSalepercent() / 100);
                 String productImage = product.getProductImageUrl();
-                double productId = product.getProductId();
                 double numOfProduct = 1.0;
                 String userId = fireStoreClass.getCurrentUID();
                 Log.d("DetailProduct", "productName: " + productName);
