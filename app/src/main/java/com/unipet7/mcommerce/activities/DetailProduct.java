@@ -153,58 +153,37 @@ public class DetailProduct extends BaseActivity {
         tvProductDescription.setText(product.getProductDescription());
         double price = product.getProductprice();
         String formattedPrice = String.format("%,.0f đ", price);
+        double presaleprice = product.getPresaleprice();
+        String formattedPreSalePrice = String.format("%,.0f đ", presaleprice);
+        btnAddcart.setOnClickListener(v -> {
+            String productName = product.getProductname();
+            double productPrice = product.getProductprice();
+            String productImage = product.getProductImageUrl();
+            double productId = product.getProductId();
+            double numOfProduct = Double.parseDouble(binding.txtNumberOrder.getText().toString());
+            String userId = fireStoreClass.getCurrentUID();
+            Log.d("DetailProduct", "productName: " + productName);
+            Log.d("DetailProduct", "productPrice: " + productPrice);
+            Log.d("DetailProduct", "numOfProduct: " + numOfProduct);
+            Log.d("DetailProduct", "productImageUrl: " + productImage);
+            Log.d("DetailProduct", "productId: " + productId);
+            fireStoreClass.addToCart(userId, productId, productName, productPrice, numOfProduct, productImage);
+            Toast.makeText(DetailProduct.this, "Thêm vào giỏ hàng thành công", Toast.LENGTH_SHORT).show();
+        });
         // check if product is on sale
         if (product.getSalepercent() > 0) {
             tvProductPresale.setVisibility(TextView.VISIBLE);
             imvSalePercent.setVisibility(ImageView.VISIBLE);
             String salePercent = "-" + Math.round(product.getSalepercent()) + " %";
             tvSalePercent.setText(salePercent);
-            double salePrice = price - price * product.getSalepercent() / 100;
-            String formattedSalePrice = String.format("%,.0f đ", salePrice);
-            tvProductPrice.setText(formattedSalePrice);
+            tvProductPrice.setText(formattedPrice);
             tvProductPresale.setPaintFlags(tvProductPresale.getPaintFlags() | android.graphics.Paint.STRIKE_THRU_TEXT_FLAG);
-            tvProductPresale.setText(formattedPrice);
-            btnAddcart.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    String productName = product.getProductname();
-                    double productPrice = product.getProductprice() - (product.getProductprice()*product.getSalepercent() / 100);
-                    String productImage = product.getProductImageUrl();
-                    double productId = product.getProductId();
-                    double numOfProduct = Double.parseDouble(binding.txtNumberOrder.getText().toString());
-                    String userId = fireStoreClass.getCurrentUID();
-                    Log.d("DetailProduct", "productName: " + productName);
-                    Log.d("DetailProduct", "productPrice: " + productPrice);
-                    Log.d("DetailProduct", "numOfProduct: " + numOfProduct);
-                    Log.d("DetailProduct", "productImageUrl: " + productImage);
-                    Log.d("DetailProduct", "productId: " + productId);
-                    fireStoreClass.addToCart(userId, productId, productName, productPrice,numOfProduct ,productImage);
-                    Toast.makeText(DetailProduct.this, "Thêm vào giỏ hàng thành công", Toast.LENGTH_SHORT).show();
-                }
-            });
+            tvProductPresale.setText(formattedPreSalePrice);
         } else {
             imvSalePercent.setVisibility(ImageView.INVISIBLE);
             tvSalePercent.setVisibility(TextView.INVISIBLE);
             tvProductPresale.setVisibility(TextView.INVISIBLE);
             tvProductPrice.setText(formattedPrice);
-            btnAddcart.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    String productName = product.getProductname();
-                    double productPrice = product.getProductprice() - (product.getProductprice()*product.getSalepercent() / 100);
-                    String productImage = product.getProductImageUrl();
-                    double productId = product.getProductId();
-                    double numOfProduct = Double.parseDouble(binding.txtNumberOrder.getText().toString());
-                    String userId = fireStoreClass.getCurrentUID();
-                    Log.d("DetailProduct", "productName: " + productName);
-                    Log.d("DetailProduct", "productPrice: " + productPrice);
-                    Log.d("DetailProduct", "numOfProduct: " + numOfProduct);
-                    Log.d("DetailProduct", "productImageUrl: " + productImage);
-                    Log.d("DetailProduct", "productId: " + productId);
-                    fireStoreClass.addToCart(userId, productId, productName, productPrice,numOfProduct ,productImage);
-                    Toast.makeText(DetailProduct.this, "Thêm vào giỏ hàng thành công", Toast.LENGTH_SHORT).show();
-                }
-            });
         }
         // load image
         Glide.with(this).load(product.getProductImageUrl()).into(ivProductImage);
