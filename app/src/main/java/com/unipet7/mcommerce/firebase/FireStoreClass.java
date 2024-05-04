@@ -103,7 +103,11 @@ public class FireStoreClass {
                         for (int i = 0; i < queryDocumentSnapshots.size(); i++) {
                             Product product = queryDocumentSnapshots.getDocuments().get(i).toObject(Product.class);
                             allProducts.add(product);
-                            Log.i("FireStoreClass", "getAllProducts: " + product.getProductname());
+                        }
+                        for (Product product1 : allProducts) {
+                            if (userFav().contains(product1.getProductId())) {
+                                product1.setIsFavorite(true);
+                            }
                         }
                     }
                     fragment.divideProduct();
@@ -120,8 +124,13 @@ public class FireStoreClass {
                     if (!queryDocumentSnapshots.isEmpty()) {
                         for (int i = 0; i < queryDocumentSnapshots.size(); i++) {
                             Product product = queryDocumentSnapshots.getDocuments().get(i).toObject(Product.class);
-                            product.isFavoriteProduct(favList);
+                            assert product != null;
                             allProducts.add(product);
+                            for (Product product1 : allProducts) {
+                                if (userFav().contains(product1.getProductId())) {
+                                    product1.setIsFavorite(true);
+                                }
+                            }
                             Log.i("FireStoreClass", "getAllProducts: " + product.getProductname());
                         }
                         activity.configAdaptersBlog();
@@ -142,9 +151,12 @@ public class FireStoreClass {
                     if (!queryDocumentSnapshots.isEmpty()) {
                         for (int i = 0; i < queryDocumentSnapshots.size(); i++) {
                             Product product = queryDocumentSnapshots.getDocuments().get(i).toObject(Product.class);
-                            assert product != null;
-                            product.isFavoriteProduct(favList);
                             productsSale.add(product);
+                        }
+                        for (Product product1 : productsSale) {
+                            if (userFav().contains(product1.getProductId())) {
+                                product1.setIsFavorite(true);
+                            }
                         }
                     }
                     home.loadSalesProducts(productsSale);
@@ -163,9 +175,13 @@ public class FireStoreClass {
                     if (!queryDocumentSnapshots.isEmpty()) {
                         for (int i = 0; i < queryDocumentSnapshots.size(); i++) {
                             Product product = queryDocumentSnapshots.getDocuments().get(i).toObject(Product.class);
-                            assert product != null;
-                            product.isFavoriteProduct(favList);
+                            Log.i("FireStoreClass", "getProductsByCategoryIdHome: " + product.getProductId() + " " + userFav());
                             productsList.add(product);
+                        }
+                        for (Product product1 : productsList) {
+                            if (userFav().contains(product1.getProductId())) {
+                                product1.setIsFavorite(true);
+                            }
                         }
                     }
                     home.loadProductsByCategoryId(productsList, categoryId);
@@ -179,6 +195,10 @@ public class FireStoreClass {
                 .addOnSuccessListener(documentSnapshot -> {
                     if (documentSnapshot.exists()) {
                         Product product = documentSnapshot.toObject(Product.class);
+                        if (userFav().contains(productId)) {
+                            assert product != null;
+                            product.setIsFavorite(true);
+                        }
                         detailProduct.loadProductDetail(product);
                     }
                 })
@@ -336,36 +356,21 @@ public class FireStoreClass {
                 });
     }
 
-    public ArrayList<Product> userFav() {
-        ArrayList<Product> favProducts = new ArrayList<>();
+    public List<Integer> userFav() {
+        AtomicReference<List<Integer>> favProducts = new AtomicReference<>(new ArrayList<>());
         UniPetdb.collection(Constants.USERS)
                 .document(getCurrentUID())
                 .get()
                 .addOnSuccessListener(documentSnapshot -> {
                     if (documentSnapshot.exists()) {
-                        List<Integer> favProductIds = (List<Integer>) documentSnapshot.get(Constants.FAVPRODUCTID);
-                        if (favProductIds != null) {
-                            for (int i = 0; i < favProductIds.size(); i++) {
-                                UniPetdb.collection(Constants.PRODUCTS)
-                                        .document(String.valueOf(favProductIds.get(i)))
-                                        .get()
-                                        .addOnSuccessListener(documentSnapshot1 -> {
-                                            if (documentSnapshot1.exists()) {
-                                                Product product = documentSnapshot1.toObject(Product.class);
-                                                favProducts.add(product);
-                                            }
-                                        })
-                                        .addOnFailureListener(e -> {
-                                            Log.e("FireStoreClass", "getUserFavorites: ", e);
-                                        });
-                            }
-                        }
+                        favProducts.set((List<Integer>) documentSnapshot.get(Constants.FAVPRODUCTID));
+                        Log.i("FireStoreClass", "userFav: " + favProducts);
                     }
                 })
                 .addOnFailureListener(e -> {
-                    Log.e("FireStoreClass", "getUserFavorites: ", e);
+                    Log.e("FireStoreClass", "userFav: ", e);
                 });
-        return favProducts;
+        return favProducts.get();
     }
 
     public void getUserFavorites(Fragment fragment, ArrayList<Product> favProducts) {

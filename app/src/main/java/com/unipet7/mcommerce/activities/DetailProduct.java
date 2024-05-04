@@ -96,6 +96,7 @@ public class DetailProduct extends BaseActivity {
 
     public void loadProductDetail(Product product) {
         String name = product.getProductname();
+        cbFavorite.setChecked(product.isFavorite());
         tvProductName.setText(name);
         tvProductDescription.setText(product.getProductDescription());
         double price = product.getProductprice();
