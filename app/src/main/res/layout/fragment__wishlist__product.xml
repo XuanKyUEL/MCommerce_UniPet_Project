@@ -31,15 +31,56 @@
                 android:text="Sản phẩm yêu thích"/>
         </androidx.appcompat.widget.Toolbar>
     </com.google.android.material.appbar.AppBarLayout>
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/favlist"
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_marginStart="15dp"
-        android:layout_height="wrap_content"
-        android:layout_marginHorizontal="12dp"/>
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="20dp"
-        android:background="@color/white"/>
+        android:layout_height="match_parent"
+        android:padding="5dp"
+        android:gravity="center_horizontal">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_centerInParent="true"
+            android:gravity="center"
+            android:visibility="visible"
+            android:id="@+id/emptyFav">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/fav_empty_ic"
+                android:layout_marginBottom="45dp"
+                android:visibility="visible"/>
+
+            <TextView
+                android:id="@+id/txtEmptyFav"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                style="@style/HEAD4_BOLD_20"
+                android:text="Bạn chưa yêu thích sản phẩm nào!"
+                android:gravity="center"/>
+
+            <Button
+                android:id="@+id/btn_empty_fav"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Mua sắm ngay"
+                style="@style/BODY_SEMI_18"
+                android:background="@drawable/bg_btn_cartpayment"
+                android:layout_marginTop="65dp"/>
+
+        </LinearLayout>
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/favlist"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:visibility="visible"
+            android:layout_marginHorizontal="12dp"/>
+
+
+        
+    </RelativeLayout>
+
 
 </LinearLayout>

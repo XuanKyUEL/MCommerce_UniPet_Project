@@ -51,26 +51,19 @@ public class FragmentAddress extends Fragment {
     }
 
     private void addEvents1() {
-        binding.lvlAddress.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Fragment editAdrressFragment = new FragmentAddressEdit();
-                FragmentTransaction transaction = getParentFragmentManager().beginTransaction();
-                transaction.replace(R.id.fragment_container, editAdrressFragment);
-                transaction.addToBackStack(null); // Thêm Fragment hiện tại vào back stack
-                transaction.commit();
-            }
+        binding.lvlAddress.setOnItemClickListener((parent, view, position, id) -> {
+            Fragment editAdrressFragment = new FragmentAddressEdit();
+            FragmentTransaction transaction = getParentFragmentManager().beginTransaction();
+            transaction.replace(R.id.fragment_container, editAdrressFragment);
+            transaction.addToBackStack(null); // Thêm Fragment hiện tại vào back stack
+            transaction.commit();
         });
-        binding.btnAddaddress.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Fragment addAddressFragment = new FragmentAdressAdd();
-                FragmentTransaction transaction = getParentFragmentManager().beginTransaction();
-                transaction.replace(R.id.fragment_container, addAddressFragment);
-                transaction.addToBackStack(null); // Thêm Fragment hiện tại vào back stack
-                transaction.commit();
-            }
-
+        binding.btnAddaddress.setOnClickListener(v -> {
+            Fragment addAddressFragment = new FragmentAdressAdd();
+            FragmentTransaction transaction = getParentFragmentManager().beginTransaction();
+            transaction.replace(R.id.fragment_container, addAddressFragment);
+            transaction.addToBackStack(null); // Thêm Fragment hiện tại vào back stack
+            transaction.commit();
         });
     }
 
