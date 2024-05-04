@@ -62,6 +62,8 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ViewHold
     @Override
     public void onBindViewHolder(@NonNull ProductAdapter.ViewHolder holder, int position) {
         Product product = productList.get(position);
+        int productId = product.getProductId();
+        holder.favorite.setChecked(product.isFavorite());
         holder.productname.setText(product.getProductname());
         double roundRating = Math.round(product.getProductratenum() * 10) / 10.0;
         holder.productratenum.setText("4.5");
@@ -121,7 +123,6 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ViewHold
         Glide.with(holder.itemView.getContext()).load(product.getProductImageUrl()).into(holder.imvThumb);
 
         holder.itemView.setOnClickListener(v -> {
-            int productId = product.getProductId();
             Intent intent = new Intent(v.getContext(), DetailProduct.class);
             intent.putExtra(Constants.PRODUCT_ID, productId);
             v.getContext().startActivity(intent);
