@@ -24,4 +24,5 @@ public class Constants {
     public static final String FAVPRODUCTID = "favProductId";
     public static final String CATEGORYID = "categoryId";
     public static final String SALESPERCENT = "salepercent";
+    public static final String CART = "cart";
 }
