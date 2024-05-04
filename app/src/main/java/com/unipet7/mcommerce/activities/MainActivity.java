@@ -29,7 +29,7 @@ public class MainActivity extends AppCompatActivity {
     private static final String TAG = "MainActivity";
     ActivityMainBinding binding;
 
-    private ViewPager2 mainViewPager2;
+    public ViewPager2 mainViewPager2;
 
     LoadingDialog loadingDialog;
     BottomNavigationView bottomNavigationView;

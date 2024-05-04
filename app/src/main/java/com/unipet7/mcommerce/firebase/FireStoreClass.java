@@ -511,8 +511,8 @@ public class FireStoreClass {
                                             Log.e("FireStoreClass", "getUserFavorites: ", e);
                                         });
                             }
-                            loadingDialog.dissmis();
                         }
+                        loadingDialog.dissmis();
                     }
                 })
                 .addOnFailureListener(e -> {
