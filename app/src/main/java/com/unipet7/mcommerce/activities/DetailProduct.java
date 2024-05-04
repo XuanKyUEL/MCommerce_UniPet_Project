@@ -98,17 +98,12 @@ public class DetailProduct extends BaseActivity {
                 Log.d("DetailProduct", "Remove product from favorite " + product.getProductId());
             }
         });
-        binding.imvPlus.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                increaseProductQuantity();
-            }
-        });
-        binding.imvMinus.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                decreaseProductQuantity();
-            }
+        binding.imvPlus.setOnClickListener(v -> increaseProductQuantity());
+        binding.imvMinus.setOnClickListener(v -> decreaseProductQuantity());
+        binding.imageCart.setOnClickListener(v -> {
+            Intent intent = new Intent(DetailProduct.this, MainActivity.class);
+            intent.putExtra(Constants.CART, 2);
+            startActivity(intent);
         });
     }
 
