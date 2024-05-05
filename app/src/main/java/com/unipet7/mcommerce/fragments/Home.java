@@ -303,14 +303,14 @@ public class Home extends Fragment {
     }
 
     public void loadSalesProducts(ArrayList<Product> productsSale) {
-        ProductAdapter adapterSale = new ProductAdapter(productsSale);
+        ProductAdapter adapterSale = new ProductAdapter(productsSale, fireStoreClass);
         saleRecyclerView.setAdapter(adapterSale);
         saleRecyclerView.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
         saleRecyclerView.setHasFixedSize(true);
     }
 
     public void loadProductsByCategoryId(ArrayList<Product> productsList, int categoryId) {
-        ProductAdapter adapter = new ProductAdapter(productsList);
+        ProductAdapter adapter = new ProductAdapter(productsList, fireStoreClass);
         RecyclerView recyclerView;
         if (categoryId == 1) {
             recyclerView = catRecyclerView;

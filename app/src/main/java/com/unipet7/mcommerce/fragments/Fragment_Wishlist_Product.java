@@ -81,7 +81,6 @@ public class Fragment_Wishlist_Product extends Fragment {
         if (favoriteList.isEmpty()) {
             fvRecyclerView.setVisibility(View.GONE);
             binding.emptyFav.setVisibility(View.VISIBLE);
-            loadingDialog.dissmis();
         } else {
             loadFavoriteProducts(favoriteList);
         }
@@ -99,7 +98,7 @@ public class Fragment_Wishlist_Product extends Fragment {
         fvRecyclerView.setVisibility(View.VISIBLE);
         binding.emptyFav.setVisibility(View.GONE);
         loadingDialog.dissmis();
-        fvAdapter = new ProductAdapter(favProducts);
+        fvAdapter = new ProductAdapter(favProducts,fireStoreClass);
         Log.d("TAG", "loadFavoriteProducts: "+ favProducts.size());
         fvRecyclerView.setLayoutManager(new GridLayoutManager(getContext(),2));
         fvRecyclerView.setAdapter(fvAdapter);

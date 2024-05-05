@@ -17,6 +17,7 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.unipet7.mcommerce.R;
 import com.unipet7.mcommerce.models.ProductCart;
+import com.unipet7.mcommerce.utils.Constants;
 
 import java.util.ArrayList;
 
@@ -107,9 +108,9 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.ViewHolder> {
     }
     public void updateCartItem(ProductCart productCart) {
         FirebaseFirestore db = FirebaseFirestore.getInstance();
-        db.collection("cart")
-                .whereEqualTo("productId", productCart.getProductId())
-                .whereEqualTo("userId", productCart.getUserId())
+        db.collection(Constants.CART)
+                .whereEqualTo(Constants.PRODUCT_ID, productCart.getProductId())
+                .whereEqualTo(Constants.USER_ID, productCart.getUserId())
                 .get()
                 .addOnSuccessListener(queryDocumentSnapshots -> {
                     if (!queryDocumentSnapshots.isEmpty()) {

@@ -16,40 +16,53 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FirebaseFirestore;
 import com.unipet7.mcommerce.R;
 import com.unipet7.mcommerce.activities.DetailProduct;
+import com.unipet7.mcommerce.firebase.CheckFavoriteHelper;
 import com.unipet7.mcommerce.firebase.FireStoreClass;
 import com.unipet7.mcommerce.models.Product;
 import com.unipet7.mcommerce.utils.Constants;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.atomic.AtomicReference;
 
-public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ViewHolder> implements FavProductInterface {
+public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ViewHolder> {
 
     List<Product> productList;
 
     FireStoreClass fireStoreClass = new FireStoreClass();
+
+    private FirebaseFirestore firestore;
+
+    private CheckFavoriteHelper checkFavoriteHelper;
+
+    String userId = fireStoreClass.getCurrentUID();
     private List<Integer> favList = new ArrayList<>();
 
-    @Override
-    public void onDataLoaded(List<Integer> favList) {
-        this.favList = favList;
-        notifyDataSetChanged();
-    }
-    public ProductAdapter(List<Product> productList) {
+
+    public ProductAdapter(List<Product> productList, FireStoreClass fireStoreClass) {
         this.productList = productList;
-        fireStoreClass.getFavoriteList(this);
+        this.userId = fireStoreClass.getCurrentUID();
+        this.checkFavoriteHelper = new CheckFavoriteHelper();
+        fireStoreClass.addFavoriteChangeListener(() -> notifyDataSetChanged());
     }
+
+    @Override
+    public void onDetachedFromRecyclerView(@NonNull RecyclerView recyclerView) {
+        super.onDetachedFromRecyclerView(recyclerView);
+        fireStoreClass.removeFavoriteChangeListener(()-> notifyDataSetChanged());
+    }
+
     public void setData(List<Product> newData) {
         productList = newData;
     }
 
+
     @NonNull
     @Override
-    public ProductAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        // TODO: Inflate your layout and return your view holder
+    public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_layout, parent, false);
         return new ViewHolder(view);
     }
@@ -57,6 +70,9 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ViewHold
     @Override
     public void onBindViewHolder(@NonNull ProductAdapter.ViewHolder holder, int position) {
         Product product = productList.get(position);
+        String userId = fireStoreClass.getCurrentUID();
+        String productIdString = String.valueOf(product.getProductId());
+        checkFavoriteHelper.checkUserFavorite(userId, productIdString, isFavorite -> holder.favorite.setChecked(isFavorite));
         int productId = product.getProductId();
         holder.favorite.setChecked(product.isFavorite());
         String productName = product.getProductname();
@@ -68,18 +84,16 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ViewHold
         double presaleprice = product.getPresaleprice();
         String formattedPrice = String.format("%,.0f đ", price);
         String formattedPreSalePrice = String.format("%,.0f đ", presaleprice);
-
         holder.btnAddCart.setOnClickListener(v -> {
             String productImage = product.getProductImageUrl();
             double numOfProduct = 1.0;
-            String userId = fireStoreClass.getCurrentUID();
             Log.d("DetailProduct", "productName: " + productName);
             Log.d("DetailProduct", "productPrice: " + price);
             Log.d("DetailProduct", "numOfProduct: " + numOfProduct);
             Log.d("DetailProduct", "productImageUrl: " + productImage);
             Log.d("DetailProduct", "productId: " + productId);
             Toast.makeText(v.getContext(), "Thêm vào giỏ hàng thành công", Toast.LENGTH_SHORT).show();
-            fireStoreClass.addToCart(userId, productId, productName, price,numOfProduct ,productImage);
+            fireStoreClass.addToCart(productId, productName, price, numOfProduct, productImage);
         });
 
         if (product.getSalepercent() > 0) {
@@ -102,11 +116,15 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ViewHold
             intent.putExtra(Constants.PRODUCT_ID, productId);
             v.getContext().startActivity(intent);
         });
-        holder.favorite.setOnCheckedChangeListener((buttonView, isChecked) -> {
-            if (isChecked)
-                fireStoreClass.addFavorite(buttonView.getContext(),product.getProductId());
-            else {
-                fireStoreClass.removeFavorite(buttonView.getContext(),product.getProductId());
+        holder.favorite.setOnClickListener(v -> {
+            // check if favorite is checked, then make it unchecked and remove from favorite list
+            boolean isChecked = holder.favorite.isChecked();
+            if (!isChecked) {
+                holder.favorite.setChecked(false);
+                fireStoreClass.removeFavorite(v.getContext(), productId);
+            } else {
+                holder.favorite.setChecked(true);
+                fireStoreClass.addFavorite(v.getContext(), productId);
             }
         });
     }
@@ -138,9 +156,5 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ViewHold
             btnAddCart = itemView.findViewById(R.id.btnAddCart);
             favorite = itemView.findViewById(R.id.chkFavouriteItem);
         }
-    }
-
-    public interface OnItemClickListener {
-        void onItemClick(Product product);
     }
 }

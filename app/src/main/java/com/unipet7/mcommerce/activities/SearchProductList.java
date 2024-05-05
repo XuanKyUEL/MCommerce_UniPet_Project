@@ -115,7 +115,7 @@ public class SearchProductList extends AppCompatActivity {
         int numberOfProducts = allProducts.size();
         String numberSearchText = numberOfProducts + " Kết quả tìm kiếm";
         binding.numbersearch.setText(numberSearchText);
-        adapter = new ProductAdapter(allProducts);
+        adapter = new ProductAdapter(allProducts, fireStoreClass);
         binding.lvlProductList.setLayoutManager(new GridLayoutManager(this, 2, GridLayoutManager.VERTICAL, false));
         binding.lvlProductList.setAdapter(adapter);
         binding.lvlProductList.setHasFixedSize(true);
@@ -128,7 +128,7 @@ public class SearchProductList extends AppCompatActivity {
         binding.voucherfilter.setOnClickListener(v -> fireStoreClass.getSalesPFilter(SearchProductList.this));
         }
     public void loadSalesProducts(ArrayList<Product> productsSale) {
-        ProductAdapter adapterSale = new ProductAdapter(productsSale);
+        ProductAdapter adapterSale = new ProductAdapter(productsSale, fireStoreClass);
         binding.lvlProductList.setAdapter(adapterSale);
         binding.lvlProductList.setLayoutManager(new GridLayoutManager(this, 2, GridLayoutManager.VERTICAL, false));
         binding.lvlProductList.setHasFixedSize(true);
@@ -216,7 +216,7 @@ public class SearchProductList extends AppCompatActivity {
         String numberSearchText = numberOfProducts + " Kết quả tìm kiếm";
         binding.numbersearch.setText(numberSearchText);
         // Cập nhật giao diện người dùng để hiển thị danh sách sản phẩm mới
-        adapter = new ProductAdapter(sortedproduct);
+        adapter = new ProductAdapter(sortedproduct, fireStoreClass);
         binding.lvlProductList.setLayoutManager(new GridLayoutManager(this, 2, GridLayoutManager.VERTICAL, false));
         binding.lvlProductList.setAdapter(adapter);
         binding.lvlProductList.setHasFixedSize(true);
@@ -306,7 +306,7 @@ public class SearchProductList extends AppCompatActivity {
         int numberOfProducts = filteredProductList.size();
         String numberSearchText = numberOfProducts + " Kết quả tìm kiếm";
         binding.numbersearch.setText(numberSearchText);
-        adapter = new ProductAdapter(filteredProductList);
+        adapter = new ProductAdapter(filteredProductList, fireStoreClass);
         binding.lvlProductList.setLayoutManager(new GridLayoutManager(this, 2, GridLayoutManager.VERTICAL, false));
         binding.lvlProductList.setAdapter(adapter);
         binding.lvlProductList.setHasFixedSize(true);
