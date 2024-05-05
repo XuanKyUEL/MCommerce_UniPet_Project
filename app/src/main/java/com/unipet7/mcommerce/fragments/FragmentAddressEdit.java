@@ -15,6 +15,8 @@ import android.view.ViewGroup;
 import com.unipet7.mcommerce.R;
 import com.unipet7.mcommerce.databinding.FragmentAddressEditBinding;
 
+import java.util.Objects;
+
 /**
  * A simple {@link Fragment} subclass.
  * Use the {@link FragmentAddressEdit#newInstance} factory method to
@@ -67,21 +69,16 @@ public class FragmentAddressEdit extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        binding= FragmentAddressEditBinding.inflate(inflater, container, false);
+        binding = FragmentAddressEditBinding.inflate(inflater, container, false);
         setActionBar(binding.toolbaraddessedit);
         addEvents();
         return binding.getRoot();
     }
     private void addEvents() {
-        binding.toolbaraddessedit.setNavigationOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                requireActivity().getOnBackPressedDispatcher().onBackPressed();
-            }
-        });
+        binding.toolbaraddessedit.setNavigationOnClickListener(v -> requireActivity().getOnBackPressedDispatcher().onBackPressed());
     }
     public void setActionBar(@Nullable Toolbar toolbar) {
-        ((AppCompatActivity) getActivity()).setSupportActionBar(toolbar);
+        ((AppCompatActivity) requireActivity()).setSupportActionBar(toolbar);
         ActionBar actionBar = ((AppCompatActivity) getActivity()).getSupportActionBar();
         assert actionBar != null;
         actionBar.setDisplayHomeAsUpEnabled(true);

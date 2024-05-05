@@ -1,10 +1,7 @@
 package com.unipet7.mcommerce.adapters;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Paint;
-import android.os.Bundle;
-import android.os.Handler;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -15,10 +12,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import androidx.activity.result.ActivityResultLauncher;
 import androidx.annotation.NonNull;
-import androidx.fragment.app.FragmentActivity;
-import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
@@ -30,6 +24,7 @@ import com.unipet7.mcommerce.utils.Constants;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.atomic.AtomicReference;
 
 public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ViewHolder> implements FavProductInterface {
 
@@ -47,7 +42,9 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ViewHold
         this.productList = productList;
         fireStoreClass.getFavoriteList(this);
     }
-
+    public void setData(List<Product> newData) {
+        productList = newData;
+    }
 
     @NonNull
     @Override
@@ -60,66 +57,47 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ViewHold
     @Override
     public void onBindViewHolder(@NonNull ProductAdapter.ViewHolder holder, int position) {
         Product product = productList.get(position);
-        holder.productname.setText(product.getProductname());
+        int productId = product.getProductId();
+        holder.favorite.setChecked(product.isFavorite());
+        String productName = product.getProductname();
+        holder.productname.setText(productName);
         double roundRating = Math.round(product.getProductratenum() * 10) / 10.0;
         holder.productratenum.setText("4.5");
         holder.numOfRating.setText("  (130)");
+        double price = product.getProductprice();
+        double presaleprice = product.getPresaleprice();
+        String formattedPrice = String.format("%,.0f đ", price);
+        String formattedPreSalePrice = String.format("%,.0f đ", presaleprice);
+
+        holder.btnAddCart.setOnClickListener(v -> {
+            String productImage = product.getProductImageUrl();
+            double numOfProduct = 1.0;
+            String userId = fireStoreClass.getCurrentUID();
+            Log.d("DetailProduct", "productName: " + productName);
+            Log.d("DetailProduct", "productPrice: " + price);
+            Log.d("DetailProduct", "numOfProduct: " + numOfProduct);
+            Log.d("DetailProduct", "productImageUrl: " + productImage);
+            Log.d("DetailProduct", "productId: " + productId);
+            Toast.makeText(v.getContext(), "Thêm vào giỏ hàng thành công", Toast.LENGTH_SHORT).show();
+            fireStoreClass.addToCart(userId, productId, productName, price,numOfProduct ,productImage);
+        });
+
         if (product.getSalepercent() > 0) {
             int salepercent = (int) product.getSalepercent();
             holder.salepercent.setText("-"+ salepercent + " %");
-            double percent = product.getSalepercent();
-            double price = product.getProductprice();
-            double saleprice = price - (price * percent / 100);
-
-            String formattedPrice = String.format("%,.0f đ", price);
-            String formattedSalePrice = String.format("%,.0f đ", saleprice);
-
-            holder.productprice.setText(formattedSalePrice);
+            holder.productprice.setText(formattedPrice);
             holder.presaleprice.setPaintFlags(holder.presaleprice.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
-            holder.presaleprice.setText(formattedPrice);
-            holder.btnAddCart.setOnClickListener(v -> {
-                String productName = product.getProductname();
-                double productPrice = product.getProductprice() - (product.getProductprice()*product.getSalepercent() / 100);
-                String productImage = product.getProductImageUrl();
-                double productId = product.getProductId();
-                double numOfProduct = 1.0;
-                String userId = fireStoreClass.getCurrentUID();
-                Log.d("DetailProduct", "productName: " + productName);
-                Log.d("DetailProduct", "productPrice: " + productPrice);
-                Log.d("DetailProduct", "numOfProduct: " + numOfProduct);
-                Log.d("DetailProduct", "productImageUrl: " + productImage);
-                Log.d("DetailProduct", "productId: " + productId);
-                Toast.makeText(v.getContext(), "Thêm vào giỏ hàng thành công", Toast.LENGTH_SHORT).show();
-                fireStoreClass.addToCart(userId, productId, productName, productPrice,numOfProduct ,productImage);
-            });
-
+            holder.presaleprice.setText(formattedPreSalePrice);
         }else {
             holder.salepercent.setVisibility(View.GONE);
             holder.salespercentbg.setVisibility(View.GONE);
             holder.salebanner.setVisibility(View.INVISIBLE);
-            holder.productprice.setText(String.format("%,.0f đ", product.getProductprice()));
+            holder.productprice.setText(formattedPrice);
             holder.presaleprice.setVisibility(View.GONE);
-            holder.btnAddCart.setOnClickListener(v -> {
-                String productName = product.getProductname();
-                double productPrice = product.getProductprice() - (product.getProductprice()*product.getSalepercent() / 100);
-                String productImage = product.getProductImageUrl();
-                double productId = product.getProductId();
-                double numOfProduct = 1.0;
-                String userId = fireStoreClass.getCurrentUID();
-                Log.d("DetailProduct", "productName: " + productName);
-                Log.d("DetailProduct", "productPrice: " + productPrice);
-                Log.d("DetailProduct", "numOfProduct: " + numOfProduct);
-                Log.d("DetailProduct", "productImageUrl: " + productImage);
-                Log.d("DetailProduct", "productId: " + productId);
-                Toast.makeText(v.getContext(), "Thêm vào giỏ hàng thành công", Toast.LENGTH_SHORT).show();
-                fireStoreClass.addToCart(userId, productId, productName, productPrice,numOfProduct ,productImage);
-            });
-
         }
         Glide.with(holder.itemView.getContext()).load(product.getProductImageUrl()).into(holder.imvThumb);
 
         holder.itemView.setOnClickListener(v -> {
-            int productId = product.getProductId();
             Intent intent = new Intent(v.getContext(), DetailProduct.class);
             intent.putExtra(Constants.PRODUCT_ID, productId);
             v.getContext().startActivity(intent);

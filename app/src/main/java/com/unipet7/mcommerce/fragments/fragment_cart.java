@@ -175,15 +175,12 @@ public class fragment_cart extends Fragment {
             }
         });
         FireStoreClass fireStoreClass = new FireStoreClass();
-        fireStoreClass.getCartItemsRealtime(getContext(), new CartAdapter.OnQuantityChangeListener() {
-            @Override
-            public void onQuantityChange(int position, double quantity) {
-                ProductCart productCart = productCarts.get(position);
-                productCart.setNumOfProduct((int) quantity);
-                productCart.setTotalPrice(productCart.getProductPrice() * quantity);
-                adapter.notifyItemChanged(position);
-                calculateTotalCartPrice();
-            }
+        fireStoreClass.getCartItemsRealtime(getContext(), (position, quantity) -> {
+            ProductCart productCart = productCarts.get(position);
+            productCart.setNumOfProduct((int) quantity);
+            productCart.setTotalPrice(productCart.getProductPrice() * quantity);
+            adapter.notifyItemChanged(position);
+            calculateTotalCartPrice();
         });
 
         return binding.getRoot();
@@ -255,17 +252,14 @@ public class fragment_cart extends Fragment {
         loadData();
 
         if (adapter != null) {
-            adapter.setOnQuantityChangeListener(new CartAdapter.OnQuantityChangeListener() {
-                @Override
-                public void onQuantityChange(int position, double quantity) {
-                    ProductCart productCart = productCarts.get(position);
-                    productCart.setNumOfProduct((int) quantity);
-                    productCart.setTotalPrice(productCart.getProductPrice() * quantity);
-                    adapter.updateCartItem(productCart);
-                    adapter.notifyItemChanged(position);
-                    calculateTotalCartPrice();
-                    CalculateVoucher();
-                }
+            adapter.setOnQuantityChangeListener((position, quantity) -> {
+                ProductCart productCart = productCarts.get(position);
+                productCart.setNumOfProduct((int) quantity);
+                productCart.setTotalPrice(productCart.getProductPrice() * quantity);
+                adapter.updateCartItem(productCart);
+                adapter.notifyItemChanged(position);
+                calculateTotalCartPrice();
+                CalculateVoucher();
             });
         }
     }
@@ -306,13 +300,13 @@ public class fragment_cart extends Fragment {
         for (ProductCart cartItem : productCarts) {
             totalCartPrice += cartItem.getTotalPrice();
         }
-        binding.txtPreNumb.setText(String.valueOf(Math.round(totalCartPrice) + " đ"));
+        binding.txtPreNumb.setText(Math.round(totalCartPrice) + " đ");
 
         // Check if a voucher is applied
         String voucherCode = binding.edtVoucher.getText().toString().trim();
         if (!voucherCode.isEmpty()) {
         } else {
-            binding.txtTotalNumb.setText(String.valueOf(Math.round(totalCartPrice) + " đ"));}
+            binding.txtTotalNumb.setText(Math.round(totalCartPrice) + " đ");}
     }
 
 

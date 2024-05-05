@@ -11,10 +11,12 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.unipet7.mcommerce.activities.MainActivity;
 import com.unipet7.mcommerce.adapters.ProductAdapter;
 import com.unipet7.mcommerce.databinding.FragmentWishlistProductBinding;
 import com.unipet7.mcommerce.firebase.FireStoreClass;
 import com.unipet7.mcommerce.models.Product;
+import com.unipet7.mcommerce.utils.LoadingDialog;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -40,6 +42,8 @@ public class Fragment_Wishlist_Product extends Fragment {
 
     FireStoreClass fireStoreClass = new FireStoreClass();
 
+    LoadingDialog loadingDialog = new LoadingDialog();
+
     public Fragment_Wishlist_Product() {
         // Required empty public constructor
     }
@@ -59,8 +63,28 @@ public class Fragment_Wishlist_Product extends Fragment {
         // Inflate the layout for this fragment
         binding= FragmentWishlistProductBinding.inflate(inflater, container, false);
         fvRecyclerView = binding.favlist;
-        fireStoreClass.getUserFavorites(this,favoriteList);
+        
+        binding.btnEmptyFav.setOnClickListener(v -> {
+            // TODO: go to home fragment which is the first fragment, implement the menu item click listener in main activity, position 0
+            MainActivity mainActivity = (MainActivity) getActivity();
+            if (mainActivity != null) {
+                mainActivity.mainViewPager2.setCurrentItem(0);
+            }
+        });
+        fetchFav();
         return binding.getRoot();
+    }
+
+    private void fetchFav() {
+        fireStoreClass.getUserFavorites(this,favoriteList);
+
+        if (favoriteList.isEmpty()) {
+            fvRecyclerView.setVisibility(View.GONE);
+            binding.emptyFav.setVisibility(View.VISIBLE);
+            loadingDialog.dissmis();
+        } else {
+            loadFavoriteProducts(favoriteList);
+        }
     }
 
     @Override
@@ -68,10 +92,13 @@ public class Fragment_Wishlist_Product extends Fragment {
         super.onResume();
         // remove the previous data
         favoriteList.clear();
-        fireStoreClass.getUserFavorites(this,favoriteList);
+        fetchFav();
     }
 
     public void loadFavoriteProducts(ArrayList<Product> favProducts) {
+        fvRecyclerView.setVisibility(View.VISIBLE);
+        binding.emptyFav.setVisibility(View.GONE);
+        loadingDialog.dissmis();
         fvAdapter = new ProductAdapter(favProducts);
         Log.d("TAG", "loadFavoriteProducts: "+ favProducts.size());
         fvRecyclerView.setLayoutManager(new GridLayoutManager(getContext(),2));

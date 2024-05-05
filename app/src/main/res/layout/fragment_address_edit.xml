@@ -39,7 +39,7 @@
         android:textColor="@color/black"/>
     <EditText
         android:layout_marginTop="8dp"
-        android:id="@+id/edtuser"
+        android:id="@+id/edtaddressname"
         android:layout_width="320dp"
         android:layout_height="48dp"
         android:hint="Họ và tên"
@@ -50,7 +50,7 @@
         android:background="@drawable/edittext_conner_profile"/>
     <EditText
         android:layout_marginTop="15dp"
-        android:id="@+id/edtphone"
+        android:id="@+id/edtaddressphone"
         android:layout_width="320dp"
         android:layout_height="48dp"
         android:hint="Số điện thoại"
@@ -58,6 +58,7 @@
         style="@style/BODY_LARGE_MED_16"
         android:textColor="@color/darkPrimary"
         android:layout_gravity="center"
+        android:inputType="phone"
         android:background="@drawable/edittext_conner_profile"/>
     <TextView
         android:layout_width="320dp"
@@ -69,7 +70,7 @@
         android:textColor="@color/black"/>
     <EditText
         android:layout_marginTop="8dp"
-        android:id="@+id/edtprovince"
+        android:id="@+id/edtaddressprovince"
         android:layout_width="320dp"
         android:layout_height="48dp"
         android:hint="Tỉnh/Thành phố, Quận/Huyện, Phường/Xã"
@@ -80,7 +81,7 @@
         android:background="@drawable/edittext_conner_profile"/>
     <EditText
         android:layout_marginTop="15dp"
-        android:id="@+id/edtstress"
+        android:id="@+id/edtaddressstress"
         android:layout_width="320dp"
         android:layout_height="48dp"
         android:hint="Tên đường, Tòa nhà, Số nhà"
@@ -97,8 +98,9 @@
         android:layout_height="48dp"
         style="@style/HEAD6_BOLD_16"
         android:layout_gravity="center"
+        android:textColor="@color/brandPrimary"
         android:text="Xóa địa chỉ"
-        android:background="@drawable/bg_btn_cartpayment" />
+        android:background="@drawable/btn_outlined_rectangle" />
     <Button
         android:layout_marginTop="25dp"
         android:id="@+id/btn_Doneedit"

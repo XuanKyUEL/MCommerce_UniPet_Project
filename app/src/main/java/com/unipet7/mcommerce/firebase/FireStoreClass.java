@@ -37,8 +37,11 @@ import com.unipet7.mcommerce.utils.LoadingDialog;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Objects;
+import java.util.Random;
+import java.util.Set;
 import java.util.concurrent.atomic.AtomicReference;
 
 public class FireStoreClass {
@@ -106,7 +109,11 @@ public class FireStoreClass {
                         for (int i = 0; i < queryDocumentSnapshots.size(); i++) {
                             Product product = queryDocumentSnapshots.getDocuments().get(i).toObject(Product.class);
                             allProducts.add(product);
-                            Log.i("FireStoreClass", "getAllProducts: " + product.getProductname());
+                        }
+                        for (Product product1 : allProducts) {
+                            if (userFav().contains(product1.getProductId())) {
+                                product1.setIsFavorite(true);
+                            }
                         }
                     }
                     fragment.divideProduct();
@@ -122,7 +129,13 @@ public class FireStoreClass {
                     if (!queryDocumentSnapshots.isEmpty()) {
                         for (int i = 0; i < queryDocumentSnapshots.size(); i++) {
                             Product product = queryDocumentSnapshots.getDocuments().get(i).toObject(Product.class);
+                            assert product != null;
                             allProducts.add(product);
+                            for (Product product1 : allProducts) {
+                                if (userFav().contains(product1.getProductId())) {
+                                    product1.setIsFavorite(true);
+                                }
+                            }
                             Log.i("FireStoreClass", "getAllProducts: " + product.getProductname());
                         }
                         activity.configAdaptersBlog();
@@ -132,6 +145,51 @@ public class FireStoreClass {
                     Log.e("FireStoreClass", "getAllProducts: ", e);
                 });
     }
+
+    public void getRandomProductsBlog(BlogDetails activity, ArrayList<Product> randomProducts, int limit) {
+        UniPetdb.collection(Constants.PRODUCTS)
+                .limit(limit) // Giới hạn số lượng sản phẩm trả về
+                .get()
+                .addOnSuccessListener(queryDocumentSnapshots -> {
+                    if (!queryDocumentSnapshots.isEmpty()) {
+                        List<DocumentSnapshot> documents = queryDocumentSnapshots.getDocuments();
+                        List<DocumentSnapshot> randomDocuments = getRandomDocuments(documents, limit);
+
+                        for (DocumentSnapshot document : randomDocuments) {
+                            Product product = document.toObject(Product.class);
+                            if (product != null) {
+                                randomProducts.add(product);
+                                if (userFav().contains(product.getProductId())) {
+                                    product.setIsFavorite(true);
+                                }
+                                Log.i("FireStoreClass", "getRandomProducts: " + product.getProductname());
+                            }
+                        }
+                        activity.configAdaptersBlog();
+                    }
+                })
+                .addOnFailureListener(e -> {
+                    Log.e("FireStoreClass", "getRandomProducts: ", e);
+                });
+    }
+
+    private List<DocumentSnapshot> getRandomDocuments(List<DocumentSnapshot> documents, int limit) {
+        List<DocumentSnapshot> randomDocuments = new ArrayList<>();
+        Random random = new Random();
+        int size = documents.size();
+        if (size <= limit) {
+            return documents;
+        }
+        Set<Integer> indexes = new HashSet<>();
+        while (indexes.size() < limit) {
+            indexes.add(random.nextInt(size));
+        }
+        for (int index : indexes) {
+            randomDocuments.add(documents.get(index));
+        }
+        return randomDocuments;
+    }
+
     public ArrayList<Product> getAllProductFrag (Fragment fragment) {
         ArrayList<Product> allProducts = new ArrayList<>();
         UniPetdb.collection(Constants.PRODUCTS)
@@ -182,8 +240,12 @@ public class FireStoreClass {
                     if (!queryDocumentSnapshots.isEmpty()) {
                         for (int i = 0; i < queryDocumentSnapshots.size(); i++) {
                             Product product = queryDocumentSnapshots.getDocuments().get(i).toObject(Product.class);
-                            assert product != null;
                             productsSale.add(product);
+                        }
+                        for (Product product1 : productsSale) {
+                            if (userFav().contains(product1.getProductId())) {
+                                product1.setIsFavorite(true);
+                            }
                         }
                     }
                     home.loadSalesProducts(productsSale);
@@ -194,7 +256,7 @@ public class FireStoreClass {
     }
 
     public void getProductsByCategoryIdHome(Home home, int categoryId) {
-        ArrayList<Product> products = new ArrayList<>();
+        ArrayList<Product> productsList = new ArrayList<>();
         UniPetdb.collection(Constants.PRODUCTS)
                 .whereEqualTo(Constants.CATEGORYID, categoryId)
                 .get()
@@ -202,11 +264,16 @@ public class FireStoreClass {
                     if (!queryDocumentSnapshots.isEmpty()) {
                         for (int i = 0; i < queryDocumentSnapshots.size(); i++) {
                             Product product = queryDocumentSnapshots.getDocuments().get(i).toObject(Product.class);
-                            assert product != null;
-                            products.add(product);
+                            Log.i("FireStoreClass", "getProductsByCategoryIdHome: " + product.getProductId() + " " + userFav());
+                            productsList.add(product);
+                        }
+                        for (Product product1 : productsList) {
+                            if (userFav().contains(product1.getProductId())) {
+                                product1.setIsFavorite(true);
+                            }
                         }
                     }
-                    home.loadProductsByCategoryId(products, categoryId);
+                    home.loadProductsByCategoryId(productsList, categoryId);
                 })
                 .addOnFailureListener(e -> {
                     Log.e("FireStoreClass", "getProductsByCategoryId: ", e);
@@ -220,6 +287,10 @@ public class FireStoreClass {
                 .addOnSuccessListener(documentSnapshot -> {
                     if (documentSnapshot.exists()) {
                         Product product = documentSnapshot.toObject(Product.class);
+                        if (userFav().contains(productId)) {
+                            assert product != null;
+                            product.setIsFavorite(true);
+                        }
                         detailProduct.loadProductDetail(product);
                     }
                 })
@@ -440,79 +511,21 @@ public class FireStoreClass {
     }
 
 
-
-
-
-
-
-
-
-
-
-    public void addToFavoriteFrag(Fragment fragment, int productId) {
-        UniPetdb.collection(Constants.USERS)
-                .document(getCurrentUID())
-                .update(Constants.FAVPRODUCTID, FieldValue.arrayUnion(productId))
-                .addOnSuccessListener(aVoid -> {
-                    Toast.makeText(context, "Đã thêm vào danh sách yêu thích", Toast.LENGTH_SHORT).show();
-                    userFav();
-                    if (fragment instanceof Fragment_Wishlist_Product) {
-                        Fragment_Wishlist_Product fragment_wishlist_product = (Fragment_Wishlist_Product) fragment;
-                        fragment_wishlist_product.loadFavoriteProducts(userFav());
-                    }
-                })
-                .addOnFailureListener(e -> {
-                    Log.e("FireStoreClass", "addToFavorite: ", e);
-                });
-    }
-
-    public void removeFromFavoriteFrag(Fragment fragment, int productId) {
-        UniPetdb.collection(Constants.USERS)
-                .document(getCurrentUID())
-                .update(Constants.FAVPRODUCTID, FieldValue.arrayRemove(productId))
-                .addOnSuccessListener(aVoid -> {
-                    Toast.makeText(context, "Đã xóa khỏi danh sách yêu thích", Toast.LENGTH_SHORT).show();
-                    userFav();
-                    if (fragment instanceof Fragment_Wishlist_Product) {
-                        Fragment_Wishlist_Product fragment_wishlist_product = (Fragment_Wishlist_Product) fragment;
-                        fragment_wishlist_product.loadFavoriteProducts(userFav());
-                    }
-                })
-                .addOnFailureListener(e -> {
-                    Log.e("FireStoreClass", "removeFromFavorite: ", e);
-                });
-    }
-
-    public ArrayList<Product> userFav() {
-        ArrayList<Product> favProducts = new ArrayList<>();
+    public List<Integer> userFav() {
+        AtomicReference<List<Integer>> favProducts = new AtomicReference<>(new ArrayList<>());
         UniPetdb.collection(Constants.USERS)
                 .document(getCurrentUID())
                 .get()
                 .addOnSuccessListener(documentSnapshot -> {
                     if (documentSnapshot.exists()) {
-                        List<Integer> favProductIds = (List<Integer>) documentSnapshot.get(Constants.FAVPRODUCTID);
-                        if (favProductIds != null) {
-                            for (int i = 0; i < favProductIds.size(); i++) {
-                                UniPetdb.collection(Constants.PRODUCTS)
-                                        .document(String.valueOf(favProductIds.get(i)))
-                                        .get()
-                                        .addOnSuccessListener(documentSnapshot1 -> {
-                                            if (documentSnapshot1.exists()) {
-                                                Product product = documentSnapshot1.toObject(Product.class);
-                                                favProducts.add(product);
-                                            }
-                                        })
-                                        .addOnFailureListener(e -> {
-                                            Log.e("FireStoreClass", "getUserFavorites: ", e);
-                                        });
-                            }
-                        }
+                        favProducts.set((List<Integer>) documentSnapshot.get(Constants.FAVPRODUCTID));
+                        Log.i("FireStoreClass", "userFav: " + favProducts);
                     }
                 })
                 .addOnFailureListener(e -> {
-                    Log.e("FireStoreClass", "getUserFavorites: ", e);
+                    Log.e("FireStoreClass", "userFav: ", e);
                 });
-        return favProducts;
+        return favProducts.get();
     }
 
     public void getUserFavorites(Fragment fragment, ArrayList<Product> favProducts) {
@@ -546,8 +559,8 @@ public class FireStoreClass {
                                             Log.e("FireStoreClass", "getUserFavorites: ", e);
                                         });
                             }
-                            loadingDialog.dissmis();
                         }
+                        loadingDialog.dissmis();
                     }
                 })
                 .addOnFailureListener(e -> {

@@ -29,7 +29,7 @@ public class MainActivity extends AppCompatActivity {
     private static final String TAG = "MainActivity";
     ActivityMainBinding binding;
 
-    private ViewPager2 mainViewPager2;
+    public ViewPager2 mainViewPager2;
 
     LoadingDialog loadingDialog;
     BottomNavigationView bottomNavigationView;
@@ -51,6 +51,16 @@ public class MainActivity extends AppCompatActivity {
         MainViewPager2Adapter adapter = new MainViewPager2Adapter(this);
         mainViewPager2.setAdapter(adapter);
         navigateFragment();
+
+        int id = getIntent().getIntExtra(Constants.CART, -1);
+        if (id == 2) {
+            mainViewPager2.setCurrentItem(2);
+            // set other menu item to false
+            bottomNavigationView.getMenu().getItem(0).setChecked(false);
+            bottomNavigationView.getMenu().getItem(1).setChecked(false);
+            bottomNavigationView.getMenu().getItem(3).setChecked(false);
+            bottomNavigationView.getMenu().getItem(4).setChecked(false);
+        }
     }
 
 
