@@ -126,7 +126,7 @@ public class fragment_cart extends Fragment {
             RectF deleteButtonDelete = new RectF(deleteButtonLeft, deleteButtonTop, deleteButtonRight, deleteButtonBottom);
             c.drawRoundRect(deleteButtonDelete, radius, radius, paint);
 
-            paint.setColor(getResources().getColor(R.color.white));
+            paint.setColor(getResources().getColor(R.color.white)); ch
 
             Drawable deleteIconDrawable = AppCompatResources.getDrawable(getContext(), R.drawable.ic_cart_delete);
 
