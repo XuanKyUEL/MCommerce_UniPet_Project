@@ -13,6 +13,7 @@ import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -39,6 +40,7 @@ import com.unipet7.mcommerce.adapters.CartAdapter;
 import com.unipet7.mcommerce.databinding.FragmentCartBinding;
 import com.unipet7.mcommerce.firebase.FireStoreClass;
 import com.unipet7.mcommerce.models.ProductCart;
+import com.unipet7.mcommerce.utils.Constants;
 
 import java.util.ArrayList;
 import java.util.Map;
@@ -68,6 +70,9 @@ public class fragment_cart extends Fragment {
                 AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
                 LayoutInflater inflater = LayoutInflater.from(getContext());
                 View dialogView = inflater.inflate(R.layout.dialogmessage, null);
+                Window window = builder.create().getWindow();
+                assert window != null;
+                window.setBackgroundDrawableResource(android.R.color.transparent);
                 builder.setView(dialogView);
 
                 TextView dialogMessage = dialogView.findViewById(R.id.tv_message_details_dialog);
@@ -79,26 +84,20 @@ public class fragment_cart extends Fragment {
 
                 final AlertDialog alertDialog = builder.create();
 
-                btnCancel.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        alertDialog.dismiss();
-                        if (lastSwipedPosition != -1) {
-                            adapter.notifyItemChanged(lastSwipedPosition);
-                            lastSwipedPosition = -1;
-                        }
+                btnCancel.setOnClickListener(v -> {
+                    alertDialog.dismiss();
+                    if (lastSwipedPosition != -1) {
+                        adapter.notifyItemChanged(lastSwipedPosition);
+                        lastSwipedPosition = -1;
                     }
                 });
                 dialogMessage.setText("Bạn có muốn xóa sản phẩm khỏi giỏ hàng?");
                 dialogTitle.setText("Xóa sản phẩm");
 
-                btnConfirm.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        String cartItemId = String.valueOf(productCarts.get(position).getProductId());
-                        deleteItem(cartItemId, position);
-                        alertDialog.dismiss();
-                    }
+                btnConfirm.setOnClickListener(v -> {
+                    String cartItemId = String.valueOf(productCarts.get(position).getProductId());
+                    deleteItem(cartItemId, position);
+                    alertDialog.dismiss();
                 });
                 alertDialog.show();
                 lastSwipedPosition = position;
@@ -231,7 +230,7 @@ public class fragment_cart extends Fragment {
 
     public void updateCartItem(ProductCart productCart) {
         FirebaseFirestore db = FirebaseFirestore.getInstance();
-        db.collection("cart")
+        db.collection(Constants.CART)
                 .whereEqualTo("productId", productCart.getProductId())
                 .whereEqualTo("userId", productCart.getUserId())
                 .get()
@@ -269,8 +268,8 @@ public class fragment_cart extends Fragment {
         FirebaseFirestore db = FirebaseFirestore.getInstance();
         String currentUserId = new FireStoreClass().getCurrentUID();
         if (currentUserId != null && !currentUserId.isEmpty()) {
-            db.collection("cart")
-                    .whereEqualTo("userId", currentUserId)
+            db.collection(Constants.CART)
+                    .whereEqualTo(Constants.USER_ID, currentUserId)
                     .get()
                     .addOnSuccessListener(queryDocumentSnapshots -> {
                         productCarts = new ArrayList<>();

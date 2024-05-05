@@ -67,7 +67,7 @@ public class DetailProduct extends BaseActivity {
         ldDialog1.dissmis();
     }
     public void configAdaptersProductDetail() {
-        adapter = new ProductAdapter(allProducts);
+        adapter = new ProductAdapter(allProducts, fireStoreClass);
         binding.rclProductDetail.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
         binding.rclProductDetail.setAdapter(adapter);
         binding.rclProductDetail.setHasFixedSize(true);
@@ -90,11 +90,10 @@ public class DetailProduct extends BaseActivity {
         cbFavorite.setOnCheckedChangeListener((buttonView, isChecked) -> {
             if (isChecked) {
                 // add product to favorite
-                fireStoreClass.addFavorite(this,product.getProductId());
+
                 Log.d("DetailProduct", "Add product to favorite " + product.getProductId());
             } else {
                 // remove product from favorite
-                fireStoreClass.removeFavorite(this,product.getProductId());
                 Log.d("DetailProduct", "Remove product from favorite " + product.getProductId());
             }
         });
@@ -104,6 +103,21 @@ public class DetailProduct extends BaseActivity {
             Intent intent = new Intent(DetailProduct.this, MainActivity.class);
             intent.putExtra(Constants.CART, 2);
             startActivity(intent);
+        });
+        btnAddcart.setOnClickListener(v -> {
+            fireStoreClass.getCountUserCartItems(this);
+            String productName = product.getProductname();
+            double productPrice = product.getProductprice();
+            String productImage = product.getProductImageUrl();
+            double productId = product.getProductId();
+            double numOfProduct = Double.parseDouble(binding.txtNumberOrder.getText().toString());
+            Log.d("DetailProduct", "productName: " + productName);
+            Log.d("DetailProduct", "productPrice: " + productPrice);
+            Log.d("DetailProduct", "numOfProduct: " + numOfProduct);
+            Log.d("DetailProduct", "productImageUrl: " + productImage);
+            Log.d("DetailProduct", "productId: " + productId);
+            fireStoreClass.addToCart(productId, productName, productPrice, numOfProduct, productImage);
+            Toast.makeText(DetailProduct.this, "Thêm vào giỏ hàng thành công", Toast.LENGTH_SHORT).show();
         });
     }
 
@@ -147,6 +161,7 @@ public class DetailProduct extends BaseActivity {
     }
 
     public void loadProductDetail(Product product) {
+        this.product = product;
         String name = product.getProductname();
         cbFavorite.setChecked(product.isFavorite());
         tvProductName.setText(name);
@@ -155,22 +170,7 @@ public class DetailProduct extends BaseActivity {
         String formattedPrice = String.format("%,.0f đ", price);
         double presaleprice = product.getPresaleprice();
         String formattedPreSalePrice = String.format("%,.0f đ", presaleprice);
-        btnAddcart.setOnClickListener(v -> {
-            String productName = product.getProductname();
-            double productPrice = product.getProductprice();
-            String productImage = product.getProductImageUrl();
-            double productId = product.getProductId();
-            double numOfProduct = Double.parseDouble(binding.txtNumberOrder.getText().toString());
-            String userId = fireStoreClass.getCurrentUID();
-            Log.d("DetailProduct", "productName: " + productName);
-            Log.d("DetailProduct", "productPrice: " + productPrice);
-            Log.d("DetailProduct", "numOfProduct: " + numOfProduct);
-            Log.d("DetailProduct", "productImageUrl: " + productImage);
-            Log.d("DetailProduct", "productId: " + productId);
-            fireStoreClass.addToCart(productId, productName, productPrice, numOfProduct, productImage);
-            Toast.makeText(DetailProduct.this, "Thêm vào giỏ hàng thành công", Toast.LENGTH_SHORT).show();
-            fireStoreClass.getCountUserCartItems(DetailProduct.this);
-        });
+
         // check if product is on sale
         if (product.getSalepercent() > 0) {
             tvProductPresale.setVisibility(TextView.VISIBLE);
