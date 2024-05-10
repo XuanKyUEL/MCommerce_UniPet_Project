@@ -23,10 +23,14 @@ import com.unipet7.mcommerce.activities.SearchProductList;
 import com.unipet7.mcommerce.activities.SignUp;
 import com.unipet7.mcommerce.adapters.CartAdapter;
 import com.unipet7.mcommerce.fragments.FragmentAccount;
+import com.unipet7.mcommerce.fragments.FragmentAddress;
+import com.unipet7.mcommerce.fragments.FragmentAddressEdit;
+import com.unipet7.mcommerce.fragments.FragmentAdressAdd;
 import com.unipet7.mcommerce.fragments.FragmentAllProduct;
 import com.unipet7.mcommerce.fragments.Fragment_Wishlist_Product;
 import com.unipet7.mcommerce.fragments.Home;
 import com.unipet7.mcommerce.fragments.Profile;
+import com.unipet7.mcommerce.models.Addresses;
 import com.unipet7.mcommerce.models.Product;
 import com.unipet7.mcommerce.models.ProductCart;
 import com.unipet7.mcommerce.models.User;
@@ -455,6 +459,8 @@ public class FireStoreClass {
                     listener.onFailure("Error fetching vouchers: " + e.getMessage());
                 });
     }
+
+
     public interface OnVoucherListListener {
         void onSuccess(ArrayList<Voucher> vouchers);
         void onFailure(String errorMessage);
@@ -530,6 +536,97 @@ public class FireStoreClass {
                 })
                 .addOnFailureListener(e -> {
                     Log.e("FireStoreClass", "SearchAllProducts: ", e);
+                });
+    }
+
+    // Address API
+    // fetch user address from User collection
+    public void GetUserAddresses (FragmentAddress fragment) {
+        // return the data in addresses field of the user
+        UniPetdb.collection(Constants.USERS)
+                .document(getCurrentUID())
+                .get()
+                .addOnSuccessListener(documentSnapshot -> {
+                    if (documentSnapshot.exists()) {
+                        User user = documentSnapshot.toObject(User.class);
+                        if (user != null) {
+                            fragment.loadAddresses(user.getAddresses());
+                            Log.i("FireStoreClass", "GetUserAddresses: " + user.getAddresses());
+                        } else {
+                            Log.e("FireStoreClass", "GetUserAddresses: User is null");
+                        }
+                    }
+                })
+                .addOnFailureListener(e -> {
+                    Log.e("FireStoreClass", "GetUserAddresses: ", e);
+                });
+    }
+
+    public void addAddress(FragmentAdressAdd fragment, Addresses address) {
+        address.setAddressId(System.currentTimeMillis() + new Random().nextInt(1000) + getCurrentUID());
+        UniPetdb.collection(Constants.USERS)
+                .document(getCurrentUID())
+                .update(Constants.ADDRESSES, FieldValue.arrayUnion(address))
+                .addOnSuccessListener(aVoid -> {
+                    fragment.addAddressSuccess();
+                })
+                .addOnFailureListener(e -> {
+                    Log.e("FireStoreClass", "AddAddress: ", e);
+                });
+    }
+
+    public void deleteAddress(FragmentAddressEdit fragmentAddressEdit, String addressId) {
+        UniPetdb.collection(Constants.USERS)
+                .document(getCurrentUID())
+                .get()
+                .addOnSuccessListener(documentSnapshot -> {
+                    List<Addresses> addresses = documentSnapshot.toObject(User.class).getAddresses();
+                    for (int i = 0; i < addresses.size(); i++) {
+                        if (addresses.get(i).getAddressId().equals(addressId)) {
+                            addresses.remove(i); // Xóa địa chỉ
+                            break;
+                        }
+                    }
+                    // Cập nhật lại danh sách địa chỉ trên Firestore
+                    UniPetdb.collection(Constants.USERS)
+                            .document(getCurrentUID())
+                            .update(Constants.ADDRESSES, addresses)
+                            .addOnSuccessListener(aVoid -> {
+                                fragmentAddressEdit.deleteAddressSuccess();
+                            })
+                            .addOnFailureListener(e -> {
+                                Log.e("FireStoreClass", "deleteAddress: ", e);
+                            });
+                })
+                .addOnFailureListener(e -> {
+                    Log.e("FireStoreClass", "deleteAddress: ", e);
+                });
+    }
+    public void updateAddress(FragmentAddressEdit fragmentAddressEdit, Addresses newAddress, String addressId) {
+        UniPetdb.collection(Constants.USERS)
+                .document(getCurrentUID())
+                .get()
+                .addOnSuccessListener(documentSnapshot -> {
+                    List<Addresses> addresses = documentSnapshot.toObject(User.class).getAddresses();
+                    for (int i = 0; i < addresses.size(); i++) {
+                        if (addresses.get(i).getAddressId().equals(addressId)) {
+                            addresses.set(i, newAddress); // Cập nhật địa chỉ
+                            break;
+                        }
+                    }
+                    // Cập nhật lại danh sách địa chỉ trên Firestore
+                    UniPetdb.collection(Constants.USERS)
+                            .document(getCurrentUID())
+                            .update(Constants.ADDRESSES, addresses)
+                            .addOnSuccessListener(aVoid -> {
+                                fragmentAddressEdit.updateAddressSuccess();
+                            })
+                            .addOnFailureListener(e -> {
+                                Log.e("FireStoreClass", "updateAddress: ", e);
+                            });
+                })
+                .addOnFailureListener(e -> {
+                    Log.e("FireStoreClass", "updateAddress: ", e);
                 });
     }
 }

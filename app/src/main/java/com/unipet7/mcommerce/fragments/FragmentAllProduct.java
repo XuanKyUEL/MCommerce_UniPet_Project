@@ -363,7 +363,7 @@ private String currentCategory = Constants.ALLPRODUCT;
 //            ldDialog.dissmis();
 //
 //        }
-        else if (sKey != null && sKey.equals("null")){
+        else if (sKey != null && sKey.equals(Constants.NULL)){
             LoadingDialog ldDialog = new LoadingDialog();
             ldDialog.showLoadingDialog(this.getContext());
             view.postDelayed(() -> btnAll.performClick(), 300);

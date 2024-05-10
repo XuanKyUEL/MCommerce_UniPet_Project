@@ -15,6 +15,16 @@ public class User implements Parcelable {
     private Long mobile;
     private String fcmToken;
 
+    public List<Addresses> addresses;
+
+    public List<Addresses> getAddresses() {
+        return addresses;
+    }
+
+    public void setAddresses(List<Addresses> addresses) {
+        this.addresses = addresses;
+    }
+
     private List<Integer> favProductId;
     private List<Integer> orderHistoryId;
 
