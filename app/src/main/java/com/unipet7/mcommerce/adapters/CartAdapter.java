@@ -52,7 +52,6 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.ViewHolder> {
 
     private OnItemClickListener onItemClickListener;
 
-    // Phương thức để thiết lập listener
     public void setOnItemClickListener(OnItemClickListener listener) {
         this.onItemClickListener = listener;
     }
@@ -67,19 +66,14 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.ViewHolder> {
         holder.txtProductPrice.setText(String.format("%,.0f đ", productCart.getProductPrice()));
         holder.txtNumberOrder.setText(String.valueOf(productCart.getNumOfProduct()));
         holder.txtSumNumbPrice.setText(String.format("%,.0f đ", productCart.getTotalPrice()));
-        // Load image from URL using Glide
         Glide.with(context).load(productCart.getProductImageUrl()).into(holder.imvProductCart);
-
         holder.imvMinus.setOnClickListener(v -> {
             if (onQuantityChangeListener != null) {
                 double newQuantity = productCart.getNumOfProduct() - 1;
                 if (newQuantity >= 1) {
                     productCart.setNumOfProduct((int) newQuantity);
                     productCart.setTotalPrice(productCart.getProductPrice() * newQuantity);
-
-                    // Cập nhật Firestore
                     updateCartItem(productCart);
-
                     onQuantityChangeListener.onQuantityChange(position, newQuantity);
                 }
             }
@@ -90,10 +84,7 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.ViewHolder> {
                 double newQuantity = productCart.getNumOfProduct() + 1;
                 productCart.setNumOfProduct((int) newQuantity);
                 productCart.setTotalPrice(productCart.getProductPrice() * newQuantity);
-
-                // Cập nhật Firestore
                 updateCartItem(productCart);
-
                 onQuantityChangeListener.onQuantityChange(position, newQuantity);
             }
         });

@@ -4,8 +4,10 @@ import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Canvas;
+import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.RectF;
+import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.util.Log;
@@ -42,6 +44,7 @@ import com.unipet7.mcommerce.models.ProductCart;
 
 import java.util.ArrayList;
 import java.util.Map;
+import java.util.Objects;
 
 public class fragment_cart extends Fragment {
     private static final int REQUEST_CODE_VOUCHER = 1;
@@ -78,6 +81,8 @@ public class fragment_cart extends Fragment {
                 btnConfirm.setText("Xóa");
 
                 final AlertDialog alertDialog = builder.create();
+                Objects.requireNonNull(alertDialog.getWindow()).setBackgroundDrawableResource(android.R.color.transparent);
+
 
                 btnCancel.setOnClickListener(new View.OnClickListener() {
                     @Override
@@ -126,7 +131,7 @@ public class fragment_cart extends Fragment {
             RectF deleteButtonDelete = new RectF(deleteButtonLeft, deleteButtonTop, deleteButtonRight, deleteButtonBottom);
             c.drawRoundRect(deleteButtonDelete, radius, radius, paint);
 
-            paint.setColor(getResources().getColor(R.color.white)); ch
+            paint.setColor(getResources().getColor(R.color.white));
 
             Drawable deleteIconDrawable = AppCompatResources.getDrawable(getContext(), R.drawable.ic_cart_delete);
 
