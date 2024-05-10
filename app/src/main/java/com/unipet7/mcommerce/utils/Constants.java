@@ -26,4 +26,8 @@ public class Constants {
     public static final String SALESPERCENT = "salepercent";
     public static final String CART = "cart";
     public static final String FAVORITEBY = "isFavoriteBy";
+    public static final String NULL = "null";
+    public static final String ADDRESSES = "addresses";
+    public static final String ADDRESS = "address";
+    public static final String ADDRESSID = "addressId";
 }

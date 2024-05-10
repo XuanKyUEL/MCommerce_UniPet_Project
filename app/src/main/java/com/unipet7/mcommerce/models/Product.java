@@ -6,6 +6,8 @@ import android.os.Parcelable;
 import androidx.annotation.NonNull;
 
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 
 public class Product implements Parcelable {
@@ -18,7 +20,9 @@ public class Product implements Parcelable {
 
     private ArrayList<String> isFavoriteBy;
 
-
+    public ArrayList<String> getIsFavoriteBy() {
+        return isFavoriteBy;
+    }
 
     public boolean isFavorite() {
         return isFavorite;

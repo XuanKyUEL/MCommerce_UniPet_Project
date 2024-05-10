@@ -14,6 +14,7 @@ import androidx.appcompat.app.ActionBar;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
 import com.bumptech.glide.Glide;
+import com.google.firebase.firestore.FirebaseFirestore;
 import com.unipet7.mcommerce.R;
 import com.unipet7.mcommerce.adapters.ProductAdapter;
 import com.unipet7.mcommerce.databinding.ActivityDetailProductBinding;
@@ -36,6 +37,8 @@ public class DetailProduct extends BaseActivity {
     Button btnAddcart;
 
     FireStoreClass fireStoreClass = new FireStoreClass();
+
+    FirebaseFirestore db = FirebaseFirestore.getInstance();
 
     Product product;
     ProductAdapter adapter;
@@ -170,6 +173,19 @@ public class DetailProduct extends BaseActivity {
         String formattedPrice = String.format("%,.0f đ", price);
         double presaleprice = product.getPresaleprice();
         String formattedPreSalePrice = String.format("%,.0f đ", presaleprice);
+        db.collection(Constants.PRODUCTS)
+                .whereEqualTo(Constants.PRODUCT_ID, product.getProductId())
+                .get()
+                .addOnCompleteListener(task -> {
+                    if (task.isSuccessful()) {
+                        for (Product document : task.getResult().toObjects(Product.class)) {
+                            // check if document has isFavoriteBy field
+                            if (document.getIsFavoriteBy() != null) {
+                                cbFavorite.setChecked(document.getIsFavoriteBy().contains(fireStoreClass.getCurrentUID()));
+                            }
+                        }
+                    }
+                });
 
         // check if product is on sale
         if (product.getSalepercent() > 0) {
