@@ -48,18 +48,20 @@
         android:paddingLeft="10dp"
         android:layout_gravity="center"
         android:background="@drawable/edittext_conner_profile"/>
+
     <EditText
-        android:layout_marginTop="15dp"
         android:id="@+id/edtaddressphone"
+        style="@style/BODY_LARGE_MED_16"
         android:layout_width="320dp"
         android:layout_height="48dp"
-        android:hint="Số điện thoại"
-        android:paddingLeft="10dp"
-        style="@style/BODY_LARGE_MED_16"
-        android:textColor="@color/darkPrimary"
         android:layout_gravity="center"
-        android:inputType="phone"
-        android:background="@drawable/edittext_conner_profile"/>
+        android:layout_marginTop="15dp"
+        android:background="@drawable/edittext_conner_profile"
+        android:hint="Số điện thoại"
+        android:inputType="number"
+        android:paddingLeft="10dp"
+        android:textColor="@color/darkPrimary" />
+
     <TextView
         android:layout_width="320dp"
         android:layout_height="wrap_content"
