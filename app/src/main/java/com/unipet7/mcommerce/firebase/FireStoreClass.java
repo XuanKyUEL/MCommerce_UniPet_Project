@@ -22,6 +22,7 @@ import com.unipet7.mcommerce.activities.BlogDetails;
 import com.unipet7.mcommerce.activities.SearchProductList;
 import com.unipet7.mcommerce.activities.SignUp;
 import com.unipet7.mcommerce.adapters.CartAdapter;
+import com.unipet7.mcommerce.fragments.CartOverall;
 import com.unipet7.mcommerce.fragments.FragmentAccount;
 import com.unipet7.mcommerce.fragments.FragmentAddress;
 import com.unipet7.mcommerce.fragments.FragmentAddressEdit;
@@ -44,6 +45,7 @@ import java.util.List;
 import java.util.Objects;
 import java.util.Random;
 import java.util.Set;
+import java.util.concurrent.atomic.AtomicInteger;
 import java.util.concurrent.atomic.AtomicReference;
 
 public class FireStoreClass {
@@ -271,6 +273,22 @@ public class FireStoreClass {
                 });
     }
 
+    public int getCartItemCount(CartOverall cartOverall) {
+        AtomicInteger cartCount = new AtomicInteger();
+        UniPetdb.collection(Constants.CART)
+                .whereEqualTo(Constants.USER_ID, getCurrentUID())
+                .get()
+                .addOnSuccessListener(queryDocumentSnapshots -> {
+                    cartCount.set(queryDocumentSnapshots.size());
+                    cartOverall.loadCart = cartCount.get() > 0;
+                    cartOverall.loadUi(cartOverall.loadCart);
+                })
+                .addOnFailureListener(e -> {
+                    Log.e("FireStoreClass", "updateCartCount: ", e);
+                });
+        return cartCount.get();
+    }
+
     public void updateUser(Fragment fragment, HashMap<String, Object> userHashMap) {
         UniPetdb.collection(Constants.USERS)
                 .document(getCurrentUID())
@@ -465,6 +483,8 @@ public class FireStoreClass {
         void onSuccess(ArrayList<Voucher> vouchers);
         void onFailure(String errorMessage);
     }
+
+
 
 
     public List<Integer> userFav() {
