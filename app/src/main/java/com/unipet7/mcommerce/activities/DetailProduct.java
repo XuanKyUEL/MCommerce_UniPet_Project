@@ -106,6 +106,7 @@ public class DetailProduct extends BaseActivity {
             Intent intent = new Intent(DetailProduct.this, MainActivity.class);
             intent.putExtra(Constants.CART, 2);
             startActivity(intent);
+
         });
         btnAddcart.setOnClickListener(v -> {
             fireStoreClass.getCountUserCartItems(this);

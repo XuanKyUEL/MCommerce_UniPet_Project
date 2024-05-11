@@ -1,5 +1,8 @@
 package com.unipet7.mcommerce.activities;
 
+import android.content.BroadcastReceiver;
+import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import androidx.appcompat.app.AppCompatActivity;
@@ -14,6 +17,7 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.unipet7.mcommerce.R;
 import com.unipet7.mcommerce.adapters.MainViewPager2Adapter;
 import com.unipet7.mcommerce.databinding.ActivityMainBinding;
+import com.unipet7.mcommerce.fragments.CartOverall;
 import com.unipet7.mcommerce.fragments.FragmentAllProduct;
 import com.unipet7.mcommerce.fragments.Fragment_Wishlist_Product;
 import com.unipet7.mcommerce.fragments.Home;
@@ -23,18 +27,19 @@ import com.unipet7.mcommerce.utils.Constants;
 import com.unipet7.mcommerce.utils.LoadingDialog;
 import com.unipet7.mcommerce.utils.NonSwipeAbleViewPager;
 
+import java.util.Objects;
+
 public class MainActivity extends AppCompatActivity {
     private ViewPager2 viewPager2;
 
     private static final String TAG = "MainActivity";
     ActivityMainBinding binding;
 
+
     public ViewPager2 mainViewPager2;
 
-    LoadingDialog loadingDialog;
-    BottomNavigationView bottomNavigationView;
+    public BottomNavigationView bottomNavigationView;
     FloatingActionButton fabCart;
-    private FirebaseFirestore db;
 
     Fragment fragment = null;
 
@@ -55,11 +60,6 @@ public class MainActivity extends AppCompatActivity {
         int id = getIntent().getIntExtra(Constants.CART, -1);
         if (id == 2) {
             mainViewPager2.setCurrentItem(2);
-            // set other menu item to false
-            bottomNavigationView.getMenu().getItem(0).setChecked(false);
-            bottomNavigationView.getMenu().getItem(1).setChecked(false);
-            bottomNavigationView.getMenu().getItem(3).setChecked(false);
-            bottomNavigationView.getMenu().getItem(4).setChecked(false);
         }
     }
 
@@ -71,7 +71,7 @@ public class MainActivity extends AppCompatActivity {
         RecyclerView recyclerView = (RecyclerView) mainViewPager2.getChildAt(0);
         recyclerView.addOnItemTouchListener(new NonSwipeAbleViewPager());
         fabCart = binding.fabCart;
-        db = FirebaseFirestore.getInstance();
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
     }
 
 
@@ -85,17 +85,17 @@ public class MainActivity extends AppCompatActivity {
                         fragment = new Home();
                         bottomNavigationView.getMenu().getItem(0).setChecked(true);
                         break;
-
                     case 1:
                         fragment = new FragmentAllProduct();
-                        // truyền bundle category allproduct cho fragment allproduct
+                        // truyền bundle category all product cho fragment allproduct
                         Bundle bundle = new Bundle();
                         bundle.putString(Constants.CATEGORY, Constants.ALLPRODUCT);
                         fragment.setArguments(bundle);
                         bottomNavigationView.getMenu().getItem(1).setChecked(true);
                         break;
                     case 2:
-                        fragment = new fragment_cart();
+                        fragment = new CartOverall();
+                        // set other menu item to false
                         bottomNavigationView.getMenu().getItem(2).setChecked(true);
                         break;
                     case 3:
@@ -115,8 +115,6 @@ public class MainActivity extends AppCompatActivity {
             if (id == R.id.home_icon_bottom) {
                 removeAllFragments();
                 mainViewPager2.setCurrentItem(0);
-
-
             } else if (id == R.id.product_icon_bottom) {
                 mainViewPager2.setCurrentItem(1);
             } else if (id == R.id.fab_nav_shop) {
@@ -144,8 +142,4 @@ public class MainActivity extends AppCompatActivity {
         BottomNavigationView bottomNavigationView = findViewById(R.id.bottomNavigationView);
         bottomNavigationView.setSelectedItemId(R.id.home_icon_bottom);
     }
-
-
-
-
 }

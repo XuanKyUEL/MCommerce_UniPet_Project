@@ -3,7 +3,7 @@ package com.unipet7.mcommerce.fragments;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentContainerView;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,15 +11,18 @@ import android.view.ViewGroup;
 
 import com.unipet7.mcommerce.R;
 import com.unipet7.mcommerce.activities.MainActivity;
-import com.unipet7.mcommerce.databinding.FragmentBlankCartBinding;
-import com.unipet7.mcommerce.databinding.FragmentEmptyNotificationBinding;
+import com.unipet7.mcommerce.databinding.FragmentCartOverallBinding;
+import com.unipet7.mcommerce.firebase.FireStoreClass;
 
 /**
  * A simple {@link Fragment} subclass.
- * Use the {@link fragment_blank_cart#newInstance} factory method to
+ * Use the {@link CartOverall#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class fragment_blank_cart extends Fragment {
+public class CartOverall extends Fragment {
+
+    public boolean loadCart;
+    FragmentCartOverallBinding binding;
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -29,9 +32,8 @@ public class fragment_blank_cart extends Fragment {
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
-    FragmentBlankCartBinding binding;
 
-    public fragment_blank_cart() {
+    public CartOverall() {
         // Required empty public constructor
     }
 
@@ -41,11 +43,11 @@ public class fragment_blank_cart extends Fragment {
      *
      * @param param1 Parameter 1.
      * @param param2 Parameter 2.
-     * @return A new instance of fragment fragment_blank_cart.
+     * @return A new instance of fragment CartOverall.
      */
     // TODO: Rename and change types and number of parameters
-    public static fragment_blank_cart newInstance(String param1, String param2) {
-        fragment_blank_cart fragment = new fragment_blank_cart();
+    public static CartOverall newInstance(String param1, String param2) {
+        CartOverall fragment = new CartOverall();
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
         args.putString(ARG_PARAM2, param2);
@@ -66,16 +68,30 @@ public class fragment_blank_cart extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        binding= FragmentBlankCartBinding.inflate(inflater, container, false);
-        addEvents();
-        return binding.getRoot();    }
+        binding = FragmentCartOverallBinding.inflate(inflater, container, false);
+        FireStoreClass fireStoreClass = new FireStoreClass();
+        fireStoreClass.getCartItemCount(this);
+        if (getActivity() instanceof MainActivity mainActivity) {
+            mainActivity.bottomNavigationView.getMenu().getItem(2).setChecked(true);
+        }
+        return binding.getRoot();
+    }
 
-    private void addEvents() {
-        binding.btnBackHome.setOnClickListener(v -> {
-            if (getActivity() instanceof MainActivity) {
-                MainActivity mainActivity = (MainActivity) getActivity();
-                mainActivity.mainViewPager2.setCurrentItem(0);
-            }
-        });
+    public void loadUi(boolean loadCart) {
+        this.loadCart = loadCart;
+        if (loadCart) {
+            Fragment fragment = new fragment_cart();
+            getChildFragmentManager().beginTransaction().replace(R.id.fragment_cart_container, fragment).commit();
+        } else {
+            Fragment fragment = new fragment_blank_cart();
+            getChildFragmentManager().beginTransaction().replace(R.id.fragment_cart_container, fragment).commit();
+        }
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        FireStoreClass fireStoreClass = new FireStoreClass();
+        fireStoreClass.getCartItemCount(this);
     }
 }

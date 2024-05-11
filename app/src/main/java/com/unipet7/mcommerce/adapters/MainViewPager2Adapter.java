@@ -9,6 +9,7 @@ import androidx.fragment.app.FragmentManager;
 import androidx.viewpager2.adapter.FragmentStateAdapter;
 
 import com.unipet7.mcommerce.R;
+import com.unipet7.mcommerce.fragments.CartOverall;
 import com.unipet7.mcommerce.fragments.FragmentAllProduct;
 import com.unipet7.mcommerce.fragments.Fragment_Empty_Notification;
 import com.unipet7.mcommerce.fragments.Fragment_Wishlist_Product;
@@ -25,20 +26,13 @@ public class MainViewPager2Adapter extends FragmentStateAdapter {
     @Override
     public Fragment createFragment(int position) {
 
-        switch (position) {
-            case 0:
-                return new Home();
-            case 1:
-                return new FragmentAllProduct();
-            case 2:
-                return new fragment_cart();
-            case 3:
-                return new Fragment_Wishlist_Product();
-            case 4:
-                return new Profile();
-            default:
-                return new Home();
-        }
+        return switch (position) {
+            case 1 -> new FragmentAllProduct();
+            case 2 -> new CartOverall();
+            case 3 -> new Fragment_Wishlist_Product();
+            case 4 -> new Profile();
+            default -> new Home();
+        };
     }
 
     @Override
