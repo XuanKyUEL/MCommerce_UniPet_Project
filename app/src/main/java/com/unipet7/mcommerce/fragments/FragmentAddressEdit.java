@@ -99,7 +99,15 @@ public class FragmentAddressEdit extends Fragment {
     private void addEvents() {
         binding.toolbaraddessedit.setNavigationOnClickListener(v -> requireActivity().getOnBackPressedDispatcher().onBackPressed());
         binding.btnDel.setOnClickListener(v -> {
-            fireStoreClass.deleteAddress(this, address.getAddressId());
+            MessageDialog messageDialog = new MessageDialog("Xác nhận xóa", "Bạn có chắc chắn muốn xóa địa chỉ này không?", "Xóa", "Hủy");
+            MessageDialogAdapter messageDialogAdapter = new MessageDialogAdapter(requireContext());
+            messageDialog.setCancelable(true);
+            messageDialog.setPositiveClickListener(v1 -> {
+                messageDialogAdapter.dismissDialog();
+                fireStoreClass.deleteAddress(this, address.getAddressId());
+            });
+            messageDialog.setNegativeClickListener(v1 -> messageDialogAdapter.dismissDialog()); // Dismiss dialog
+            messageDialogAdapter.showDialog(messageDialog);
         });
         binding.btnDoneedit.setOnClickListener(v -> {
             boolean hasError = isHasError();

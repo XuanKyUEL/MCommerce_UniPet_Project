@@ -3,12 +3,13 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical"
-    android:background="@drawable/edittext_conner_profile">
+    android:layout_marginBottom="25dp"
+    >
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:layout_weight="8">
+        android:background="@drawable/edittext_conner_profile"
+        android:orientation="horizontal">
         <ImageView
             android:paddingLeft="5dp"
             android:layout_width="30dp"
@@ -46,8 +47,6 @@
             android:src="@drawable/ic_address_edit"
             android:layout_weight="2"
             android:layout_gravity="center_vertical"/>
-
-
     </LinearLayout>
 
 </LinearLayout>
