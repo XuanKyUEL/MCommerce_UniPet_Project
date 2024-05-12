@@ -17,6 +17,7 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.unipet7.mcommerce.R;
 import com.unipet7.mcommerce.models.ProductCart;
+import com.unipet7.mcommerce.utils.Constants;
 
 import java.util.ArrayList;
 
@@ -52,7 +53,6 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.ViewHolder> {
 
     private OnItemClickListener onItemClickListener;
 
-    // Phương thức để thiết lập listener
     public void setOnItemClickListener(OnItemClickListener listener) {
         this.onItemClickListener = listener;
     }
@@ -67,19 +67,14 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.ViewHolder> {
         holder.txtProductPrice.setText(String.format("%,.0f đ", productCart.getProductPrice()));
         holder.txtNumberOrder.setText(String.valueOf(productCart.getNumOfProduct()));
         holder.txtSumNumbPrice.setText(String.format("%,.0f đ", productCart.getTotalPrice()));
-        // Load image from URL using Glide
         Glide.with(context).load(productCart.getProductImageUrl()).into(holder.imvProductCart);
-
         holder.imvMinus.setOnClickListener(v -> {
             if (onQuantityChangeListener != null) {
                 double newQuantity = productCart.getNumOfProduct() - 1;
                 if (newQuantity >= 1) {
                     productCart.setNumOfProduct((int) newQuantity);
                     productCart.setTotalPrice(productCart.getProductPrice() * newQuantity);
-
-                    // Cập nhật Firestore
                     updateCartItem(productCart);
-
                     onQuantityChangeListener.onQuantityChange(position, newQuantity);
                 }
             }
@@ -90,10 +85,7 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.ViewHolder> {
                 double newQuantity = productCart.getNumOfProduct() + 1;
                 productCart.setNumOfProduct((int) newQuantity);
                 productCart.setTotalPrice(productCart.getProductPrice() * newQuantity);
-
-                // Cập nhật Firestore
                 updateCartItem(productCart);
-
                 onQuantityChangeListener.onQuantityChange(position, newQuantity);
             }
         });
@@ -107,9 +99,9 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.ViewHolder> {
     }
     public void updateCartItem(ProductCart productCart) {
         FirebaseFirestore db = FirebaseFirestore.getInstance();
-        db.collection("cart")
-                .whereEqualTo("productId", productCart.getProductId())
-                .whereEqualTo("userId", productCart.getUserId())
+        db.collection(Constants.CART)
+                .whereEqualTo(Constants.PRODUCT_ID, productCart.getProductId())
+                .whereEqualTo(Constants.USER_ID, productCart.getUserId())
                 .get()
                 .addOnSuccessListener(queryDocumentSnapshots -> {
                     if (!queryDocumentSnapshots.isEmpty()) {

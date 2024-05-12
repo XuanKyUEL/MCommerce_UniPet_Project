@@ -195,6 +195,15 @@ public class Home extends Fragment {
 
         });
 
+        binding.Xemthem4.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getActivity(), com.unipet7.mcommerce.activities.Blogs.class);
+                startActivity(intent);
+            }
+        });
+
+
         binding.Xemthem4.setOnClickListener(v -> {
             Intent intent = new Intent(getActivity(), com.unipet7.mcommerce.activities.Blogs.class);
             startActivity(intent);
@@ -245,27 +254,7 @@ public class Home extends Fragment {
 
             }
         });
-        binding.imgGroupBanner1.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                sId = "0";
-                open();
-            }
-        });
-        binding.imgGroupBanner2.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                sId = "2";
-                open();
-            }
-        });
-        binding.imgGroupBanner3.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                sId = "3";
-                open();
-            }
-        });
+
 
 
         binding.imageView.setOnClickListener(v -> {

@@ -37,7 +37,9 @@
         android:layout_height="wrap_content"
         android:id="@+id/lvlAddress"
         android:layout_weight="1"
-        android:padding="10dp"/>
+        android:padding="10dp"
+        android:divider="@android:color/transparent"
+        android:dividerHeight="15dp"/>
     <View
         android:layout_width="match_parent"
         android:layout_height="20dp"
