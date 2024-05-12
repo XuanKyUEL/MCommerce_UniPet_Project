@@ -181,52 +181,6 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"/>
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="Mã khuyến mãi"
-                    android:textColor="@color/brandPrimary"
-                    style="@style/HEAD6_BOLD_16"
-                    android:layout_marginTop="10dp"/>
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:layout_marginTop="10dp"
-                    android:padding="10dp">
-                    <FrameLayout
-                        android:layout_width="222dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="7">
-                        <EditText
-                            android:id="@+id/edtDiscountCode"
-                            android:layout_width="222dp"
-                            android:layout_height="35dp"
-                            style="@style/BODY_MED_REGULAR_14"
-                            android:text="Nhập mã khuyến mãi"
-                            android:textColor="#A2A2A2"
-                            android:background="@drawable/search_background"
-                            android:padding="10dp" />
-                        <ImageView
-                            android:id="@+id/btnShowDiscountCode"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:src="@drawable/ic_showdiscount_paymentmethoddetails"
-                            android:layout_gravity="end|center" />
-                    </FrameLayout>
-                    <Button
-                        android:id="@+id/btnvoucheruse"
-                        android:layout_width="wrap_content"
-                        android:layout_height="35dp"
-                        android:layout_gravity="center_vertical"
-                        android:text="Áp dụng"
-                        android:textStyle="bold"
-                        android:textSize="12dp"
-                        android:layout_marginStart="20dp"
-                        android:layout_weight="3"
-                        android:textColor="@color/white"
-                        android:background="@drawable/custom_button_paymenmethoddetails"/>
-                </LinearLayout>
 
                 <androidx.cardview.widget.CardView
                     android:layout_width="match_parent"

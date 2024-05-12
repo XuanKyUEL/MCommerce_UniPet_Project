@@ -64,29 +64,9 @@ public class PaymentMethodDetails extends AppCompatActivity implements PaymentMe
 
             }
         });
-        binding.btnShowDiscountCode.setOnClickListener(v -> startActivityForResult(new Intent(PaymentMethodDetails.this, VoucherActivity.class), REQUEST_CODE_VOUCHER));
-        binding.btnvoucheruse.setOnClickListener(v -> {
-            String voucherCode = binding.edtDiscountCode.getText().toString().trim();
-            if (voucherCode.isEmpty()) {
-                startActivityForResult(new Intent(PaymentMethodDetails.this, VoucherActivity.class), REQUEST_CODE_VOUCHER);
-            } else {
-                // Add logic to handle voucher code
-                // For example:
-                Toast.makeText(PaymentMethodDetails.this, "Voucher code entered: " + voucherCode, Toast.LENGTH_SHORT).show();
-            }
-        });
     }
     public void onPaymentMethodSelected(String paymentMethod) {
         // Cập nhật TextView theo phương thức thanh toán được chọn
         binding.txtPaymentMethodName.setText(paymentMethod);
-    }
-
-
-    public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == REQUEST_CODE_VOUCHER && resultCode == Activity.RESULT_OK && data != null) {
-            String voucherCode = data.getStringExtra("voucher_code");
-            binding.edtDiscountCode.setText(voucherCode);
-        }
     }
 }
