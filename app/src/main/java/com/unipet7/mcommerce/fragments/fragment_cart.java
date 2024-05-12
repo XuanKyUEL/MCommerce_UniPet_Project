@@ -166,6 +166,9 @@ public class fragment_cart extends Fragment {
         itemTouchHelper.attachToRecyclerView(binding.rcCart);
         binding.btnPaymentNow.setOnClickListener(v -> {
             Intent intent = new Intent(getActivity(), PaymentMethodDetails.class);
+            Bundle bundle = new Bundle();
+            bundle.putDouble("totalCartPrice", totalCartPrice);
+            intent.putExtras(bundle);
             startActivity(intent);
         });
 

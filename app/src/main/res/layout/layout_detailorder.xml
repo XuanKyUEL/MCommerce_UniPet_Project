@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="horizontal"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <ImageView
+        android:id="@+id/imvproductthumb"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        android:src="@drawable/unipet_app_icon"/>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:padding="5dp"
+        android:orientation="vertical">
+        <TextView
+            android:id="@+id/order_productname1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Pate chó IRIS chăm sóc răng m..."
+            style="@style/BODY_MED_BOLD_14"
+            android:textColor="@color/brandPrimary"/>
+        <TextView
+            android:id="@+id/product_count1"
+            style="@style/BODY_SMALL_REGULAR_12"
+            android:layout_width="25dp"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="5dp"
+            android:text="x1 "
+            android:textColor="@color/darkSecondary"
+            android:textStyle="italic"/>
+        <TextView
+            android:id="@+id/product_price1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="68.000đ"
+            style="@style/BODY_SMALL_REGULAR_12"
+            android:textStyle="italic"
+            android:layout_marginRight="5dp"
+            android:textColor="@color/darkSecondary"/>
+    </LinearLayout>
+
+</LinearLayout>

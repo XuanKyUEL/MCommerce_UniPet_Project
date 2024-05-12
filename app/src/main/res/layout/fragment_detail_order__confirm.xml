@@ -1,14 +1,243 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".fragments.DetailOrder_Confirm">
-
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".fragments.DetailOrder_Confirm"
+    android:orientation="vertical"
+    android:padding="10dp"
+    android:background="@color/white"
+    android:id="@+id/product">
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
+        android:layout_height="match_parent">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:layout_marginTop="20dp">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+                    <TextView
+                        android:id="@+id/Do_order_date"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1 "
+                        android:text="02/02/2024"
+                        android:layout_marginRight="10dp"
+                        style="@style/BODY_SMALL_REGULAR_12"
+                        android:textColor="@color/darkSecondary"/>
+                    <View
+                        android:layout_width="1dp"
+                        android:layout_height="15dp"
+                        android:layout_marginRight="10dp"
+                        android:background="@color/darkSecondary"/>
+                    <TextView
+                        android:id="@+id/Do_order_code"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="#11123"
+                        style="@style/BODY_SMALL_REGULAR_12"
+                        android:layout_marginRight="10dp"
+                        android:textColor="@color/darkSecondary"/>
+                </LinearLayout>
+                <TextView
+                    android:id="@+id/Do_order_status"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Chờ xác nhận"
+                    style="@style/BODY_XS_BOLD_12"
+                    android:layout_marginRight="5dp"
+                    android:textColor="@color/brandPrimary"
+                    android:gravity="end"/>
+            </LinearLayout>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:text="Thông tin vận chuyển"
+                android:textColor="@color/brandPrimary"
+                style="@style/HEAD6_BOLD_16"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:text="Thông tin người nhận"
+                android:layout_marginBottom="5dp"
+                android:textColor="@color/brandPrimary"
+                style="@style/HEAD6_BOLD_16"/>
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="5dp"
+                android:orientation="horizontal">
 
-</FrameLayout>
+                <TextView
+                    android:id="@+id/txtDOUserName"
+                    style="@style/BODY_LARGE_SEMI_BOLD_16"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Nhân Đinh"
+                    android:textColor="@color/black" />
+
+                <TextView
+                    android:id="@+id/txtDOphonenumber"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="30dp"
+                    android:text="09048937492"
+                    android:textColor="@color/black"
+                    style="@style/BODY_MED_REG_14" />
+
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/txtDOAddressStreetName"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="5dp"
+                android:text="36 Nguyễn Tri Phương"
+                android:textColor="@color/black"
+                style="@style/BODY_MED_REG_14" />
+
+            <TextView
+                android:id="@+id/txtDOOtherAddressInfo"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Đông Hòa, Dĩ An, Bình Dương"
+                android:textColor="@color/black"
+                style="@style/BODY_MED_REG_14" />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Hình thức thanh toán"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginBottom="5dp"
+                    android:textColor="@color/brandPrimary"
+                    style="@style/HEAD6_BOLD_16"/>
+                <TextView
+                    android:id="@+id/txtPaymentName"
+                    style="@style/BODY_MED_SEM_14"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="5dp"
+                    android:text="Hãy chọn phương thức thanh toán"
+                    android:textColor="@color/black" />
+            </LinearLayout>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Thông tin sản phẩm"
+                android:layout_marginTop="10dp"
+                android:textColor="@color/brandPrimary"
+                style="@style/HEAD6_BOLD_16"/>
+
+            <ListView
+                android:id="@+id/lvlConfOrder"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:divider="@drawable/divider"
+                android:dividerHeight="20dp" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginTop="10dp">
+                <TextView
+                    style="@style/HEAD6_BOLD_16"
+                    android:layout_width="20dp"
+                    android:layout_height="wrap_content"
+                    android:text="Tạm tính"
+                    android:textColor="@color/black"
+                    android:layout_weight="5"/>
+
+                <TextView
+                    android:id="@+id/txtDOCost"
+                    style="@style/HEAD6_BOLD_16"
+                    android:layout_width="20dp"
+                    android:layout_height="wrap_content"
+                    android:text="300.000đ"
+                    android:gravity="end"
+                    android:textColor="@color/black"
+                    android:layout_weight="5"/>
+
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginTop="10dp">
+                <TextView
+                    style="@style/HEAD6_BOLD_16"
+                    android:layout_width="20dp"
+                    android:layout_height="wrap_content"
+                    android:text="Phí vận chuyển"
+                    android:textColor="@color/black"
+                    android:layout_weight="5"/>
+
+                <TextView
+                    android:id="@+id/txtDODeliveryCost"
+                    style="@style/HEAD6_BOLD_16"
+                    android:layout_width="20dp"
+                    android:layout_height="wrap_content"
+                    android:text="25.000đ"
+                    android:gravity="end"
+                    android:textColor="@color/black"
+                    android:layout_weight="5"/>
+
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginTop="10dp">
+                <TextView
+                    style="@style/HEAD6_BOLD_16"
+                    android:layout_width="20dp"
+                    android:layout_height="wrap_content"
+                    android:text="Tổng cộng"
+                    android:textColor="@color/black"
+                    android:layout_weight="5"/>
+
+                <TextView
+                    android:id="@+id/txtDOTotalPayment"
+                    style="@style/HEAD6_BOLD_16"
+                    android:layout_width="20dp"
+                    android:layout_height="wrap_content"
+                    android:text="325.000đ"
+                    android:gravity="end"
+                    android:textColor="@color/brandPrimary"
+                    android:layout_weight="5"/>
+
+            </LinearLayout>
+            <Button
+                android:id="@+id/btnPay"
+                android:layout_width="300dp"
+                android:layout_height="40dp"
+                android:layout_gravity="center"
+                android:text="Thanh toán"
+                style="@style/HEAD6_BOLD_16"
+                android:layout_marginTop="20dp"
+                android:background="@drawable/button_custom"/>
+        </LinearLayout>
+
+    </ScrollView>
+
+
+</LinearLayout>

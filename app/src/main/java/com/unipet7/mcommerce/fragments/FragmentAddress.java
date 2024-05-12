@@ -59,14 +59,7 @@ public class FragmentAddress extends Fragment {
     private void addEvents() {
         binding.toolbaraddress.setNavigationOnClickListener(v -> requireActivity().getOnBackPressedDispatcher().onBackPressed());
         binding.lvlAddress.setOnItemClickListener((parent, view, position, id) -> {
-            Fragment editAdrressFragment = new FragmentAddressEdit();
-            FragmentTransaction transaction = getParentFragmentManager().beginTransaction();
-            Bundle bundle = new Bundle();
-            bundle.putParcelable(Constants.ADDRESS, addresses.get(position));
-            editAdrressFragment.setArguments(bundle);
-            transaction.replace(R.id.fragment_container, editAdrressFragment);
-            transaction.addToBackStack(null); // Thêm Fragment hiện tại vào back stack
-            transaction.commit();
+
         });
         binding.btnAddaddress.setOnClickListener(v -> {
             Fragment addAddressFragment = new FragmentAdressAdd();

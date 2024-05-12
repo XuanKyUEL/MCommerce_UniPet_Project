@@ -49,7 +49,6 @@ import com.unipet7.mcommerce.models.Blogs;
 import com.unipet7.mcommerce.models.Product;
 import com.unipet7.mcommerce.models.SliderItems;
 import com.unipet7.mcommerce.models.User;
-import com.unipet7.mcommerce.utils.Constants;
 import com.unipet7.mcommerce.utils.LoadingDialog;
 
 import java.util.ArrayList;
@@ -180,22 +179,22 @@ public class Home extends Fragment {
 
     private void addEvents() {
         binding.txtXemThem1.setOnClickListener(v -> {
-            sId = Constants.NULL;
+            sId = "null";
             open();
+
         });
         binding.txtXemThem2.setOnClickListener(v -> {
-            sId = Constants.NULL;
+            sId = "null";
             open();
+
+
         });
         binding.txtXemthem3.setOnClickListener(v -> {
-            sId = Constants.NULL;
+            sId = "null";
             open();
+
         });
 
-        binding.Xemthem4.setOnClickListener(v -> {
-            Intent intent = new Intent(getActivity(), com.unipet7.mcommerce.activities.Blogs.class);
-            startActivity(intent);
-        });
         binding.Xemthem4.setOnClickListener(v -> {
             Intent intent = new Intent(getActivity(), com.unipet7.mcommerce.activities.Blogs.class);
             startActivity(intent);
@@ -204,26 +203,74 @@ public class Home extends Fragment {
             Intent intent = new Intent(getActivity(), com.unipet7.mcommerce.activities.Blogs.class);
             startActivity(intent);
         });
-        binding.imgCate1.setOnClickListener(v -> {
-            sId = "0";
-            open();
+        binding.imgCate1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                sId = "0";
+                open();
+
+            }
         });
-        binding.imgCate2.setOnClickListener(v -> {
-            sId = "1";
-            open();
+        binding.imgCate2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                sId = "1";
+                open();
+
+
+            }
         });
-        binding.imgCate3.setOnClickListener(v -> {
-            sId = "2";
-            open();
+        binding.imgCate3.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                sId = "2";
+                open();
+
+            }
         });
-        binding.imgCate4.setOnClickListener(v -> {
-            sId = "3";
-            open();
+        binding.imgCate4.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                sId = "3";
+                open();
+
+            }
         });
-        binding.imgCate5.setOnClickListener(v -> {
-            sId = "4";
-            open();
+        binding.imgCate5.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                sId = "4";
+                open();
+
+
+            }
         });
+        binding.imgGroupBanner1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                sId = "0";
+                open();
+
+            }
+        });
+        binding.imgGroupBanner2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                sId = "1";
+                open();
+
+            }
+        });
+        binding.imgGroupBanner3.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                sId = "2";
+                open();
+
+            }
+        });
+
+
 
         binding.imageView.setOnClickListener(v -> {
             Intent intent = new Intent(getActivity(), Notification.class);
