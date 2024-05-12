@@ -17,7 +17,7 @@
             android:src="@drawable/ic_address_map"/>
 
         <LinearLayout
-            android:layout_width="320dp"
+            android:layout_width="300dp"
             android:layout_height="48dp"
             android:orientation="vertical">
             <TextView
@@ -42,8 +42,8 @@
         </LinearLayout>
         <ImageView
             android:id="@+id/editlayout"
-            android:layout_width="20dp"
-            android:layout_height="20dp"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
             android:src="@drawable/ic_address_edit"
             android:layout_weight="2"
             android:layout_gravity="center_vertical"/>

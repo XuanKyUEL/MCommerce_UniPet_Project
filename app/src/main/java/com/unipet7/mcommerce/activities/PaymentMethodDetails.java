@@ -17,21 +17,27 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
 
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.unipet7.mcommerce.R;
+import com.unipet7.mcommerce.adapters.AddressAdapter;
 import com.unipet7.mcommerce.adapters.CartAdapter;
 import com.unipet7.mcommerce.adapters.Cart_Checkout_Adapter;
 import com.unipet7.mcommerce.adapters.PaymentMethodListener;
 import com.unipet7.mcommerce.databinding.ActivityNotificationBinding;
 import com.unipet7.mcommerce.databinding.ActivityPaymentMethodDetailsBinding;
 import com.unipet7.mcommerce.firebase.FireStoreClass;
+import com.unipet7.mcommerce.fragments.FragmentAddress;
 import com.unipet7.mcommerce.fragments.FragmentAddressEdit;
 import com.unipet7.mcommerce.fragments.FragmentPaymentMethod;
+import com.unipet7.mcommerce.models.Addresses;
 import com.unipet7.mcommerce.models.ProductCart;
 import com.unipet7.mcommerce.models.User;
+import com.unipet7.mcommerce.utils.Constants;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class PaymentMethodDetails extends AppCompatActivity implements PaymentMethodListener {
     private static final int REQUEST_CODE_VOUCHER = 101;
@@ -45,6 +51,7 @@ public class PaymentMethodDetails extends AppCompatActivity implements PaymentMe
         setActionBaricon();
         addEvents();
         loadData();
+        updateTotalorder();
         setContentView(binding.getRoot());
     }
 
@@ -86,7 +93,16 @@ public class PaymentMethodDetails extends AppCompatActivity implements PaymentMe
 
     private void addEvents() {
         binding.txtChangePaymentMethod.setOnClickListener(v -> {
-            FragmentPaymentMethod editAdrressFragment = new FragmentPaymentMethod();
+            FragmentPaymentMethod editPaymentFragment = new FragmentPaymentMethod();
+            getSupportFragmentManager()
+                    .beginTransaction()
+                    .add(R.id.containerpayment, editPaymentFragment, "editPaymentFragment")
+                    .addToBackStack(null)
+                    .commit();
+
+        });
+        binding.txtChangeAddress.setOnClickListener(v -> {
+            FragmentAddress editAdrressFragment = new FragmentAddress();
             getSupportFragmentManager()
                     .beginTransaction()
                     .add(R.id.containerpayment, editAdrressFragment, "editAddressFragment")
@@ -99,4 +115,16 @@ public class PaymentMethodDetails extends AppCompatActivity implements PaymentMe
         // Cập nhật TextView theo phương thức thanh toán được chọn
         binding.txtPaymentMethodName.setText(paymentMethod);
     }
+    private void updateTotalorder() {
+        Bundle bundle = getIntent().getExtras();
+        if (bundle != null && bundle.containsKey("totalCartPrice")) {
+            double totalCartPrice = bundle.getDouble("totalCartPrice");
+            double delivery = 30000; // Fixed delivery cost as an example
+            double totalprice = totalCartPrice + delivery;
+            binding.txtCost.setText(String.format("%,.0f đ", totalCartPrice));
+            binding.txtDeliveryCost.setText(String.format("%,.0f đ", delivery));
+            binding.txtTotalPayment.setText(String.format("%,.0f đ", totalprice));
+        }
+    }
+
 }

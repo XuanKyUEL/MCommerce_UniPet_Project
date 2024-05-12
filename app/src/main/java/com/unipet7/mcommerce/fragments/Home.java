@@ -195,15 +195,6 @@ public class Home extends Fragment {
 
         });
 
-        binding.Xemthem4.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(getActivity(), com.unipet7.mcommerce.activities.Blogs.class);
-                startActivity(intent);
-            }
-        });
-
-
         binding.Xemthem4.setOnClickListener(v -> {
             Intent intent = new Intent(getActivity(), com.unipet7.mcommerce.activities.Blogs.class);
             startActivity(intent);
@@ -251,6 +242,30 @@ public class Home extends Fragment {
                 sId = "4";
                 open();
 
+
+            }
+        });
+        binding.imgGroupBanner1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                sId = "0";
+                open();
+
+            }
+        });
+        binding.imgGroupBanner2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                sId = "1";
+                open();
+
+            }
+        });
+        binding.imgGroupBanner3.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                sId = "2";
+                open();
 
             }
         });
@@ -303,14 +318,14 @@ public class Home extends Fragment {
     }
 
     public void loadSalesProducts(ArrayList<Product> productsSale) {
-        ProductAdapter adapterSale = new ProductAdapter(productsSale);
+        ProductAdapter adapterSale = new ProductAdapter(productsSale, fireStoreClass);
         saleRecyclerView.setAdapter(adapterSale);
         saleRecyclerView.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
         saleRecyclerView.setHasFixedSize(true);
     }
 
     public void loadProductsByCategoryId(ArrayList<Product> productsList, int categoryId) {
-        ProductAdapter adapter = new ProductAdapter(productsList);
+        ProductAdapter adapter = new ProductAdapter(productsList, fireStoreClass);
         RecyclerView recyclerView;
         if (categoryId == 1) {
             recyclerView = catRecyclerView;

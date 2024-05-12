@@ -39,7 +39,7 @@ public class Cart_Checkout_Adapter extends RecyclerView.Adapter<Cart_Checkout_Ad
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         ProductCart productCart = productCarts.get(position);
         holder.txtProductName.setText(productCart.getProductName());
-        holder.txtTotalPrice.setText(String.valueOf(Math.round(productCart.getTotalPrice())));
+        holder.txtTotalPrice.setText(String.format("%,.0f đ", productCart.getTotalPrice()));
         holder.txtNumberOrder.setText(String.valueOf(productCart.getNumOfProduct()));
         Glide.with(context).load(productCart.getProductImageUrl()).into(holder.imvProductCart);
     }

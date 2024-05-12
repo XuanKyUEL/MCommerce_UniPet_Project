@@ -6,7 +6,6 @@ plugins {
 android {
     namespace = "com.unipet7.mcommerce"
     compileSdk = 34
-
     defaultConfig {
         applicationId = "com.unipet7.mcommerce"
         minSdk = 28
@@ -34,6 +33,7 @@ android {
         viewBinding = true
         dataBinding = true
     }
+
 }
 tasks.register("customSigningReport") {
     doLast {

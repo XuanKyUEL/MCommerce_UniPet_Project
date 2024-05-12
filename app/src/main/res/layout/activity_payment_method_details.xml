@@ -124,7 +124,7 @@
                     android:text="Phương thức thanh toán"
                     android:textColor="@color/brandPrimary"
                     style="@style/HEAD6_BOLD_16"
-                    android:layout_marginTop="10dp"/>
+                    android:layout_marginTop="15dp"/>
 
                 <androidx.cardview.widget.CardView
                     android:layout_width="340dp"
@@ -175,17 +175,17 @@
                     android:text="Sản phẩm đã mua"
                     android:textColor="@color/brandPrimary"
                     style="@style/HEAD6_BOLD_16"
-                    android:layout_marginTop="10dp"/>
+                    android:layout_marginTop="15dp"/>
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/rclPurchasedProduct"
                     android:layout_width="match_parent"
                     android:layout_height="200dp"
-                    android:layout_marginTop="10dp"/>
+                    android:layout_marginTop="15dp"/>
 
                 <androidx.cardview.widget.CardView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
+                    android:layout_marginTop="15dp"
                     app:cardCornerRadius="8dp">
                     <LinearLayout
                         android:layout_width="match_parent"
@@ -282,7 +282,7 @@
                             android:layout_gravity="center"
                             android:text="Thanh toán"
                             style="@style/HEAD6_BOLD_16"
-                            android:layout_marginTop="20dp"
+                            android:layout_marginTop="15dp"
                             android:background="@drawable/button_custom"/>
 
                     </LinearLayout>
