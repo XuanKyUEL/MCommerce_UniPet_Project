@@ -102,17 +102,8 @@ public class HistoryOrder_All extends Fragment {
     }
     private List<HistoryOrders> initData() {
         Historyorders = new ArrayList<>();
-        Historyorders.add(new HistoryOrders("11/12/2024","1111", "Đã hủy", R.drawable.unipet_app_icon,"Royal Canin Rottweiler Puppy con mèo con đi hia long nhong",
+        Historyorders.add(new HistoryOrders("11/12/2024","1111", "Đã giao hàng", R.drawable.unipet_app_icon,"Royal Canin Rottweiler Puppy con mèo con đi hia long nhong",
                 "Túi", 1.0,24000.0, 24000.0));
-        Historyorders.add(new HistoryOrders("11/12/2024","1111", "Đã hủy", R.drawable.unipet_app_icon,"Royal Canin Rottweiler Puppy con mèo con đi hia long nhong",
-                "Túi", 1.0,24000.0, 24000.0));
-        Historyorders.add(new HistoryOrders("11/12/2024","1111", "Đã hủy", R.drawable.unipet_app_icon,"Royal Canin Rottweiler Puppy con mèo con đi hia long nhong",
-                "Túi", 1.0,24000.0, 24000.0));
-        Historyorders.add(new HistoryOrders("11/12/2024","1111", "Đã hủy", R.drawable.unipet_app_icon,"Royal Canin Rottweiler Puppy con mèo con đi hia long nhong",
-                "Túi", 1.0,24000.0, 24000.0));
-        Historyorders.add(new HistoryOrders("11/12/2024","1111", "Đã hủy", R.drawable.unipet_app_icon,"Royal Canin Rottweiler Puppy con mèo con đi hia long nhong",
-                "Túi", 1.0,24000.0, 24000.0));
-
         return Historyorders;
     }
 }
