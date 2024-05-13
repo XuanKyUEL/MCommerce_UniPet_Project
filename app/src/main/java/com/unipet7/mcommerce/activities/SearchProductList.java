@@ -27,6 +27,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -78,6 +79,7 @@ public class SearchProductList extends AppCompatActivity {
         searchkeyword();
         fireStoreClass.SearchAllProducts(this, allProducts);
         addEvents();
+        fireStoreClass.getCountUserCartItemsinSearch(this);
     }
 
     private void searchkeyword() {
@@ -126,7 +128,18 @@ public class SearchProductList extends AppCompatActivity {
         binding.arrangefilter.setOnClickListener(v -> showBottomSheet());
         binding.filter.setOnClickListener(v -> showBottomSheet2());
         binding.voucherfilter.setOnClickListener(v -> fireStoreClass.getSalesPFilter(SearchProductList.this));
-        }
+        binding.imageCart1.setOnClickListener(v -> {
+            Intent intent = new Intent(SearchProductList.this, MainActivity.class);
+            intent.putExtra(Constants.CART, 2);
+            startActivity(intent);
+        });
+    }
+    public void loadCartCount1(int count) {
+        RelativeLayout cartCountLayout = binding.rlCartNumber1;
+        cartCountLayout.setVisibility(RelativeLayout.VISIBLE);
+        TextView cartCount = binding.txtNumberCart1;
+        cartCount.setText(String.valueOf(count));
+    }
     public void loadSalesProducts(ArrayList<Product> productsSale) {
         ProductAdapter adapterSale = new ProductAdapter(productsSale, fireStoreClass);
         binding.lvlProductList.setAdapter(adapterSale);
