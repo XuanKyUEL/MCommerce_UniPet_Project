@@ -30,4 +30,6 @@ public class Constants {
     public static final String ADDRESSES = "addresses";
     public static final String ADDRESS = "address";
     public static final String ADDRESSID = "addressId";
+    public static final String IS_FROM_CHECKOUT = "isFromCheckout";
+    public static final int RESULT_CODE_ADDRESS = 102;
 }

@@ -1,8 +1,10 @@
 package com.unipet7.mcommerce.fragments;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
@@ -13,10 +15,10 @@ import androidx.fragment.app.FragmentTransaction;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
 
 import com.unipet7.mcommerce.R;
 import com.unipet7.mcommerce.adapters.AddressAdapter;
+import com.unipet7.mcommerce.adapters.DetailCheckoutHelper;
 import com.unipet7.mcommerce.databinding.FragmentAddressBinding;
 import com.unipet7.mcommerce.firebase.FireStoreClass;
 import com.unipet7.mcommerce.models.Addresses;
@@ -32,6 +34,13 @@ public class FragmentAddress extends Fragment {
 
     FireStoreClass fireStoreClass;
 
+    Bundle bundle;
+
+    private boolean isFromCheckout = false;
+
+    private DetailCheckoutHelper detailCheckoutHelper;
+
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -42,14 +51,31 @@ public class FragmentAddress extends Fragment {
         addresses = new ArrayList<>();
         fireStoreClass = new FireStoreClass();
         fireStoreClass.GetUserAddresses(this);
+        this.bundle = getArguments();
+        if (bundle != null) {
+            isFromCheckout = bundle.getBoolean(Constants.IS_FROM_CHECKOUT, false);
+        }
+        if (isFromCheckout) {
+            binding.btnAddaddress.setVisibility(View.GONE);
+        } else {
+            binding.btnAddaddress.setVisibility(View.VISIBLE);
+        }
+
         addEvents();
         return binding.getRoot();
     }
 
+    @Override
+    public void onAttach(@NonNull Context context) {
+        super.onAttach(context);
 
+        if (context instanceof DetailCheckoutHelper) {
+            detailCheckoutHelper = (DetailCheckoutHelper) context;
+        }
+    }
 
     public void setActionBar(@Nullable Toolbar toolbar) {
-        ((AppCompatActivity) getActivity()).setSupportActionBar(toolbar);
+        ((AppCompatActivity) requireActivity()).setSupportActionBar(toolbar);
         ActionBar actionBar = ((AppCompatActivity) getActivity()).getSupportActionBar();
         assert actionBar != null;
         actionBar.setDisplayHomeAsUpEnabled(true);
@@ -58,9 +84,15 @@ public class FragmentAddress extends Fragment {
     }
     private void addEvents() {
         binding.toolbaraddress.setNavigationOnClickListener(v -> requireActivity().getOnBackPressedDispatcher().onBackPressed());
-        binding.lvlAddress.setOnItemClickListener((parent, view, position, id) -> {
-
-        });
+        if (isFromCheckout) {
+            binding.lvlAddress.setOnItemClickListener((parent, view, position, id) -> {
+                Addresses address = addresses.get(position);
+                if (detailCheckoutHelper != null) {
+                    detailCheckoutHelper.onAddressSelected(address);
+                    requireActivity().getOnBackPressedDispatcher().onBackPressed();
+                }
+            });
+        }
         binding.btnAddaddress.setOnClickListener(v -> {
             Fragment addAddressFragment = new FragmentAdressAdd();
             FragmentTransaction transaction = getParentFragmentManager().beginTransaction();
@@ -74,7 +106,9 @@ public class FragmentAddress extends Fragment {
     public void loadAddresses(List<Addresses> addresses) {
         if (addresses != null) {
             this.addresses.addAll(addresses);
-            addressAdapter = new AddressAdapter(requireContext(), addresses,R.layout.layout_address_list);
+            Bundle arg = getArguments();
+            boolean isFromCheckout = arg != null && arg.getBoolean(Constants.IS_FROM_CHECKOUT, false);
+            addressAdapter = new AddressAdapter(requireContext(), addresses,R.layout.layout_address_list, isFromCheckout);
             binding.lvlAddress.setAdapter(addressAdapter);
         }
     }
