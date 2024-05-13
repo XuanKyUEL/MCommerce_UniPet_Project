@@ -41,7 +41,7 @@
 
         </LinearLayout>
         <ImageView
-            android:id="@+id/editlayout"
+            android:id="@+id/editAddressImv"
             android:layout_width="30dp"
             android:layout_height="30dp"
             android:src="@drawable/ic_address_edit"

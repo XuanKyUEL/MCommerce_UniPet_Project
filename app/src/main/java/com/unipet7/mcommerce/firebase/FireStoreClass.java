@@ -19,6 +19,7 @@ import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.unipet7.mcommerce.activities.DetailProduct;
 import com.unipet7.mcommerce.activities.BlogDetails;
+import com.unipet7.mcommerce.activities.DetailCheckout;
 import com.unipet7.mcommerce.activities.SearchProductList;
 import com.unipet7.mcommerce.activities.SignUp;
 import com.unipet7.mcommerce.adapters.CartAdapter;
@@ -32,6 +33,7 @@ import com.unipet7.mcommerce.fragments.Fragment_Wishlist_Product;
 import com.unipet7.mcommerce.fragments.Home;
 import com.unipet7.mcommerce.fragments.Profile;
 import com.unipet7.mcommerce.models.Addresses;
+import com.unipet7.mcommerce.models.Order;
 import com.unipet7.mcommerce.models.Product;
 import com.unipet7.mcommerce.models.ProductCart;
 import com.unipet7.mcommerce.models.User;
@@ -490,6 +492,54 @@ public class FireStoreClass {
                 })
                 .addOnFailureListener(e -> {
                     listener.onFailure("Error fetching vouchers: " + e.getMessage());
+                });
+    }
+
+    public void addOrder(DetailCheckout paymentMethodDetails, Order order) {
+        order.setOrderId(System.currentTimeMillis()  + getCurrentUID());
+        order.setUserId(getCurrentUID());
+        // check if the field orders is existed in the user collection
+        UniPetdb.collection(Constants.USERS)
+                .document(getCurrentUID())
+                .get()
+                .addOnSuccessListener(documentSnapshot -> {
+                    if (documentSnapshot.exists()) {
+                        User user = documentSnapshot.toObject(User.class);
+                        if (user != null) {
+                            List<Order> orders = user.getOrders();
+                            if (orders == null) {
+                                orders = new ArrayList<>();
+                            }
+                            orders.add(order);
+                            UniPetdb.collection(Constants.USERS)
+                                    .document(getCurrentUID())
+                                    .update(Constants.ORDERS, orders)
+                                    .addOnSuccessListener(aVoid -> {
+                                        clearCart();
+                                        paymentMethodDetails.addOrderSuccess();
+                                    })
+                                    .addOnFailureListener(e -> {
+                                        Log.e("FireStoreClass", "addOrder: ", e);
+                                    });
+                        }
+                    }
+                })
+                .addOnFailureListener(e -> {
+                    Log.e("FireStoreClass", "addOrder: ", e);
+                });
+    }
+
+    private void clearCart() {
+        UniPetdb.collection(Constants.CART)
+                .whereEqualTo(Constants.USER_ID, getCurrentUID())
+                .get()
+                .addOnSuccessListener(queryDocumentSnapshots -> {
+                    for (QueryDocumentSnapshot document : queryDocumentSnapshots) {
+                        document.getReference().delete();
+                    }
+                })
+                .addOnFailureListener(e -> {
+                    Log.e("FireStoreClass", "clearCart: ", e);
                 });
     }
 

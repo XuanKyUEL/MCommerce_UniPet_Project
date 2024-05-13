@@ -104,7 +104,7 @@ public class DetailProduct extends BaseActivity {
         binding.imvMinus.setOnClickListener(v -> decreaseProductQuantity());
         binding.imageCart.setOnClickListener(v -> {
             Intent intent = new Intent(DetailProduct.this, MainActivity.class);
-            intent.putExtra(Constants.CART, 2);
+            intent.putExtra(Constants.FROM_PRODUCT_DETAIL, true);
             startActivity(intent);
 
         });

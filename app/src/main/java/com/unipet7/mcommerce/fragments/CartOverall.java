@@ -79,13 +79,13 @@ public class CartOverall extends Fragment {
 
     public void loadUi(boolean loadCart) {
         this.loadCart = loadCart;
+        Fragment fragment;
         if (loadCart) {
-            Fragment fragment = new fragment_cart();
-            getChildFragmentManager().beginTransaction().replace(R.id.fragment_cart_container, fragment).commit();
+            fragment = new fragment_cart();
         } else {
-            Fragment fragment = new fragment_blank_cart();
-            getChildFragmentManager().beginTransaction().replace(R.id.fragment_cart_container, fragment).commit();
+            fragment = new fragment_blank_cart();
         }
+        getChildFragmentManager().beginTransaction().replace(R.id.fragment_cart_container, fragment).commit();
     }
 
     @Override

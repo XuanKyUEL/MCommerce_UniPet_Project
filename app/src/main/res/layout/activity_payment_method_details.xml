@@ -6,8 +6,8 @@
     android:layout_height="match_parent"
     android:id="@+id/containerpayment"
     android:padding="5dp"
-    tools:context=".activities.PaymentMethodDetails"
-    android:background="@color/white">
+    tools:context=".activities.DetailCheckout"
+    android:background="@android:color/transparent">
     <com.google.android.material.appbar.AppBarLayout
         android:id="@+id/appBarLayout"
         android:layout_width="match_parent"
@@ -38,7 +38,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:padding="10dp"
-            android:background="@color/white">
+            android:background="@android:color/transparent">
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"

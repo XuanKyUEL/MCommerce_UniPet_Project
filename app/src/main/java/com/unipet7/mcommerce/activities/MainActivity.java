@@ -4,7 +4,12 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.util.Log;
+import android.widget.Toast;
+
+import androidx.activity.OnBackPressedCallback;
+import androidx.activity.OnBackPressedDispatcher;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
@@ -43,6 +48,9 @@ public class MainActivity extends AppCompatActivity {
 
     Fragment fragment = null;
 
+    private boolean doubleBackToExitPressedOnce = false;
+    private final Runnable doubleBackToExitRunnable = () -> doubleBackToExitPressedOnce = false;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,12 +65,36 @@ public class MainActivity extends AppCompatActivity {
         mainViewPager2.setAdapter(adapter);
         navigateFragment();
 
-        int id = getIntent().getIntExtra(Constants.CART, -1);
-        if (id == 2) {
+        boolean isFromProductDetail = getIntent().getBooleanExtra(Constants.FROM_PRODUCT_DETAIL, false);
+        boolean orderSuccess = getIntent().getBooleanExtra(Constants.ODERSUCCESS, false);
+
+        if (isFromProductDetail || orderSuccess) {
             mainViewPager2.setCurrentItem(2);
         }
+
+        final OnBackPressedDispatcher dispatcher = getOnBackPressedDispatcher();
+        dispatcher.addCallback(this, new OnBackPressedCallback(true) {
+            @Override
+            public void handleOnBackPressed() {
+                if (doubleBackToExitPressedOnce) {
+                    setEnabled(false);
+                    dispatcher.onBackPressed();
+                    return;
+                }
+
+                doubleBackToExitPressedOnce = true;
+                Toast.makeText(MainActivity.this, "Nhấn lần nữa để thoát", Toast.LENGTH_SHORT).show();
+
+                new Handler().postDelayed(doubleBackToExitRunnable, 2000);
+            }
+        });
     }
 
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        new Handler().removeCallbacks(doubleBackToExitRunnable);
+    }
 
     private void mapping() {
         bottomNavigationView = binding.bottomNavigationView;
@@ -136,10 +168,5 @@ public class MainActivity extends AppCompatActivity {
         fragmentManager.popBackStackImmediate(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
         fragmentManager.executePendingTransactions();
     }
-    @Override
-    public void onBackPressed() {
-        super.onBackPressed();
-        BottomNavigationView bottomNavigationView = findViewById(R.id.bottomNavigationView);
-        bottomNavigationView.setSelectedItemId(R.id.home_icon_bottom);
-    }
+
 }
