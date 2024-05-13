@@ -10,7 +10,6 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentActivity;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
@@ -27,10 +26,13 @@ public class AddressAdapter extends BaseAdapter {
     List<Addresses> addresses;
     int item_layout;
 
-    public AddressAdapter(Context context, List<Addresses> addresses, int item_layout) {
+    private boolean isFromCheckout;
+
+    public AddressAdapter(Context context, List<Addresses> addresses, int item_layout, boolean isFromCheckout) {
         this.context = context;
         this.addresses = addresses;
         this.item_layout = item_layout;
+        this.isFromCheckout = isFromCheckout;
     }
 
     @Override
@@ -61,29 +63,32 @@ public class AddressAdapter extends BaseAdapter {
             holder.edtprovince = view.findViewById(R.id.edtprovince);
             holder.edtstreet = view.findViewById(R.id.edtstress);
             holder.name = view.findViewById(R.id.addressUsername);
-            holder.editlayout = view.findViewById(R.id.editlayout);
+            holder.editlayout = view.findViewById(R.id.editAddressImv);
             view.setTag(holder);
         }else {
             holder = (ViewHolder) view.getTag();
+        }
+
+        if (isFromCheckout) {
+            holder.editlayout.setVisibility(View.GONE);
+        } else {
+            holder.editlayout.setVisibility(View.VISIBLE);
         }
         //binding
         Addresses address = addresses.get(position);
         holder.name.setText(address.getName());
         holder.txtdetailadress.setText(address.getStreet() + " , " + address.getProvince());
-        holder.editlayout.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                FragmentAddressEdit editAdrressFragment = new FragmentAddressEdit();
-                Bundle bundle = new Bundle();
-                bundle.putParcelable(Constants.ADDRESS, address);
-                editAdrressFragment.setArguments(bundle);
+        holder.editlayout.setOnClickListener(v -> {
+            FragmentAddressEdit editAdrressFragment = new FragmentAddressEdit();
+            Bundle bundle = new Bundle();
+            bundle.putParcelable(Constants.ADDRESS, address);
+            editAdrressFragment.setArguments(bundle);
 
-                FragmentManager fragmentManager = ((FragmentActivity) context).getSupportFragmentManager();
-                FragmentTransaction transaction = fragmentManager.beginTransaction();
-                transaction.replace(R.id.fragment_container, editAdrressFragment);
-                transaction.addToBackStack(null);
-                transaction.commit();
-            }
+            FragmentManager fragmentManager = ((FragmentActivity) context).getSupportFragmentManager();
+            FragmentTransaction transaction = fragmentManager.beginTransaction();
+            transaction.replace(R.id.fragment_container, editAdrressFragment);
+            transaction.addToBackStack(null);
+            transaction.commit();
         });
         return view;
     }
