@@ -65,8 +65,10 @@ public class MainActivity extends AppCompatActivity {
         mainViewPager2.setAdapter(adapter);
         navigateFragment();
 
-        int id = getIntent().getIntExtra(Constants.CART, -1);
-        if (id == 2) {
+        boolean isFromProductDetail = getIntent().getBooleanExtra(Constants.FROM_PRODUCT_DETAIL, false);
+        boolean orderSuccess = getIntent().getBooleanExtra(Constants.ODERSUCCESS, false);
+
+        if (isFromProductDetail || orderSuccess) {
             mainViewPager2.setCurrentItem(2);
         }
 

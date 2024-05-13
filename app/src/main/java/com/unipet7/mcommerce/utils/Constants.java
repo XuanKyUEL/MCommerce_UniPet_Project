@@ -25,6 +25,8 @@ public class Constants {
     public static final String CATEGORYID = "categoryId";
     public static final String SALESPERCENT = "salepercent";
     public static final String CART = "cart";
+
+    public static final String FROM_PRODUCT_DETAIL = "fromProductDetail";
     public static final String FAVORITEBY = "isFavoriteBy";
     public static final String NULL = "null";
     public static final String ADDRESSES = "addresses";
@@ -32,4 +34,7 @@ public class Constants {
     public static final String ADDRESSID = "addressId";
     public static final String IS_FROM_CHECKOUT = "isFromCheckout";
     public static final int RESULT_CODE_ADDRESS = 102;
+    public static final String AWAIT = "Chờ xác nhận";
+    public static final String ORDERS = "orders";
+    public static final String ODERSUCCESS = "orderSuccess";
 }

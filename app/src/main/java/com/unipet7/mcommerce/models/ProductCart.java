@@ -1,6 +1,8 @@
 package com.unipet7.mcommerce.models;
 
-public class ProductCart {
+import java.io.Serializable;
+
+public class ProductCart implements Serializable {
     private String productImageUrl;
     private String productName;
     private Double productPrice;
@@ -14,16 +16,6 @@ public class ProductCart {
     }
 
     public void setUserId(String userId) {
-        this.userId = userId;
-    }
-
-    public ProductCart(String productImageUrl, String productName, Double productPrice, Double totalPrice, Integer numOfProduct, Integer productId, String userId) {
-        this.productImageUrl = productImageUrl;
-        this.productName = productName;
-        this.productPrice = productPrice;
-        this.totalPrice = totalPrice;
-        this.numOfProduct = numOfProduct;
-        this.productId = productId;
         this.userId = userId;
     }
 
@@ -74,7 +66,5 @@ public class ProductCart {
     public void setNumOfProduct(Integer numOfProduct) {
         this.numOfProduct = numOfProduct;
     }
-
-    public ProductCart() {
-    }
+    
 }

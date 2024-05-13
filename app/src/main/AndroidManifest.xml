@@ -32,7 +32,7 @@
             android:name=".activities.ProfileFunction"
             android:exported="false" />
         <activity
-            android:name=".activities.PaymentMethodDetails"
+            android:name=".activities.DetailCheckout"
             android:exported="false" />
         <activity
             android:name=".activities.VoucherActivity"

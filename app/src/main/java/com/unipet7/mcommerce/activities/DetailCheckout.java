@@ -1,18 +1,13 @@
 package com.unipet7.mcommerce.activities;
 
-import androidx.activity.OnBackPressedCallback;
-import androidx.activity.OnBackPressedDispatcher;
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.GridLayoutManager;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
-import android.window.OnBackInvokedDispatcher;
+import android.widget.Toast;
 
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
@@ -24,14 +19,18 @@ import com.unipet7.mcommerce.firebase.FireStoreClass;
 import com.unipet7.mcommerce.fragments.FragmentAddress;
 import com.unipet7.mcommerce.fragments.FragmentPaymentMethod;
 import com.unipet7.mcommerce.models.Addresses;
+import com.unipet7.mcommerce.models.Order;
 import com.unipet7.mcommerce.models.ProductCart;
 import com.unipet7.mcommerce.models.User;
 import com.unipet7.mcommerce.utils.Constants;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
-public class PaymentMethodDetails extends AppCompatActivity implements DetailCheckoutHelper {
+public class DetailCheckout extends AppCompatActivity implements DetailCheckoutHelper {
     private static final int REQUEST_CODE_VOUCHER = 101;
     ActivityPaymentMethodDetailsBinding binding;
 
@@ -40,6 +39,10 @@ public class PaymentMethodDetails extends AppCompatActivity implements DetailChe
     Addresses address;
     Cart_Checkout_Adapter adapter;
     ArrayList<ProductCart> productCarts;
+
+    FireStoreClass fireStoreClass;
+
+    Double totalCartPrice;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -106,8 +109,8 @@ public class PaymentMethodDetails extends AppCompatActivity implements DetailChe
                             ProductCart productCart = document.toObject(ProductCart.class);
                             productCarts.add(productCart);
                         }
-                        adapter = new Cart_Checkout_Adapter(PaymentMethodDetails.this, productCarts);
-                        binding.rclPurchasedProduct.setLayoutManager(new GridLayoutManager(PaymentMethodDetails.this, 1));
+                        adapter = new Cart_Checkout_Adapter(DetailCheckout.this, productCarts);
+                        binding.rclPurchasedProduct.setLayoutManager(new GridLayoutManager(DetailCheckout.this, 1));
                         binding.rclPurchasedProduct.setAdapter(adapter);
                     })
                     .addOnFailureListener(e -> Log.e("Firestore", "Error fetching documents: ", e));
@@ -152,6 +155,22 @@ public class PaymentMethodDetails extends AppCompatActivity implements DetailChe
                     .addToBackStack(null)
                     .commit();
         });
+        binding.btnPay.setOnClickListener(v -> {
+            // check if onPaymentMethodSelected is called
+            if (binding.txtPaymentMethodName.getText().toString().equals("Hãy chọn phương thức thanh toán")) {
+                Toast.makeText(this, "Bạn chưa chọn phương thức thanh toán", Toast.LENGTH_SHORT).show();
+            }
+            else {
+                fireStoreClass = new FireStoreClass();
+                String paymentMethod = binding.txtPaymentMethodName.getText().toString();
+                Order order = new Order(paymentMethod, address, Constants.AWAIT, productCarts, totalCartPrice);
+                Date currentDate = new Date();
+                SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy", Locale.getDefault());
+                String formattedDate = formatter.format(currentDate);
+                order.setOrderDate(formattedDate);
+                fireStoreClass.addOrder(this, order);
+            }
+        });
     }
     public void onPaymentMethodSelected(String paymentMethod) {
         // Cập nhật TextView theo phương thức thanh toán được chọn
@@ -176,10 +195,17 @@ public class PaymentMethodDetails extends AppCompatActivity implements DetailChe
             double totalCartPrice = bundle.getDouble("totalCartPrice");
             double delivery = 30000; // Fixed delivery cost as an example
             double totalprice = totalCartPrice + delivery;
+            this.totalCartPrice = totalCartPrice;
             binding.txtCost.setText(String.format("%,.0f đ", totalCartPrice));
             binding.txtDeliveryCost.setText(String.format("%,.0f đ", delivery));
             binding.txtTotalPayment.setText(String.format("%,.0f đ", totalprice));
         }
     }
 
+    public void addOrderSuccess() {
+        Toast.makeText(this, "Đặt hàng thành công", Toast.LENGTH_SHORT).show();
+        Intent intent = new Intent(this, MainActivity.class);
+        intent.putExtra(Constants.ODERSUCCESS, true);
+        startActivity(intent);
+    }
 }
