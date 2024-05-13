@@ -37,4 +37,5 @@ public class Constants {
     public static final String AWAIT = "Chờ xác nhận";
     public static final String ORDERS = "orders";
     public static final String ODERSUCCESS = "orderSuccess";
+    public static final String LOADFAV = "loadFav";
 }

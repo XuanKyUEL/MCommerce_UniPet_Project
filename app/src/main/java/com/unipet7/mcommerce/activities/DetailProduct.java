@@ -70,7 +70,7 @@ public class DetailProduct extends BaseActivity {
         ldDialog1.dissmis();
     }
     public void configAdaptersProductDetail() {
-        adapter = new ProductAdapter(allProducts, fireStoreClass);
+        adapter = new ProductAdapter(allProducts, fireStoreClass, false);
         binding.rclProductDetail.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
         binding.rclProductDetail.setAdapter(adapter);
         binding.rclProductDetail.setHasFixedSize(true);

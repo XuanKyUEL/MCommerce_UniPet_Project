@@ -51,7 +51,7 @@ public class BlogDetails extends AppCompatActivity {
         ldDialog1.dissmis();
     }
     public void configAdaptersBlog() {
-        adapter = new ProductAdapter(blogProducts, fireStoreClass);
+        adapter = new ProductAdapter(blogProducts, fireStoreClass, false);
         binding.rclBlogDetails1.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
         binding.rclBlogDetails1.setAdapter(adapter);
         binding.rclBlogDetails1.setHasFixedSize(true);

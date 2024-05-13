@@ -13,7 +13,7 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.unipet7.mcommerce.R;
 import com.unipet7.mcommerce.adapters.Cart_Checkout_Adapter;
-import com.unipet7.mcommerce.adapters.DetailCheckoutHelper;
+import com.unipet7.mcommerce.utils.DetailCheckoutHelper;
 import com.unipet7.mcommerce.databinding.ActivityPaymentMethodDetailsBinding;
 import com.unipet7.mcommerce.firebase.FireStoreClass;
 import com.unipet7.mcommerce.fragments.FragmentAddress;

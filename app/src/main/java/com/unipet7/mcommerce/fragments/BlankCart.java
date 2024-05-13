@@ -3,23 +3,20 @@ package com.unipet7.mcommerce.fragments;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.unipet7.mcommerce.R;
 import com.unipet7.mcommerce.activities.MainActivity;
 import com.unipet7.mcommerce.databinding.FragmentBlankCartBinding;
-import com.unipet7.mcommerce.databinding.FragmentEmptyNotificationBinding;
 
 /**
  * A simple {@link Fragment} subclass.
- * Use the {@link fragment_blank_cart#newInstance} factory method to
+ * Use the {@link BlankCart#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class fragment_blank_cart extends Fragment {
+public class BlankCart extends Fragment {
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -31,7 +28,7 @@ public class fragment_blank_cart extends Fragment {
     private String mParam2;
     FragmentBlankCartBinding binding;
 
-    public fragment_blank_cart() {
+    public BlankCart() {
         // Required empty public constructor
     }
 
@@ -44,8 +41,8 @@ public class fragment_blank_cart extends Fragment {
      * @return A new instance of fragment fragment_blank_cart.
      */
     // TODO: Rename and change types and number of parameters
-    public static fragment_blank_cart newInstance(String param1, String param2) {
-        fragment_blank_cart fragment = new fragment_blank_cart();
+    public static BlankCart newInstance(String param1, String param2) {
+        BlankCart fragment = new BlankCart();
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
         args.putString(ARG_PARAM2, param2);

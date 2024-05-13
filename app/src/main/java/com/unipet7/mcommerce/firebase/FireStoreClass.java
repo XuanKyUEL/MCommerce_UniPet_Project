@@ -24,12 +24,13 @@ import com.unipet7.mcommerce.activities.SearchProductList;
 import com.unipet7.mcommerce.activities.SignUp;
 import com.unipet7.mcommerce.adapters.CartAdapter;
 import com.unipet7.mcommerce.fragments.CartOverall;
+import com.unipet7.mcommerce.fragments.FavoriteList;
 import com.unipet7.mcommerce.fragments.FragmentAccount;
 import com.unipet7.mcommerce.fragments.FragmentAddress;
 import com.unipet7.mcommerce.fragments.FragmentAddressEdit;
 import com.unipet7.mcommerce.fragments.FragmentAdressAdd;
 import com.unipet7.mcommerce.fragments.FragmentAllProduct;
-import com.unipet7.mcommerce.fragments.Fragment_Wishlist_Product;
+import com.unipet7.mcommerce.fragments.FavoriteOverall;
 import com.unipet7.mcommerce.fragments.Home;
 import com.unipet7.mcommerce.fragments.Profile;
 import com.unipet7.mcommerce.models.Addresses;
@@ -39,6 +40,7 @@ import com.unipet7.mcommerce.models.ProductCart;
 import com.unipet7.mcommerce.models.User;
 import com.unipet7.mcommerce.models.Voucher;
 import com.unipet7.mcommerce.utils.Constants;
+import com.unipet7.mcommerce.utils.LoadingDialog;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -528,6 +530,23 @@ public class FireStoreClass {
                 });
     }
 
+    public int countFavorite(FavoriteOverall favoriteOverall) {
+        // count how many products has the favoriteBy field contains the current user id
+        AtomicInteger countFavorite = new AtomicInteger();
+        UniPetdb.collection(Constants.PRODUCTS)
+                .whereArrayContains(Constants.FAVORITEBY, getCurrentUID())
+                .get()
+                .addOnSuccessListener(queryDocumentSnapshots -> {
+                    countFavorite.set(queryDocumentSnapshots.size());
+                    favoriteOverall.loadFavoriteCount = countFavorite.get() > 0;
+                    favoriteOverall.loadUi(favoriteOverall.loadFavoriteCount);
+                })
+                .addOnFailureListener(e -> {
+                    Log.e("FireStoreClass", "countFavorite: ", e);
+                });
+        return countFavorite.get();
+    }
+
 
     public interface OnVoucherListListener {
         void onSuccess(ArrayList<Voucher> vouchers);
@@ -554,7 +573,7 @@ public class FireStoreClass {
         return favProducts.get();
     }
 
-    public void getUserFavorites(Fragment_Wishlist_Product fragment, ArrayList<Product> favProducts) {
+    public void getUserFavorites(FavoriteList fragment, ArrayList<Product> favProducts) {
         UniPetdb.collection(Constants.PRODUCTS)
                 .get()
                 .addOnCompleteListener(task -> {

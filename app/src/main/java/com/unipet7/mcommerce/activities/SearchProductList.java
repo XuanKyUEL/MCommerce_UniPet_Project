@@ -1,57 +1,33 @@
 package com.unipet7.mcommerce.activities;
 
-import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.GridLayoutManager;
-import androidx.recyclerview.widget.LinearLayoutManager;
 
 import android.app.Dialog;
-import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
-import android.provider.MediaStore;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.Gravity;
-import android.view.KeyEvent;
-import android.view.View;
 import android.view.ViewGroup;
-import android.view.inputmethod.EditorInfo;
 import android.widget.CheckBox;
-import android.widget.CompoundButton;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.RadioButton;
-import android.widget.RadioGroup;
-import android.widget.TextView;
-import android.widget.Toast;
 
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.Query;
-import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.unipet7.mcommerce.R;
 import com.unipet7.mcommerce.adapters.ProductAdapter;
 import com.unipet7.mcommerce.databinding.ActivitySearchProductListBinding;
-import com.unipet7.mcommerce.databinding.ActivitySupportContactBinding;
 import com.unipet7.mcommerce.firebase.FireStoreClass;
-import com.unipet7.mcommerce.fragments.fragment_cart;
 import com.unipet7.mcommerce.models.Product;
-import com.unipet7.mcommerce.utils.Constants;
-import com.unipet7.mcommerce.utils.LoadingDialog;
 
 import java.util.ArrayList;
 
 import java.util.Collections;
-import java.util.Comparator;
 
 import java.util.List;
 
@@ -115,7 +91,7 @@ public class SearchProductList extends AppCompatActivity {
         int numberOfProducts = allProducts.size();
         String numberSearchText = numberOfProducts + " Kết quả tìm kiếm";
         binding.numbersearch.setText(numberSearchText);
-        adapter = new ProductAdapter(allProducts, fireStoreClass);
+        adapter = new ProductAdapter(allProducts, fireStoreClass, false);
         binding.lvlProductList.setLayoutManager(new GridLayoutManager(this, 2, GridLayoutManager.VERTICAL, false));
         binding.lvlProductList.setAdapter(adapter);
         binding.lvlProductList.setHasFixedSize(true);
@@ -128,7 +104,7 @@ public class SearchProductList extends AppCompatActivity {
         binding.voucherfilter.setOnClickListener(v -> fireStoreClass.getSalesPFilter(SearchProductList.this));
         }
     public void loadSalesProducts(ArrayList<Product> productsSale) {
-        ProductAdapter adapterSale = new ProductAdapter(productsSale, fireStoreClass);
+        ProductAdapter adapterSale = new ProductAdapter(productsSale, fireStoreClass, false);
         binding.lvlProductList.setAdapter(adapterSale);
         binding.lvlProductList.setLayoutManager(new GridLayoutManager(this, 2, GridLayoutManager.VERTICAL, false));
         binding.lvlProductList.setHasFixedSize(true);
@@ -216,7 +192,7 @@ public class SearchProductList extends AppCompatActivity {
         String numberSearchText = numberOfProducts + " Kết quả tìm kiếm";
         binding.numbersearch.setText(numberSearchText);
         // Cập nhật giao diện người dùng để hiển thị danh sách sản phẩm mới
-        adapter = new ProductAdapter(sortedproduct, fireStoreClass);
+        adapter = new ProductAdapter(sortedproduct, fireStoreClass, false);
         binding.lvlProductList.setLayoutManager(new GridLayoutManager(this, 2, GridLayoutManager.VERTICAL, false));
         binding.lvlProductList.setAdapter(adapter);
         binding.lvlProductList.setHasFixedSize(true);
@@ -306,7 +282,7 @@ public class SearchProductList extends AppCompatActivity {
         int numberOfProducts = filteredProductList.size();
         String numberSearchText = numberOfProducts + " Kết quả tìm kiếm";
         binding.numbersearch.setText(numberSearchText);
-        adapter = new ProductAdapter(filteredProductList, fireStoreClass);
+        adapter = new ProductAdapter(filteredProductList, fireStoreClass, false);
         binding.lvlProductList.setLayoutManager(new GridLayoutManager(this, 2, GridLayoutManager.VERTICAL, false));
         binding.lvlProductList.setAdapter(adapter);
         binding.lvlProductList.setHasFixedSize(true);
