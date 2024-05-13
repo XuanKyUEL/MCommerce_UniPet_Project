@@ -1,4 +1,4 @@
-package com.unipet7.mcommerce.adapters;
+package com.unipet7.mcommerce.utils;
 
 import com.unipet7.mcommerce.models.Addresses;
 

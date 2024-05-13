@@ -4,9 +4,10 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context=".fragments.CartOverall"
+    android:orientation="vertical"
     android:padding="10dp"
-    android:orientation="vertical">
+    android:background="@color/white"
+    tools:context=".fragments.FavoriteOverall">
 
     <com.google.android.material.appbar.AppBarLayout
         android:layout_width="match_parent"
@@ -27,14 +28,15 @@
                 android:textColor="@color/darkPrimary"
                 style="@style/HEAD5_BOLD_18"
                 android:gravity="center_horizontal"
-                android:text="Giỏ hàng"/>
+                android:text="Sản phẩm yêu thích"/>
         </androidx.appcompat.widget.Toolbar>
     </com.google.android.material.appbar.AppBarLayout>
 
-    <!-- TODO: Update blank fragment layout -->
-    <androidx.fragment.app.FragmentContainerView
-        android:id="@+id/fragment_cart_container"
+    <FrameLayout
+        android:id="@+id/fragment_favorite_container"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="match_parent">
+    </FrameLayout>
+
 
 </LinearLayout>

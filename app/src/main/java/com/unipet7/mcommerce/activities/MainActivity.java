@@ -1,8 +1,5 @@
 package com.unipet7.mcommerce.activities;
 
-import android.content.BroadcastReceiver;
-import android.content.Context;
-import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
@@ -13,7 +10,6 @@ import androidx.activity.OnBackPressedDispatcher;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewpager2.widget.ViewPager2;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
@@ -24,15 +20,11 @@ import com.unipet7.mcommerce.adapters.MainViewPager2Adapter;
 import com.unipet7.mcommerce.databinding.ActivityMainBinding;
 import com.unipet7.mcommerce.fragments.CartOverall;
 import com.unipet7.mcommerce.fragments.FragmentAllProduct;
-import com.unipet7.mcommerce.fragments.Fragment_Wishlist_Product;
+import com.unipet7.mcommerce.fragments.FavoriteOverall;
 import com.unipet7.mcommerce.fragments.Home;
 import com.unipet7.mcommerce.fragments.Profile;
-import com.unipet7.mcommerce.fragments.fragment_cart;
 import com.unipet7.mcommerce.utils.Constants;
-import com.unipet7.mcommerce.utils.LoadingDialog;
 import com.unipet7.mcommerce.utils.NonSwipeAbleViewPager;
-
-import java.util.Objects;
 
 public class MainActivity extends AppCompatActivity {
     private ViewPager2 viewPager2;
@@ -131,7 +123,7 @@ public class MainActivity extends AppCompatActivity {
                         bottomNavigationView.getMenu().getItem(2).setChecked(true);
                         break;
                     case 3:
-                        fragment = new Fragment_Wishlist_Product();
+                        fragment = new FavoriteOverall();
                         bottomNavigationView.getMenu().getItem(3).setChecked(true);
                         break;
                     case 4:

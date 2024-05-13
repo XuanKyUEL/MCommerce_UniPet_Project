@@ -2,6 +2,7 @@ package com.unipet7.mcommerce.fragments;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Canvas;
 import android.graphics.Paint;
@@ -45,7 +46,7 @@ import java.util.ArrayList;
 import java.util.Map;
 import java.util.Objects;
 
-public class fragment_cart extends Fragment {
+public class CartList extends Fragment {
     private static final int REQUEST_CODE_VOUCHER = 1;
     private String voucherCode;
     private double voucherNumb;
@@ -358,4 +359,8 @@ public class fragment_cart extends Fragment {
         }
     }
 
+    @Override
+    public void onAttach(@NonNull Context context) {
+        super.onAttach(context);
+    }
 }

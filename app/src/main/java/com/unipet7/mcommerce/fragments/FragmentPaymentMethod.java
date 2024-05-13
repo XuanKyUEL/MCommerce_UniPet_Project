@@ -17,7 +17,7 @@ import android.view.ViewGroup;
 import android.widget.RadioButton;
 
 import com.unipet7.mcommerce.R;
-import com.unipet7.mcommerce.adapters.DetailCheckoutHelper;
+import com.unipet7.mcommerce.utils.DetailCheckoutHelper;
 import com.unipet7.mcommerce.databinding.FragmentPaymentMethodBinding;
 
 import org.checkerframework.checker.nullness.qual.NonNull;

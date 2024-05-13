@@ -1,7 +1,6 @@
 package com.unipet7.mcommerce.fragments;
 
 import android.content.Context;
-import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -18,7 +17,7 @@ import android.view.ViewGroup;
 
 import com.unipet7.mcommerce.R;
 import com.unipet7.mcommerce.adapters.AddressAdapter;
-import com.unipet7.mcommerce.adapters.DetailCheckoutHelper;
+import com.unipet7.mcommerce.utils.DetailCheckoutHelper;
 import com.unipet7.mcommerce.databinding.FragmentAddressBinding;
 import com.unipet7.mcommerce.firebase.FireStoreClass;
 import com.unipet7.mcommerce.models.Addresses;

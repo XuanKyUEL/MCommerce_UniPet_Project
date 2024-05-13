@@ -16,7 +16,6 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
-import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.unipet7.mcommerce.R;
 import com.unipet7.mcommerce.activities.DetailProduct;
@@ -24,6 +23,7 @@ import com.unipet7.mcommerce.firebase.CheckFavoriteHelper;
 import com.unipet7.mcommerce.firebase.FireStoreClass;
 import com.unipet7.mcommerce.models.Product;
 import com.unipet7.mcommerce.utils.Constants;
+import com.unipet7.mcommerce.utils.OnRemoveAllFavHelper;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -41,11 +41,14 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ViewHold
     String userId = fireStoreClass.getCurrentUID();
     private List<Integer> favList = new ArrayList<>();
 
+    private boolean loadFav;
 
-    public ProductAdapter(List<Product> productList, FireStoreClass fireStoreClass) {
+
+    public ProductAdapter(List<Product> productList, FireStoreClass fireStoreClass, boolean loadFav) {
         this.productList = productList;
         this.userId = fireStoreClass.getCurrentUID();
         this.checkFavoriteHelper = new CheckFavoriteHelper();
+        this.loadFav = loadFav;
         fireStoreClass.addFavoriteChangeListener(() -> notifyDataSetChanged());
     }
 
@@ -127,6 +130,22 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ViewHold
                 fireStoreClass.addFavorite(v.getContext(), productId);
             }
         });
+        // if loadFav == true, then when user click on favorite, it will remove the product from favorite list and remove from the view
+        if (loadFav) {
+            holder.favorite.setOnClickListener(v -> {
+                // check if favorite is checked, then make it unchecked and remove from favorite list
+                    fireStoreClass.removeFavorite(v.getContext(), productId);
+                    productList.remove(position);
+                    notifyItemRemoved(position);
+                    notifyItemRangeChanged(position, productList.size());
+                    if (productList.isEmpty()) {
+                        if (v.getContext() instanceof OnRemoveAllFavHelper) {
+                            boolean loadEmptyFav = true;
+                            ((OnRemoveAllFavHelper) v.getContext()).onRemoveFav(loadEmptyFav);
+                        }
+                    }
+            });
+        }
     }
 
     @Override
