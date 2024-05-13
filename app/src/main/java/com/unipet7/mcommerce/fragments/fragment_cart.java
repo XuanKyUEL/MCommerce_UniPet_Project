@@ -4,15 +4,12 @@ import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Canvas;
-import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.RectF;
-import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
@@ -36,7 +33,7 @@ import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.unipet7.mcommerce.R;
-import com.unipet7.mcommerce.activities.PaymentMethodDetails;
+import com.unipet7.mcommerce.activities.DetailCheckout;
 import com.unipet7.mcommerce.activities.VoucherActivity;
 import com.unipet7.mcommerce.adapters.CartAdapter;
 import com.unipet7.mcommerce.databinding.FragmentCartBinding;
@@ -165,7 +162,7 @@ public class fragment_cart extends Fragment {
         itemTouchHelper = new ItemTouchHelper(simpleCallback);
         itemTouchHelper.attachToRecyclerView(binding.rcCart);
         binding.btnPaymentNow.setOnClickListener(v -> {
-            Intent intent = new Intent(getActivity(), PaymentMethodDetails.class);
+            Intent intent = new Intent(getActivity(), DetailCheckout.class);
             Bundle bundle = new Bundle();
             bundle.putDouble("totalCartPrice", totalCartPrice);
             intent.putExtras(bundle);
@@ -360,4 +357,5 @@ public class fragment_cart extends Fragment {
             Toast.makeText(getContext(), "Bạn cần mua thêm " + String.valueOf(Math.round(valueNeed)) + " đ để sử dụng voucher.", Toast.LENGTH_SHORT).show();
         }
     }
+
 }
