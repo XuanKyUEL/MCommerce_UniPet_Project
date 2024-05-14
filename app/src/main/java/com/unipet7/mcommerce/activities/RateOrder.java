@@ -2,8 +2,10 @@ package com.unipet7.mcommerce.activities;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.RatingBar;
+import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.ActionBar;
@@ -44,27 +46,49 @@ public class RateOrder extends AppCompatActivity {
         binding.btnDone.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                MessageDialogAdapter messageDialogAdapter = new MessageDialogAdapter(RateOrder.this);
-                MessageDialog messageDialog = new MessageDialog("Đánh giá thành công", "Bạn đã đánh giá thành công", "Quay lại", "Đóng");
-                messageDialog.setCancelable(true);
-                messageDialog.setNegativeClickListener(v1 -> {
-                    messageDialogAdapter.dismissDialog();
-                    // Quay lại trang Home
-                    Intent intent = new Intent(RateOrder.this, MainActivity.class);
-                    intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
-                    startActivity(intent);
-                });
-                messageDialog.setPositiveClickListener(v1 -> {
-                    messageDialogAdapter.dismissDialog();
-                    // Quay lại Fragment trước đó
-                    finish();
-                });
-                messageDialogAdapter.showDialog(messageDialog);
+                boolean isRatingBarsSelected = isRatingBarsSelected();
+                boolean isEditTextFilled = isEditTextFilled();
+
+                if (isRatingBarsSelected && isEditTextFilled) {
+                    MessageDialogAdapter messageDialogAdapter = new MessageDialogAdapter(RateOrder.this);
+                    MessageDialog messageDialog = new MessageDialog("Đánh giá thành công", "Bạn đã đánh giá thành công", "Quay lại", "Đóng");
+                    messageDialog.setCancelable(true);
+                    messageDialog.setNegativeClickListener(v1 -> {
+                        messageDialogAdapter.dismissDialog();
+                        // Quay lại trang Home
+                        Intent intent = new Intent(RateOrder.this, MainActivity.class);
+                        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
+                        startActivity(intent);
+                    });
+                    messageDialog.setPositiveClickListener(v1 -> {
+                        messageDialogAdapter.dismissDialog();
+                        // Quay lại Fragment trước đó
+                        finish();
+                    });
+                    messageDialogAdapter.showDialog(messageDialog);
+                } else {
+                    // Hiển thị thông báo khi chưa chọn đủ rating bar hoặc nhập liệu
+                    Toast.makeText(RateOrder.this, "Vui lòng chọn đủ rating và nhập đủ dữ liệu", Toast.LENGTH_SHORT).show();
+                }
             }
         });
     }
+    private boolean isRatingBarsSelected() {
+         if (binding.ratingbar1.getRating() > 0 && binding.ratingbar2.getRating() > 0 && binding.ratingbar3.getRating() > 0) {
+             return true;
+         } else {
+             return false;
+         }
+    }
 
-
+    private boolean isEditTextFilled() {
+         String editTextValue = binding.edtRating.getText().toString();
+         if (!TextUtils.isEmpty(editTextValue)) {
+             return true;
+         } else {
+             return false;
+         }
+    }
     private void addEvents() {
         binding.ratingbar1.setOnRatingBarChangeListener(new RatingBar.OnRatingBarChangeListener() {
             @Override

@@ -155,6 +155,7 @@
             android:gravity="center" />
     </LinearLayout>
     <EditText
+        android:id="@+id/edtRating"
         android:layout_marginTop="20dp"
         android:layout_width="340dp"
         android:layout_height="100dp"

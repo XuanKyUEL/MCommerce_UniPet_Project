@@ -4,11 +4,10 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context=".fragments.FragmentAddress"
     android:orientation="vertical"
     android:padding="10dp"
     android:background="@color/white"
-    android:id="@+id/AddressLayout">
+    tools:context=".fragments.FavoriteOverall">
 
     <com.google.android.material.appbar.AppBarLayout
         android:layout_width="match_parent"
@@ -16,7 +15,7 @@
         android:theme="@style/ThemeOverlay.AppCompat.DayNight.ActionBar"
         android:gravity="center">
         <androidx.appcompat.widget.Toolbar
-            android:id="@+id/toolbaraddress"
+            android:id="@+id/toolbarall"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
             style="@style/HEAD5_BOLD_18"
@@ -24,34 +23,20 @@
             app:popupTheme="@style/Widget.Material3.PopupMenu.Overflow"
             android:layout_gravity="center">
             <TextView
-                android:layout_width="250dp"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:textColor="@color/darkPrimary"
                 style="@style/HEAD5_BOLD_18"
-                android:gravity="center"
-                android:text="Địa chỉ"/>
+                android:gravity="center_horizontal"
+                android:text="Sản phẩm yêu thích"/>
         </androidx.appcompat.widget.Toolbar>
     </com.google.android.material.appbar.AppBarLayout>
-    <ListView
+
+    <FrameLayout
+        android:id="@+id/fragment_favorite_container"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/lvlAddress"
-        android:layout_weight="1"
-        android:padding="10dp"
-        android:divider="@android:color/transparent"
-        android:dividerHeight="15dp"/>
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="20dp"
-        android:background="@color/white"/>
-    <Button
-        android:id="@+id/btn_addaddress"
-        android:layout_width="300dp"
-        android:layout_height="48dp"
-        style="@style/HEAD6_BOLD_16"
-        android:text="Thêm địa chỉ"
-        android:layout_marginBottom="100dp"
-        android:layout_gravity="bottom|center_horizontal"
-        android:background="@drawable/button_custom"/>
+        android:layout_height="match_parent">
+    </FrameLayout>
+
 
 </LinearLayout>

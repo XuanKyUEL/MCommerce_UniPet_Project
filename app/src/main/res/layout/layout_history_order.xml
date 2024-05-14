@@ -79,6 +79,15 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal">
+                <TextView
+                    android:id="@+id/product_count"
+                    style="@style/BODY_SMALL_REGULAR_12"
+                    android:layout_width="25dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="5dp"
+                    android:text="x1 "
+                    android:textColor="@color/darkSecondary"
+                    android:textStyle="italic"/>
 
                 <TextView
                     android:id="@+id/product_info"
@@ -90,16 +99,7 @@
                     android:textColor="@color/darkSecondary"
                     android:textStyle="italic" />
 
-                <TextView
-                    android:id="@+id/product_count"
-                    style="@style/BODY_SMALL_REGULAR_12"
-                    android:layout_width="25dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginRight="5dp"
-                    android:gravity="end"
-                    android:text="x1 "
-                    android:textColor="@color/darkSecondary"
-                    android:textStyle="italic" />
+                />
             </LinearLayout>
 
             <TextView

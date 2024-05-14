@@ -6,7 +6,6 @@ plugins {
 android {
     namespace = "com.unipet7.mcommerce"
     compileSdk = 34
-
     defaultConfig {
         applicationId = "com.unipet7.mcommerce"
         minSdk = 28
@@ -27,13 +26,14 @@ android {
         }
     }
     compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_1_8
-        targetCompatibility = JavaVersion.VERSION_1_8
+        sourceCompatibility = JavaVersion.VERSION_17
+        targetCompatibility = JavaVersion.VERSION_17
     }
     buildFeatures {
         viewBinding = true
         dataBinding = true
     }
+
 }
 tasks.register("customSigningReport") {
     doLast {

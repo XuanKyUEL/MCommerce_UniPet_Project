@@ -3,12 +3,13 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical"
-    android:background="@drawable/edittext_conner_profile">
+    android:layout_marginBottom="25dp"
+    >
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:layout_weight="8">
+        android:background="@drawable/edittext_conner_profile"
+        android:orientation="horizontal">
         <ImageView
             android:paddingLeft="5dp"
             android:layout_width="30dp"
@@ -16,11 +17,11 @@
             android:src="@drawable/ic_address_map"/>
 
         <LinearLayout
-            android:layout_width="320dp"
+            android:layout_width="300dp"
             android:layout_height="48dp"
             android:orientation="vertical">
             <TextView
-                android:id="@+id/txttitleadress"
+                android:id="@+id/addressUsername"
                 style="@style/HEAD6_BOLD_16"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -40,14 +41,12 @@
 
         </LinearLayout>
         <ImageView
-            android:id="@+id/editlayout"
-            android:layout_width="20dp"
-            android:layout_height="20dp"
+            android:id="@+id/editAddressImv"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
             android:src="@drawable/ic_address_edit"
             android:layout_weight="2"
             android:layout_gravity="center_vertical"/>
-
-
     </LinearLayout>
 
 </LinearLayout>

@@ -5,8 +5,9 @@ import android.os.Parcelable;
 
 import androidx.annotation.NonNull;
 
-import com.unipet7.mcommerce.firebase.FireStoreClass;
-
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 
 public class Product implements Parcelable {
@@ -17,7 +18,11 @@ public class Product implements Parcelable {
 
     boolean isFavorite;
 
+    private ArrayList<String> isFavoriteBy;
 
+    public ArrayList<String> getIsFavoriteBy() {
+        return isFavoriteBy;
+    }
 
     public boolean isFavorite() {
         return isFavorite;
@@ -35,6 +40,7 @@ public class Product implements Parcelable {
     }
 
     protected Product(Parcel in) {
+        isFavoriteBy = in.createStringArrayList();
         ProductId = in.readInt();
         CategoryId = in.readInt();
         ProductDescription = in.readString();
@@ -108,7 +114,8 @@ public class Product implements Parcelable {
     public Product() {
     }
 
-    public Product(int imvThumb, String productname, double productprice, double productratenum, double producttotalnum, double salepercent, double presaleprice) {
+    public Product(ArrayList<String> isFavoriteBy, int imvThumb, String productname, double productprice, double productratenum, double producttotalnum, double salepercent, double presaleprice) {
+        this.isFavoriteBy = isFavoriteBy;
         this.imvThumb = imvThumb;
         this.productname = productname;
         this.productprice = productprice;
@@ -181,6 +188,10 @@ public class Product implements Parcelable {
 
     @Override
     public void writeToParcel(@NonNull Parcel dest, int flags) {
+        dest.writeInt(this.CategoryId);
+        dest.writeString(this.ProductDescription);
+        dest.writeString(this.ProductImageUrl);
+        dest.writeStringList(this.isFavoriteBy);
         dest.writeInt(this.ProductId);
         dest.writeInt(this.imvThumb);
         dest.writeString(this.productname);

@@ -78,11 +78,23 @@ public class HistoryOrder_All extends Fragment {
         // Inflate the layout for this fragment
         binding = FragmentAllHistoryOrderBinding.inflate(inflater,container,false);
         loadData();
-
+        addEvents();
         return binding.getRoot();
     }
 
-
+    private void addEvents() {
+        binding.lvlOrder.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+            @Override
+            public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
+                if (position == 0) {
+                    Intent intent = new Intent(getActivity(), DetailOrder_Confirm.class);
+                    startActivity(intent);
+                    return true; // Trả về true nếu xử lý thành công
+                }
+                return false; // Trả về false nếu không xử lý sự kiện
+            }
+        });
+    }
 
     private void loadData() {
         HistoryAdapter = new HistoryOrderAdapter(getActivity(),R.layout.layout_history_order, initData());
@@ -90,17 +102,8 @@ public class HistoryOrder_All extends Fragment {
     }
     private List<HistoryOrders> initData() {
         Historyorders = new ArrayList<>();
-        Historyorders.add(new HistoryOrders("11/12/2024","1111", "Đã hủy", R.drawable.unipet_app_icon,"Royal Canin Rottweiler Puppy con mèo con đi hia long nhong",
+        Historyorders.add(new HistoryOrders("11/12/2024","1111", "Đã giao hàng", R.drawable.unipet_app_icon,"Royal Canin Rottweiler Puppy con mèo con đi hia long nhong",
                 "Túi", 1.0,24000.0, 24000.0));
-        Historyorders.add(new HistoryOrders("11/12/2024","1111", "Đã hủy", R.drawable.unipet_app_icon,"Royal Canin Rottweiler Puppy con mèo con đi hia long nhong",
-                "Túi", 1.0,24000.0, 24000.0));
-        Historyorders.add(new HistoryOrders("11/12/2024","1111", "Đã hủy", R.drawable.unipet_app_icon,"Royal Canin Rottweiler Puppy con mèo con đi hia long nhong",
-                "Túi", 1.0,24000.0, 24000.0));
-        Historyorders.add(new HistoryOrders("11/12/2024","1111", "Đã hủy", R.drawable.unipet_app_icon,"Royal Canin Rottweiler Puppy con mèo con đi hia long nhong",
-                "Túi", 1.0,24000.0, 24000.0));
-        Historyorders.add(new HistoryOrders("11/12/2024","1111", "Đã hủy", R.drawable.unipet_app_icon,"Royal Canin Rottweiler Puppy con mèo con đi hia long nhong",
-                "Túi", 1.0,24000.0, 24000.0));
-
         return Historyorders;
     }
 }

@@ -32,12 +32,13 @@ public class BlogDetails extends AppCompatActivity {
     ArrayList<Product> products;
 
     List<Integer> favList = new ArrayList<>();
-    public ArrayList<Product> allProducts = new ArrayList<>();
+
+    FireStoreClass fireStoreClass = new FireStoreClass();
+    public ArrayList<Product> blogProducts = new ArrayList<>();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         binding = ActivityBlogDetailsBinding.inflate(getLayoutInflater());
-        FireStoreClass fireStoreClass = new FireStoreClass();
         loadProduct();
         addEvents();
         initBlog();
@@ -46,12 +47,11 @@ public class BlogDetails extends AppCompatActivity {
     private void loadProduct() {
         LoadingDialog ldDialog1 = new LoadingDialog();
         ldDialog1.showLoadingDialog(this);
-        FireStoreClass fireStoreClass = new FireStoreClass();
-        fireStoreClass.getAllProductsBlog(this, allProducts);
+        fireStoreClass.getRandomProductsBlog(this, blogProducts, 10);
         ldDialog1.dissmis();
     }
     public void configAdaptersBlog() {
-        adapter = new ProductAdapter(allProducts);
+        adapter = new ProductAdapter(blogProducts, fireStoreClass, false);
         binding.rclBlogDetails1.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
         binding.rclBlogDetails1.setAdapter(adapter);
         binding.rclBlogDetails1.setHasFixedSize(true);

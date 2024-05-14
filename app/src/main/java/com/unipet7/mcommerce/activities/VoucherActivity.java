@@ -8,6 +8,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
 import androidx.appcompat.widget.Toolbar;
@@ -16,6 +17,7 @@ import com.unipet7.mcommerce.adapters.AdapterVoucher;
 import com.unipet7.mcommerce.databinding.ActivityVoucherBinding;
 import com.unipet7.mcommerce.firebase.FireStoreClass;
 import com.unipet7.mcommerce.models.Voucher;
+import com.unipet7.mcommerce.utils.Constants;
 
 import java.util.ArrayList;
 
@@ -63,24 +65,20 @@ public class VoucherActivity extends AppCompatActivity {
     }
 
     private void addEvents() {
-        binding.btnAppVoucher.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                int selectedPosition = adapter.getSelectedPosition();
-                if (selectedPosition != -1) {
-                    String voucherCode = vouchers.get(selectedPosition).getVoucher_code();
-                    Double voucherNumb = vouchers.get(selectedPosition).getVoucher_numb();
-                    Double voucherMaxDiscount = vouchers.get(selectedPosition).getVoucher_max_discount();
-                    Double voucherMiniumValue = vouchers.get(selectedPosition).getVoucher_minium_value();
-                    Intent intent = new Intent();
-                    intent.putExtra("voucher_code", voucherCode);
-                    intent.putExtra("voucher_numb", voucherNumb);
-                    intent.putExtra("voucher_max", voucherMaxDiscount);
-                    intent.putExtra("voucher_minium_value", voucherMiniumValue);
-                    setResult(Activity.RESULT_OK, intent);
-                    finish();
-                }
+        binding.btnAppVoucher.setOnClickListener(v -> {
+            int selectedPosition = adapter.getSelectedPosition();
+            Log.i("VoucherActivity", "addEvents: " + selectedPosition);
+            if (selectedPosition != -1) {
+                Intent intent = new Intent();
+                intent.putExtra(Constants.VOUCHER, vouchers.get(selectedPosition));
+                setResult(Activity.RESULT_OK, intent);
+                finish();
             }
+        });
+        binding.toolbarall.setNavigationOnClickListener(v -> {
+            Log.i("VoucherActivity", "addEvents: ");
+            Toast.makeText(this, "VoucherActivity", Toast.LENGTH_SHORT).show();
+            this.getOnBackPressedDispatcher().onBackPressed();
         });
     }
 }

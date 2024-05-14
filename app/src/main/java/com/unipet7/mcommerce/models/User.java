@@ -15,6 +15,26 @@ public class User implements Parcelable {
     private Long mobile;
     private String fcmToken;
 
+    public List<Addresses> addresses;
+
+    private List<Order> orders;
+
+    public List<Order> getOrders() {
+        return orders;
+    }
+
+    public void setOrders(List<Order> orders) {
+        this.orders = orders;
+    }
+
+    public List<Addresses> getAddresses() {
+        return addresses;
+    }
+
+    public void setAddresses(List<Addresses> addresses) {
+        this.addresses = addresses;
+    }
+
     private List<Integer> favProductId;
     private List<Integer> orderHistoryId;
 
@@ -49,6 +69,10 @@ public class User implements Parcelable {
         in.readList(favProductId, Integer.class.getClassLoader());
         orderHistoryId = new ArrayList<>();
         in.readList(orderHistoryId, Integer.class.getClassLoader());
+        addresses = new ArrayList<>();
+        in.readList(addresses, Addresses.class.getClassLoader());
+        orders = new ArrayList<>();
+        in.readList(orders, Order.class.getClassLoader());
     }
 
     public static final Creator<User> CREATOR = new Creator<User>() {
@@ -132,5 +156,7 @@ public class User implements Parcelable {
         dest.writeString(fcmToken);
         dest.writeList(favProductId);
         dest.writeList(orderHistoryId);
+        dest.writeList(addresses);
+        dest.writeList(orders);
     }
 }

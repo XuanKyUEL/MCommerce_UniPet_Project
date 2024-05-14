@@ -59,6 +59,7 @@
         android:layout_marginTop="10dp"
         android:background="@drawable/edittext_conner_profile"
         android:hint="Số điện thoại"
+        android:inputType="number"
         android:padding="10dp"
         android:textColor="@color/black"
         android:textColorHint="#C4C4C4"/>/>

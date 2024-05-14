@@ -51,6 +51,8 @@ public class FragmentAllProduct extends Fragment {
     FragmentAllProductBinding binding;
     public ProductAdapter allPdadapter;
     public ArrayList<Product> allProducts;
+
+    FireStoreClass fireStoreClass = new FireStoreClass();
     private String sKey;
 
     public void SetId(String id) {
@@ -143,7 +145,7 @@ private String currentCategory = Constants.ALLPRODUCT;
     }
 
     private void searchproduct() {
-        ProductAdapter adapter = new ProductAdapter(new ArrayList<>());
+        ProductAdapter adapter = new ProductAdapter(new ArrayList<>(), fireStoreClass, false);
 
         binding.searchallproduct.addTextChangedListener(new TextWatcher() {
             @Override
@@ -291,7 +293,7 @@ private String currentCategory = Constants.ALLPRODUCT;
     public void loadProduct(ArrayList<Product> products) {
         LoadingDialog ldDialog = new LoadingDialog();
         ldDialog.showLoadingDialog(this.getContext());
-        ProductAdapter adapter = new ProductAdapter(products);
+        ProductAdapter adapter = new ProductAdapter(products, fireStoreClass, false);
         binding.lvlAllProduct.setLayoutManager(new GridLayoutManager(getContext(), 2));
         binding.lvlAllProduct.setAdapter(adapter);
         binding.lvlAllProduct.setHasFixedSize(false);
@@ -361,7 +363,7 @@ private String currentCategory = Constants.ALLPRODUCT;
 //            ldDialog.dissmis();
 //
 //        }
-        else if (sKey != null && sKey.equals("null")){
+        else if (sKey != null && sKey.equals(Constants.NULL)){
             LoadingDialog ldDialog = new LoadingDialog();
             ldDialog.showLoadingDialog(this.getContext());
             view.postDelayed(() -> btnAll.performClick(), 300);

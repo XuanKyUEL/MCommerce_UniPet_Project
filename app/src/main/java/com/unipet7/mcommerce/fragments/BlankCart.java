@@ -8,14 +8,15 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.unipet7.mcommerce.R;
+import com.unipet7.mcommerce.activities.MainActivity;
+import com.unipet7.mcommerce.databinding.FragmentBlankCartBinding;
 
 /**
  * A simple {@link Fragment} subclass.
- * Use the {@link DetailOrder_Cancel#newInstance} factory method to
+ * Use the {@link BlankCart#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class DetailOrder_Cancel extends Fragment {
+public class BlankCart extends Fragment {
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -25,8 +26,9 @@ public class DetailOrder_Cancel extends Fragment {
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
+    FragmentBlankCartBinding binding;
 
-    public DetailOrder_Cancel() {
+    public BlankCart() {
         // Required empty public constructor
     }
 
@@ -36,11 +38,11 @@ public class DetailOrder_Cancel extends Fragment {
      *
      * @param param1 Parameter 1.
      * @param param2 Parameter 2.
-     * @return A new instance of fragment DetailOrder_Cancel.
+     * @return A new instance of fragment fragment_blank_cart.
      */
     // TODO: Rename and change types and number of parameters
-    public static DetailOrder_Cancel newInstance(String param1, String param2) {
-        DetailOrder_Cancel fragment = new DetailOrder_Cancel();
+    public static BlankCart newInstance(String param1, String param2) {
+        BlankCart fragment = new BlankCart();
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
         args.putString(ARG_PARAM2, param2);
@@ -61,6 +63,16 @@ public class DetailOrder_Cancel extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_detail_order__cancel, container, false);
+        binding= FragmentBlankCartBinding.inflate(inflater, container, false);
+        addEvents();
+        return binding.getRoot();    }
+
+    private void addEvents() {
+        binding.btnBackHome.setOnClickListener(v -> {
+            if (getActivity() instanceof MainActivity) {
+                MainActivity mainActivity = (MainActivity) getActivity();
+                mainActivity.mainViewPager2.setCurrentItem(0);
+            }
+        });
     }
 }
