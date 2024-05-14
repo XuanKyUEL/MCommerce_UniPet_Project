@@ -157,6 +157,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="20dp"
+                android:paddingStart="2dp"
                 android:orientation="horizontal"
                 app:layout_constraintTop_toBottomOf="@+id/lnEmail">
 

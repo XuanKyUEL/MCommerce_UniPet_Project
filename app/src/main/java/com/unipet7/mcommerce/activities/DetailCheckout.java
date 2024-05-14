@@ -207,5 +207,6 @@ public class DetailCheckout extends AppCompatActivity implements DetailCheckoutH
         Intent intent = new Intent(this, MainActivity.class);
         intent.putExtra(Constants.ODERSUCCESS, true);
         startActivity(intent);
+        finishAffinity();
     }
 }
