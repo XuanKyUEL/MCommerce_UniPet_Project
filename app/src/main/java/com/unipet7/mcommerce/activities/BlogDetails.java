@@ -80,4 +80,5 @@ public class BlogDetails extends AppCompatActivity {
         binding.rclBlogDetails2.setAdapter(blogAdapter);
     }
 
+
 }

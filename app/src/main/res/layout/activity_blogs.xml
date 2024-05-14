@@ -7,43 +7,25 @@
     tools:context=".activities.Blogs"
     android:padding="10dp"
     android:background="@color/white">
-    <com.google.android.material.appbar.AppBarLayout
-        android:id="@+id/appBarLayout1"
-        android:layout_width="match_parent"
+
+    <TextView
+        style="@style/HEAD5_BOLD_18"
+        android:layout_width="270dp"
         android:layout_height="wrap_content"
         android:gravity="center"
-        android:theme="@style/ThemeOverlay.AppCompat.DayNight.ActionBar"
+        android:text="Blog"
+        android:textColor="@color/darkPrimary"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
-
-        <androidx.appcompat.widget.Toolbar
-            android:id="@+id/toolbarblog"
-            style="@style/HEAD5_BOLD_18"
-            android:layout_width="match_parent"
-            android:layout_height="?attr/actionBarSize"
-            android:layout_gravity="center_horizontal"
-            android:background="@color/white"
-            app:popupTheme="@style/Widget.Material3.PopupMenu.Overflow">
-            <TextView
-                android:layout_width="270dp"
-                android:layout_height="wrap_content"
-                android:textColor="@color/darkPrimary"
-                style="@style/HEAD5_BOLD_18"
-                android:gravity="center"
-                android:text="Blog"/>
-
-        </androidx.appcompat.widget.Toolbar>
-
-    </com.google.android.material.appbar.AppBarLayout>
+        app:layout_constraintTop_toTopOf="parent" />
 
     <ScrollView
+        android:id="@+id/scrollView2"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/appBarLayout1">
+        tools:layout_editor_absoluteY="10dp">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -118,10 +100,11 @@
                     app:layout_constraintVertical_bias="1.0" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
+
             <View
                 android:layout_width="match_parent"
                 android:layout_height="20dp"
-                android:background="@color/white"/>
+                android:background="@color/white" />
 
         </LinearLayout>
 
