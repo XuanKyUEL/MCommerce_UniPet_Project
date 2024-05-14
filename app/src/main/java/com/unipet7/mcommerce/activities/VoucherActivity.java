@@ -68,15 +68,12 @@ public class VoucherActivity extends AppCompatActivity {
             public void onClick(View v) {
                 int selectedPosition = adapter.getSelectedPosition();
                 if (selectedPosition != -1) {
-                    String voucherCode = vouchers.get(selectedPosition).getVoucher_code();
-                    Double voucherNumb = vouchers.get(selectedPosition).getVoucher_numb();
-                    Double voucherMaxDiscount = vouchers.get(selectedPosition).getVoucher_max_discount();
-                    Double voucherMiniumValue = vouchers.get(selectedPosition).getVoucher_minium_value();
+                    Voucher selectedVoucher = vouchers.get(selectedPosition);
                     Intent intent = new Intent();
-                    intent.putExtra("voucher_code", voucherCode);
-                    intent.putExtra("voucher_numb", voucherNumb);
-                    intent.putExtra("voucher_max", voucherMaxDiscount);
-                    intent.putExtra("voucher_minium_value", voucherMiniumValue);
+                    intent.putExtra("voucher_code", selectedVoucher.getVoucher_code());
+                    intent.putExtra("voucher_numb", selectedVoucher.getVoucher_numb());
+                    intent.putExtra("voucher_max", selectedVoucher.getVoucher_max_discount());
+                    intent.putExtra("voucher_minium_value", selectedVoucher.getVoucher_minium_value());
                     setResult(Activity.RESULT_OK, intent);
                     finish();
                 }

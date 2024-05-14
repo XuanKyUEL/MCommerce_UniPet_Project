@@ -98,7 +98,6 @@ public class fragment_cart extends Fragment {
                 });
                 dialogMessage.setText("Bạn có muốn xóa sản phẩm khỏi giỏ hàng?");
                 dialogTitle.setText("Xóa sản phẩm");
-
                 btnConfirm.setOnClickListener(v -> {
                     String cartItemId = String.valueOf(productCarts.get(position).getProductId());
                     deleteItem(cartItemId, position);
@@ -254,7 +253,6 @@ public class fragment_cart extends Fragment {
     public void onResume() {
         super.onResume();
         loadData();
-
         if (adapter != null) {
             adapter.setOnQuantityChangeListener((position, quantity) -> {
                 ProductCart productCart = productCarts.get(position);
@@ -305,8 +303,6 @@ public class fragment_cart extends Fragment {
             totalCartPrice += cartItem.getTotalPrice();
         }
         binding.txtPreNumb.setText(Math.round(totalCartPrice) + " đ");
-
-        // Check if a voucher is applied
         String voucherCode = binding.edtVoucher.getText().toString().trim();
         if (!voucherCode.isEmpty()) {
         } else {
@@ -330,6 +326,7 @@ public class fragment_cart extends Fragment {
             voucherNumb = data.getDoubleExtra("voucher_numb", 0.0);
             voucherMaxDiscount = data.getDoubleExtra("voucher_max", 0.0);
             voucherMiniumValue = data.getDoubleExtra("voucher_minium_value", 0.0);
+            Log.d("FragmentCart", "onActivityResult is called"); // Thêm dòng log này
             CalculateVoucher();
         }
     }
