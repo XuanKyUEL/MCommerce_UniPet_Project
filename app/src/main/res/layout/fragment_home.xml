@@ -92,18 +92,20 @@
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent">
 
-                        <ImageView
+                        <com.makeramen.roundedimageview.RoundedImageView
                             android:id="@+id/imgBanner1"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:src="@drawable/bannerhome"
                             android:scaleType="fitXY"
+                            app:riv_corner_radius="16dp"
                             android:background="@drawable/banner_background"/>
-                        <ImageView
+                        <com.makeramen.roundedimageview.RoundedImageView
                             android:id="@+id/imgBanner2"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:src="@drawable/banner02"
+                            app:riv_corner_radius="16dp"
                             android:scaleType="fitXY"
                             android:background="@drawable/banner_background"/>
                     </ViewFlipper>
