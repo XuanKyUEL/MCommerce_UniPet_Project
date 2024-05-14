@@ -410,6 +410,21 @@ public class FireStoreClass {
                     Log.e("FireStoreClass", "getCountUserCartItems: ", e);
                 });
     }
+    public void getCountUserCartItemsinSearch(SearchProductList searchProductList) {
+        UniPetdb.collection(Constants.CART)
+                .whereEqualTo("userId", getCurrentUID())
+                .get()
+                .addOnSuccessListener(queryDocumentSnapshots -> {
+                    int count = queryDocumentSnapshots.size();
+                    Log.i("FireStoreClass", "getCountUserCartItemsinSearch: " + count);
+                    if (count > 0) {
+                        searchProductList.loadCartCount1(count);
+                    }
+                })
+                .addOnFailureListener(e -> {
+                    Log.e("FireStoreClass", "getCountUserCartItemsinSearch: ", e);
+                });
+    }
     public void getCartItemsRealtime(Context context, CartAdapter.OnQuantityChangeListener listener) {
         String currentUserId = getCurrentUID();
         if (currentUserId != null && !currentUserId.isEmpty()) {
