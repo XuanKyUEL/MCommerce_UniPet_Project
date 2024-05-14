@@ -18,13 +18,11 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AlertDialog;
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.content.res.AppCompatResources;
-import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.ItemTouchHelper;
@@ -40,6 +38,7 @@ import com.unipet7.mcommerce.adapters.CartAdapter;
 import com.unipet7.mcommerce.databinding.FragmentCartBinding;
 import com.unipet7.mcommerce.firebase.FireStoreClass;
 import com.unipet7.mcommerce.models.ProductCart;
+import com.unipet7.mcommerce.models.Voucher;
 import com.unipet7.mcommerce.utils.Constants;
 
 import java.util.ArrayList;
@@ -48,12 +47,16 @@ import java.util.Objects;
 
 public class CartList extends Fragment {
     private static final int REQUEST_CODE_VOUCHER = 1;
+
+    private boolean isVoucherUpdated = false;
     private String voucherCode;
     private double voucherNumb;
     private double voucherMaxDiscount;
     private double voucherMiniumValue;
 
     FragmentCartBinding binding;
+
+    Voucher voucher;
     ArrayList<ProductCart> productCarts;
     private double totalCartPrice = 0.0;
     CartAdapter adapter;
@@ -149,16 +152,28 @@ public class CartList extends Fragment {
             FireStoreClass fireStoreClass = new FireStoreClass();
             fireStoreClass.deleteCartItem(productId);
             calculateTotalCartPrice();
-            CalculateVoucher();
+            CalculateVoucher(voucherCode, voucherNumb, voucherMaxDiscount, voucherMiniumValue);
         }
     };
 
 
     ItemTouchHelper itemTouchHelper;
 
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         binding = FragmentCartBinding.inflate(inflater, container, false);
+        loadData();
+        if (adapter != null) {
+            adapter.setOnQuantityChangeListener((position, quantity) -> {
+                ProductCart productCart = productCarts.get(position);
+                productCart.setNumOfProduct((int) quantity);
+                productCart.setTotalPrice(productCart.getProductPrice() * quantity);
+                adapter.updateCartItem(productCart);
+                adapter.notifyItemChanged(position);
+                calculateTotalCartPrice();
+            });
+        }
         itemTouchHelper = new ItemTouchHelper(simpleCallback);
         itemTouchHelper.attachToRecyclerView(binding.rcCart);
         binding.btnPaymentNow.setOnClickListener(v -> {
@@ -169,15 +184,35 @@ public class CartList extends Fragment {
             startActivity(intent);
         });
 
-        binding.btnCircleVoucher.setOnClickListener(v -> startActivityForResult(new Intent(getContext(), VoucherActivity.class), REQUEST_CODE_VOUCHER));
+        ActivityResultLauncher<Intent> voucherActivityResultLauncher = registerForActivityResult(
+                new ActivityResultContracts.StartActivityForResult(),
+                result -> {
+                    if (result.getResultCode() == Activity.RESULT_OK) {
+                        Intent data = result.getData();
+                        if (data != null) {
+                            voucher = (Voucher) data.getSerializableExtra(Constants.VOUCHER);
+                            assert voucher != null;
+                            this.voucherCode = voucher.getVoucher_code();
+                            this.voucherNumb = voucher.getVoucher_numb();
+                            this.voucherMaxDiscount = voucher.getVoucher_max_discount();
+                            this.voucherMiniumValue = voucher.getVoucher_minium_value();
+                            isVoucherUpdated = true;
+                            Log.i("CartList", "onActivityResult: " + voucherCode);
+                            CalculateVoucher(voucher.getVoucher_code(), voucher.getVoucher_numb(), voucher.getVoucher_max_discount(), voucher.getVoucher_minium_value());
+                        }
+                    }
+                });
+
+        binding.btnCircleVoucher.setOnClickListener(v -> voucherActivityResultLauncher.launch(new Intent(getContext(), VoucherActivity.class)));
         binding.btnVoucher.setOnClickListener(v -> {
             String voucherCode = binding.edtVoucher.getText().toString().trim();
             if (voucherCode.isEmpty()) {
-                startActivityForResult(new Intent(getContext(), VoucherActivity.class), REQUEST_CODE_VOUCHER);
+                voucherActivityResultLauncher.launch(new Intent(getContext(), VoucherActivity.class));
             } else {
                 checkVoucherExistence(voucherCode);
             }
         });
+
         FireStoreClass fireStoreClass = new FireStoreClass();
         fireStoreClass.getCartItemsRealtime(getContext(), (position, quantity) -> {
             ProductCart productCart = productCarts.get(position);
@@ -218,7 +253,7 @@ public class CartList extends Fragment {
                                 Toast.makeText(getContext(), "Dữ liệu voucher min không hợp lệ.", Toast.LENGTH_SHORT).show();
                                 return;
                             }
-                            CalculateVoucher();
+                            CalculateVoucher(voucherCode, voucherNumb, voucherMaxDiscount, voucherMiniumValue);
                         } else {
                             Toast.makeText(getContext(), "Dữ liệu voucher chung không hợp lệ.", Toast.LENGTH_SHORT).show();
                         }
@@ -246,26 +281,6 @@ public class CartList extends Fragment {
                     }
                 });
         calculateTotalCartPrice();
-        CalculateVoucher();
-    }
-
-
-    @Override
-    public void onResume() {
-        super.onResume();
-        loadData();
-
-        if (adapter != null) {
-            adapter.setOnQuantityChangeListener((position, quantity) -> {
-                ProductCart productCart = productCarts.get(position);
-                productCart.setNumOfProduct((int) quantity);
-                productCart.setTotalPrice(productCart.getProductPrice() * quantity);
-                adapter.updateCartItem(productCart);
-                adapter.notifyItemChanged(position);
-                calculateTotalCartPrice();
-                CalculateVoucher();
-            });
-        }
     }
 
 
@@ -304,50 +319,34 @@ public class CartList extends Fragment {
         for (ProductCart cartItem : productCarts) {
             totalCartPrice += cartItem.getTotalPrice();
         }
-        binding.txtPreNumb.setText(Math.round(totalCartPrice) + " đ");
+        String formatTotalCartPrice = String.format("%,.0f đ", totalCartPrice);
+        binding.txtPreNumb.setText(formatTotalCartPrice);
+        updateCartPriceDisplay(totalCartPrice, 0.0);
+    }
 
-        // Check if a voucher is applied
-        String voucherCode = binding.edtVoucher.getText().toString().trim();
-        if (!voucherCode.isEmpty()) {
+    private void CalculateVoucher(String voucherCode, double voucherNumb, double voucherMaxDiscount, double voucherMinimumValue) {
+        binding.edtVoucher.setText(voucherCode);
+        if (voucherCode.isEmpty()) {
+            updateCartPriceDisplay(totalCartPrice, 0.0);
+            return;
+        }
+        if (totalCartPrice >= voucherMinimumValue) {
+            double discountPrice = Math.min(totalCartPrice * voucherNumb / 100, voucherMaxDiscount);
+            double finalPrice = totalCartPrice - discountPrice;
+            updateCartPriceDisplay(finalPrice, discountPrice);
         } else {
-            binding.txtTotalNumb.setText(Math.round(totalCartPrice) + " đ");}
-    }
-
-    @Override
-    public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == REQUEST_CODE_VOUCHER && resultCode == Activity.RESULT_OK && data != null) {
-            voucherCode = data.getStringExtra("voucher_code");
-            voucherNumb = data.getDoubleExtra("voucher_numb", 0.0);
-            voucherMaxDiscount = data.getDoubleExtra("voucher_max", 0.0);
-            voucherMiniumValue = data.getDoubleExtra("voucher_minium_value", 0.0);
-            CalculateVoucher();
+            double valueNeed = voucherMinimumValue - totalCartPrice;
+            updateCartPriceDisplay(totalCartPrice, 0.0);
+            Toast.makeText(getContext(), "Bạn cần mua thêm " + String.format("%,.0f đ", valueNeed) + " để sử dụng voucher.", Toast.LENGTH_SHORT).show();
         }
     }
 
-    private void CalculateVoucher() {
-        if (totalCartPrice >= voucherMiniumValue) {
-            double discountPrice = totalCartPrice * voucherNumb / 100;
-            if (discountPrice <= voucherMaxDiscount) {
-                binding.edtVoucher.setText(voucherCode);
-                double finalPrice = totalCartPrice - discountPrice;
-                binding.txtDiscoutNumb.setText(String.valueOf(Math.round(discountPrice)) + " đ");
-                binding.txtTotalNumb.setText(String.valueOf(Math.round(finalPrice)) + " đ");
-            } else {
-                binding.edtVoucher.setText(voucherCode);
-                binding.txtDiscoutNumb.setText(String.valueOf(Math.round(voucherMaxDiscount)) + " đ");
-                double finalPrice = totalCartPrice - voucherMaxDiscount;
-                binding.txtTotalNumb.setText(String.valueOf(Math.round(finalPrice)) + " đ");
-            }
-        }
-        else {
-            binding.edtVoucher.setText("Nhập mã giảm giá");
-            double valueNeed = voucherMiniumValue - totalCartPrice;
-            binding.txtDiscoutNumb.setText(String.valueOf(Math.round(0.0)) + " đ");
-            binding.txtTotalNumb.setText(String.valueOf(Math.round(totalCartPrice)) + " đ");
-            Toast.makeText(getContext(), "Bạn cần mua thêm " + String.valueOf(Math.round(valueNeed)) + " đ để sử dụng voucher.", Toast.LENGTH_SHORT).show();
-        }
+    private void updateCartPriceDisplay(double finalPrice, double discountPrice) {
+        binding.txtDiscoutNumb.setText(String.format("%,.0f đ", discountPrice));
+        binding.txtTotalNumb.setText(String.format("%,.0f đ", finalPrice));
     }
+
+
 
     @Override
     public void onAttach(@NonNull Context context) {
