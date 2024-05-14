@@ -93,10 +93,11 @@ public class DetailProduct extends BaseActivity {
         cbFavorite.setOnCheckedChangeListener((buttonView, isChecked) -> {
             if (isChecked) {
                 // add product to favorite
-
+                fireStoreClass.addFavorite(this, product.getProductId());
                 Log.d("DetailProduct", "Add product to favorite " + product.getProductId());
             } else {
                 // remove product from favorite
+                fireStoreClass.removeFavorite(this, product.getProductId());
                 Log.d("DetailProduct", "Remove product from favorite " + product.getProductId());
             }
         });
@@ -106,7 +107,6 @@ public class DetailProduct extends BaseActivity {
             Intent intent = new Intent(DetailProduct.this, MainActivity.class);
             intent.putExtra(Constants.FROM_PRODUCT_DETAIL, true);
             startActivity(intent);
-
         });
         btnAddcart.setOnClickListener(v -> {
             fireStoreClass.getCountUserCartItems(this);
@@ -157,11 +157,6 @@ public class DetailProduct extends BaseActivity {
         ivProductImage = binding.productImageDetail;
         cbFavorite = binding.chkFavouriteProductDetail;
         btnAddcart = binding.btnAddtoCart;
-    }
-
-    private void getProductDetail() {
-        // get product detail base on product id
-
     }
 
     public void loadProductDetail(Product product) {

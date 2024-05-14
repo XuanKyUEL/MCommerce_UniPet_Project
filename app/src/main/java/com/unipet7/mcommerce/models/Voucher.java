@@ -1,6 +1,8 @@
 package com.unipet7.mcommerce.models;
 
-public class Voucher {
+import java.io.Serializable;
+
+public class Voucher implements Serializable {
     String voucher_code, voucher_descript;
 
     Double voucher_id, voucher_limit_use, voucher_max_discount, voucher_minium_value, voucher_numb;
