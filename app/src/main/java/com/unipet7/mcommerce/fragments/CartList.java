@@ -159,7 +159,6 @@ public class CartList extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         binding = FragmentCartBinding.inflate(inflater, container, false);
-        setActionBar(binding.toolbarall);
         itemTouchHelper = new ItemTouchHelper(simpleCallback);
         itemTouchHelper.attachToRecyclerView(binding.rcCart);
         binding.btnPaymentNow.setOnClickListener(v -> {
@@ -312,15 +311,6 @@ public class CartList extends Fragment {
         if (!voucherCode.isEmpty()) {
         } else {
             binding.txtTotalNumb.setText(Math.round(totalCartPrice) + " đ");}
-    }
-
-
-    public void setActionBar(@Nullable Toolbar toolbar) {
-        ((AppCompatActivity) requireActivity()).setSupportActionBar(toolbar);
-        ActionBar actionBar = ((AppCompatActivity) requireActivity()).getSupportActionBar();
-        if (actionBar != null) {
-            actionBar.setDisplayShowTitleEnabled(false);
-        }
     }
 
     @Override
