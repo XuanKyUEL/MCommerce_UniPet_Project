@@ -3,7 +3,6 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:padding="5dp"
     tools:context=".fragments.FavoriteList">
 
     <!-- TODO: Update blank fragment layout -->
@@ -11,7 +10,6 @@
         android:id="@+id/favlist"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:visibility="visible"
-        android:layout_marginHorizontal="12dp"/>
+        android:visibility="visible" />
 
 </FrameLayout>

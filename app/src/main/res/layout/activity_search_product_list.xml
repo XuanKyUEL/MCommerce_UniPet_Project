@@ -5,6 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
+    android:paddingHorizontal="20dp"
     android:id="@+id/searchproduct"
     tools:context=".activities.SearchProductList"
     android:background="@color/white">
@@ -88,29 +89,32 @@
         android:layout_height="1dp"
         android:background="@color/brandPrimary"/>
     <LinearLayout
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="5dp"
         android:layout_marginTop="5dp"
         android:layout_gravity="center_horizontal"
         android:orientation="horizontal">
+
         <LinearLayout
             android:id="@+id/arrangefilter"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginLeft="5dp"
+            android:layout_weight="0.5"
             android:orientation="horizontal"
-            android:padding="5dp"
-            android:layout_marginLeft="5dp">
+            android:padding="5dp">
+
             <ImageView
                 android:layout_width="20dp"
                 android:layout_height="20dp"
-                android:src="@drawable/ic_filter_1"/>
+                android:src="@drawable/ic_filter_1" />
+
             <TextView
+                style="@style/BODY_SMALL_MED_12"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="5dp"
-                style="@style/BODY_SMALL_MED_12"
-                android:text="Sắp xếp"/>
+                android:text="Sắp xếp" />
 
         </LinearLayout>
         <View
@@ -119,23 +123,27 @@
             android:layout_gravity="center_vertical"
             android:layout_height="20dp"
             android:background="@color/black"/>
+
         <LinearLayout
             android:id="@+id/filter"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
             android:layout_marginLeft="15dp"
+            android:layout_weight="0.5"
+            android:orientation="horizontal"
             android:padding="5dp">
+
             <ImageView
                 android:layout_width="20dp"
                 android:layout_height="20dp"
-                android:src="@drawable/ic_filter_2"/>
+                android:src="@drawable/ic_filter_2" />
+
             <TextView
+                style="@style/BODY_SMALL_MED_12"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="5dp"
-                style="@style/BODY_SMALL_MED_12"
-                android:text="Bộ lọc"/>
+                android:text="Bộ lọc" />
         </LinearLayout>
         <View
             android:layout_marginLeft="15dp"
@@ -143,45 +151,44 @@
             android:layout_gravity="center_vertical"
             android:layout_height="20dp"
             android:background="@color/black"/>
+
         <LinearLayout
             android:id="@+id/voucherfilter"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="15dp"
+            android:layout_weight="0.5"
             android:orientation="horizontal"
             android:padding="5dp">
+
             <ImageView
                 android:layout_width="20dp"
                 android:layout_height="20dp"
-                android:src="@drawable/ic_sale"/>
+                android:src="@drawable/ic_sale" />
+
             <TextView
+                style="@style/BODY_SMALL_MED_12"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="5dp"
-                style="@style/BODY_SMALL_MED_12"
-                android:text="Khuyến mãi"/>
+                android:text="Khuyến mãi" />
         </LinearLayout>
     </LinearLayout>
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="15dp"
-        android:orientation="horizontal"
-        android:padding="5dp">
+        android:orientation="horizontal">
         <TextView
             android:id="@+id/numbersearch"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="5dp"
             style="@style/BODY_MED_MED_14"
             android:textColor="@color/darkSecondary"
-            android:text=""/>
+            android:text="5"/>
 
     </LinearLayout>
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/lvlProductList"
-        android:padding="10dp"
-        android:layout_marginLeft="20dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"/>
     <View

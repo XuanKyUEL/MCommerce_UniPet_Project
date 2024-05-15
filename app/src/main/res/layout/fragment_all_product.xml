@@ -6,7 +6,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".fragments.FragmentAllProduct"
     android:orientation="vertical"
-    android:padding="10dp"
+    android:paddingHorizontal="20dp"
     android:background="@color/white"
     android:id="@+id/product">
 
@@ -55,8 +55,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:scrollbars="none"
-        android:layout_marginTop="15dp"
-        android:paddingLeft="10dp">
+        android:layout_marginTop="15dp">
         <LinearLayout
             android:id="@+id/buttonContainer"
             android:layout_width="wrap_content"
@@ -128,7 +127,6 @@
         android:id="@+id/lvlAllProduct"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="20dp"
         android:layout_marginTop="10dp" />
     <View
         android:layout_width="match_parent"
