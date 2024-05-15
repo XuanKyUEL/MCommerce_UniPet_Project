@@ -309,7 +309,7 @@
                     style="@style/BODY_LARGE_BOLD_16"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Đặt hàng dễ, Boss cực mê"
+                    android:text="Meow! Món ngon cho mèo cưng"
                     android:textColor="@color/black"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
@@ -406,7 +406,7 @@
                     style="@style/BODY_LARGE_BOLD_16"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Chill cùng boss sành điệu, Sen ơi"
+                    android:text="Boss đẳng cấp, bữa ăn đỉnh cao!"
                     android:textColor="@color/black"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
