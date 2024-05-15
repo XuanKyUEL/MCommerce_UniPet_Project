@@ -93,10 +93,11 @@ public class DetailProduct extends BaseActivity {
         cbFavorite.setOnCheckedChangeListener((buttonView, isChecked) -> {
             if (isChecked) {
                 // add product to favorite
-
+                fireStoreClass.addFavorite(this, product.getProductId());
                 Log.d("DetailProduct", "Add product to favorite " + product.getProductId());
             } else {
                 // remove product from favorite
+                fireStoreClass.removeFavorite(this, product.getProductId());
                 Log.d("DetailProduct", "Remove product from favorite " + product.getProductId());
             }
         });
