@@ -39,4 +39,5 @@ public class Constants {
     public static final String ODERSUCCESS = "orderSuccess";
     public static final String LOADFAV = "loadFav";
     public static final String VOUCHER = "voucher";
+    public static final String BLOG = "blog";
 }

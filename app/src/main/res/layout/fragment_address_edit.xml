@@ -110,7 +110,7 @@
         android:layout_height="48dp"
         style="@style/HEAD6_BOLD_16"
         android:layout_gravity="center"
-        android:text="Hoàn thành"
+        android:text="Cập nhật địa chỉ"
         android:background="@drawable/bg_btn_cartpayment" />
 
 

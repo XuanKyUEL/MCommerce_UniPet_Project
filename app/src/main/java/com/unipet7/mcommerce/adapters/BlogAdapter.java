@@ -17,11 +17,12 @@ import com.unipet7.mcommerce.R;
 import com.unipet7.mcommerce.activities.BlogDetails;
 import com.unipet7.mcommerce.activities.Notification;
 import com.unipet7.mcommerce.models.Blogs;
+import com.unipet7.mcommerce.utils.Constants;
 
 import java.util.ArrayList;
 
 public class BlogAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
-    ArrayList<Blogs>blogsList;
+    static ArrayList<Blogs>blogsList;
     private static final int VIEW_TYPE_IMAGE = 1;
     private static final int VIEW_TYPE_IMAGE_AND_DESCRIPTION = 2;
 
@@ -79,6 +80,7 @@ public class BlogAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
             itemView.setOnClickListener(v -> {
                 Intent intent = new Intent(v.getContext(), BlogDetails.class);
+                intent.putExtra(Constants.BLOG, blogsList.get(getAdapterPosition()));
                 v.getContext().startActivity(intent);
             });
         }
@@ -97,6 +99,7 @@ public class BlogAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
             textViewDate = itemView.findViewById(R.id.txtBlog2PubDate);
             itemView.setOnClickListener(v -> {
                 Intent intent = new Intent(v.getContext(), BlogDetails.class);
+                intent.putExtra(Constants.BLOG, blogsList.get(getAdapterPosition()));
                 v.getContext().startActivity(intent);
             });
         }
