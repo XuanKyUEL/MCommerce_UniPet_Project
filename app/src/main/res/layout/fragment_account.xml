@@ -110,8 +110,8 @@
             android:enabled="false"
             android:padding="10dp"
             android:layout_gravity="center"
-            android:textColor="@color/black"
-            android:textColorHint="@color/black"/>
+            android:textColor="@color/darkSecondary"
+            android:textColorHint="@color/black"/>xz
         <TextView
             android:layout_width="320dp"
             android:layout_height="wrap_content"

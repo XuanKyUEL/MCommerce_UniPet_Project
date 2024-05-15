@@ -128,7 +128,7 @@
         android:id="@+id/lvlAllProduct"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="20dp"
+        android:layout_marginStart="10dp"
         android:layout_marginTop="10dp" />
     <View
         android:layout_width="match_parent"
