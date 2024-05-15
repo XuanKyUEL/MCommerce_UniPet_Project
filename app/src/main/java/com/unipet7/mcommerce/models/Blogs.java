@@ -1,6 +1,8 @@
 package com.unipet7.mcommerce.models;
 
-public class Blogs {
+import java.io.Serializable;
+
+public class Blogs implements Serializable {
     int blogid;
     String title;
     int pic;

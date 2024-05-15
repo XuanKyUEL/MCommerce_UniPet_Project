@@ -22,7 +22,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:src="@drawable/fav_empty_ic"
-                android:layout_marginBottom="45dp"
+                android:layout_marginBottom="20dp"
                 android:visibility="visible"/>
 
             <TextView
@@ -37,10 +37,9 @@
                 android:id="@+id/btn_empty_fav"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Mua sắm ngay"
+                android:text="MUA SẮM NGAY"
                 style="@style/BODY_SEMI_18"
-                android:background="@drawable/bg_btn_cartpayment"
-                android:layout_marginTop="65dp"/>
+                android:layout_marginTop="20dp"/>
 
         </LinearLayout>
     </RelativeLayout>
