@@ -5,7 +5,7 @@
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".fragments.FragmentAccount"
-    android:padding="10dp"
+    android:paddingHorizontal="20dp"
     android:background="@color/white">
 
     <com.google.android.material.appbar.AppBarLayout
@@ -27,7 +27,7 @@
             android:gravity="center"
             app:popupTheme="@style/Widget.Material3.PopupMenu.Overflow">
             <TextView
-                android:layout_width="280dp"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:textColor="@color/darkPrimary"
                 style="@style/HEAD5_BOLD_18"
@@ -74,8 +74,8 @@
 
         <TextView
             style="@style/HEAD6_BOLD_16"
-            android:layout_width="320dp"
-            android:layout_height="27dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:text="Tên người dùng"
             android:textColor="@color/black"/>
@@ -83,8 +83,8 @@
         <EditText
             android:id="@+id/edtUserNameAccount"
             style="@style/BODY_LARGE_MED_16"
-            android:layout_width="320dp"
-            android:layout_height="48dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
             android:background="@drawable/edittext_conner_profile"
             android:padding="10dp"
@@ -92,7 +92,7 @@
             android:textColor="@color/black"
             android:textColorHint="@color/black"/>
         <TextView
-            android:layout_width="320dp"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Email"
             android:layout_gravity="center"
@@ -103,17 +103,17 @@
         <EditText
             android:id="@+id/edtEmailAccount"
             style="@style/BODY_LARGE_MED_16"
-            android:layout_width="320dp"
-            android:layout_height="48dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
-            android:background="@drawable/edt_not_editatble"
+            android:background="@drawable/edittext_conner_profile"
             android:enabled="false"
             android:padding="10dp"
             android:layout_gravity="center"
             android:textColor="@color/black"
             android:textColorHint="@color/black"/>
         <TextView
-            android:layout_width="320dp"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Số điện thoại"
             android:layout_gravity="center"
@@ -124,8 +124,8 @@
         <EditText
             android:id="@+id/edtPhoneAccount"
             style="@style/BODY_LARGE_MED_16"
-            android:layout_width="320dp"
-            android:layout_height="48dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_marginTop="10dp"
             android:inputType="phone"

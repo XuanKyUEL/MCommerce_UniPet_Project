@@ -1,20 +1,10 @@
 <vector xmlns:android="http://schemas.android.com/apk/res/android"
-    android:width="18dp"
-    android:height="19dp"
-    android:viewportWidth="18"
-    android:viewportHeight="19">
+    android:width="800dp"
+    android:height="800dp"
+    android:viewportWidth="24"
+    android:viewportHeight="24">
   <path
-      android:strokeWidth="1"
-      android:pathData="M9,9V18M9,9L17,5M9,9L1,5M9,18L16.447,14.276C16.786,14.107 17,13.761 17,13.382V5M9,18L1.553,14.276C1.214,14.107 1,13.761 1,13.382V5M17,5L9.447,1.224C9.166,1.083 8.834,1.083 8.553,1.224L1,5"
-      android:strokeLineJoin="round"
-      android:fillColor="#00000000"
-      android:strokeColor="#FF6C44"
-      android:strokeLineCap="round"/>
-  <path
-      android:strokeWidth="1"
-      android:pathData="M5,3L12.447,6.724C12.786,6.893 13,7.239 13,7.618V10"
-      android:strokeLineJoin="round"
-      android:fillColor="#00000000"
-      android:strokeColor="#FF6C44"
-      android:strokeLineCap="round"/>
+      android:pathData="M5.586,4.586C5,5.172 5,6.114 5,8V17C5,18.886 5,19.828 5.586,20.414C6.172,21 7.114,21 9,21H15C16.886,21 17.828,21 18.414,20.414C19,19.828 19,18.886 19,17V8C19,6.114 19,5.172 18.414,4.586C17.828,4 16.886,4 15,4H9C7.114,4 6.172,4 5.586,4.586ZM9,8C8.448,8 8,8.448 8,9C8,9.552 8.448,10 9,10H15C15.552,10 16,9.552 16,9C16,8.448 15.552,8 15,8H9ZM9,12C8.448,12 8,12.448 8,13C8,13.552 8.448,14 9,14H15C15.552,14 16,13.552 16,13C16,12.448 15.552,12 15,12H9ZM9,16C8.448,16 8,16.448 8,17C8,17.552 8.448,18 9,18H13C13.552,18 14,17.552 14,17C14,16.448 13.552,16 13,16H9Z"
+      android:fillColor="#FF6C44"
+      android:fillType="evenOdd"/>
 </vector>

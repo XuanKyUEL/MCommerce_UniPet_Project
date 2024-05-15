@@ -6,6 +6,7 @@
     android:layout_height="match_parent"
     tools:context=".activities.DetailOrder"
     android:orientation="vertical"
+    android:paddingHorizontal="20dp"
     android:id="@+id/HistoryPurchase"
     android:background="@color/white">
     <com.google.android.material.appbar.AppBarLayout
@@ -22,7 +23,7 @@
             app:popupTheme="@style/Widget.Material3.PopupMenu.Overflow"
             android:layout_gravity="center">
             <TextView
-                android:layout_width="300dp"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:textColor="@color/darkPrimary"
                 style="@style/HEAD5_BOLD_18"

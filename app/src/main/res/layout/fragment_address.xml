@@ -6,7 +6,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".fragments.FragmentAddress"
     android:orientation="vertical"
-    android:padding="10dp"
+    android:paddingHorizontal="20dp"
     android:background="@color/white"
     android:id="@+id/AddressLayout">
 
@@ -24,7 +24,7 @@
             app:popupTheme="@style/Widget.Material3.PopupMenu.Overflow"
             android:layout_gravity="center">
             <TextView
-                android:layout_width="250dp"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:textColor="@color/darkPrimary"
                 style="@style/HEAD5_BOLD_18"
@@ -37,7 +37,6 @@
         android:layout_height="wrap_content"
         android:id="@+id/lvlAddress"
         android:layout_weight="1"
-        android:padding="10dp"
         android:divider="@android:color/transparent"
         android:dividerHeight="15dp"/>
     <View

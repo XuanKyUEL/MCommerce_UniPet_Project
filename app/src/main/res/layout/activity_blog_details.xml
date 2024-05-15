@@ -5,7 +5,7 @@ xmlns:tools="http://schemas.android.com/tools"
 android:layout_width="match_parent"
 android:layout_height="match_parent"
 tools:context=".activities.BlogDetails"
-android:padding="10dp"
+android:paddingHorizontal="20dp"
 android:background="@color/white">
 
 <com.google.android.material.appbar.AppBarLayout
@@ -30,7 +30,7 @@ android:background="@color/white">
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginTop="50dp"
+        android:layout_marginTop="30dp"
         app:layout_constraintTop_toTopOf="@+id/apptoolbar"
         tools:layout_editor_absoluteX="10dp">
 
@@ -41,7 +41,7 @@ android:background="@color/white">
 
             <com.makeramen.roundedimageview.RoundedImageView
                 android:id="@+id/imvBlogDetailImage"
-                android:layout_width="320dp"
+                android:layout_width="match_parent"
                 android:layout_height="209dp"
                 android:layout_gravity="center"
                 android:src="@drawable/blog_image_3"
@@ -85,8 +85,7 @@ Ngoài ra, việc chó mèo dùng rất nhiều tinh bột cho một bữa ăn s
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/rclBlogDetails1"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp" />
+                android:layout_height="wrap_content" />
 
             <View
                 android:layout_width="match_parent"
@@ -94,7 +93,6 @@ Ngoài ra, việc chó mèo dùng rất nhiều tinh bột cho một bữa ăn s
                 android:layout_margin="20dp"
                 android:layout_marginStart="20dp"
                 android:layout_marginTop="15dp"
-                android:layout_marginEnd="20dp"
                 android:background="#E0E0E0" />
 
             <TextView
