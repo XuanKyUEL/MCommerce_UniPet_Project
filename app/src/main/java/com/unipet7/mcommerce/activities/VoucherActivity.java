@@ -77,8 +77,7 @@ public class VoucherActivity extends AppCompatActivity {
         });
         binding.toolbarall.setNavigationOnClickListener(v -> {
             Log.i("VoucherActivity", "addEvents: ");
-            Toast.makeText(this, "VoucherActivity", Toast.LENGTH_SHORT).show();
-            this.getOnBackPressedDispatcher().onBackPressed();
+            finish();
         });
     }
 }
