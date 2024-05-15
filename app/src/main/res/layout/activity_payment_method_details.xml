@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:id="@+id/containerpayment"
-    android:padding="5dp"
+    android:paddingHorizontal="20dp"
     tools:context=".activities.DetailCheckout"
     android:background="@color/white">
     <com.google.android.material.appbar.AppBarLayout
@@ -27,7 +27,7 @@
             android:layout_gravity="center"
             app:popupTheme="@style/Widget.Material3.PopupMenu.Overflow">
             <TextView
-                android:layout_width="320dp"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:textColor="@color/darkPrimary"
                 style="@style/HEAD5_BOLD_18"
@@ -37,7 +37,6 @@
         <ScrollView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:padding="10dp"
             android:background="@color/white">
             <LinearLayout
                 android:layout_width="match_parent"
@@ -51,11 +50,9 @@
                     android:textColor="@color/brandPrimary"
                     style="@style/HEAD6_BOLD_16"/>
                 <androidx.cardview.widget.CardView
-                    android:layout_width="340dp"
-                    android:layout_height="120dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
                     android:layout_gravity="center"
-                    app:cardCornerRadius="8dp"
-                    app:cardElevation="8dp"
                     android:layout_marginTop="10dp"
                     android:background="@color/white">
 
@@ -128,13 +125,11 @@
                     android:layout_marginTop="15dp"/>
 
                 <androidx.cardview.widget.CardView
-                    android:layout_width="340dp"
-                    android:layout_height="40dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:layout_marginTop="10dp"
-                    android:background="@color/white"
-                    app:cardCornerRadius="8dp"
-                    app:cardElevation="8dp">
+                    android:background="@color/white">
 
                     <LinearLayout
                         android:layout_width="match_parent"
@@ -193,7 +188,7 @@
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_margin="10dp"
+
                         android:background="@color/white"
                         android:orientation="vertical">
 

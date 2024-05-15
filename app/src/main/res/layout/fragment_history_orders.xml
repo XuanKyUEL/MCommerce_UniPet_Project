@@ -6,7 +6,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".fragments.FragmentHistoryOrders"
     android:orientation="vertical"
-    android:padding="10dp"
+    android:paddingHorizontal="20dp"
     android:background="@color/white"
     android:id="@+id/HistoryPurchase">
 
@@ -24,7 +24,7 @@
             app:popupTheme="@style/Widget.Material3.PopupMenu.Overflow"
             android:layout_gravity="center">
             <TextView
-                android:layout_width="300dp"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:textColor="@color/darkPrimary"
                 style="@style/HEAD5_BOLD_18"
@@ -37,8 +37,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:scrollbars="none"
-        android:layout_marginTop="15dp"
-        android:paddingLeft="10dp">
+        android:layout_marginTop="15dp">
         <LinearLayout
             android:id="@+id/buttonContainer"
             android:layout_width="wrap_content"

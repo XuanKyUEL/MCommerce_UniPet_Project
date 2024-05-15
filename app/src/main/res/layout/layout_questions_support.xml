@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_width="320dp"
+    android:layout_width="match_parent"
     android:layout_height="wrap_content"
     app:cardCornerRadius="5dp"
     android:layout_gravity="center"
     app:cardUseCompatPadding="true"
     android:background="@drawable/edittext_conner_profile">
     <LinearLayout
-        android:layout_width="320dp"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
         android:id="@+id/layout_question">
@@ -20,8 +20,6 @@
             android:text="Chính sáchHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHH"
             android:textColor="@color/black"
             style="@style/HEAD6_BOLD_16"
-            android:layout_marginRight="2dp"
-            android:layout_marginLeft="5dp"
             android:padding="10dp"/>
         <RelativeLayout
             android:id="@+id/rlt_title"
@@ -35,8 +33,6 @@
             android:layout_height="wrap_content"
             android:text="Answer"
             android:padding="10dp"
-            android:layout_marginRight="2dp"
-            android:layout_marginLeft="5dp"
             android:textColor="@color/darkPrimary"
             style="@style/BODY_MED_REGULAR_14"
             android:id="@+id/answer"/>

@@ -6,7 +6,7 @@
     tools:context=".fragments.FragmentAdressAdd"
     android:orientation="vertical"
     android:background="@color/white"
-    android:padding="10dp">
+    android:paddingHorizontal="20dp">
 
     <com.google.android.material.appbar.AppBarLayout
         android:layout_width="match_parent"
@@ -22,7 +22,7 @@
             tools:popupTheme="@style/Widget.Material3.PopupMenu.Overflow"
             android:layout_gravity="center">
             <TextView
-                android:layout_width="300dp"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:textColor="@color/darkPrimary"
                 style="@style/HEAD5_BOLD_18"
@@ -31,7 +31,7 @@
         </androidx.appcompat.widget.Toolbar>
     </com.google.android.material.appbar.AppBarLayout>
     <TextView
-        android:layout_width="320dp"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Liên hệ"
         android:layout_gravity="center"
@@ -41,7 +41,7 @@
     <EditText
         android:id="@+id/edtuser"
         style="@style/BODY_MED_REGULAR_14"
-        android:layout_width="320dp"
+        android:layout_width="match_parent"
         android:layout_height="48dp"
         android:layout_gravity="center"
         android:layout_marginTop="10dp"
@@ -53,7 +53,7 @@
     <EditText
         android:id="@+id/edtphone"
         style="@style/BODY_MED_REGULAR_14"
-        android:layout_width="320dp"
+        android:layout_width="match_parent"
         android:layout_height="48dp"
         android:layout_gravity="center"
         android:layout_marginTop="10dp"
@@ -64,7 +64,7 @@
         android:textColor="@color/black"
         android:textColorHint="#C4C4C4"/>/>
     <TextView
-        android:layout_width="320dp"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Địa chỉ"
         android:layout_gravity="center"
@@ -75,7 +75,7 @@
         android:id="@+id/edtprovince"
         android:hint="Tỉnh/Thành phố, Quận/Huyện, Phường/Xã"
         style="@style/BODY_MED_REGULAR_14"
-        android:layout_width="320dp"
+        android:layout_width="match_parent"
         android:layout_height="48dp"
         android:layout_gravity="center"
         android:layout_marginTop="10dp"
@@ -87,7 +87,7 @@
         android:id="@+id/edtstress"
         android:hint="Tên đường, Tòa nhà, Số nhà"
         style="@style/BODY_MED_REGULAR_14"
-        android:layout_width="320dp"
+        android:layout_width="match_parent"
         android:layout_height="48dp"
         android:layout_gravity="center"
         android:layout_marginTop="10dp"

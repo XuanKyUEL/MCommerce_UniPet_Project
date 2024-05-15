@@ -11,9 +11,9 @@
         android:id="@+id/rcCart"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_marginStart="15dp"
+        android:layout_marginStart="20dp"
         android:layout_marginTop="5dp"
-        android:layout_marginEnd="15dp"
+        android:layout_marginEnd="20dp"
         android:layout_marginBottom="5dp"
         app:layout_constraintBottom_toTopOf="@+id/lnCart"
         app:layout_constraintEnd_toEndOf="parent"
@@ -36,7 +36,7 @@
             android:id="@+id/txtCartInfor"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="15dp"
+            android:layout_marginStart="20dp"
             android:layout_marginTop="10dp"
             android:layout_marginEnd="15dp"
             android:fontFamily="@font/svn_gilroy_bold"
@@ -49,17 +49,17 @@
             android:id="@+id/vLine"
             android:layout_width="match_parent"
             android:layout_height="2dp"
-            android:layout_marginStart="15dp"
+            android:layout_marginStart="20dp"
             android:layout_marginTop="5dp"
-            android:layout_marginEnd="15dp"
+            android:layout_marginEnd="20dp"
             android:background="@color/brandLighter" />
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginStart="15dp"
+            android:layout_marginStart="20dp"
             android:layout_marginTop="5dp"
-            android:layout_marginEnd="15dp">
+            android:layout_marginEnd="20dp">
 
             <EditText
                 android:id="@+id/edtVoucher"
